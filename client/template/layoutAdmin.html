@@ -1,0 +1,14 @@
+<template name="layoutAdmin">
+	<html>
+	<body class="admin">
+		<div id="admin-wrapper">
+			{{> adminNavigation}}
+			<div id="admin-page-wrapper">
+				{{> yield}}
+			</div>
+			<!-- /#page-wrapper -->
+		</div>
+	    <!-- /#wrapper -->
+	</body>
+	</html>
+</template>
