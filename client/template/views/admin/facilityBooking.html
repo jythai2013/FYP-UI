@@ -1,0 +1,180 @@
+<template name = "facilityBooking">
+<div class="container">
+  <div class="col-xs-12 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+        <h3 class="page-header">Facility Booking System</h3>
+        <!-- Insert image here-->
+
+        <form role="form" action="action_page.java" method="POST">
+
+
+
+          <!-- Date of Booking -->
+          <!-- Put a date time picker -->
+          <div class="form-group has-error has-feedback">
+            <label class="col-sm-2 control-label">Booking Date</label>
+            <div class="col-sm-4">
+              Start Date:
+              <input type="date" id="input_date_beginning" class="form-control" placeholder="D.O.B.B">
+              Number of Session:
+              <input type="string" id="noSession" class="form-control">
+            </div>
+          </div>
+
+          <!-- Put a date time picker -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Repeat</label>
+            <div class="col-sm-4">
+              <select class="form-control" name="repeat" id="repeatOption">
+                <option value="">-- No Repeat --</option>
+                <option value="everyday">Everyday</option>
+                <option value="weekday">Weekdays</option>
+                <option value="weekends">Weekends</option>
+                <option value="weekly">Weekly</option>
+                <option value="mothly">Monthly</option>
+                </select>
+            </div>
+          </div>
+
+          <!-- Select date -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Days</label>
+            <div class="col-sm-4">
+                <label>
+                  <input type="checkbox" checked> Mon
+                </label>
+      
+                <label>
+                  <input type="checkbox" checked> Tue
+                </label>
+
+                <label>
+                  <input type="checkbox" checked> Wed
+                </label>
+
+                <label>
+                  <input type="checkbox" checked> Thur
+                </label>
+
+                <label>
+                  <input type="checkbox" checked> Fri
+                </label>
+
+                <label>
+                  <input type="checkbox" checked> Sat
+                </label>
+
+                <label>
+                  <input type="checkbox" checked> Sun
+                </label>
+            </div>
+          </div>
+
+          <!-- Time of Booking -->
+          <!-- Put a date time picker -->
+          <!-- Format  -->
+          <div class="form-group has-error has-feedback">
+            <label class="col-sm-2 control-label">Booking Time</label>
+            <div class="col-sm-4">
+              Start Time:
+              <input type="time" id="input_time_beginning" class="form-control" placeholder="time.start">
+              End Time:
+              <input type="time" id="input_time_end" class="form-control" placeholder="time.end">
+            </div>
+          </div>
+          
+          
+          <!-- Capacity -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Capacity</label>
+            <div class="col-sm-4">
+              Min:
+              <input type="string" id="input_capacity_min" class="form-control" >
+              Max:
+              <input type="string" id="input_capacity_max" class="form-control" >
+            </div>
+          </div>
+
+          <!-- Facility Type -->
+          <!-- Get Facility List from DB and drop down List -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Facility Type</label>
+            <div class="col-sm-4">
+              <select class="form-control" name="facilityType" id="facType">
+                <option value="">-- Select a Facility --</option>
+                <option value="classRm">Class Room</option>
+                <option value="trainingRm">Training Room</option>
+                <option value="meetingRm">Meeting Room</option>
+                </select>
+            </div>
+          </div>
+
+          <!-- Facility  -->
+          <!--  Based on Facility Type -> get Facility List from DB and drop down List -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Facility</label>
+            <div class="col-sm-4">
+              <select class="form-control" name="facility" id="fac">
+                <option value="">-- Select a Facility --</option>
+                <option value="classRm">Class Room 1</option>
+                </select>
+            </div>
+          </div>
+
+
+          
+          <div class="row top-buffer">
+          </div>
+          
+          <div class="row top-buffer">
+          </div>
+          
+          
+          
+          
+          <!--<h4>Search Result display</h4>-->
+          <!--javascript to capture time, similar to oasis?-->
+
+          <div class="row top-buffer">
+          </div>
+          <div class="row top-buffer">
+          </div>
+          
+          
+          <div class="row top-buffer">
+          </div><div class="row top-buffer">
+          </div>
+
+          <div class="form-group">     
+            <div class="col-xs-2">
+              <!-- Might use javascript over here cause the courses shouldnt be the same -->
+              <!-- back to homepage? -->
+                  <button type="button" class="btn pull-left btn-success" href="index.html">Back</button>
+              </div>
+
+
+
+            <div class="col-sm-10">
+              
+            <button type="submit" class="btn pull-right btn-primary">Make Booking</button>
+
+            </div>
+          </div>
+          
+          
+          
+
+
+
+          <!-- To make the white background cover all fields -->
+          <div class="clearfix"></div> 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
