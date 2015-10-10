@@ -63,5 +63,11 @@ Router.map(function() {
         layoutTemplate: "layoutAdmin"
     });
 
+    this.route('classHomepage', {
+        path:'/classHomePage',
+        template: 'homePage',
+        layoutTemplate: "layoutAdmin"
+    });
+
     
 });
