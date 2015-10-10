@@ -63,19 +63,18 @@ Router.map(function() {
         layoutTemplate: "layoutAdmin"
     });
 
-<<<<<<< Updated upstream
+
     this.route('classHomepage', {
         path:'/classHomePage',
         template: 'homePage',
         layoutTemplate: "layoutAdmin"
     });
 
-=======
+
     this.route('facilityBooking', {
         path:'/facilityBooking',
         template: 'facilityBooking',
         layoutTemplate: "layoutAdmin"
     });
->>>>>>> Stashed changes
     
 });
