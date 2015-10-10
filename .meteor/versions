@@ -84,6 +84,7 @@ mongo-livedata@1.0.9
 mquandalle:jade@0.4.3_1
 mquandalle:jade-compiler@0.4.3
 mrt:accounts-admin-ui-bootstrap-3@0.2.7
+natestrauser:select2@4.0.0_1
 npm-bcrypt@0.7.8_2
 npm-mongo@1.4.39_1
 observe-sequence@1.0.7
