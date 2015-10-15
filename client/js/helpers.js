@@ -32,3 +32,9 @@ Template.imagesView.helpers({
     return Images.find(); // Where Images is an FS.Collection instance
   }
 });
+
+Template.facilityBooking.helpers({
+  facilities: function () {
+    return Facilities.find(); // Where Images is an FS.Collection instance
+  }
+});

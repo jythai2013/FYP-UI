@@ -1,42 +1,37 @@
 
 	Meteor.methods({ 
 		
-		'editCourse': function editCourse(_id, cName, cCode, cFee, cMin, cMax, cDescription){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-			Courses.update(_id, {
+			
+			// if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
+			Facilities.update(_id, {
         $set: {
-					name: cName,
-					code: cCode,
-					fee: cFee,
-					min: cMin,
-					max: cMax,
-					description: cDescription
+					facType: facTypeI,
+					fac: facI,
+					description: cDescriptionI
 				}
       });
 		},
 		
-		'deleteCourse': function deleteCourse(_id){
+		'deleteFacility': function deleteCourse(_id){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-      Courses.remove(_id);
 		},
 		
-		'createCourse': function createCourse(cName, cCode, cFee, cMin, cMax, cDescription){
+		'createFacility': function createCourse(input_capacity_maxI, facTypeI, facI, cDescriptionI){
 			// debugger;
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
 			
-			Courses.insert({
-				name: cName,
-				code: cCode,
-				fee: cFee,
-				min: cMin,
-				max: cMax,
-				description: cDescription
+			if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
+			Facilities.insert({
+					facType: facTypeI,
+					fac: facI,
+					description: cDescriptionI
 			});
 		}
 	});

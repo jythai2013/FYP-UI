@@ -1,4 +1,49 @@
+<template name="facility">
+	Fac: {{fac}}
+	Faciltiy Type: {{facType}}
+	Capacity: {{capacity}}
+	Description: {{description}}
+	id: {{_id}}
+	<input type="button" id="deleteFacility" value="delete">
+</template>
+
+
+
+
+
+
+
+
+
+
 <template name = "facilityBooking">
+
+
+
+
+		<form id="faciltyAddForm">
+			max: <input type="string" id="input_capacity_max" class="form-control" >
+			facType:    <select class="form-control" name="facilityType" id="facType">
+										<option value="">-- Select a Facility --</option>
+										<option value="classRm">Class Room</option>
+										<option value="trainingRm">Training Room</option>
+										<option value="meetingRm">Meeting Room</option>
+									</select>
+			fac: <input type="string" id="fac" class="form-control" >
+			description: <input type="string" id="description" class="form-control" >
+			<input type="submit">
+		</form>
+		{{#each facilities}}
+			{{> facility}}
+		{{/each}}
+
+
+
+
+
+
+
+
 <div class="container">
   <div class="col-xs-6 col-sm-12">
     <div class="box">
@@ -45,31 +90,31 @@
             <label class="col-sm-2 control-label">Days</label>
             <div class="col-sm-4">
                 <label>
-                  <input type="checkbox" checked> Mon
+                  <input type="checkbox" checked id="day_Mon"> Mon
                 </label>
       
                 <label>
-                  <input type="checkbox" checked> Tue
+                  <input type="checkbox" checked id="day_Tue"> Tue
                 </label>
 
                 <label>
-                  <input type="checkbox" checked> Wed
+                  <input type="checkbox" checked id="day_Wed"> Wed
                 </label>
 
                 <label>
-                  <input type="checkbox" checked> Thur
+                  <input type="checkbox" checked id="day_Thu"> Thur
                 </label>
 
                 <label>
-                  <input type="checkbox" checked> Fri
+                  <input type="checkbox" checked id="day_Fri"> Fri
                 </label>
 
                 <label>
-                  <input type="checkbox" checked> Sat
+                  <input type="checkbox" checked id="day_Sat"> Sat
                 </label>
 
                 <label>
-                  <input type="checkbox" checked> Sun
+                  <input type="checkbox" checked id="day_Sun"> Sun
                 </label>
             </div>
           </div>
@@ -109,7 +154,7 @@
                 <option value="classRm">Class Room</option>
                 <option value="trainingRm">Training Room</option>
                 <option value="meetingRm">Meeting Room</option>
-                </select>
+							</select>
             </div>
           </div>
 
