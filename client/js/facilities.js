@@ -24,6 +24,64 @@ Template.facilityBooking.events({
 	}
 });
 
+function findIfFacilityIsAvailable(facility, startDate, endDate, timeStart, timeEnd){
+	dates = getDatesFromRepeat();
+	
+	dates.forEach(Function(date, startTime, endTime){
+		var available = isFacilityAvailableOnThisTimeslot(facility, date, startTime, endTime) | false;
+		if(available){
+			return true;
+		} else{
+			return false;
+		}
+	});
+}
+
+function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, timeEnd){
+	// results = new Array();
+	soFarSoGood = true;
+	existingBookings = bookings.find({
+									"facId":facility._id,
+									"date":searchDate,
+									"start_time":{&lte: timeStart },	// |				|
+									"end_time":{&gte: timeEnd }				//    |		|
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		return false;
+	}
+	existingBookings = bookings.find({
+									"facId":facility._id,
+									"date":searchDate,
+									"start_time":{&lte: timeStart },	// |				|
+									"end_time":{&lte: timeEnd }				//    |				|
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		return false;
+	}
+	existingBookings = bookings.find({
+									"facId":facility._id,
+									"date":searchDate,
+									"start_time":{&gte: timeStart },	// 			|				|
+									"end_time":{&gte: timeEnd }				//    |		|
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		return false;
+	}
+	existingBookings = bookings.find({
+									"facId":facility._id,
+									"date":searchDate,
+									"start_time":{&gte: timeStart },	// 			|				|
+									"end_time":{&lte: timeEnd }				//    |						|
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		return false;
+	}
+	return soFarSoGood;
+}
 
 // Template.course.events({ 											//TODO <----
 
