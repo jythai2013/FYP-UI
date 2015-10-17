@@ -54,7 +54,7 @@ Template.facilityBooking.helpers({
 		// Iinput_time_beginning = document.getElementById("input_time_beginning");
 		// Iinput_time_end = document.getElementById("input_time_end");
 		
-		matchingFacilities = Facilities.find({"facType":IfacType, "capacity": {$gte : Icapacity});
+		matchingFacilities = Facilities.find({"facType":IfacType, "capacity": {$gte : Icapacity}});
 		matchingFacilities.forEach(function(facility){
 			available = findIfFacilityIsAvailable(facility, startDate, endDate, timeStart, timeEnd)
 			if(available) results.push(facility);
@@ -71,6 +71,6 @@ Template.facilityBooking.helpers({
 
 		
 		
-		return Facilities.find({"facType":IfacType, "capacity": {$gte : Icapacity});
+		return Facilities.find({"facType":IfacType, "capacity": {$gte : Icapacity}});
 	}
 });

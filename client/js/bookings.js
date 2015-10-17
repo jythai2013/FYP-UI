@@ -1,6 +1,13 @@
 
 
 
+Template.facilityBooking.events({
+	"submit #facilityBookingFormForMeteor" : function createBookingEventHandler(e) {
+		e.preventDefault();
+		
+		
+	}
+});
 // Template.facilityBooking.events({
 	// "submit #facilityBookingFormForMeteor" : function createBookingEventHandler(e) {
 		// e.preventDefault();
