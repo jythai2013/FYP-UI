@@ -1,6 +1,3 @@
-
-
-
 Template.facilityBooking.events({
 	"submit #faciltyAddForm" : function createFacilityEventHandler(e) {
 		e.preventDefault();
@@ -24,11 +21,17 @@ Template.facilityBooking.events({
 	}
 });
 
+<<<<<<< HEAD
 function getDatesFromRepeat(){
 	
 }
 
 function findIfFacilityIsAvailable(facility, startDate, endDate, timeStart, timeEnd){
+=======
+//this might be redundant, i think for the repeat option we just multiple booking entity with different date as each of them will be one record, as such
+// the repeat option will be better at booking
+function findIfFacilityIsAvailable(facility, startDate, timeStart, timeEnd){
+>>>>>>> origin/master
 	dates = getDatesFromRepeat();
 	
 	dates.forEach(function(date, startTime, endTime){
@@ -93,6 +96,24 @@ function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, time
 		return false;
 	}
 	return soFarSoGood;
+}
+
+function bookFacility(dateI, startTimeI, endTimeI, facTypeI, facI, courseI, sessionI) {
+	dates = getDatesFromRepeat();
+	var canBook = true;
+	
+	//check the whole repeat duration, if one session is not available then the repeat is invalid.
+	dates.forEach(Function(date, startTime, endTime){
+		var available = isFacilityAvailableOnThisTimeslot(facility, date, startTime, endTime) | false;
+		if(!available){
+			return false;
+		}		 
+	});
+
+	//for each date object, create a booking
+	dates.forEach(Function(){
+		bookings.createBooking(date, startTime, endTime, facTypeI, facI, courseI, sessionI);
+	});
 }
 
 // Template.course.events({ 											//TODO <----
