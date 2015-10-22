@@ -71,9 +71,9 @@ Router.map(function() {
     });
 
 
-    this.route('facilityBooking', {
-        path:'/facilityBooking',
-        template: 'facilityBooking',
+    this.route('facilityManagement', {
+        path:'/facilityManagement',
+        template: 'facilityManagement',
         layoutTemplate: "layoutAdmin"
     });
     

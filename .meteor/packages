@@ -33,3 +33,4 @@ cfs:filesystem
 cfs:standard-packages
 cfs:gridfs
 natestrauser:select2
+rzymek:fullcalendar
