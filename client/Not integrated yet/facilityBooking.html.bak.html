@@ -1,0 +1,308 @@
+<template name="facility123">
+	Fac: {{fac}}
+	Faciltiy Type: {{facType}}
+	Capacity: {{capacity}}
+	Description: {{description}}
+	id: {{_id}}
+	<input type="button" id="deleteFacility" value="delete">
+</template>
+
+
+
+
+
+
+
+
+
+
+<template name = "facilityBooking123">
+
+
+
+
+		<form id="faciltyAddForm">
+			max: <input type="string" id="input_capacity_max" class="form-control" >
+			facType:    <select class="form-control" name="facilityType" id="facType">
+										<option value="">-- Select a Facility --</option>
+										<option value="classRm">Class Room</option>
+										<option value="trainingRm">Training Room</option>
+										<option value="meetingRm">Meeting Room</option>
+									</select>
+			fac: <input type="string" id="fac" class="form-control" >
+			description: <input type="string" id="description" class="form-control" >
+			<input type="submit">
+		</form>
+		{{#each facilities}}
+			{{> facility}}
+		{{/each}}
+
+
+
+
+
+
+
+
+<div class="container">
+  <div class="col-xs-6 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+        <h3 class="page-header">Facility Booking System</h3>
+        <!-- Insert image here-->
+
+        <form role="form" action="action_page.java" method="POST" id="facilityBookingFormForMeteor">
+
+
+
+          <!-- Date of Booking -->
+          <!-- Put a date time picker -->
+          <div class="form-group has-error has-feedback">
+            <label class="col-sm-2 control-label">Booking Date</label>
+            <div class="col-sm-4">
+              Start Date:
+              <input type="date" id="input_date_beginning" class="form-control" placeholder="D.O.B.B">
+              Number of Session:
+              <input type="string" id="noSession" class="form-control">
+            </div>
+          </div>
+
+          <!-- Put a date time picker -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Repeat</label>
+            <div class="col-sm-4">
+              <select class="form-control" name="repeat" id="repeatOption">
+                <option value="">-- No Repeat --</option>
+                <option value="everyday">Everyday</option>
+                <option value="weekday">Weekdays</option>
+                <option value="weekends">Weekends</option>
+                <option value="weekly">Weekly</option>
+                <option value="mothly">Monthly</option>
+                </select>
+            </div>
+          </div>
+
+          <!-- Select date -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Days</label>
+            <div class="col-sm-4">
+                <label>
+                  <input type="checkbox" checked id="day_Mon"> Mon
+                </label>
+      
+                <label>
+                  <input type="checkbox" checked id="day_Tue"> Tue
+                </label>
+
+                <label>
+                  <input type="checkbox" checked id="day_Wed"> Wed
+                </label>
+
+                <label>
+                  <input type="checkbox" checked id="day_Thu"> Thur
+                </label>
+
+                <label>
+                  <input type="checkbox" checked id="day_Fri"> Fri
+                </label>
+
+                <label>
+                  <input type="checkbox" checked id="day_Sat"> Sat
+                </label>
+
+                <label>
+                  <input type="checkbox" checked id="day_Sun"> Sun
+                </label>
+            </div>
+          </div>
+
+          <!-- Time of Booking -->
+          <!-- Put a date time picker -->
+          <!-- Format  -->
+          <div class="form-group has-error has-feedback">
+            <label class="col-sm-2 control-label">Booking Time</label>
+            <div class="col-sm-4">
+              Start Time:
+              <input type="time" id="input_time_beginning" class="form-control" placeholder="time.start">
+              End Time:
+              <input type="time" id="input_time_end" class="form-control" placeholder="time.end">
+            </div>
+          </div>
+          
+          
+          <!-- Capacity -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Capacity</label>
+            <div class="col-sm-4">
+              Min:
+              <input type="string" id="input_capacity_min" class="form-control" >
+              Max:
+              <input type="string" id="input_capacity_max" class="form-control" >
+            </div>
+          </div>
+
+          <!-- Facility Type -->
+          <!-- Get Facility List from DB and drop down List -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Facility Type</label>
+            <div class="col-sm-4">
+              <select class="form-control" name="facilityType" id="facType">
+                <option value="">-- Select a Facility --</option>
+                <option value="classRm">Class Room</option>
+                <option value="trainingRm">Training Room</option>
+                <option value="meetingRm">Meeting Room</option>
+							</select>
+            </div>
+          </div>
+
+          <!-- Facility  -->
+          <!--  Based on Facility Type -> get Facility List from DB and drop down List -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Facility</label>
+            <div class="col-sm-4">
+              <select class="form-control" name="facility" id="fac">
+                <option value="">-- Select a Facility --</option>
+                <option value="classRm">Class Room 1</option>
+                </select>
+            </div>
+          </div>
+
+
+          
+          
+          <!--<h4>Search Result display</h4>-->
+          <!--javascript to capture time, similar to oasis?-->
+
+          <div class="row top-buffer">
+          </div>
+          <div class="row top-buffer">
+          </div>
+          
+          
+          <div class="row top-buffer">
+          </div><div class="row top-buffer">
+          </div>
+
+          <div class="form-group">     
+            <div class="col-xs-2">
+              <!-- Might use javascript over here cause the courses shouldnt be the same -->
+              <!-- back to homepage? -->
+                  <button type="button" class="btn pull-left btn-success" href="index.html">Back</button>
+              </div>
+
+
+
+            <div class="col-sm-10">
+              
+            <button type="submit" class="btn pull-right btn-primary">Search</button>
+
+            </div>
+          </div>
+          
+          
+          {{>facilityTable }}
+
+
+
+          <!-- To make the white background cover all fields -->
+          <div class="clearfix"></div> 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+
+<template name = "facilityTable">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Facility</th>
+        <th>Report Fault</th>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+        <div class="radio">
+          <label><input type="radio" name="optradio">CR 2.1</label>
+        </div>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger">Report Fault</button>
+        </td>
+        <td>NA</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="radio">
+            <label><input type="radio" name="optradio">CR 2.2</label>
+          </div>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger">Report Fault</button>
+        </td>
+        <td>NA</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="radio">
+            <label><input type="radio" name="optradio">CR 2.3</label>
+          </div>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger">Report Faulty</button>
+        </td>
+        <td>NA</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {{> bookingForm}}
+</template>
+
+
+<template name = "bookingForm">
+
+<div class="container">
+    <div class="col-xs-6 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+        <h3 class="page-header">Book Facility</h3>
+        <form>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Course</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="website" placeholder="Course" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Class</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="website" placeholder="Class" />
+            </div>
+          </div>
+          <div class="row top-buffer">
+          </div>
+          <div class="col-sm-10">
+            <button type="submit" class="btn pull-right btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+   </div>
+  </div>
+</div>
+
+
+
+
+</template>

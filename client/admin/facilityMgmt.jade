@@ -1,0 +1,155 @@
+template(name="facilityMgmt")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Facility Management
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Enter Class Details
+          .panel-body
+            .row
+              .col-lg-6
+                form(name="", role="form", action="facilityResult", method="post")
+                  .form-group
+                    label Start Date
+                    input.form-control(type="date")
+                  .form-group
+                    label Repeat
+                    select.form-control
+                      option No Repeat
+                      option Everyday
+                      option Weekdays
+                      option Weekends
+                      option Weekly
+                      option Monthly
+                  .form-group
+                    label No. of Sessions
+                    input.form-control(type="text" placeholder="Example: 5")
+              // /.col-lg-6
+              .col-lg-6
+                  .form-group
+                    label Start Time
+                    input.form-control(type="time")
+                  .form-group
+                    label End Time
+                    input.form-control(type="time")
+              // /.col-lg-6 (nested)
+              .col-lg-12
+                  .form-group
+                    label Days
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | Monday
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | Tuesday
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | Wednesday
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | Thursday
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | Friday
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | Saturday
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | Sunday
+              // /.col-lg-12
+              .col-lg-6
+                  .form-group
+                    label Facility Type
+                    select.form-control
+                      option Classroom
+                      option Training Room
+                      option Meeting Room
+                  .form-group
+                    label Classroom
+                    select.form-control
+                      option Classroom 01
+                      option Classroom 02
+              // /.col-lg-6 (nested)
+            // /.row (nested)
+          // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+
+      {{>searchFacility}}
+    
+    .row
+      .col-lg-12
+        .panel.panel-default
+
+          .panel-heading
+            | Facility Table
+          // /.panel-heading
+
+          .panel-body
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered.table-hover
+                thead
+                  tr
+                    th Facility
+                    th Report Fault
+                    th Comments
+                tbody
+                  tr.odd.gradeX
+                    td classroom 1.1 (CR1.1)
+                    td 
+                      input(type="button", value="Report Fault", class="btn btn-warning btn-block", onclick="window.location.replace('dashboard')")
+                    td.center NA
+                  tr
+                    td Trident
+                    td Internet Explorer 4.0
+                    td Win 95+
+            // /.table-responsive
+          // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-6
+        .panel.panel-default
+          .panel-heading
+            | Kitchen Sink
+          // /.panel-heading
+          .panel-body
+            .table-responsive
+              table.table.table-striped.table-bordered.table-hover
+                thead
+                  tr
+                    th #
+                    th First Name
+                    th Last Name
+                    th Username
+                tbody
+                  tr
+                    td 1
+                    td Mark
+                    td Otto
+                    td @mdo
+                  tr
+                    td 2
+                    td Jacob
+                    td Thornton
+                    td @fat
+                  tr
+                    td 3
+                    td Larry
+                    td the Bird
+                    td @twitter
+            // /.table-responsive
+          // /.panel-body
+        // /.panel
+      // /.col-lg-6
+    // /.row
+  // /#page-wrapper
+

@@ -14,7 +14,7 @@ This is for timeline for public page
     width: 2px;
     background-color: #f1f1f1;
     left: 40px;
-    margin-left: -1.5px
+    margin-left: 0px
 }
 .timeline>li {
     margin-bottom: 50px;
@@ -39,13 +39,13 @@ This is for timeline for public page
 .timeline>li .timeline-panel:before {
     border-left-width: 0;
     border-right-width: 15px;
-    left: -15px;
+    left: 0px;
     right: auto
 }
 .timeline>li .timeline-panel:after {
     border-left-width: 0;
     border-right-width: 14px;
-    left: -14px;
+    left: 0px;
     right: auto
 }
 .timeline>li .timeline-image {
@@ -74,13 +74,13 @@ This is for timeline for public page
 .timeline>li.timeline-inverted>.timeline-panel:before {
     border-left-width: 0;
     border-right-width: 15px;
-    left: -15px;
+    left: 0px;
     right: auto
 }
 .timeline>li.timeline-inverted>.timeline-panel:after {
     border-left-width: 0;
     border-right-width: 14px;
-    left: -14px;
+    left: 0px;
     right: auto
 }
 .timeline>li:last-child {

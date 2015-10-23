@@ -1,0 +1,139 @@
+template(name="mainLayout")
+  +head
+  div.adminBody
+    +topbar
+    +container
+    +loginModal
+
+template(name="head")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(name="description", content="")
+    meta(name="author", content="")
+    title Sterling Training Hub Admin Page
+
+template(name="topbar")
+  #wrapper
+    // Navigation
+    nav.navbar.navbar-default.navbar-static-top(role="navigation", style="margin-bottom: 0")
+      .navbar-header
+        button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/dashboard") <span class="light">STERLING </span>HUB
+      // /.navbar-header
+      ul.nav.navbar-top-links.navbar-right
+        li.dropdown
+          a.dropdown-toggle(data-toggle="dropdown", href="#", style="color: #42dca3")
+            i.fa.fa-bell.fa-fw
+            i.fa.fa-caret-down
+          ul.dropdown-menu.dropdown-alerts
+            +notificationsElement(href="#" icon="fa fa-warning fa-fw" text="CR 1.3 is faulty" when="4 minutes ago")
+            +notificationsElement(href="#" icon="fa fa-tasks fa-fw" text="WHS G2 is starting in 30 mins" when="12 minutes ago")
+            +notificationsElement(href="#" icon="fa fa-warning fa-fw" text="SC05 is reported faulty" when="27 minutes ago")
+            +notificationsElement(href="#" icon="fa fa-tasks fa-fw" text="AAW G2 is starting in 30 mins" when="Yesterday")
+            +notificationsElement(href="#" icon="fa fa-upload fa-fw" text="SDAF G1 is rescheduled to Saturday 9:00am" when="Yesterday")
+            +notificationsElement(href="#" icon="fa fa-upload fa-fw" text="Trainer for DAC is unable to make it" when="9th October")
+            li
+              a.text-center(href="#")
+                strong See All Alerts
+                i.fa.fa-angle-right
+          // /.dropdown-alerts
+        // /.dropdown
+        li.dropdown
+          a.dropdown-toggle(data-toggle="dropdown", href="#", style="color: #42dca3")
+            | Welcome, Marc Sim
+            i.fa.fa-caret-down
+          ul.dropdown-menu.dropdown-user
+            li
+              a(href="profile")
+                i.fa.fa-user.fa-fw
+                | User Profile
+            li
+              a(href="#")
+                i.fa.fa-gear.fa-fw
+                | Settings
+            li.divider
+            li
+              a#sign-out(href="#")
+                i.fa.fa-sign-in.fa-fw
+                | Sign Out
+            li
+              a#login(href="#")
+                i.fa.fa-sign-in.fa-fw
+                | Login
+          // /.dropdown-user
+        // /.dropdown
+      // /.navbar-top-links
+
+template(name="emailDropdownElement")
+  li
+    a(href=href)
+      div
+        strong #{name}
+        span.pull-right.text-muted
+          em #{when}
+      div
+        | #{summary}
+  li.divider
+
+template(name="taskDropdownElement")
+  li
+    a(href=href)
+      div
+        p
+          strong #{task}
+          span.pull-right.text-muted #{percentComplete}% Complete
+        .progress.progress-striped.active
+          .progress-bar(class=progressBarType role="progressbar", aria-valuenow=percentComplete, aria-valuemin="0", aria-valuemax="100", style=style)
+            span.sr-only #{percentComplete}% Complete (#{type})
+  li.divider
+
+template(name="notificationsElement")
+  li
+    a(href=href)
+      div
+        i.fa.fa-fw(class=icon)
+        | #{text}
+        span.pull-right.text-muted.small #{when}
+  li.divider
+
+template(name="container")
+  +sidebar
+  +page
+
+template(name="sidebar")
+  .navbar-default.sidebar(role="navigation")
+    .sidebar-nav.navbar-collapse
+      ul#side-menu.nav
+        li.sidebar-search
+          .input-group.custom-search-form
+            input.form-control(type="text", placeholder="Search...")
+            span.input-group-btn
+              button.btn.btn-default(type="button")
+                i.fa.fa-search
+          // /input-group
+        each navElements
+          +navElement
+
+template(name="navElement")
+  li
+    a(href=path class=isActive)
+      if icon
+        i.fa.fa-fw(class=icon)
+      | #{label}
+      if children
+        span.fa.arrow
+    if children
+      ul.nav.nav-second-level
+        each children
+          +navElement
+
+template(name="page")
+  // Put page title and breadcrumbs here with `Router.routes[Session.get('active')]`
+  +yield
+

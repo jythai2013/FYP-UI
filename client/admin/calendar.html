@@ -1,0 +1,41 @@
+<template name="calendar">
+	 <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Calendar</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    {{>exampleModal}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="exampleModal">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Workplace Health and Safety</h4>
+                </div>
+                <div class="modal-body">
+                    <ul>
+						<li>Course: Workplace Health and Safety</li>
+						<li>Class: G2</li>
+						<li>Venue: CR 2.1</li>
+                        <li>Trainer: Benjamin Lim </li>
+						<li>Equipment: Steel Cutter SC02 </li>
+					</ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="document.location.href='../classHomepage'" data-dismiss="modal">Go to Class Page</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

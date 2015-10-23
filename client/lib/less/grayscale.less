@@ -1,7 +1,7 @@
 @import "variables.less";
 @import "mixins.less";
 
-body {
+div.grayscale {
     width: 100%;
     height: 100%;
     font-family: "Lora","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -9,9 +9,9 @@ body {
     background-color: black;
 }
 
-html {
-    width: 100%;
-    height: 100%;
+.row {
+    margin-right: 3%;
+    margin-left: 3%;
 }
 
 h1,
@@ -20,7 +20,6 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0 0 35px;
     text-transform: uppercase;
     font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
@@ -46,7 +45,7 @@ a {
     &:hover,
     &:focus {
         text-decoration: none;
-        color: darken(@primary,20%);
+        color: darken(#1d9b6c,20%);
     }
 }
 
@@ -54,7 +53,7 @@ a {
     font-weight: 400;
 }
 
-.navbar-custom {
+.grayscale-navbar-custom {
     margin-bottom: 0;
     border-bottom: 1px solid fade(white, 30%);
     text-transform: uppercase;
@@ -85,7 +84,7 @@ a {
                 -moz-transition: background .3s ease-in-out;
                 transition: background .3s ease-in-out;
                 &:hover {
-                    color: fade(white, 80%);
+                    color: fade(@primary, 80%);
                     outline: none;
                     background-color: transparent;
                 }
@@ -106,19 +105,52 @@ a {
             }
         }
     }
-    @media(min-width:768px) {
+    
+}
+
+// Navigation
+
+// --Topbar
+
+.grayscale-navbar {
+  background-color: @topbar-background;
+  border-bottom-color: darken(@topbar-background, 6.5%);
+}
+
+.grayscale-navbar-brand {
+  color: darken(#ffffff, 6.5%) !important;
+  &:hover {
+    color: #42dca3 !important;
+  }
+}
+
+.grayscale-navbar {
+  border-bottom: 1px solid darken(@topbar-background, 6.5%);
+  a {
+    &.active {
+      background-color: darken(@primary, 13%) !important;
+    }
+    &:hover {
+      color: darken(@primary, 6.5%) !important;
+    }
+  }
+}
+
+@media(min-width:768px) {
+    .grayscale-navbar-custom {
         padding: 20px 0;
-        border-bottom: none;
+        border-bottom: 0;
         letter-spacing: 1px;
-        background: transparent;
+        background: 0 0;
         -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
         -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
         transition: background .5s ease-in-out,padding .5s ease-in-out;
-        &.top-nav-collapse {
-            padding: 0;
-            background: black;
-            border-bottom: 1px solid fade(white, 30%);
-        }
+    }
+
+    .grayscale-navbar-custom.grayscale-top-nav-collapse {
+        padding: 0;
+        border-bottom: 1px solid rgba(255,255,255,.3);
+        background: #000;
     }
 }
 
@@ -147,7 +179,6 @@ a {
     }
     @media(min-width:768px) {
         height: 100%;
-        padding: 0;
         .intro-body {
             .brand-heading {
                 font-size: 100px;
@@ -159,15 +190,15 @@ a {
     }
 }
 
-.btn-circle {
+.grayscale-btn-circle {
     width: 70px;
     height: 70px;
     margin-top: 15px;
     padding: 7px 16px;
-    border: 2px solid white;
+    border: 2px solid @primary;
     border-radius: 100% !important;
     font-size: 40px;
-    color: white;
+    color: @primary;
     background: transparent;
     -webkit-transition: background .3s ease-in-out;
     -moz-transition: background .3s ease-in-out;
@@ -240,8 +271,7 @@ a {
     width: 100%;
     padding: 50px 0;
     color: white;
-    background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
-    background-color: black;
+    background-color: @secondary;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -334,8 +364,4 @@ img::selection {
 
 img::-moz-selection {
     background: transparent;
-}
-
-body {
-    webkit-tap-highlight-color: fade(white, 20%);
 }

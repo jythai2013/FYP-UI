@@ -1,0 +1,104 @@
+<template name="searchFacility">
+	<div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+		      <!-- Might use javascript over here cause the courses shouldnt be the same -->
+		      <!-- back to homepage? -->
+		      <button type="button" class="btn pull-left btn-success" href="index.html" style="margin-top:50px">Back</button>
+		      <button type="submit" class="btn pull-right btn-primary" style="margin-top:50px">Search</button>
+		    </div>
+		    <div class="panel panel-default">
+		    	<div id="reporting" class="tab-pane fade">
+			        <div class="row">
+			          <div id="home" class="col-xs-12 col-sm-6">
+			            <div class="box">
+			              {{> facilityTable}}
+			            </div>
+			          </div>
+			        </div>
+			      </div>
+		    </div>
+		</div>
+	</div>
+
+</template>
+
+<template name = "facilityTable">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Facility</th>
+            <th>Report Fault</th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="radio">
+                <label>Classroom 1.1 (CR1.1)</label>
+              </div>
+            </td>
+            <td>
+              <a href="reportfacilityfault" role="button" class="btn btn-warning btn-block"> Report Fault</a>
+            </td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="radio">
+                <label>Classroom 1.2 (CR1.2)</label>
+              </div>
+            </td>
+            <td>
+              <a href="reportfacilityfault" role="button" class="btn btn-warning btn-block"> Report Fault</a>
+            </td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="radio">
+                <label>Classroom 2.1 (CR2.1)</label>
+              </div>
+            </td>
+            <td>
+              <a href="/reportfacilityfault" role="button" class="btn btn-warning btn-block"> Report Fault</a>
+            </td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="radio">
+                <label>Classroom 2.2 (CR2.2)</label>
+              </div>
+            </td>
+            <td>
+              <a href="/reportfacilityfault" role="button" class="btn btn-warning btn-block"> Report Fault</a>
+            </td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="radio">
+                <label>Classroom 2.3 (CR2.3)</label>
+              </div>
+            </td>
+            <td>
+              <a href="/reportfacilityfault" role="button" class="btn btn-warning btn-block"> Report Fault</a>
+            </td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="radio">
+                <label>Classroom 3.1 (CR3.1)</label>
+              </div>
+            </td>
+            <td>
+              Faulty
+            </td>
+            <td>Lights are unable to be turned on.</td>
+          </tr>
+        </tbody>
+      </table>
+</template>
