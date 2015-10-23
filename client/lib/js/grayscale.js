@@ -11,7 +11,6 @@ $(window).scroll(function() {
     } else {
         $(".navbar-fixed-top").removeClass("grayscale-top-nav-collapse");
     }
-
 });
 
 // jQuery for page scrolling feature - requires jQuery Easing plugin
