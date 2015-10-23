@@ -13,7 +13,6 @@ coffeescript
 fortawesome:fontawesome
 ian:accounts-ui-bootstrap-3
 
-insecure
 iron:router
 jquery
 less
@@ -30,3 +29,5 @@ standard-minifiers
 tracker
 twbs:bootstrap
 
+percolate:synced-cron
+email

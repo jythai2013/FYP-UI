@@ -38,4 +38,4 @@
 			};
 			Accounts.createUser(options);
 		}
-	});
+	}); //
