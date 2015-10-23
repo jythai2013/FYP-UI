@@ -1,0 +1,66 @@
+template(name="courseList")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Course List
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Course Details
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                tbody
+                  tr
+                    th Code
+                    th Name
+                    th Start Date
+                    th Venue
+                    th Details
+                  tr
+                    td 
+                      a(href="/courseMgmt/course") IS101
+                    td Workplace Health & Safety
+                    td 01/01/2015
+                    td C.R. 1.2
+                    td
+                      button.btn.btn-primary.btn-sn(data-toggle="modal", data-target="#myModal")
+                        | More Details
+            // /.table-responsive
+            // Button trigger modal
+            // Modal
+            #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+                    h4#myModalLabel.modal-title Edit Course Detail
+                  .modal-body
+                    form(name="", role="form", action="facilityResult", method="post")
+                    .table-responsive
+                      table#dataTables-example.table.table-bordered
+                        tbody
+                          tr
+                            th(colspan="2") Course Code, Course Name   
+                          tr
+                            td Description:
+                            td 
+                              Some Description here
+                          tr
+                            td Fees
+                            td $120
+                    // /.table-responsive
+                  .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+                // /.modal-content
+              // /.modal-dialog
+            // /.modal
+            // /.row
+          // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+  // /#page-wrapper
+

@@ -1,0 +1,98 @@
+template(name="class")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header IS101 G1
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Course Details
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                tbody
+                  tr
+                    th Session
+                    th Course Materials
+                  tr
+                    th Session 01
+                    td $Filename
+            // /.table-responsive
+            // Button trigger modal
+            // Modal
+            #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+                    h4#myModalLabel.modal-title Edit Course Detail
+                  .modal-body
+                    form(name="", role="form", action="facilityResult", method="post")
+                    .table-responsive
+                      table#dataTables-example.table.table-bordered
+                        tbody
+                          tr
+                            th Course Code
+                            td 
+                              .form-group
+                                input.form-control(type="text", name="cCode", value="is101")
+                          tr
+                            th Course Name
+                            td 
+                              .form-group
+                                input.form-control(type="text", name="cName", value="is101")
+                          tr
+                            th Description
+                            td 
+                              .form-group
+                                textarea.form-control(name="cDesc")
+                          tr
+                            th No. of Session(s)
+                            td
+                              .form-group
+                                select.form-control(name="cSession")
+                                  option 1
+                                  option 2
+                                  option 3
+                                  option 4
+                                  option 5
+                                  option 6
+                                  option 7
+                          tr
+                            th Fees
+                            td
+                              .form-group.input-group
+                                span.input-group-addon $
+                                input.form-control(type="text")
+                                span.input-group-addon .00
+                    // /.table-responsive
+                  .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+                    button.btn.btn-primary(type="button") Save changes
+                // /.modal-content
+              // /.modal-dialog
+            // /.modal
+            h4 Class Management
+            .table-responsive
+              table#dataTables-example.table.table-bordered.table-hover
+                tbody
+                  tr
+                    th Trainer
+                    td CHIA wei ting, Poon lee wang
+                    td 
+                      input(type="button", value="Update")
+                  tr 
+                    th Class List
+                    td G1, G2, G3
+                    td 
+                      input(type="button", value="Update")
+            // /.table-responsive
+            // /.row
+          // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+  // /#page-wrapper
+
