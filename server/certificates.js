@@ -29,9 +29,10 @@
         // return false; //TODO: output error message in client
       // }
       Certificates.insert({
-          course: bookingDateI,
-          session: sessionNoI,
-          question: questionI,
-          answer: answerI
+        course: bookingDateI,
+        session: sessionNoI,
+        question: questionI,
+        answer: answerI
       });
-  });
+    }
+});

@@ -52,4 +52,5 @@
           attendance: attendanceI,
           status: statusI
       });
-  });
+  }
+ }); 
