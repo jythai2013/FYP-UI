@@ -1,4 +1,12 @@
 template(name="courseList")
+  style.
+    .panel-body{
+      padding: 3%;
+    }
+    .col-lg-12{
+      padding-left: 2%;
+      padding-right: 2%;
+    }
   #page-wrapper
     .row
       .col-lg-12
@@ -10,6 +18,11 @@ template(name="courseList")
         .panel.panel-default
           .panel-body
             h4 Course Details
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addCourse" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus
+                        | Course
+            +addCourseForm
+
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
                 tbody
@@ -26,37 +39,11 @@ template(name="courseList")
                     td 01/01/2015
                     td C.R. 1.2
                     td
-                      button.btn.btn-primary.btn-sn(data-toggle="modal", data-target="#myModal")
+                      button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#editCourse")
                         | More Details
             // /.table-responsive
-            // Button trigger modal
-            // Modal
-            #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
-              .modal-dialog
-                .modal-content
-                  .modal-header
-                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-                    h4#myModalLabel.modal-title Edit Course Detail
-                  .modal-body
-                    form(name="", role="form", action="facilityResult", method="post")
-                    .table-responsive
-                      table#dataTables-example.table.table-bordered
-                        tbody
-                          tr
-                            th(colspan="2") Course Code, Course Name   
-                          tr
-                            td Description:
-                            td 
-                              Some Description here
-                          tr
-                            td Fees
-                            td $120
-                    // /.table-responsive
-                  .modal-footer
-                    button.btn.btn-default(type="button", data-dismiss="modal") Close
-                // /.modal-content
-              // /.modal-dialog
-            // /.modal
+            +editCourseForm
+
             // /.row
           // /.panel-body
         // /.panel
@@ -64,3 +51,76 @@ template(name="courseList")
     // /.row
   // /#page-wrapper
 
+
+
+template(name="addCourseForm")
+  // Button trigger modal
+  // Modal
+  #addCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Course
+        .modal-body
+          form(name="", role="form", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table
+              tbody
+                tr
+                  th Course Code
+                  td
+                    .form-group
+                      input.form-control(type="text", name="cNewCode", placeholder="eg. IS101")
+                tr
+                  th Course Name  
+                  td 
+                    .form-group
+                      input.form-control(type="text", name="cNewName") 
+                tr
+                  th Description:
+                  td 
+                    .form-group
+                      input.form-control(type="text", name="cNewDesc")
+                tr
+                  th Fees
+                  td 
+                    .form-group.input-group
+                      span.input-group-addon $
+                      input.form-control(type="text", name="cNewFee")
+                      span.input-group-addon .00
+          // /.table-responsive
+        .modal-footer
+          button.btn.btn-save(type="button") Save changes
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+
+template(name="editCourseForm")
+  #editCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Edit Course Detail
+        .modal-body
+          form(name="", role="form", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table
+              tbody
+                tr
+                  th(colspan="2") Course Code, Course Name   
+                tr
+                  td Description:
+                  td 
+                    Some Description here
+                tr
+                  td Fees
+                  td $120
+          // /.table-responsive
+        .modal-footer
+          a(href="course", class="button btn admin-btn") Enter Course Page
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal

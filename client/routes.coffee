@@ -2,13 +2,16 @@ navRoutes = [
   new NavRoute('dashboard', 'fa-dashboard')
   new NavRoute('admin', '', {label: "Accounts Admin ???"})
   new NavRoute('calendar', '', {label: "Calendar ???"})
-  new NavRoute('profile', '', {isMainNav: false})
+
+
+  new NavRoute('profile', '', {isMainNav: false, label: "redirect", template: 'profile'})
+  new NavRoute('facilityMgmt', 'fa-table', {label: "Facility Management"})
 
   new NavRoute('courseMgmt', 'fa-wrench', {label: "Maintain Course"})
   new NavRoute('courseList', '', {parentName: 'courseMgmt', label: "Course List"})
   new NavRoute('course', '', {parentName: 'courseMgmt', label: "Course"})
   new NavRoute('classHomepage', '', {parentName: 'courseMgmt', label: "Class Homepage"})
-  new NavRoute('facilityMgmt', 'fa-table', {parentName: 'courseMgmt', label: "Facility Management"})
+  new NavRoute('class', '', {parentName: 'courseMgmt', label: "Class"})
 
   new NavRoute('forms', 'fa-edit')
   new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})
@@ -25,7 +28,6 @@ navRoutes = [
 
 
   new NavRoute('website', '', {isMainNav: false, template: 'website', layoutTemplate: 'layoutWebsite'})
-
 ]
 
 navRouteList = new NavRouteList(navRoutes)

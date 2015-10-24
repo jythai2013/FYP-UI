@@ -9,85 +9,71 @@ template(name="class")
       .col-lg-12
         .panel.panel-default
           .panel-body
-            h4 Course Details
+            h4 Course Details: IS101 G1
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
                 tbody
                   tr
-                    th Session
-                    th Course Materials
+                    th Course
+                    td Workplace Health & Safety
                   tr
-                    th Session 01
-                    td $Filename
+                    th Venue
+                    td Classroom 2.1
+                  tr
+                    th No. of Sessions(s)
+                    td 30
+                  tr
+                    th Schedule
+                    td Monday and Friday, 10am - 5pm
+                  tr
+                    th Start Date
+                    td 02 September 2015
+                  tr
+                    th End Date
+                    td 27 November 2015
             // /.table-responsive
-            // Button trigger modal
-            // Modal
-            #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
-              .modal-dialog
-                .modal-content
-                  .modal-header
-                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-                    h4#myModalLabel.modal-title Edit Course Detail
-                  .modal-body
-                    form(name="", role="form", action="facilityResult", method="post")
-                    .table-responsive
-                      table#dataTables-example.table.table-bordered
-                        tbody
-                          tr
-                            th Course Code
-                            td 
-                              .form-group
-                                input.form-control(type="text", name="cCode", value="is101")
-                          tr
-                            th Course Name
-                            td 
-                              .form-group
-                                input.form-control(type="text", name="cName", value="is101")
-                          tr
-                            th Description
-                            td 
-                              .form-group
-                                textarea.form-control(name="cDesc")
-                          tr
-                            th No. of Session(s)
-                            td
-                              .form-group
-                                select.form-control(name="cSession")
-                                  option 1
-                                  option 2
-                                  option 3
-                                  option 4
-                                  option 5
-                                  option 6
-                                  option 7
-                          tr
-                            th Fees
-                            td
-                              .form-group.input-group
-                                span.input-group-addon $
-                                input.form-control(type="text")
-                                span.input-group-addon .00
-                    // /.table-responsive
-                  .modal-footer
-                    button.btn.btn-default(type="button", data-dismiss="modal") Close
-                    button.btn.btn-primary(type="button") Save changes
-                // /.modal-content
-              // /.modal-dialog
-            // /.modal
+
+            h4 Notification Panel
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                tbody
+                  tr
+                    th Title
+                    th Details
+                    th Date
+                  tr
+                    td Deadline for Assignment 3
+                    td Class, do take note Assignmmment 3 is due next Monday
+                    td 10 October 2015
+                  tr
+                    td Lecture Notes 13
+                    td Lecture notes for session 13 has been uploaded
+                    td 30 September 2015
+                  tr
+                    th Rescheduling of this week Wednesday's Class
+                    td This Wednesday's class is rescheduled to Saturday (12/09/2015)
+                    td 04 September 2015
+            // /.table-responsive
+            
             h4 Class Management
             .table-responsive
               table#dataTables-example.table.table-bordered.table-hover
                 tbody
                   tr
                     th Trainer
-                    td CHIA wei ting, Poon lee wang
-                    td 
-                      input(type="button", value="Update")
+                    td(colspan="2") CHIA wei ting
                   tr 
-                    th Class List
-                    td G1, G2, G3
+                    th Student 1
+                    td  
+                      input(type="button", value="Assessment")
                     td 
-                      input(type="button", value="Update")
+                      input(type="button", value="Drop Student")
+                   tr 
+                    th Student 2
+                    td  
+                      input(type="button", value="Assessment")
+                    td 
+                      input(type="button", value="Drop Student")
             // /.table-responsive
             // /.row
           // /.panel-body
