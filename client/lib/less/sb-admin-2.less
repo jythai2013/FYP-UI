@@ -225,10 +225,40 @@ div.adminBody{
 }
 
 // Buttons
+.btn-save {
+    color: white;
+    background-color: @secondary;
+    border-radius: 1.5rem;
+    border-color: @primary;
+    &:hover {
+        border: 1px solid @primary;
+        outline: none;
+        color: black;
+        background-color: @primary;
+    }
+    &:focus {
+      color: white;
+      outline: none;
+    }
+}
 
+.admin-btn {
+    color: @secondary;
+    background-color: @lighterSecondary;
+    border-radius: 1.5rem;
+    &:hover {
+        border: 1px solid @primary;
+        outline: none;
+        color: black;
+        background-color: @primary;
+    }
+    &:focus {
+      outline: none;
+    }
+}
 .btn-outline {
   color: inherit;
-  background-color: transparent;
+  background-color: @sidebar-background;
   transition: all .5s;
 }
 
@@ -465,7 +495,6 @@ table.dataTable thead .sorting:after {
 
 // Class Info
 li.active {
-  color: #333;
   a {
     background-color: @primary;
     &hover,
@@ -475,6 +504,34 @@ li.active {
   }
   &hover,
   &focus {
+    color: #333;
     background-color: @secondary;
+  }
+}
+
+.adminFormDark {
+  color: #fff;
+  .modal-content {
+    background-color: @secondary;
+  }
+  .table {
+    margin-bottom: 0px;
+  }
+  h4 {
+    color: @primary;
+  }
+  tbody,
+  tr,
+  td{
+    border-style: hidden;
+  }
+  td,
+  th {
+    white-space: nowrap;
+    color: #fff;
+  }
+  button.close {
+    color: @primary;
+    opacity: .8;
   }
 }

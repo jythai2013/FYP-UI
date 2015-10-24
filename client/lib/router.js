@@ -1,21 +1,3 @@
-Router.configure({
-    layoutTemplate: 'layout'
-});
-
-/*
-Router.map(function(){
-	this.route('publicIndex', {
-		path: '/index.html',
-		template: 'homepage',
-	  	layoutTemplate: 'layout',
-	  	yieldTemplates: {
-	    	'navigation': {to: 'header'},
-	    	'carousel': {to: 'asideTop'},
-	    	'contactUs': {to: 'asideBottom'}	    
-	    }
-	});
-*/
-
 Router.map(function() {
     this.route('Sterling Traing Hub', {
         path:'/index.html',

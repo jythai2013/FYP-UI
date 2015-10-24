@@ -3,6 +3,10 @@ template(name="course")
     .breakH4 {
       margin-top: 40px;
     }
+  script(type='text/javascript').
+      $('#myModal').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
   #page-wrapper
     .row
       .col-lg-12
@@ -11,7 +15,7 @@ template(name="course")
     // /.row
     .row
       .col-lg-12
-        .panel.panel-default
+        .panel.panel-default(data-dismiss="modal")
           .panel-body
             h4 Course Details
             .table-responsive
@@ -29,18 +33,22 @@ template(name="course")
                   tr 
                     th No. of Session(s)
                     td 10
+                  tr 
+                    th Capacity
+                    td 10(min), 30(max)
+                  tr
                   tr
                     th Fees
                     td $120
                   tr
                     td
                     td 
-                      button.btn.btn-primary.btn-sn(data-toggle="modal", data-target="#myModal")
+                      button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#myModal")
                         | Edit Details
             // /.table-responsive
             // Button trigger modal
             // Modal
-            #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+            #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
               .modal-dialog
                 .modal-content
                   .modal-header
@@ -49,7 +57,7 @@ template(name="course")
                   .modal-body
                     form(name="", role="form", action="facilityResult", method="post")
                     .table-responsive
-                      table#dataTables-example.table.table-bordered
+                      table#dataTables-example.table
                         tbody
                           tr
                             th Course Code
@@ -87,8 +95,8 @@ template(name="course")
                                 span.input-group-addon .00
                     // /.table-responsive
                   .modal-footer
-                    button.btn.btn-default(type="button", data-dismiss="modal") Close
-                    button.btn.btn-primary(type="button") Save changes
+                    //button.btn.btn-default(type="button", data-dismiss="modal") Close
+                    button.btn.btn-save(type="button") Save changes
                 // /.modal-content
               // /.modal-dialog
             // /.modal
@@ -104,7 +112,9 @@ template(name="course")
                       input(type="button", value="Update")
                   tr 
                     th Class List
-                    td G1, G2, G3
+                    td
+                      a(href="class") G1
+                      |, G2, G3
                     td(width="50px")
                       input(type="button", value="Update")
             // /.table-responsive
@@ -116,7 +126,7 @@ template(name="course")
                   tr
                     th Session
                     th Topic
-                    th(colspan="3") Course Materials
+                    th(colspan="2") Course Materials
                   tr 
                     td 01
                     td Theory 101
@@ -129,6 +139,32 @@ template(name="course")
                     td Files here
                     td(width="50px") 
                       input(type="button", value="Remove")
+                  tr
+                    td(colspan="4")
+                      button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
+                        | Upload Course Material(s)
+            // /.table-responsive
+            // Button trigger modal
+            // Modal
+            #myModal2.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+                    h4#myModalLabel.modal-title Upload Files
+                  .modal-body
+                    | Select Course Material For Session:
+                    .form-group
+                      select.form-control(name="cSession")
+                        option Session 01
+                        option Session 02
+                        option Session 03                          
+                    input.myFileInput(type="file", name="courseMaterials")
+                  .modal-footer
+                    button.btn.admin-btn(type="button") Upload
+                // /.modal-content
+              // /.modal-dialog
+            // /.modal
             // /.table-responsive
             // /.row
           // /.panel-body
