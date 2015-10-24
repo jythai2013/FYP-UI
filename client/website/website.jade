@@ -1,0 +1,15 @@
+template(name="layoutWebsite")
+  +head
+  body(data-spy="scroll" data-target=".navbar-fixed-top" data-offset="50")
+    +intro
+
+
+template(name="intro")
+  .container
+    .row
+      .login-panel.panel.panel-default
+          .panel-heading
+            a.close(href="/") &#215;
+            h3.panel-title Please Sign Up
+          .panel-body
+            

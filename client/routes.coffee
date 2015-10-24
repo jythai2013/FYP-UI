@@ -1,15 +1,20 @@
 navRoutes = [
   new NavRoute('dashboard', 'fa-dashboard')
-  new NavRoute('facilityMgmt', 'fa-table', {label: "Facility Management"})
   new NavRoute('admin', '', {label: "Accounts Admin ???"})
   new NavRoute('calendar', '', {label: "Calendar ???"})
-  new NavRoute('classHomepage', '', {label: "Class Homepage"})
   new NavRoute('profile', '', {isMainNav: false})
+
+  new NavRoute('courseMgmt', 'fa-wrench', {label: "Maintain Course"})
+  new NavRoute('courseList', '', {parentName: 'courseMgmt', label: "Course List"})
+  new NavRoute('course', '', {parentName: 'courseMgmt', label: "Course"})
+  new NavRoute('classHomepage', '', {parentName: 'courseMgmt', label: "Class Homepage"})
+  new NavRoute('facilityMgmt', 'fa-table', {parentName: 'courseMgmt', label: "Facility Management"})
 
   new NavRoute('forms', 'fa-edit')
   new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})
   new NavRoute('buttons', '', {parentName: 'ui-elements'})
   new NavRoute('grid', '', {parentName: 'ui-elements'})
+  new NavRoute('todo', '', {parentName: 'ui-elements', label: "ToDo List"})
   new NavRoute('notifications', '', {parentName: 'ui-elements'})
   new NavRoute('panels-and-wells', '', {parentName: 'ui-elements', label: 'Panels and Wells'})
   new NavRoute('pages', 'fa-files-o', {label: "Sample Pages"})
