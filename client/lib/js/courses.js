@@ -1,6 +1,3 @@
-
-
-
 Template.addCourseTemplate.events({
 	"submit #courseAddForm" : function createCourseEventHandler(e) {
 		e.preventDefault();
@@ -17,8 +14,9 @@ Template.addCourseTemplate.events({
 		// var cMin = document.getElementById("courseAddMin").value;
 		// var cMax = document.getElementById("courseAddMax").value;
 		var cDescription = document.getElementById("courseAddDescription").value;
+		var cTrainer = document.getElementById("courseAddTrainer").value;
 
-		Meteor.call("createCourse", cName, cCode, cFee, cDescription);
+		Meteor.call("createCourse", cName, cCode, cFee, cDescription, cTrainer);
 	}
 });
 
@@ -49,6 +47,7 @@ Template.course.events({
 			// "<b>min:</b> <input type=\"text\" value=\"" + this.min + "\" id=\"courseEditMin\"><br />" +
 			// "<b>max:</b> <input type=\"text\" value=\"" + this.max + "\" id=\"courseEditMax\"><br />" +
 			"<br />" +
+			"<b>fee:</b> <input type=\"text\" value=\"" + this.Trainer + "\" id=\"courseEditTrainer\"><br />" +
 			"<span class=\"text\">description: <textarea  id=\"courseEditDescription\">" + this.description + "</textarea></span><br />" +
 			"<button class=\"editCourseSave\" >Save</button>" +
 			"</form>";
@@ -70,8 +69,9 @@ Template.course.events({
 		fee = document.getElementById("courseEditFee").value,
 		// min = document.getElementById("courseEditMin").value,
 		// max = document.getElementById("courseEditMax").value,
-		description = document.getElementById("courseEditDescription").value
-			Meteor.call("updateCourse", this._id, name, courseCode, fee, description);
+		description = document.getElementById("courseEditDescription").value,
+		trainer = document.getElementById("courseEditTrainer").value
+		Meteor.call("updateCourse", this._id, name, courseCode, fee, description,trainer);
 
 		// replace back with original HTML
 		var originalHTML = "" +
@@ -81,6 +81,7 @@ Template.course.events({
 			// "<b>min:</b> " + this.min + "<br />" +
 			// "<b>max:</b> " + this.max + "<br />" +
 			"<br />" +
+			"<b>fee:</b> " + this.trainer + "<br />" +
 			"<span class=\"text\">description: " + this.description + "</span><br />" +
 			"<button class=\"editCourse\">edit</button>" +
 			"<button class=\"deleteCourse\">delete</button>";
