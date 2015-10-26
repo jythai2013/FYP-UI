@@ -1,7 +1,7 @@
 
 Meteor.methods({ 
 	
-	'editFacilities': function editCourse(_id, capacityI, facTypeI, facI, cDescriptionI){
+	'editFacility': function editFacility(_id, capacityI, facTypeI, facI, cDescriptionI){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
@@ -17,14 +17,14 @@ Meteor.methods({
 			});
 		},
 		
-		'deleteFacility': function deleteCourse(_id){
+		'deleteFacility': function deleteFacility(_id){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
 			Facilities.remove(_id);
 		},
 		
-		'createFacility': function createCourse(input_capacity_maxI, facTypeI, facI, cDescriptionI){
+		'createFacility': function createFacility(input_capacity_maxI, facTypeI, facI, cDescriptionI){
 			// debugger;
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
