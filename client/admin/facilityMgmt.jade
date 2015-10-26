@@ -1,4 +1,4 @@
-template(name="facilityMgmt")
+template(name="facilityBooking")
   #page-wrapper
     .row
       .col-lg-12
@@ -9,7 +9,7 @@ template(name="facilityMgmt")
       .col-lg-12
         .panel.panel-default
           .panel-heading
-            | Enter Class Details
+            | Make a Facility Booking
           .panel-body
             .row
               .col-lg-6
@@ -83,15 +83,20 @@ template(name="facilityMgmt")
     // /.row
 
       {{>searchFacility}}
-    
+
+template(name="facilityMgmt")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Facility Management
+      // /.col-lg-12
+    // /.row
     .row
       .col-lg-12
         .panel.panel-default
-
           .panel-heading
-            | Facility Table
+            | Facilities Log
           // /.panel-heading
-
           .panel-body
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered.table-hover

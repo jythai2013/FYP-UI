@@ -2,22 +2,25 @@ navRoutes = [
   new NavRoute('dashboard', 'fa-dashboard')
   new NavRoute('admin', '', {label: "Accounts Admin ???"})
   new NavRoute('calendar', '', {label: "Calendar ???"})
-  new NavRoute('facilityMgmt', 'fa-table', {label: "Facility Management"})
-  new NavRoute('courseMgmt', 'fa-wrench', {label: "Maintain Course"})
-  new NavRoute('courseList', '', {parentName: 'courseMgmt', label: "Course List"})
-  new NavRoute('course', '', {parentName: 'courseMgmt', label: "Course"})
-  new NavRoute('classHomepage', '', {parentName: 'courseMgmt', label: "Class Homepage"})
-  new NavRoute('class', '', {parentName: 'courseMgmt', label: "Class"})
+
+  # Facility
+  new NavRoute('FacilityModule', 'fa-table', {label: "Facility Management"})
+  new NavRoute('facilityMgmt', 'fa-wrench', {parentName: 'FacilityModule', label: "View Facilities"})
+  new NavRoute('facilityBooking', 'fa-wrench', {parentName: 'FacilityModule', label: "Book Facilities"})
+
+  new NavRoute('CourseModule', 'fa-table', {label: "Course Management"})
+  new NavRoute('courseList', '', {parentName: 'CourseModule', label: "Course List"})
+  new NavRoute('course', '', {parentName: 'CourseModule', label: "Course"})
+  new NavRoute('classHomepage', '', {parentName: 'CourseModule', label: "Class Homepage"})
+  new NavRoute('class', '', {parentName: 'CourseModule', label: "Class"})
 
   new NavRoute('forms', 'fa-edit')
   new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})
-  new NavRoute('buttons', '', {parentName: 'ui-elements'})
   new NavRoute('grid', '', {parentName: 'ui-elements'})
-  new NavRoute('notifications', '', {parentName: 'ui-elements'})
   new NavRoute('panels-and-wells', '', {parentName: 'ui-elements', label: 'Panels and Wells'})
   new NavRoute('pages', 'fa-files-o', {label: "Sample Pages"})
   new NavRoute('blank', '', {parentName: 'pages', label: "Blank Page"})
-  new NavRoute('signUp', '', {parentName: 'pages', label: "Sign Up", layoutTemplate: 'loginLayout'})
+  new NavRoute('loginModal', '', {parentName: 'pages', label: "Sign In Modal", layoutTemplate: 'loginLayout'})
 
   new NavRoute('', '', {isMainNav: false, label: "redirect", template: 'dashboard'})
 ]

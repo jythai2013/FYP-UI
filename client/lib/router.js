@@ -8,6 +8,12 @@ Router.map(function() {
 	    }
     });
 
+    this.route('loginPage', {
+        path:'/login',
+        template: 'loginPage',
+        layoutTemplate: "loginLayout"
+    });
+
     this.route('userProfile', {
         path:'/profile',
         template: 'profile',

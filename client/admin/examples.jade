@@ -1,0 +1,532 @@
+template(name="grid")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Grid
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h3 Grid options
+            p
+              | See how aspects of the Bootstrap grid system work across multiple devices with a handy table.
+            .table-responsive
+              table.table.table-bordered.table-striped
+                thead
+                  tr
+                    th
+                    th
+                      | Extra small devices
+                      small Phones (&#60;768px)
+                    th
+                      | Small devices
+                      small Tablets (&#8805;768px)
+                    th
+                      | Medium devices
+                      small Desktops (&#8805;992px)
+                    th
+                      | Large devices
+                      small Desktops (&#8805;1200px)
+                tbody
+                  tr
+                    th Grid behavior
+                    td Horizontal at all times
+                    td(colspan="3") Collapsed to start, horizontal above breakpoints
+                  tr
+                    th Max container width
+                    td None (auto)
+                    td 750px
+                    td 970px
+                    td 1170px
+                  tr
+                    th Class prefix
+                    td
+                      code .col-xs-
+                    td
+                      code .col-sm-
+                    td
+                      code .col-md-
+                    td
+                      code .col-lg-
+                  tr
+                    th # of columns
+                    td(colspan="4") 12
+                  tr
+                    th Max column width
+                    td.text-muted Auto
+                    td 60px
+                    td 78px
+                    td 95px
+                  tr
+                    th Gutter width
+                    td(colspan="4") 30px (15px on each side of a column)
+                  tr
+                    th Nestable
+                    td(colspan="4") Yes
+                  tr
+                    th Offsets
+                    td(colspan="4") Yes
+                  tr
+                    th Column ordering
+                    td(colspan="4") Yes
+            p
+              | Grid classes apply to devices with screen widths greater than or equal to the breakpoint sizes, and override grid classes targeted at smaller devices. Therefore, applying any
+              code .col-md-
+              | class to an element will not only affect its styling on medium devices but also on large devices if a
+              code .col-lg-
+              | class is not present.
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h3 Example: Stacked-to-horizontal
+            p
+              | Using a single set of
+              code .col-md-*
+              | grid classes, you can create a default grid system that starts out stacked on mobile devices and tablet devices (the extra small to small range) before becoming horizontal on desktop (medium) devices. Place grid columns in any
+              code .row
+              | .
+            .row.show-grid
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+              .col-md-1 .col-md-1
+            .row.show-grid
+              .col-md-8 .col-md-8
+              .col-md-4 .col-md-4
+            .row.show-grid
+              .col-md-4 .col-md-4
+              .col-md-4 .col-md-4
+              .col-md-4 .col-md-4
+            .row.show-grid
+              .col-md-6 .col-md-6
+              .col-md-6 .col-md-6
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h3 Example: Mobile and desktop
+            p
+              | Don"t want your columns to simply stack in smaller devices? Use the extra small and medium device grid classes by adding
+              code .col-xs-*
+              code .col-md-*
+              | to your columns. See the example below for a better idea of how it all works.
+            .row.show-grid
+              .col-xs-12.col-md-8 .col-xs-12 .col-md-8
+              .col-xs-6.col-md-4 .col-xs-6 .col-md-4
+            .row.show-grid
+              .col-xs-6.col-md-4 .col-xs-6 .col-md-4
+              .col-xs-6.col-md-4 .col-xs-6 .col-md-4
+              .col-xs-6.col-md-4 .col-xs-6 .col-md-4
+            .row.show-grid
+              .col-xs-6 .col-xs-6
+              .col-xs-6 .col-xs-6
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h3 Example: Mobile, tablet, desktops
+            p
+              | Build on the previous example by creating even more dynamic and powerful layouts with tablet
+              code .col-sm-*
+              | classes.
+            .row.show-grid
+              .col-xs-12.col-sm-6.col-md-8 .col-xs-12 .col-sm-6 .col-md-8
+              .col-xs-6.col-md-4 .col-xs-6 .col-md-4
+            .row.show-grid
+              .col-xs-6.col-sm-4 .col-xs-6 .col-sm-4
+              .col-xs-6.col-sm-4 .col-xs-6 .col-sm-4
+              // Optional: clear the XS cols if their content doesn't match in height
+              .clearfix.visible-xs
+              .col-xs-6.col-sm-4 .col-xs-6 .col-sm-4
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h3#grid-responsive-resets Responsive column resets
+            p
+              | With the four tiers of grids available you"re bound to run into issues where, at certain breakpoints, your columns don"t clear quite right as one is taller than the other. To fix that, use a combination of a
+              code .clearfix
+              | and our
+              a(href="#responsive-utilities") responsive utility classes
+              | .
+            .row.show-grid
+              .col-xs-6.col-sm-3
+                | .col-xs-6 .col-sm-3
+                br
+                | Resize your viewport or check it out on your phone for an example.
+              .col-xs-6.col-sm-3 .col-xs-6 .col-sm-3
+              // Add the extra clearfix for only the required viewport
+              .clearfix.visible-xs
+              .col-xs-6.col-sm-3 .col-xs-6 .col-sm-3
+              .col-xs-6.col-sm-3 .col-xs-6 .col-sm-3
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h3#grid-offsetting Offsetting columns
+            p
+              | Move columns to the right using
+              code .col-md-offset-*
+              | classes. These classes increase the left margin of a column by
+              code *
+              | columns. For example,
+              code .col-md-offset-4
+              | moves
+              code .col-md-4
+              | over four columns.
+            .row.show-grid
+              .col-md-4 .col-md-4
+              .col-md-4.col-md-offset-4 .col-md-4 .col-md-offset-4
+            .row.show-grid
+              .col-md-3.col-md-offset-3 .col-md-3 .col-md-offset-3
+              .col-md-3.col-md-offset-3 .col-md-3 .col-md-offset-3
+            .row.show-grid
+              .col-md-6.col-md-offset-3 .col-md-6 .col-md-offset-3
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h3#grid-nesting Nesting columns
+            p
+              | To nest your content with the default grid, add a new
+              code .row
+              | and set of
+              code .col-md-*
+              | columns within an existing
+              code .col-md-*
+              | column. Nested rows should include a set of columns that add up to 12.
+            .row.show-grid
+              .col-md-9
+                | Level 1: .col-md-9
+                .row.show-grid
+                  .col-md-6
+                    | Level 2: .col-md-6
+                  .col-md-6
+                    | Level 2: .col-md-6
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h3#grid-column-ordering Column ordering
+            p
+              | Easily change the order of our built-in grid columns with
+              code .col-md-push-*
+              | and
+              code .col-md-pull-*
+              | modifier classes.
+            .row.show-grid
+              .col-md-9.col-md-push-3 .col-md-9 .col-md-push-3
+              .col-md-3.col-md-pull-9 .col-md-3 .col-md-pull-9
+      // /.col-lg-12
+    // /.row
+  // /#page-wrapper
+
+
+
+
+
+
+template(name="forms")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Forms
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Basic Form Elements
+          .panel-body
+            .row
+              .col-lg-6
+                form(role="form")
+                  .form-group
+                    label Text Input
+                    input.form-control(type="text")
+                    p.help-block Example block-level help text here.
+                  .form-group
+                    label Text Input with Placeholder
+                    input.form-control(type="text", placeholder="Enter text")
+                  .form-group
+                    label Static Control
+                    p.form-control-static email@example.com
+                  .form-group
+                    label File input
+                    input(type="file")
+                  .form-group
+                    label Text area
+                    textarea.form-control(rows="3")
+                  .form-group
+                    label Checkboxes
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 1
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 2
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 3
+                  .form-group
+                    label Inline Checkboxes
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | 1
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | 2
+                    label.checkbox-inline
+                      input(type="checkbox")
+                      | 3
+                  .form-group
+                    label Radio Buttons
+                    .radio
+                      label
+                        input#optionsRadios1(type="radio", name="optionsRadios", value="option1", checked="")
+                        | Radio 1
+                    .radio
+                      label
+                        input#optionsRadios2(type="radio", name="optionsRadios", value="option2")
+                        | Radio 2
+                    .radio
+                      label
+                        input#optionsRadios3(type="radio", name="optionsRadios", value="option3")
+                        | Radio 3
+                  .form-group
+                    label Inline Radio Buttons
+                    label.radio-inline
+                      input#optionsRadiosInline1(type="radio", name="optionsRadiosInline", value="option1", checked="")
+                      | 1
+                    label.radio-inline
+                      input#optionsRadiosInline2(type="radio", name="optionsRadiosInline", value="option2")
+                      | 2
+                    label.radio-inline
+                      input#optionsRadiosInline3(type="radio", name="optionsRadiosInline", value="option3")
+                      | 3
+                  .form-group
+                    label Selects
+                    select.form-control
+                      option 1
+                      option 2
+                      option 3
+                      option 4
+                      option 5
+                  .form-group
+                    label Multiple Selects
+                    select.form-control(multiple="")
+                      option 1
+                      option 2
+                      option 3
+                      option 4
+                      option 5
+                  button.btn.btn-default(type="submit") Submit Button
+                  button.btn.btn-default(type="reset") Reset Button
+              // /.col-lg-6 (nested)
+              .col-lg-6
+                h1 Disabled Form States
+                form(role="form")
+                  fieldset(disabled="")
+                    .form-group
+                      label(for="disabledSelect") Disabled input
+                      input#disabledInput.form-control(type="text", placeholder="Disabled input", disabled="")
+                    .form-group
+                      label(for="disabledSelect") Disabled select menu
+                      select#disabledSelect.form-control
+                        option Disabled select
+                    .checkbox
+                      label
+                        input(type="checkbox")
+                        | Disabled Checkbox
+                    button.btn.btn-primary(type="submit") Disabled Button
+                h1 Form Validation States
+                form(role="form")
+                  .form-group.has-success
+                    label.control-label(for="inputSuccess") Input with success
+                    input#inputSuccess.form-control(type="text")
+                  .form-group.has-warning
+                    label.control-label(for="inputWarning") Input with warning
+                    input#inputWarning.form-control(type="text")
+                  .form-group.has-error
+                    label.control-label(for="inputError") Input with error
+                    input#inputError.form-control(type="text")
+                h1 Input Groups
+                form(role="form")
+                  .form-group.input-group
+                    span.input-group-addon @
+                    input.form-control(type="text", placeholder="Username")
+                  .form-group.input-group
+                    input.form-control(type="text")
+                    span.input-group-addon .00
+                  .form-group.input-group
+                    span.input-group-addon
+                      i.fa.fa-eur
+                    input.form-control(type="text", placeholder="Font Awesome Icon")
+                  .form-group.input-group
+                    span.input-group-addon $
+                    input.form-control(type="text")
+                    span.input-group-addon .00
+                  .form-group.input-group
+                    input.form-control(type="text")
+                    span.input-group-btn
+                      button.btn.btn-default(type="button")
+                        i.fa.fa-search
+              // /.col-lg-6 (nested)
+            // /.row (nested)
+          // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+  // /#page-wrapper
+
+
+template(name="panels-and-wells")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Panels and Wells
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Collapsible Accordion Panel Group
+          // .panel-heading
+          .panel-body
+            #accordion.panel-group
+              .panel.panel-default
+                .panel-heading
+                  h4.panel-title
+                    a(data-toggle="collapse", data-parent="#accordion", href="#collapseOne") Collapsible Group Item #1
+                #collapseOne.panel-collapse.collapse.in
+                  .panel-body
+                    | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              .panel.panel-default
+                .panel-heading
+                  h4.panel-title
+                    a(data-toggle="collapse", data-parent="#accordion", href="#collapseTwo") Collapsible Group Item #2
+                #collapseTwo.panel-collapse.collapse
+                  .panel-body
+                    | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              .panel.panel-default
+                .panel-heading
+                  h4.panel-title
+                    a(data-toggle="collapse", data-parent="#accordion", href="#collapseThree") Collapsible Group Item #3
+                #collapseThree.panel-collapse.collapse
+                  .panel-body
+                    | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          // .panel-body
+          .panel-footer
+            | Panel Footer
+        // /.col-lg-4
+        // /.panel
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-6
+        .panel.panel-default
+          .panel-heading
+            | Basic Tabs
+          // /.panel-heading
+          .panel-body
+            // Nav tabs
+            ul.nav.nav-tabs
+              li.active
+                a(href="#home", data-toggle="tab") Home
+              li
+                a(href="#profile", data-toggle="tab") Profile
+              li
+                a(href="#messages", data-toggle="tab") Messages
+              li
+                a(href="#settings", data-toggle="tab") Settings
+            // Tab panes
+            .tab-content
+              #home.tab-pane.fade.in.active
+                h4 Home Tab
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              #profile.tab-pane.fade
+                h4 Profile Tab
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              #messages.tab-pane.fade
+                h4 Messages Tab
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              #settings.tab-pane.fade
+                h4 Settings Tab
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          // /.panel-body
+        // /.panel
+      // /.col-lg-6
+      .col-lg-6
+        .panel.panel-default
+          .panel-heading
+            | Pill Tabs
+          // /.panel-heading
+          .panel-body
+            // Nav tabs
+            ul.nav.nav-pills
+              li.active
+                a(href="#home-pills", data-toggle="tab") Home
+              li
+                a(href="#profile-pills", data-toggle="tab") Profile
+              li
+                a(href="#messages-pills", data-toggle="tab") Messages
+              li
+                a(href="#settings-pills", data-toggle="tab") Settings
+            // Tab panes
+            .tab-content
+              #home-pills.tab-pane.fade.in.active
+                h4 Home Tab
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              #profile-pills.tab-pane.fade
+                h4 Profile Tab
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              #messages-pills.tab-pane.fade
+                h4 Messages Tab
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              #settings-pills.tab-pane.fade
+                h4 Settings Tab
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          // /.panel-body
+        // /.panel
+      // /.col-lg-6
+    // /.row
+  // /#page-wrapper
+

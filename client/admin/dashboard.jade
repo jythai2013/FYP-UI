@@ -11,8 +11,8 @@ template(name="dashboard")
       .col-lg-8
         .panel.panel-default
           .panel-heading
-            i.fa.fa-bar-chart-o.fa-fw
-            | Bar Chart Example
+            i.fa.fa-list.fa-fw
+            | Today's Class Schedule
             .pull-right
               .btn-group
                 button.btn.btn-default.btn-xs.dropdown-toggle(type="button", data-toggle="dropdown")
@@ -47,6 +47,9 @@ template(name="dashboard")
                         td 3:29 PM
                         td $321.33
                 // /.table-responsive
+
+                {{> fullcalendar options}}
+                
               // /.col-lg-4 (nested)
               .col-lg-8
                 #morris-bar-chart

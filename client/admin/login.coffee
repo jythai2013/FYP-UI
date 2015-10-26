@@ -21,7 +21,7 @@ Template.loginForm.events({
     return false
 })
 
-Template.signUp.events({
+Template.loginPage.events({
   'submit #sign-up-form': (e, t) ->
     e.preventDefault()
     Session.set('signUpErrorMessage', false)
@@ -41,7 +41,7 @@ Template.signUp.events({
     return false
 })
 
-Template.signUp.helpers(
+Template.loginPage.helpers(
   errorMessage: () ->
     return Session.get('signUpErrorMessage')
 
