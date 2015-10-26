@@ -1,62 +1,42 @@
 Router.map(function() {
-    this.route('Sterling Traing Hub', {
-        path:'/index.html',
-        template: 'intro',
-        layoutTemplate: "layout",
+    this.route('Sterling Traning Hub', {
+        path:'/website',
+        template: 'website',
+        layoutTemplate: "layoutWebsite",
 		onAfterAction: function() {
 	        document.title = this.route.getName();
 	    }
     });
 
-    this.route('admin', {
-        path:'/admin.html',
-        template: 'adminDashboard',
-        layoutTemplate: "layoutAdmin"
-    });
-
-    this.route('profile', {
-        path:'/profile.html',
+    this.route('userProfile', {
+        path:'/profile',
         template: 'profile',
-        layoutTemplate: "layoutAdmin"
+        layoutTemplate: "mainLayout"
     });
 
     // Registration 
     this.route('registerAdmin', {
         path:'/registerAdmin',
         template: 'registerAdmin',
-        layoutTemplate: "layoutAdmin"
+        layoutTemplate: "mainLayout"
     });
 
     this.route('registerCorporation', {
         path:'/registerCorporation',
         template: 'registerCorporation',
-        layoutTemplate: "layoutAdmin"
+        layoutTemplate: "mainLayout"
     });
 
     this.route('registerLearner', {
         path:'/registerLearner',
         template: 'registerLearner',
-        layoutTemplate: "layoutAdmin"
+        layoutTemplate: "mainLayout"
     });
 
     this.route('registerTrainer', {
         path:'/registerTrainer',
         template: 'registerTrainer',
-        layoutTemplate: "layoutAdmin"
-    });
-
-
-    this.route('classHomepage', {
-        path:'/classHomePage',
-        template: 'homePage',
-        layoutTemplate: "layoutAdmin"
-    });
-
-
-    this.route('facilityBooking', {
-        path:'/facilityBooking',
-        template: 'facilityBooking',
-        layoutTemplate: "layoutAdmin"
+        layoutTemplate: "mainLayout"
     });
     
 });
