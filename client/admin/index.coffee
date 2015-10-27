@@ -24,8 +24,6 @@ Meteor.startup(() ->
 )
 
 Template.topbar.events(
-  'click #login': () ->
-    $('#loginModal').modal('show')
 
   'click #sign-out': () ->
     Meteor.logout((err) ->
@@ -49,12 +47,4 @@ Template.navElement.helpers(
       return "active"
     else
       return ""
-)
-
-Template.taskDropdownElement.helpers(
-  progressBarType: () ->
-    return "progress-bar-" + this.type
-
-  style: () ->
-    return "width: " + this.percentComplete + "%"
 )

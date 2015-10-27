@@ -1,11 +1,10 @@
 navRoutes = [
   new NavRoute('dashboard', 'fa-dashboard')
-  new NavRoute('admin', '', {label: "Accounts Admin ???"})
   new NavRoute('calendar', '', {label: "Calendar ???"})
 
   # Facility
   new NavRoute('FacilityModule', 'fa-table', {label: "Facility Management"})
-  new NavRoute('facilityMgmt', 'fa-wrench', {parentName: 'FacilityModule', label: "View Facilities"})
+  new NavRoute('facilityManagement123', 'fa-wrench', {parentName: 'FacilityModule', label: "View Facilities"})
   new NavRoute('facilityBooking', 'fa-wrench', {parentName: 'FacilityModule', label: "Book Facilities"})
 
   new NavRoute('CourseModule', 'fa-table', {label: "Course Management"})
