@@ -29,8 +29,8 @@ template(name="courseList")
                   tr
                     th Code
                     th Name
-                    th Start Date
-                    th Venue
+                    th Fees
+                    th Trainers
                     th Details
                   tr
                     td 
@@ -42,7 +42,7 @@ template(name="courseList")
                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#editCourse")
                         | More Details
             // /.table-responsive
-            +editCourseForm
+            +viewCourseForm
 
             // /.row
           // /.panel-body
@@ -71,24 +71,29 @@ template(name="addCourseForm")
                   th Course Code
                   td
                     .form-group
-                      input.form-control(type="text", name="cNewCode", placeholder="eg. IS101")
+                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
                 tr
                   th Course Name  
                   td 
                     .form-group
-                      input.form-control(type="text", name="cNewName") 
+                      input.form-control(type="text", id="cNewName") 
                 tr
-                  th Description:
+                  th Description
                   td 
                     .form-group
-                      input.form-control(type="text", name="cNewDesc")
+                      input.form-control(type="text", id="cNewDesc")
                 tr
                   th Fees
                   td 
                     .form-group.input-group
                       span.input-group-addon $
-                      input.form-control(type="text", name="cNewFee")
+                      input.form-control(type="text", id="cNewFee")
                       span.input-group-addon .00
+                tr
+                  th Trainers
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="text", id="cTrainers")
           // /.table-responsive
         .modal-footer
           button.btn.btn-save(type="button") Save changes
@@ -97,13 +102,13 @@ template(name="addCourseForm")
   // /.modal
 
 
-template(name="editCourseForm")
+template(name="viewCourseForm")
   #editCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Edit Course Detail
+          h4#myModalLabel.modal-title Course Detail
         .modal-body
           form(name="", role="form", action="facilityResult", method="post")
           .table-responsive
