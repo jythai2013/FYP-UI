@@ -1,4 +1,4 @@
-<template name="facilityManagement123">
+<template name="facilityManagement">
   <div class="panel" style="background-color:#f8f8f8">
         <h3 class="row" style="padding-top:30px" align="center" >Facility Management</h3>
   </div>
@@ -137,8 +137,9 @@
               <div class="col-sm-4">
                 <select class="form-control" name="facility" id="fac">
                   <option value="default">-- Select a Facility --</option>
-                  <option value="classRm">Class Room 1</option>
-                  <option value="classRm2">Class Room 2</option>
+                  {{#each facilitySearchResult}}
+										{{> facDetails}}
+									{{/each}}
                 </select>
               </div>
             </div>
@@ -183,6 +184,11 @@
       </div>
 
     </div>
+</template>
+
+
+<template name="facDetails">
+	<option value="{{facID}}">Class Room {{facName}}</option>
 </template>
 
 

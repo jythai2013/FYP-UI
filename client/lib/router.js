@@ -8,6 +8,12 @@ Router.map(function() {
 	    }
     });
 
+    this.route('facDev', {
+        path:'/facDev',
+        template: 'facilityManagement',
+        layoutTemplate: "loginLayout"
+    });
+
     this.route('loginPage', {
         path:'/login',
         template: 'loginPage',

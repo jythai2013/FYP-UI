@@ -1,12 +1,6 @@
-Template.facilityBooking.events({
-	"submit #facilityBookingFormForMeteor" : function createBookingEventHandler(e) {
-		e.preventDefault();
-		
-		
-	}
-});
-Template.facilityBooking.events({
-	"submit #facilityBookingFormForMeteor" : function createBookingEventHandler(e) {
+
+Template.facilityManagement.events({
+	"submit #facilityManagementFormForMeteor" : function createBookingEventHandler(e) {
 		e.preventDefault();
 		//TODO: Validation of user
 		// if(Meteor.user.userType != "admin"){
@@ -14,7 +8,7 @@ Template.facilityBooking.events({
 		// }
 
 		//TODO: Validation of input
-		var intput_date_beginning = document.getElementById("input_date_beginning").value;
+		var input_date_beginning = document.getElementById("input_date_beginning").value;
 		var noSession = document.getElementById("noSession").value;
 		var repeatOption = document.getElementById("repeatOption").value;
 		var input_time_beginning = document.getElementById("input_time_beginning").value;
@@ -32,11 +26,31 @@ Template.facilityBooking.events({
 
 		var bookingDate = "";
 
-		bookFacility(input_date_beginning, input_course, input_session, input_time_beginning, input_time_end, facIdI);
+		bookFacility(input_date_beginning, input_time_beginning, input_time_end, input_course, input_session, facIdI);
+	},
+	
+	"change" : function facilityManagementFormForMeteorOnChangeHandler(e){
+		e.preventDefault();
+		console.log("EEEEEEEEEEEEEEEEEE");
+		console.log(e);
+		
+		IfacType = document.getElementById("facType");
+		Icapacity = document.getElementById("capacity");
+		Iinput_date_beginning = document.getElementById("input_date_begining");
+		Iinput_date_end = document.getElementById("input_date_end");
+		Iinput_time_beginning = document.getElementById("input_time_beginning");
+		Iinput_time_end = document.getElementById("input_time_end");
+		
+		Session.set("facTypeSearch", IfacType);
+		Session.set("facCapacitySearch", Icapacity);
+		Session.set("facInput_date_beginingSearch", Iinput_date_beginning);
+		Session.set("facInput_date_endSearch", Iinput_date_end);
+		Session.set("facInput_time_beginningSearch", Iinput_time_beginning);
+		Session.set("facInput_time_endSearch", Iinput_time_end);
 	}
 });
 
-Template.facilityBooking.events({
+Template.facilityManagement.events({
 
 	//consider switching to this way
 	//http://hacktivist.in/articles/Simple-crud-app-in-meteor/
@@ -166,12 +180,15 @@ function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, time
 	return soFarSoGood;
 };
 
-function bookFacility(input_date_beginning, input_course, input_session, input_time_beginning, input_time_end, facIdI) {
+function bookFacility(input_date_beginning, input_time_beginning, input_time_end, input_course, input_session, facIdI) {
 	dates = getDatesFromRepeat();
 	var canBook = true;
 	
 	//check the whole repeat duration, if one session is not available then the repeat is invalid.
-	dates.forEach(Function(input_date_beginning, input_time_beginning, input_time_end){
+	dates.forEach(function(details){
+		input_date_beginning = details.input_date_beginning; 
+		input_time_beginning = details.input_time_beginning;
+		input_time_end = details.input_time_end;
 		var available = isFacilityAvailableOnThisTimeslot(facIdI, input_date_beginning, input_time_beginning, input_time_end) | false;
 		if(!available){
 			return false;
@@ -179,7 +196,7 @@ function bookFacility(input_date_beginning, input_course, input_session, input_t
 	});
 
 	//for each date object, create a booking
-	dates.forEach(Function(){
+	dates.forEach(function(){
 		Meteor.call("createBooking", input_date_beginning, input_course, input_session, input_time_beginning, input_time_end, facIdI);
 	});
 };
