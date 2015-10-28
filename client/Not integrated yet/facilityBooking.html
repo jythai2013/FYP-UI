@@ -1,3 +1,12 @@
+<template name="test">
+	<ul>
+		{{#each facilitySearchResult}}
+			{{> facDetails}}
+		{{/each}}
+	</ul>
+</template>
+
+
 <template name="facilityManagement">
   <div class="panel" style="background-color:#f8f8f8">
         <h3 class="row" style="padding-top:30px" align="center" >Facility Management</h3>
@@ -137,12 +146,11 @@
               <div class="col-sm-4">
                 <select class="form-control" name="facility" id="fac">
                   <option value="default">-- Select a Facility --</option>
-                  {{#each facilitySearchResult}}
-										{{> facDetails}}
-									{{/each}}
+                 
                 </select>
               </div>
             </div>
+						{{> test}}
             <!--<h4>Search Result display</h4>-->
             <!--javascript to capture time, similar to oasis?-->
 
@@ -172,6 +180,8 @@
 
         </div>
       </div>
+			
+			
 
     <div id="overview" class="tab-pane active">
 
@@ -179,9 +189,8 @@
         <div id="home" class="col-xs-12 col-sm-6">
             {{> fullcalendar options}}
         </div>
-
-        </div>
-      </div>
+			</div>
+		</div>
 
     </div>
 </template>
@@ -189,6 +198,11 @@
 
 <template name="facDetails">
 	<option value="{{facID}}">Class Room {{facName}}</option>
+</template>
+
+
+<template name="facDetails2">
+	<li>Class Room {{facName}}</li>
 </template>
 
 
