@@ -29,33 +29,27 @@ template(name="courseList")
                   tr
                     th Code
                     th Name
+                    th Type
                     th Fees
-                    th Trainers
                     th Details
+                    th Remarks
                   tr
-                    td 
-                      a(href="/courseMgmt/course") IS101
-                    td Workplace Health & Safety
-                    td 01/01/2015
-                    td C.R. 1.2
-                    td
-                      button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#editCourse")
-                        | More Details
-            // /.table-responsive
+                    each courses
+                     td 
+                       a(href="/course/?code=is101") =courses.courseCode
+                     td=courses.courseName
+                     td=courses.courseType
+                     td=courses.fees
+                     td
+                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#viewCourse")
+                         | More Details
+                     td
+                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#deleteCourse")
+                         | Delete
             +viewCourseForm
-
-            // /.row
-          // /.panel-body
-        // /.panel
-      // /.col-lg-12
-    // /.row
-  // /#page-wrapper
-
 
 
 template(name="addCourseForm")
-  // Button trigger modal
-  // Modal
   #addCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
@@ -63,7 +57,7 @@ template(name="addCourseForm")
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title Add New Course
         .modal-body
-          form(name="", role="form", action="facilityResult", method="post")
+          form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
           .table-responsive
             table#dataTables-example.table
               tbody
@@ -78,6 +72,11 @@ template(name="addCourseForm")
                     .form-group
                       input.form-control(type="text", id="cNewName") 
                 tr
+                  th Course Type  
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cType") 
+                tr
                   th Description
                   td 
                     .form-group
@@ -88,22 +87,21 @@ template(name="addCourseForm")
                     .form-group.input-group
                       span.input-group-addon $
                       input.form-control(type="text", id="cNewFee")
-                      span.input-group-addon .00
                 tr
                   th Trainers
                   td 
-                    .form-group.input-group
+                    .form-group
                       input.form-control(type="text", id="cTrainers")
-          // /.table-responsive
-        .modal-footer
-          button.btn.btn-save(type="button") Save changes
+            // /.table-responsive
+          .modal-footer
+            button#addCourseButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
       // /.modal-content
     // /.modal-dialog
   // /.modal
 
 
 template(name="viewCourseForm")
-  #editCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  #viewCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -115,17 +113,53 @@ template(name="viewCourseForm")
             table#dataTables-example.table
               tbody
                 tr
-                  th(colspan="2") Course Code, Course Name   
+                  th(colspan="2") courses.courseCode, courses.courseName   
                 tr
-                  td Description:
+                  td Min
                   td 
-                    Some Description here
+                    courses.min
+                tr
+                  td Max
+                  td 
+                    courses.max
+                tr
+                  td Description
+                  td 
+                    courses.description
                 tr
                   td Fees
-                  td $120
+                  td courses.fees
           // /.table-responsive
         .modal-footer
-          a(href="course", class="button btn admin-btn") Enter Course Page
+          a(href="course/?code=is101", class="button btn admin-btn") Enter Course Page
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+
+  template(name="deleteCourse")
+  #deleteCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Course Detail
+        .modal-body
+          form(name="", role="form", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table
+              tbody  
+                tr
+                  td Are you sure you want to delete
+                tr
+                  td Code
+                  td course.courseCode
+                tr
+                  td Name
+                  td course.courseName
+          // /.table-responsive
+        .modal-footer
+          a#deleteCourse(class="button btn admin-btn") Confirm
       // /.modal-content
     // /.modal-dialog
   // /.modal

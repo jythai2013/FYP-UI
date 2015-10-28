@@ -1,24 +1,33 @@
+Template.courseList.helpers({
+	"courses" : function listCourseEventHandler(e) {
+		console.log("here");
 
+		return courses.find({}).fetch();
+	}
+});
 
 
 Template.addCourseForm.events({
-	"submit #addCourseForm" : function createCourseEventHandler(e) {
+	"click #addCourseButton" : function createCourseEventHandler(e) {
 		e.preventDefault();
 		//TODO: Validation of user
 		// if(Meteor.user.userType != "admin"){
 		// return false;
 		// }
+		console.log("here1");
 
 		//TODO: Validation of input
-		var cCode = document.getElementById("cNewCode").value;
 		var cName = document.getElementById("cNewName").value;
-		var cDescription = document.getElementById("cNewDesc").value;
+		var cCode = document.getElementById("cNewCode").value;
 		var cFee = document.getElementById("cNewFee").value;
+		var cType = document.getElementById("cType").value;
 		var cTrainers = document.getElementById("cTrainers").value;
+		var cDescription = document.getElementById("cNewDesc").value;
 
-		Meteor.call("createCourse", cName, cCode, cFee, cMin, cMax, cDescription);
+		Meteor.call("createCourse", cName, cCode, cFee, cDescription, cTrainers, cType);
 	}
 });
+
 
 Template.course.events({
 
