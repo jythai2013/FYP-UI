@@ -2,6 +2,7 @@
 Deps.autorun(function () {
 	Meteor.subscribe('images');
 	Meteor.subscribe('userData');
+	Meteor.subscribe('courseData');
 	Meteor.subscribe('sessionsData');
 	Meteor.subscribe('facilitiesData', function(e){
      //Set the reactive session as true to indicate that the data have been loaded

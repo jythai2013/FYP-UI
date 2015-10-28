@@ -1,3 +1,12 @@
+<template name="test">
+	<ul>
+		{{#each facilitySearchResult}}
+			{{> facDetails}}
+		{{/each}}
+	</ul>
+</template>
+
+
 <template name="facilityManagement">
   <div class="panel" style="background-color:#f8f8f8">
         <h3 class="row" style="padding-top:30px" align="center" >Facility Management</h3>
@@ -144,6 +153,7 @@
               </div>
             </div>
             <!--<h4>Search Result display</h4>-->
+						{{>test}}
             <!--javascript to capture time, similar to oasis?-->
 
           <div class="form-group">     
@@ -189,6 +199,11 @@
 
 <template name="facDetails">
 	<option value="{{facID}}">Class Room {{facName}}</option>
+</template>
+
+
+<template name="facDetails2">
+	<li>Class Room {{facName}}</li>
 </template>
 
 

@@ -40,9 +40,12 @@ Template.facilityManagement.helpers({
 	
   facilities: function () {
     return Facilities.find(); // Where Images is an FS.Collection instance
-  },
-	
+  }
+});
+
+Template.test.helpers({
 	facilitySearchResult:function(){
+		return false;
 		console.log("facilitySearchResult Start");
 		results = new Array();
 		
