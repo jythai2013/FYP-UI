@@ -23,10 +23,8 @@ Template.addCourseForm.events({
 		var cType = document.getElementById("cType").value;
 		var cTrainers = document.getElementById("cTrainers").value;
 		var cDescription = document.getElementById("cNewDesc").value;
-		var cMin = document.getElementById("cMin").value;
-		var cMax = document.getElementById("cMax").value;
 
-		Meteor.call("createCourse", cName, cCode, cFee, cDescription, cTrainers, cType,cMin,cMax);
+		Meteor.call("createCourse", cName, cCode, cFee, cDescription, cTrainers, cType);
 	}
 });
 

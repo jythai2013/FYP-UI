@@ -1,11 +1,11 @@
 
 	Meteor.methods({ 
 		
-		'editCourse': function editCourse(_id, cName, cCode, cFee, cDescription, cTrainer,cType){
+		'editCourse': function editCourse(_id, cName, cCode, cFee, cDescription, cTrainer,cType,cMin,cMax){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-			courses.update(_id, {
+			Courses.update(_id, {
         $set: {
 					name: cName,
 					code: cCode,
@@ -21,7 +21,7 @@
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-      courses.remove(_id);
+      Courses.remove(_id);
 		},
 		
 		'createCourse': function createCourse(cName, cCode, cFee, cDescription, cTrainer, cType){
@@ -29,8 +29,8 @@
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-			
-			courses.insert({
+			console.log("here2");
+			Courses.insert({
 				name: cName,
 				code: cCode,
 				fee: cFee,
