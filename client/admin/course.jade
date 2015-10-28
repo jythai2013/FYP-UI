@@ -26,7 +26,10 @@ template(name="course")
                     th IS101
                   tr
                     th Course Name
-                    td Workplace Health & Safety
+                    td=courses.courseName
+                  tr
+                    th Course Type
+                    td=courses.courseType
                   tr
                     th Description
                     td Hands-on and Theory lesson with 2 practical test
@@ -39,7 +42,7 @@ template(name="course")
                   tr
                   tr
                     th Fees
-                    td $120
+                    td=courses.courseType
                   tr
                     td
                     td 
@@ -63,7 +66,7 @@ template(name="course")
                             th Course Code
                             td 
                               .form-group
-                                input.form-control(type="text", name="cCode", value="is101")
+                                input.form-control(type="text", name="cCode", value=course.courseCode)
                           tr
                             th Course Name
                             td 
@@ -117,7 +120,19 @@ template(name="course")
                       |, G2, G3
                     td(width="50px")
                       input(type="button", value="Update")
+                  tr
+                    th
+                    td
+                      |G2, G3
+                    td(width="50px")
+                      input(type="button", value="Update")
+                  tr
+                    
+            button.btn.btn.btn-sm.pull-right(data-toggle="modal", data-target="#addClass" style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus
+                        | Class 
             // /.table-responsive
+
             p.breakH4
             h4 Course Materials
             .table-responsive
@@ -173,3 +188,52 @@ template(name="course")
     // /.row
   // /#page-wrapper
 
+template(name="addClassForm")
+  #addClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Course
+        .modal-body
+          form(name="addCourseForm", role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table
+              tbody
+                tr
+                  th Course Code
+                  td
+                    .form-group
+                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
+                tr
+                  th Course Name  
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cNewName") 
+                tr
+                  th Course Type  
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cType") 
+                tr
+                  th Description
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cNewDesc")
+                tr
+                  th Fees
+                  td 
+                    .form-group.input-group
+                      span.input-group-addon $
+                      input.form-control(type="text", id="cNewFee")
+                tr
+                  th Trainers
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cTrainers")
+          // /.table-responsive
+        .modal-footer
+          input.btn.btn-save(type="submit")
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal

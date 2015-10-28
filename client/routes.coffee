@@ -4,7 +4,7 @@ navRoutes = [
 
   # Facility
   new NavRoute('FacilityModule', 'fa-table', {label: "Facility Management"})
-  new NavRoute('facilityManagement123', 'fa-wrench', {parentName: 'FacilityModule', label: "View Facilities"})
+  new NavRoute('facilityMgmt', 'fa-wrench', {parentName: 'FacilityModule', label: "View Facilities"})
   new NavRoute('facilityBooking', 'fa-wrench', {parentName: 'FacilityModule', label: "Book Facilities"})
 
   new NavRoute('CourseModule', 'fa-table', {label: "Course Management"})
