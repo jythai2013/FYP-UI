@@ -9,5 +9,5 @@ Deps.autorun(function () {
      console.log("READY!!");
      console.log(e);
 		 Session.set('facilitiesData_data_loaded', true); 
-  }););
+  });
 });

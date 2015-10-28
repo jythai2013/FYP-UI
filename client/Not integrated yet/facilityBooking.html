@@ -146,14 +146,12 @@
               <div class="col-sm-4">
                 <select class="form-control" name="facility" id="fac">
                   <option value="default">-- Select a Facility --</option>
-                  {{#each facilitySearchResult}}
-										{{> facDetails}}
-									{{/each}}
+                 
                 </select>
               </div>
             </div>
+						{{> test}}
             <!--<h4>Search Result display</h4>-->
-						{{>test}}
             <!--javascript to capture time, similar to oasis?-->
 
           <div class="form-group">     
@@ -182,6 +180,8 @@
 
         </div>
       </div>
+			
+			
 
     <div id="overview" class="tab-pane active">
 
@@ -189,9 +189,8 @@
         <div id="home" class="col-xs-12 col-sm-6">
             {{> fullcalendar options}}
         </div>
-
-        </div>
-      </div>
+			</div>
+		</div>
 
     </div>
 </template>
