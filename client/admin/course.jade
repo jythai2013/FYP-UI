@@ -128,7 +128,7 @@ template(name="course")
                       input(type="button", value="Update")
                   tr
                     
-            button.btn.btn.btn-sm.pull-right(data-toggle="modal", data-target="#addClass" style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+              button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | Class 
             // /.table-responsive
@@ -188,7 +188,7 @@ template(name="course")
     // /.row
   // /#page-wrapper
 
-template(name="addClassForm")
+template(name="addClass")
   #addClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
@@ -196,7 +196,7 @@ template(name="addClassForm")
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title Add New Course
         .modal-body
-          form(name="addCourseForm", role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+          form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
           .table-responsive
             table#dataTables-example.table
               tbody
@@ -204,17 +204,17 @@ template(name="addClassForm")
                   th Course Code
                   td
                     .form-group
-                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
+                      input.form-control(type="text", id="gNewCode", placeholder="eg. IS101")
                 tr
                   th Course Name  
                   td 
                     .form-group
-                      input.form-control(type="text", id="cNewName") 
+                      input.form-control(type="text", id="gNewName") 
                 tr
                   th Course Type  
                   td 
                     .form-group
-                      input.form-control(type="text", id="cType") 
+                      input.form-control(type="text", id="gType") 
                 tr
                   th Description
                   td 
