@@ -1,4 +1,3 @@
-
 Template.facilityManagement.events({
 	"submit #facilityManagementFormForMeteor" : function createBookingEventHandler(e) {
 		e.preventDefault();
