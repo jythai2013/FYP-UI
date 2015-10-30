@@ -1,10 +1,3 @@
-<template name="test">
-	<ul>
-		{{#each facilitySearchResult}}
-			{{> facDetails}}
-		{{/each}}
-	</ul>
-</template>
 
 
 <template name="facilityManagement">
@@ -42,7 +35,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">Repeat</label>
               <div class="col-sm-4">
-                <select class="form-control" name="repeat" id="repeatOption">
+                <select class="form-control" name="repeat" id="facRepeatOptionSearch">
                   <option value="">-- No Repeat --</option>
                   <option value="everyday">Everyday</option>
                   <option value="weekday">Weekdays</option>
@@ -56,7 +49,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">Number of Sessions</label>
               <div class="col-sm-4">
-                <input type="string" id="numSession" class="form-control">
+                <input type="string" id="facNumSessionSearch" class="form-control">
               </div>
             </div>
 
@@ -76,32 +69,32 @@
                 <div class="col-sm-10">
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox" checked> Mon
+                      <input type="checkbox" checked id="facSearchMon" value="mon"> Mon
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox"> Tues
+                      <input type="checkbox" id="facSearchTue" value="tue"> Tues
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox"> Wed
+                      <input type="checkbox" id="facSearchWed" value="wed"> Wed
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox"> Thurs
+                      <input type="checkbox" id="facSearchThu" value="thu"> Thurs
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox"> Fri
+                      <input type="checkbox" id="facSearchFri" value="fri"> Fri
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox"> Sat
+                      <input type="checkbox" id="facSearchSat" value="sat"> Sat
                     </label>
                   </div>
                 </div>
@@ -146,11 +139,12 @@
               <div class="col-sm-4">
                 <select class="form-control" name="facility" id="fac">
                   <option value="default">-- Select a Facility --</option>
-                 
+										{{#each facilitySearchResult}}
+											A{{> facDetails}}
+										{{/each}}
                 </select>
               </div>
             </div>
-						{{> test}}
             <!--<h4>Search Result display</h4>-->
             <!--javascript to capture time, similar to oasis?-->
 
@@ -184,10 +178,9 @@
 			
 
     <div id="overview" class="tab-pane active">
-
       <div class="row">
         <div id="home" class="col-xs-12 col-sm-6">
-            {{> fullcalendar options}}
+            {{> fullcalendar calOptions}}
         </div>
 			</div>
 		</div>
@@ -197,12 +190,12 @@
 
 
 <template name="facDetails">
-	<option value="{{facID}}">Class Room {{facName}}</option>
+	<option value="{{facilityID}}">Class Room {{facilityName}}</option>
 </template>
 
 
 <template name="facDetails2">
-	<li>Class Room {{facName}}</li>
+	<li>Class Room {{facilityName}}</li>
 </template>
 
 

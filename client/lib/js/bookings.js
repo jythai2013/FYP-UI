@@ -35,14 +35,27 @@ Template.facilityManagement.events({
 		console.log(e);
 		
 		IfacType = document.getElementById("facType");
-		Icapacity = document.getElementById("capacity");
+		Icapacity = document.getElementById("input_capacity_min");
+		InumSessions = document.getElementById("facNumSessionSearch");
 		Iinput_date_beginning = document.getElementById("input_date_begining");
 		Iinput_date_end = document.getElementById("input_date_end");
 		Iinput_time_beginning = document.getElementById("input_time_beginning");
 		Iinput_time_end = document.getElementById("input_time_end");
+		repeatOption = document.getElementById("facRepeatOptionSearch");
 		
+		IDays = new Object();
+		IDays.mon = document.getElementById("facSearchMon").checked;
+		IDays.tue = document.getElementById("facSearchTue").checked;
+		IDays.wed = document.getElementById("facSearchWed").checked;
+		IDays.thu = document.getElementById("facSearchThu").checked;
+		IDays.fri = document.getElementById("facSearchFri").checked;
+		IDays.sat = document.getElementById("facSearchSat").checked;
+		
+		Session.set("facDaysSearch", IDays);
 		Session.set("facTypeSearch", IfacType);
 		Session.set("facCapacitySearch", Icapacity);
+		Session.set("facNumSessionSearch", InumSessions);
+		Session.set("facReapeatOptionSearch", repeatOption);
 		Session.set("facInput_date_beginingSearch", Iinput_date_beginning);
 		Session.set("facInput_date_endSearch", Iinput_date_end);
 		Session.set("facInput_time_beginningSearch", Iinput_time_beginning);
@@ -122,9 +135,6 @@ Template.facilityManagement.events({
 	}
 });
 
-function getDatesFromRepeat(){
-	
-};
 
 function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, timeEnd){
 	// results = new Array();
@@ -141,6 +151,8 @@ function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, time
 		// already have a booking sometime in that time so make sure it does not get returned
 		return false;
 	}
+	
+	
 	// |				|
 	//    |				|
 	existingBookings = bookings.find({
@@ -153,6 +165,8 @@ function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, time
 		// already have a booking sometime in that time so make sure it does not get returned
 		return false;
 	}
+	
+	
 	// 			|				|
 	//    |		|
 	existingBookings = bookings.find({
@@ -165,6 +179,8 @@ function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, time
 		// already have a booking sometime in that time so make sure it does not get returned
 		return false;
 	}
+	
+	
 	// 			|				|
 	//    |						|
 	existingBookings = bookings.find({
@@ -178,10 +194,11 @@ function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, time
 		return false;
 	}
 	return soFarSoGood;
-};
+}
 
-function bookFacility(input_date_beginning, input_time_beginning, input_time_end, input_course, input_session, facIdI) {
-	dates = getDatesFromRepeat();
+// facility, Iinput_date_beginning, Iinput_date_end, Iinput_time_beginning, Iinput_time_end, IrepeatOption
+function findIfFacilityIsAvailable(details) {
+	dates = getDatesFromRepeat(details);
 	var canBook = true;
 	
 	//check the whole repeat duration, if one session is not available then the repeat is invalid.
@@ -199,4 +216,150 @@ function bookFacility(input_date_beginning, input_time_beginning, input_time_end
 	dates.forEach(function(){
 		Meteor.call("createBooking", input_date_beginning, input_course, input_session, input_time_beginning, input_time_end, facIdI);
 	});
-};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Template.facilityManagement.helpers({
+	calOptions: function(){
+		
+		//converts the matchingFacilities.collection._docs._map into an array
+		var array = $.map(Bookings.find().collection._docs._map, function(value, index) {
+				return [value];
+		});
+		
+		return {
+			// events: [
+								// {
+									// title  : 'Workplace Health and Safety',
+									// start  : '2015-10-21T13:00:00',
+									// end    : '2015-10-21T17:00:00',
+									// allDay : false 
+								// },
+								// {
+									// title  : 'Workplace Health and Safety',
+									// start  : '2015-10-21T13:00:00',
+									// end    : '2015-10-21T17:00:00',
+									// allDay : false 
+								// }
+							// ]
+			events: array
+		};
+	},
+	
+	test: function(){
+		return "test";
+	},
+	
+  facilities: function () {
+    return Facilities.find(); // Where Images is an FS.Collection instance
+  },
+	
+	facilitySearchResult:function(){
+		console.log("facilitySearchResult Start");
+		console.log(this);
+		results = new Array();
+		
+		details = new Object();
+		// if (Session.get("facCapacitySearch") != undefined) {details.capacity = Session.get("facCapacitySearch").value; }
+		// if (Session.get("facTypeSearch") !== undefined) {details.facType = Session.get("facTypeSearch").value;}
+		// if (Session.get("facRepeatOptionSearch") !== undefined) {details.repeatOption = Session.get("facRepeatOptionSearch").value;}
+		// if (Session.get("facNumSessionSearch") !== undefined) {details.numSessions = Session.get("facNumSessionSearch").value;}
+		// if (Session.get("facInput_date_beginingSearch") !== undefined) {details.startDate = Session.get("facInput_date_beginingSearch").value;}
+		// if (Session.get("facInput_date_endSearch") !== undefined) {details.endDate = Session.get("facInput_date_endSearch").value;}
+		// if (Session.get("facInput_time_beginningSearch") !== undefined) {details.startTime = Session.get("facInput_time_beginningSearch").value;}
+		// if (Session.get("facInput_time_endSearch") !== undefined) {details.endTime = Session.get("facInput_time_endSearch").value;}
+		var today = new Date();
+		var todayS = (today.getHours()) +":" +today.getMinutes();
+		var todayE = (today.getHours() + 1) +":" +today.getMinutes();
+		var todayD = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+		if (Session.get("facCapacitySearch") 							!= undefined) {details.capacity 		= Session.get("facCapacitySearch").value; }
+		else{Session.set("facCapacitySearch", 0);}
+		// if (Session.get("facTypeSearch") 									!= undefined) {details.facType 			= Session.get("facTypeSearch").value;}
+		// if (Session.get("facRepeatOptionSearch") 					!= undefined) {details.repeatOption = Session.get("facRepeatOptionSearch").value;}
+		// if (Session.get("facNumSessionSearch") 						!= undefined) {details.numSessions 	= Session.get("facNumSessionSearch").value;}
+		if (Session.get("facInput_date_beginingSearch") 	!= undefined) {details.startDate 		= Session.get("facInput_date_beginingSearch").value;}
+		else{Session.set("facInput_date_beginingSearch", todayD);}
+		// if (Session.get("facInput_date_endSearch") 				!= undefined) {details.endDate 			= Session.get("facInput_date_endSearch").value;}
+		if (Session.get("facInput_time_beginningSearch") 	!= undefined) {details.startTime 		= Session.get("facInput_time_beginningSearch").value;}
+		else{Session.set("facInput_time_beginningSearch", todayS);}
+		if (Session.get("facInput_time_endSearch") 				!= undefined) {details.endTime 			= Session.get("facInput_time_endSearch").value;}
+		else{Session.set("facInput_time_endSearch", todayE);}
+		// if (Session.get("facDaysSearch") 									!= undefined) {details.endTime 			= Session.get("facDaysSearch").value;}
+		
+		
+		// var temptest = ["A","B","C"];
+		// temptest.forEach(function(e){console.log(e)});
+		
+		if( Session.get("facTypeSearch") != undefined){
+			matchingFacilities = Facilities.find({"facType":Session.get("facTypeSearch").value, "capacity": {$gte : Session.get("facCapacitySearch").value}});
+		} else{
+			matchingFacilities = Facilities.find({"capacity": {$gte : Session.get("facCapacitySearch").value}});
+		}
+		console.log("facilitySearchResult matchingFacilities");
+		console.log(matchingFacilities.collection._docs._map);
+		console.log("R1");
+		console.log(details.facType);
+		console.log(details.capacity);
+		
+		//converts the matchingFacilities.collection._docs._map into an array
+		var array = $.map(matchingFacilities.collection._docs._map, function(value, index) {
+				return [value];
+		});
+		
+		array.forEach(function(facility){
+			console.log("AAAAAAAAAAAAAA");
+			console.log(facility);
+			// alert();
+			// available = findIfFacilityIsAvailable(details);
+			available = true;
+			console.log(available);
+			if(available) results.push(facility);
+		});
+		console.log("R2");
+		
+		
+		console.log("facilitySearchResult results");
+		console.log(results);
+		
+		console.log("facilitySearchResult End");
+		
+		return results;
+		// return Facilities.find({"facType":IfacType, "capacity": {$gte : Icapacity}});
+	}
+});
+
+// return an array of objects, each object having a startdate, starttime, and endtime
+function getDatesFromRepeat(details){
+	// facInput_date_beginingSearch
+	// facInput_time_beginningSearch
+	// facInput_time_endSearch
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
