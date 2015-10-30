@@ -6,7 +6,7 @@
 
 // }
 
-Template.adminDashboard.helpers({
+Template.dashboard.helpers({
   options: function() {
       return {
         header: {
