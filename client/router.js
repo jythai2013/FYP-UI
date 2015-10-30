@@ -8,6 +8,12 @@ Router.map(function() {
 	    }
     });
 
+    this.route('Individual Course Sign up', {
+        path:'/courseSignup',
+        template: 'registerForCourse',
+        layoutTemplate: "layoutWebsiteJade"
+    });
+
     this.route('facDev', {
         path:'/facDev',
         template: 'facilityManagement',
