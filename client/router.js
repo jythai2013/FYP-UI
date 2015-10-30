@@ -1,8 +1,8 @@
 Router.map(function() {
     this.route('Sterling Traning Hub', {
         path:'/website',
-        template: 'website',
-        layoutTemplate: "layoutWebsite",
+        template: 'websitePages',
+        layoutTemplate: "layoutWebsiteJade",
 		onAfterAction: function() {
 	        document.title = this.route.getName();
 	    }
@@ -16,7 +16,7 @@ Router.map(function() {
 
     this.route('loginPage', {
         path:'/login',
-        template: 'loginPage',
+        template: 'loginModal',
         layoutTemplate: "loginLayout"
     });
 
