@@ -96,6 +96,15 @@ Template.facilityManagement.events({
 
 		document.getElementById("BookingNodeIdObjectID(\"" + this._id + "\")").innerHTML = newHTML;
 	},
+	
+	"submit #facMgmtFormy" : function(){
+		e.preventDefault();
+		// createBooking': function createBooking(bookingDateI, courseI, sessionNoI, startTimeI, endTimeI, facIdI){
+		dates = getDatesFromRepeat();
+		dates.forEach(function(details){
+			Meteor.call("createBookingDateTime", details.startDateTime, details.endDateTime, document.getElementById("fac").value, courseI, sessionI);
+		});
+	},
 
 	"submit .BookingEditForm" : function updateBookingSaveEventHandler(e) {
 		//TODO: Validation of user
@@ -134,89 +143,6 @@ Template.facilityManagement.events({
 		Meteor.call("deleteBooking", this._id);
 	}
 });
-
-
-function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, timeEnd){
-	// results = new Array();
-	soFarSoGood = true;
-	// |				|
-	//    |		|
-	existingBookings = bookings.find({
-									"facId":facility._id,
-									"date":searchDate,
-									"startTime":{$lte: timeStart },		
-									"endTime":{$gte: timeEnd }				
-								}).fetch();
-	if (existingBookings.length > 0){
-		// already have a booking sometime in that time so make sure it does not get returned
-		return false;
-	}
-	
-	
-	// |				|
-	//    |				|
-	existingBookings = bookings.find({
-									"facId":facility._id,
-									"date":searchDate,
-									"start_time":{$lte: timeStart },	
-									"end_time":{$lte: timeEnd }				
-								}).fetch();
-	if (existingBookings.length > 0){
-		// already have a booking sometime in that time so make sure it does not get returned
-		return false;
-	}
-	
-	
-	// 			|				|
-	//    |		|
-	existingBookings = bookings.find({
-									"facId":facility._id,
-									"date":searchDate,
-									"start_time":{$gte: timeStart },	// 			|				|
-									"end_time":{$gte: timeEnd }				//    |		|
-								}).fetch();
-	if (existingBookings.length > 0){
-		// already have a booking sometime in that time so make sure it does not get returned
-		return false;
-	}
-	
-	
-	// 			|				|
-	//    |						|
-	existingBookings = bookings.find({
-									"facId":facility._id,
-									"date":searchDate,
-									"start_time":{$gte: timeStart },	// 			|				|
-									"end_time":{$lte: timeEnd }				//    |						|
-								}).fetch();
-	if (existingBookings.length > 0){
-		// already have a booking sometime in that time so make sure it does not get returned
-		return false;
-	}
-	return soFarSoGood;
-}
-
-// facility, Iinput_date_beginning, Iinput_date_end, Iinput_time_beginning, Iinput_time_end, IrepeatOption
-function findIfFacilityIsAvailable(details) {
-	dates = getDatesFromRepeat(details);
-	var canBook = true;
-	
-	//check the whole repeat duration, if one session is not available then the repeat is invalid.
-	dates.forEach(function(details){
-		input_date_beginning = details.input_date_beginning; 
-		input_time_beginning = details.input_time_beginning;
-		input_time_end = details.input_time_end;
-		var available = isFacilityAvailableOnThisTimeslot(facIdI, input_date_beginning, input_time_beginning, input_time_end) | false;
-		if(!available){
-			return false;
-		}		 
-	});
-
-	//for each date object, create a booking
-	dates.forEach(function(){
-		Meteor.call("createBooking", input_date_beginning, input_course, input_session, input_time_beginning, input_time_end, facIdI);
-	});
-}
 
 
 
@@ -261,60 +187,44 @@ Template.facilityManagement.helpers({
 		};
 	},
 	
-	test: function(){
-		return "test";
-	},
-	
   facilities: function () {
     return Facilities.find(); // Where Images is an FS.Collection instance
   },
 	
 	facilitySearchResult:function(){
 		console.log("facilitySearchResult Start");
-		console.log(this);
 		results = new Array();
 		
 		details = new Object();
-		// if (Session.get("facCapacitySearch") != undefined) {details.capacity = Session.get("facCapacitySearch").value; }
-		// if (Session.get("facTypeSearch") !== undefined) {details.facType = Session.get("facTypeSearch").value;}
-		// if (Session.get("facRepeatOptionSearch") !== undefined) {details.repeatOption = Session.get("facRepeatOptionSearch").value;}
-		// if (Session.get("facNumSessionSearch") !== undefined) {details.numSessions = Session.get("facNumSessionSearch").value;}
-		// if (Session.get("facInput_date_beginingSearch") !== undefined) {details.startDate = Session.get("facInput_date_beginingSearch").value;}
-		// if (Session.get("facInput_date_endSearch") !== undefined) {details.endDate = Session.get("facInput_date_endSearch").value;}
-		// if (Session.get("facInput_time_beginningSearch") !== undefined) {details.startTime = Session.get("facInput_time_beginningSearch").value;}
-		// if (Session.get("facInput_time_endSearch") !== undefined) {details.endTime = Session.get("facInput_time_endSearch").value;}
 		var today = new Date();
 		var todayS = (today.getHours()) +":" +today.getMinutes();
 		var todayE = (today.getHours() + 1) +":" +today.getMinutes();
 		var todayD = new Date(today.getFullYear(),today.getMonth(),today.getDate());
-		if (Session.get("facCapacitySearch") 							!= undefined) {details.capacity 		= Session.get("facCapacitySearch").value; }
-		else{Session.set("facCapacitySearch", 0);}
+		if (Session.get("facCapacitySearch") 									!= undefined) {details.capacity 		= Session.get("facCapacitySearch").value; }
+		else{Session.set("facCapacitySearch", 0);}		
 		// if (Session.get("facTypeSearch") 									!= undefined) {details.facType 			= Session.get("facTypeSearch").value;}
 		// if (Session.get("facRepeatOptionSearch") 					!= undefined) {details.repeatOption = Session.get("facRepeatOptionSearch").value;}
 		// if (Session.get("facNumSessionSearch") 						!= undefined) {details.numSessions 	= Session.get("facNumSessionSearch").value;}
-		if (Session.get("facInput_date_beginingSearch") 	!= undefined) {details.startDate 		= Session.get("facInput_date_beginingSearch").value;}
-		else{Session.set("facInput_date_beginingSearch", todayD);}
+		if (Session.get("facInput_date_beginingSearch") 			!= undefined) {details.startDate 		= Session.get("facInput_date_beginingSearch").value;}
+		else{alert("pls set date");Session.set("facInput_date_beginingSearch", todayD);}
 		// if (Session.get("facInput_date_endSearch") 				!= undefined) {details.endDate 			= Session.get("facInput_date_endSearch").value;}
-		if (Session.get("facInput_time_beginningSearch") 	!= undefined) {details.startTime 		= Session.get("facInput_time_beginningSearch").value;}
-		else{Session.set("facInput_time_beginningSearch", todayS);}
-		if (Session.get("facInput_time_endSearch") 				!= undefined) {details.endTime 			= Session.get("facInput_time_endSearch").value;}
-		else{Session.set("facInput_time_endSearch", todayE);}
+		if (Session.get("facInput_time_beginningSearch") 			!= undefined) {details.startTime 		= Session.get("facInput_time_beginningSearch").value;}
+		else{alert("pls set start time");Session.set("facInput_time_beginningSearch", todayS);}
+		if (Session.get("facInput_time_endSearch") 						!= undefined) {details.endTime 			= Session.get("facInput_time_endSearch").value;}
+		else{alert("pls set end time");Session.set("facInput_time_endSearch", todayE);}
 		// if (Session.get("facDaysSearch") 									!= undefined) {details.endTime 			= Session.get("facDaysSearch").value;}
 		
-		
-		// var temptest = ["A","B","C"];
-		// temptest.forEach(function(e){console.log(e)});
 		
 		if( Session.get("facTypeSearch") != undefined){
 			matchingFacilities = Facilities.find({"facType":Session.get("facTypeSearch").value, "capacity": {$gte : Session.get("facCapacitySearch").value}});
 		} else{
 			matchingFacilities = Facilities.find({"capacity": {$gte : Session.get("facCapacitySearch").value}});
 		}
-		console.log("facilitySearchResult matchingFacilities");
-		console.log(matchingFacilities.collection._docs._map);
-		console.log("R1");
-		console.log(details.facType);
-		console.log(details.capacity);
+		// console.log("facilitySearchResult matchingFacilities");
+		// console.log(matchingFacilities.collection._docs._map);
+		// console.log("R1");
+		// console.log(details.facType);
+		// console.log(details.capacity);
 		
 		//converts the matchingFacilities.collection._docs._map into an array
 		var array = $.map(matchingFacilities.collection._docs._map, function(value, index) {
@@ -322,16 +232,12 @@ Template.facilityManagement.helpers({
 		});
 		
 		array.forEach(function(facility){
-			console.log("AAAAAAAAAAAAAA");
 			console.log(facility);
-			// alert();
-			// available = findIfFacilityIsAvailable(details);
-			available = true;
+			available = findIfFacilityIsAvailable();
+			// available = true;
 			console.log(available);
 			if(available) results.push(facility);
 		});
-		console.log("R2");
-		
 		
 		console.log("facilitySearchResult results");
 		console.log(results);
@@ -339,16 +245,87 @@ Template.facilityManagement.helpers({
 		console.log("facilitySearchResult End");
 		
 		return results;
-		// return Facilities.find({"facType":IfacType, "capacity": {$gte : Icapacity}});
 	}
 });
 
-// return an array of objects, each object having a startdate, starttime, and endtime
-function getDatesFromRepeat(details){
+
+function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, timeEnd){
+	// results = new Array();
+	soFarSoGood = true;
+	// |				|
+	//    |		|
+	existingBookings = bookings.find({
+									"facId":facility._id,
+									"start":{$lte: timeStart },		
+									"end":{$gte: timeEnd }				
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		return false;
+	}
+	
+	
+	// |				|
+	//    |				|
+	existingBookings = bookings.find({
+									"facId":facility._id,
+									"start":{$lte: timeStart },	
+									"end":{$lte: timeEnd }				
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		return false;
+	}
+	
+	
+	// 			|				|
+	//    |		|
+	existingBookings = bookings.find({
+									"facId":facility._id,
+									"start":{$gte: timeStart },		
+									"end":{$gte: timeEnd }			
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		return false;
+	}
+	
+	
+	// 			|				|
+	//    |						|
+	existingBookings = bookings.find({
+									"facId":facility._id,
+									"start":{$gte: timeStart },		// 			|				|
+									"end":{$lte: timeEnd }				//    |						|
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		return false;
+	}
+	return soFarSoGood;
+}
+
+// facility, Iinput_date_beginning, Iinput_date_end, Iinput_time_beginning, Iinput_time_end, IrepeatOption
+function findIfFacilityIsAvailable() {
+	dates = getDatesFromRepeat();
+	var canBook = true;
+	
+	//check the whole repeat duration, if one session is not available then the repeat is invalid.
+	dates.forEach(function(details){
+		startDT = details.start; 
+		endinDT = details.end;
+		var available = isFacilityAvailableOnThisTimeslot(facIdI, startDT, endinDT) | false;
+		if(!available){
+			return false;
+		}		 
+	});
+}
+
+// return an array of objects, each object having a start and end
+function getDatesFromRepeat(){
 	// facInput_date_beginingSearch
 	// facInput_time_beginningSearch
 	// facInput_time_endSearch
-	
 }
 
 

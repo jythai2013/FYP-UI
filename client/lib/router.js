@@ -13,7 +13,7 @@ Router.map(function() {
         template: 'facilityManagement',
         layoutTemplate: "loginLayout",
 				waitOn: function(){
-					console.log("READYYYY2");
+					// console.log("READYYYY2");
 					// waitOn makes sure that this publication is ready before rendering your template
 					return Meteor.subscribe("facilitiesData");
 				},
