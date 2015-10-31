@@ -1,42 +1,82 @@
 
 	// Meteor.methods({ 
 		
-	// 	'editCourse': function editCourse(_id, cName, cCode, cFee, cMin, cMax, cDescription){
+	// 	'editClass': function editClass(_id, cName, cCode, cFee, cMin, cMax, cDescription){
 	// 		// if(Meteor.user.userType != "admin"){
 	// 			// return false; //TODO: output error message in client
 	// 		// }
-	// 		Classes.update(_id, {
+	// 		Groups.update(_id, {
  //        $set: {
-	// 				name: cName,
-	// 				code: cCode,
-	// 				fee: cFee,
-	// 				min: cMin,
-	// 				max: cMax,
-	// 				description: cDescription
+	// 				groupNum: gNum,
+	// 				courseCode: cCode,
+	// 				groupStartDate: gstartDate,
+	// 				groupEndDate: gEndDate,
+	// 				groupStudentList: gStudentList,
+	// 				groupTrainer: gTrainer,
+	// 				groupPaymentDeadline: gPaymentDeadline,
+	// 				groupMin: gMin,
+	// 				groupMax: gMax,
+	// 				groupAttendance: gAttendance,
+	// 				groupStatus: gStatus,
+	// 				groupAnnoucement: gAnnoucement
 	// 			}
  //      });
 	// 	},
 		
-	// 	'deleteCourse': function deleteCourse(_id){
+	// 	'addAnnouncement': function addAnnouncement(_id, cName, cCode, cFee, cMin, cMax, cDescription){
 	// 		// if(Meteor.user.userType != "admin"){
 	// 			// return false; //TODO: output error message in client
 	// 		// }
- //      Classes.remove(_id);
+	// 		Groups.update(_id, {
+ //        $set: {
+	// 				groupHeader: gHeader,
+	// 				groupContent: gContent,
+	// 				groupAuthor: gAuthor,
+	// 				groupDateTime: gDateTime
+	// 			}
+ //      });
 	// 	},
 		
-	// 	'createCourse': function createCourse(cName, cCode, cFee, cMin, cMax, cDescription){
+	// 	'editAttendance': function editAttendence(_id, cName, cCode, cFee, cMin, cMax, cDescription){
+	// 		// if(Meteor.user.userType != "admin"){
+	// 			// return false; //TODO: output error message in client
+	// 		// }
+	// 		Groups.update(_id, {
+ //        $set: {
+	// 				groupHeader: gHeader,
+	// 				groupContent: gContent,
+	// 				groupAuthor: gAuthor,
+	// 				groupDateTime: gDateTime
+	// 			}
+ //      });
+	// 	},
+		
+	// 	'deleteClass': function deleteClass(_id){
+	// 		// if(Meteor.user.userType != "admin"){
+	// 			// return false; //TODO: output error message in client
+	// 		// }
+ //      		Groups.remove(_id);
+	// 	},
+		
+	// 	'createGroup': function createGroup(gNum, cCode, gstartDate, gEndDate, gStudentList, gTrainer, gTrainer, gTrainer, gMin, gMax, gStatus){
 	// 		// debugger;
 	// 		// if(Meteor.user.userType != "admin"){
 	// 			// return false; //TODO: output error message in client
 	// 		// }
 			
-	// 		Classes.insert({
-	// 			name: cName,
-	// 			code: cCode,
-	// 			fee: cFee,
-	// 			min: cMin,
-	// 			max: cMax,
-	// 			description: cDescription
+	// 		Groups.insert({
+	// 				courseCode: cCode,
+	// 				groupNum: gNum,
+	// 				groupStartDate: gstartDate,
+	// 				groupEndDate: gEndDate,
+	// 				groupStudentList: gStudentList,
+	// 				groupTrainer: gTrainer,
+	// 				groupPaymentDeadline: gPaymentDeadline,
+	// 				groupMin: gMin,
+	// 				groupMax: gMax,
+	// 				groupAttendance: gAttendance,
+	// 				groupStatus: gStatus,
+	// 				groupAnnoucement: gAnnoucement
 	// 		});
 	// 	}
 	// });

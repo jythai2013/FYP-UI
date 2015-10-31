@@ -121,7 +121,7 @@ Template.dashboard.helpers({
   }
 });
 
-Template.adminDashboard.events({
+Template.dashboard.events({
   "click .fc-widget-content": function() {
     Modal.show('exampleModal')
   }

@@ -523,11 +523,16 @@ li.active {
 
 .adminFormDark {
   color: #fff;
+  x-overflow: none;
   .modal-content {
     background-color: @secondary;
   }
   .table {
     margin-bottom: 0px;
+  }
+  .table-responsive {
+    overflow-x: hidden;
+    border: none;
   }
   h4 {
     color: @primary;
@@ -546,4 +551,10 @@ li.active {
     color: @primary;
     opacity: .8;
   }
+}
+
+// Other formats
+
+.breakH4 {
+  margin-top: 40px;
 }
