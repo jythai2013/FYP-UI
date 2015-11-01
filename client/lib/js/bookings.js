@@ -1,47 +1,16 @@
 
 Template.facilityManagement.events({
-	"submit #facilityManagementFormForMeteor" : function createBookingEventHandler(e) {
-		e.preventDefault();
-		//TODO: Validation of user
-		// if(Meteor.user.userType != "admin"){
-		// return false;
-		// }
-
-		//TODO: Validation of input
-		var input_date_beginning = document.getElementById("input_date_beginning").value;
-		var noSession = document.getElementById("noSession").value;
-		var repeatOption = document.getElementById("repeatOption").value;
-		var input_time_beginning = document.getElementById("input_time_beginning").value;
-		var input_time_end = document.getElementById("input_time_end").value;
-
-
-		//draw relevant facilities out, isnt this more for displaying of form
-		var input_capacity_min = document.getElementById("input_capacity_min").value;
-		var facType = document.getElementById("facType").value;
-		var facId = document.getElementByID("facIdI").value;
-		//Todo: use repeat to create multiple booking
-
-		//bookingDateI, sessionNoI, startTimeI, endTimeI, facIdI
-		//"bookings", "facilities"
-
-		var bookingDate = "";
-
-		bookFacility(input_date_beginning, input_time_beginning, input_time_end, input_course, input_session, facIdI);
-	},
-	
-	"change" : function facilityManagementFormForMeteorOnChangeHandler(e){
+	"change #facMgmtFormy" : function facilityManagementFormForMeteorOnChangeHandler(e){
 		e.preventDefault();
 		console.log("EEEEEEEEEEEEEEEEEE");
 		console.log(e);
 		
-		IfacType = document.getElementById("facType");
-		Icapacity = document.getElementById("input_capacity_min");
-		InumSessions = document.getElementById("facNumSessionSearch");
-		Iinput_date_beginning = document.getElementById("input_date_begining");
-		Iinput_date_end = document.getElementById("input_date_end");
-		Iinput_time_beginning = document.getElementById("input_time_beginning");
-		Iinput_time_end = document.getElementById("input_time_end");
-		repeatOption = document.getElementById("facRepeatOptionSearch");
+		IfacType = document.getElementById("facType").value;
+		Icapacity = document.getElementById("input_capacity_min").value;
+		InumSessions = document.getElementById("facNumSessionSearch").value;
+		var startDateTime = document.getElementById("input_time_beginning").value;
+		var endinDateTime = document.getElementById("input_time_end").value;
+		repeatOption = document.getElementById("facRepeatOptionSearch").value;
 		
 		IDays = new Object();
 		IDays.mon = document.getElementById("facSearchMon").checked;
@@ -56,46 +25,12 @@ Template.facilityManagement.events({
 		Session.set("facCapacitySearch", Icapacity);
 		Session.set("facNumSessionSearch", InumSessions);
 		Session.set("facReapeatOptionSearch", repeatOption);
-		Session.set("facInput_date_beginingSearch", Iinput_date_beginning);
-		Session.set("facInput_date_endSearch", Iinput_date_end);
-		Session.set("facInput_time_beginningSearch", Iinput_time_beginning);
-		Session.set("facInput_time_endSearch", Iinput_time_end);
+		Session.set("facStartDateTimeSearch", startDateTime);
+		Session.set("facEndinDateTimeSearch", endinDateTime);
 	}
 });
 
 Template.facilityManagement.events({
-
-	//consider switching to this way
-	//http://hacktivist.in/articles/Simple-crud-app-in-meteor/
-	"click .editBooking" : function updateBookingEventHandler(e) {
-		// debugger;
-		// console.log(e);
-		// console.log(this.name);
-		var originalHTML = "" +
-			"<h2>Name: {{name}}</h2><br />" +
-			"<b>BookingCode:</b> {{BookingCode}}<br />" +
-			"<b>fee:</b> {{fee}}<br />" +
-			"<b>min:</b> {{min}}<br />" +
-			"<b>max:</b> {{max}}<br />" +
-			"<br />" +
-			"<span class=\"text\">description: {{description}}</span><br />" +
-			"<button class=\"editBooking\">edit</button>" +
-			"<button class=\"deleteBooking\">delete</button>";
-
-		var newHTML = "" +
-			"<form class=\"BookingEditForm\"" +
-			"<h2>Name: <input type=\"text\" value=\"" + this.name + "\" id=\"BookingEditName\"></h2><br />" +
-			"<b>BookingCode:</b> <input type=\"text\" value=\"" + this.BookingCode + "\" id=\"BookingEditBookingCode\"><br />" +
-			"<b>fee:</b> <input type=\"text\" value=\"" + this.fee + "\" id=\"BookingEditFee\"><br />" +
-			"<b>min:</b> <input type=\"text\" value=\"" + this.min + "\" id=\"BookingEditMin\"><br />" +
-			"<b>max:</b> <input type=\"text\" value=\"" + this.max + "\" id=\"BookingEditMax\"><br />" +
-			"<br />" +
-			"<span class=\"text\">description: <textarea  id=\"BookingEditDescription\">" + this.description + "</textarea></span><br />" +
-			"<button class=\"editBookingSave\" >Save</button>" +
-			"</form>";
-
-		document.getElementById("BookingNodeIdObjectID(\"" + this._id + "\")").innerHTML = newHTML;
-	},
 	
 	"submit #facMgmtFormy" : function(){
 		e.preventDefault();
@@ -104,38 +39,6 @@ Template.facilityManagement.events({
 		dates.forEach(function(details){
 			Meteor.call("createBookingDateTime", details.startDateTime, details.endDateTime, document.getElementById("fac").value, courseI, sessionI);
 		});
-	},
-
-	"submit .BookingEditForm" : function updateBookingSaveEventHandler(e) {
-		//TODO: Validation of user
-		// if(Meteor.user.userType != "admin"){
-		// return false;
-		// }
-
-		//TODO: Validation of input
-		e.preventDefault();
-
-		name = document.getElementById("BookingEditName").value,
-		BookingCode = document.getElementById("BookingEditBookingCode").value,
-		fee = document.getElementById("BookingEditFee").value,
-		min = document.getElementById("BookingEditMin").value,
-		max = document.getElementById("BookingEditMax").value,
-		description = document.getElementById("BookingEditDescription").value
-		Meteor.call("updateBooking", this._id, name, BookingCode, fee, min, max, description);
-
-		// replace back with original HTML
-		var originalHTML = "" +
-			"<h2>Name: " + this.name + "</h2><br />" +
-			"<b>BookingCode:</b> " + this.BookingCode + "<br />" +
-			"<b>fee:</b> " + this.fee + "<br />" +
-			"<b>min:</b> " + this.min + "<br />" +
-			"<b>max:</b> " + this.max + "<br />" +
-			"<br />" +
-			"<span class=\"text\">description: " + this.description + "</span><br />" +
-			"<button class=\"editBooking\">edit</button>" +
-			"<button class=\"deleteBooking\">delete</button>";
-
-		document.getElementById("BookingNodeIdObjectID(\"" + this._id + "\")").innerHTML = originalHTML;
 	},
 
 	"click .deleteBooking" : function deleteBookingEventHandler(e) {
@@ -205,13 +108,13 @@ Template.facilityManagement.helpers({
 		// if (Session.get("facTypeSearch") 									!= undefined) {details.facType 			= Session.get("facTypeSearch").value;}
 		// if (Session.get("facRepeatOptionSearch") 					!= undefined) {details.repeatOption = Session.get("facRepeatOptionSearch").value;}
 		// if (Session.get("facNumSessionSearch") 						!= undefined) {details.numSessions 	= Session.get("facNumSessionSearch").value;}
-		if (Session.get("facInput_date_beginingSearch") 			!= undefined) {details.startDate 		= Session.get("facInput_date_beginingSearch").value;}
-		else{alert("pls set date");Session.set("facInput_date_beginingSearch", todayD);}
+		if (Session.get("facStartDateTimeSearch") 			!= undefined) {details.start 		= Session.get("facStartDateTimeSearch").value;}
+		else{console.log("pls set date");Session.set("facStartDateTimeSearch", todayD);}
 		// if (Session.get("facInput_date_endSearch") 				!= undefined) {details.endDate 			= Session.get("facInput_date_endSearch").value;}
-		if (Session.get("facInput_time_beginningSearch") 			!= undefined) {details.startTime 		= Session.get("facInput_time_beginningSearch").value;}
-		else{alert("pls set start time");Session.set("facInput_time_beginningSearch", todayS);}
-		if (Session.get("facInput_time_endSearch") 						!= undefined) {details.endTime 			= Session.get("facInput_time_endSearch").value;}
-		else{alert("pls set end time");Session.set("facInput_time_endSearch", todayE);}
+		if (Session.get("facEndDateTimeSearch") 			!= undefined) {details.end 		= Session.get("facEndDateTimeSearch").value;}
+		else{console.log("pls set start time");Session.set("facEndDateTimeSearch", todayS);}
+		if (Session.get("facDurationSearch") 						!= undefined) {details.duration 			= Session.get("facDurationSearch").value;}
+		else{console.log("pls set end time");Session.set("facDurationSearch", todayE);}
 		// if (Session.get("facDaysSearch") 									!= undefined) {details.endTime 			= Session.get("facDaysSearch").value;}
 		
 		
@@ -249,7 +152,7 @@ Template.facilityManagement.helpers({
 });
 
 
-function isFacilityAvailableOnThisTimeslot(facility, searchDate, timeStart, timeEnd){
+function isFacilityAvailableOnThisTimeslot(facility, timeStart, timeEnd){
 	// results = new Array();
 	soFarSoGood = true;
 	// |				|
@@ -321,11 +224,131 @@ function findIfFacilityIsAvailable() {
 	});
 }
 
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+		console.log(result);
+    return result;
+}
+
+function addMilis(date, num) {
+    var result = new Date(date);
+    result.setTime(result.getTime() + num);
+		console.log(result);
+    return result;
+}
+
 // return an array of objects, each object having a start and end
 function getDatesFromRepeat(){
-	// facInput_date_beginingSearch
-	// facInput_time_beginningSearch
-	// facInput_time_endSearch
+	IDays = Session.get("facDaysSearch");
+	IfacType = Session.get("facTypeSearch");
+	Icapacity = Session.get("facCapacitySearch");
+	InumSessions = Session.get("facNumSessionSearch");
+	repeatOption = Session.get("facReapeatOptionSearch");
+	startDateTime = Session.get("facStartDateTimeSearch");
+	endinDateTime = Session.get("facEndinDateTimeSearch");
+	
+	//for use in repeat calculations
+	var temp1 = new Date();
+			temp1.setHours(startDateTime.getHours());
+			temp1.setMinutes(startDateTime.getMinutes());
+			temp1.setSeconds()(startDateTime.getSeconds());
+	var temp2 = new Date();
+			temp2.setHours(endDateTime.getHours());
+			temp2.setMinutes(endDateTime.getMinutes());
+			temp2.setSeconds()(endDateTime.getSeconds());
+	var duration  = temp2 - temp1
+	var oneDay = 24*60*60*1000;
+	
+	
+	//first timeslot
+	results = new Array();
+	var firstSlot = new Object();
+	firstSlot.start = new Date(startDateTime);
+	firstSlot.end = new Date(endinDateTime);
+	results.push(firstSlot);
+	
+	//subsequent timeslots
+	var timeSlot = new Object();
+		
+	// <option value="everyday">Everyday</option>
+	if (repeatOption=="everyday"){
+		if(InumSessions > 0 && InumSessions != undefined){
+			for(var i = 1; i < InumSessions; i++){
+				timeSlot.start = addDays(startDateTime, i);
+				timeSlot.end   = addMilis(timeSlot.start, duration);
+				results.push(timeSlot);
+			}
+		} else if(endinDateTime != undefined){
+			var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
+			for(var i = 1; i < diffDays; i++){
+				timeSlot.start = addDays(startDateTime, i);
+				timeSlot.end   = addMilis(timeSlot.start, duration);
+				results.push(timeSlot);
+			}
+		}
+	}
+	// <option value="weekday">Weekdays</option>
+	else if (repeatOption=="weekday"){
+		if(InumSessions > 0 && InumSessions != undefined){
+			for(var i = 1; i < InumSessions; i++){
+				timeSlot.start = addDays(startDateTime, i);
+				if(timeSlot.start.getDay() > 0 && timeSlot.start.getDay() < 7){
+					timeSlot.end   = addMilis(timeSlot.start, duration);
+					results.push(timeSlot);
+				}
+			}
+		} else if(endinDateTime != undefined){
+			var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
+			for(var i = 1; i < diffDays; i++){
+				timeSlot.start = addDays(startDateTime, i);
+				if(timeSlot.start.getDay() > 0 && timeSlot.start.getDay() < 7){
+					timeSlot.end   = addMilis(timeSlot.start, duration);
+					results.push(timeSlot);
+				}
+			}
+		}
+	}
+	// <option value="weekends">Weekends</option>
+	else if (repeatOption=="weekends"){
+		if(InumSessions > 0 && InumSessions != undefined){
+			for(var i = 1; i < InumSessions; i++){
+				timeSlot.start = addDays(startDateTime, i);
+				if(timeSlot.start.getDay() == 0 || timeSlot.start.getDay() == 7){
+					timeSlot.end   = addMilis(timeSlot.start, duration);
+					results.push(timeSlot);
+				}
+			}
+		} else if(endinDateTime != undefined){
+			var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
+			for(var i = 1; i < diffDays; i++){
+				timeSlot.start = addDays(startDateTime, i);
+				if(timeSlot.start.getDay() == 0 || timeSlot.start.getDay() == 7){
+					timeSlot.end   = addMilis(timeSlot.start, duration);
+					results.push(timeSlot);
+				}
+			}
+		}
+	}
+	// <option value="weekly">Weekly</option>
+	else if (repeatOption=="weekly"){
+		if(InumSessions > 0 && InumSessions != undefined){
+			
+		} else if(endinDateTime != undefined){
+			
+		}
+	}
+	// <option value="mothly">Monthly</option>
+	else if (repeatOption=="mothly"){
+		if(InumSessions > 0 && InumSessions != undefined){
+			
+		} else if(endinDateTime != undefined){
+			
+		}
+	} else{
+		//repeatOption not set, just return 1 timeslot
+		return results;
+	}
 }
 
 
@@ -335,8 +358,27 @@ function getDatesFromRepeat(){
 
 
 
+// TODO: 
+// date repeater
+// change from date and time to datetime
+//
+// email blast functionality, what is the courselist name in db, and the structure?
 
 
 
+// 1) facility form change to datetime
+// 2) facility form add course and session
+// 3) blast email button id, i cant find the template. maybe wrong git branch
+// 4) groups collection, the start date name. eg. "start" or "startDate"
+// 5) groups collection classlist name and structure. eg "classlist" and an array of userID. or "students" and an array of names. prefer userID or meteor's _id for easier linking. if names, may not be unique
 
 
+// 'click button.myFileInputButton':function(event, template){
+      // var files = document.getElementById("myFileInput").files;
+      // files.forEach(function(file) {
+        // var fileObj = new FS.File(file);
+        // Files.insert(fileObj,function(err)){
+          // console.log(err);
+        // }
+      // });
+    // }
