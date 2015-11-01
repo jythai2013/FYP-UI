@@ -1,6 +1,5 @@
 navRoutes = [
   new NavRoute('dashboard', 'fa-dashboard')
-  new NavRoute('calendar', '', {label: "Calendar ???"})
 
   # Facility
   new NavRoute('FacilityModule', 'fa-table', {label: "Facility Management"})
@@ -14,13 +13,13 @@ navRoutes = [
   new NavRoute('classHomepage', '', {parentName: 'CourseModule', label: "Class Homepage"})
   new NavRoute('group', '', {parentName: 'CourseModule', label: "Class"})
 
-  new NavRoute('forms', 'fa-edit')
-  new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})
-  new NavRoute('grid', '', {parentName: 'ui-elements'})
-  new NavRoute('panels-and-wells', '', {parentName: 'ui-elements', label: 'Panels and Wells'})
-  new NavRoute('pages', 'fa-files-o', {label: "Sample Pages"})
-  new NavRoute('blank', '', {parentName: 'pages', label: "Blank Page"})
-  new NavRoute('loginModal', '', {parentName: 'pages', label: "Sign In Modal", layoutTemplate: 'loginLayout'})
+  #new NavRoute('forms', 'fa-edit')
+  #new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})
+  #new NavRoute('grid', '', {parentName: 'ui-elements'})
+  #new NavRoute('panels-and-wells', '', {parentName: 'ui-elements', label: 'Panels and Wells'})
+  #new NavRoute('pages', 'fa-files-o', {label: "Sample Pages"})
+  #new NavRoute('blank', '', {parentName: 'pages', label: "Blank Page"})
+  #new NavRoute('loginModal', '', {parentName: 'pages', label: "Sign In Modal", layoutTemplate: 'loginLayout'})
 
   new NavRoute('', '', {isMainNav: false, label: "redirect", template: 'dashboard'})
 ]

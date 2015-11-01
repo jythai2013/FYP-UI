@@ -109,21 +109,14 @@ template(name="course")
                     th Trainer
                     td CHIA Wei Ting, POON Lee Wang
                     td 
-                      input(type="button", value="Update")
+                      input(type="button", value="Remove Trainer(s)")
                   tr 
-                    th Class List
+                    th Classes
                     td
                       a(href="class") G1
                       |, G2, G3
                     td(width="50px")
-                      input(type="button", value="Update")
-                  tr
-                    th
-                    td
-                      |G2, G3
-                    td(width="50px")
-                      input(type="button", value="Update")
-                  tr
+                      input(type="button", value="Remove Class(es)")
                     
               button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
@@ -188,11 +181,11 @@ template(name="course")
 
 template(name="addClass")
   #addClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
-    .modal-dialogs
+    .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Add New Course
+          h4#myModalLabel.modal-title Add New Class
         .modal-body
           form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
           .table-responsive

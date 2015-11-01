@@ -4,7 +4,7 @@ Deps.autorun(function () {
 	Meteor.subscribe('userData');
 	Meteor.subscribe('courseData');
 	Meteor.subscribe('sessionsData');
-	// Meteor.subscribe('facilitiesData');
+	Meteor.subscribe('facilitiesData');
 	// Meteor.subscribe('facilitiesData', function(e){
      // // Set the reactive session as true to indicate that the data have been loaded
      // console.log("READY!!");

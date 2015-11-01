@@ -1,5 +1,5 @@
 Router.map(function() {
-    this.route('Sterling Traning Hub', {
+    this.route('Sterling Training Hub', {
         path:'/website',
         template: 'websitePages',
         layoutTemplate: "layoutWebsiteJade",
