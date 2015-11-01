@@ -1,4 +1,6 @@
-
+<!-- so date and time pickers should be changed to 2 datetime pickers, start and end. 
+what if the users puts start and end and number of sessions, but they contradict each other?
+-->
 
 <template name="facilityManagement">
   <div class="panel" style="background-color:#f8f8f8">
@@ -24,12 +26,12 @@
           <form id="facMgmtFormy" class="form-vertical" role="form" action = "facilityResult">
             <!-- Date of Booking -->
             <!-- Put a date time picker -->
-            <div class="form-group">
+            <!--<div class="form-group">
               <label class="col-sm-2 control-label">Start Date</label>
               <div class="col-sm-4">
-                <input type="date" id="input_date_beginning" class="form-control" placeholder="D.O.B.B">
+                <input type="datetime-local" id="input_date_beginning" class="form-control" placeholder="D.O.B.B">
               </div>
-            </div>
+            </div>-->
 
             <!-- Put a date time picker -->
             <div class="form-group">
@@ -69,32 +71,32 @@
                 <div class="col-sm-10">
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox" checked id="facSearchMon" value="mon"> Mon
+                      <input type="checkbox" checked id="facSearchMon" value="1"> Mon
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox" id="facSearchTue" value="tue"> Tues
+                      <input type="checkbox" id="facSearchTue" value="2"> Tues
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox" id="facSearchWed" value="wed"> Wed
+                      <input type="checkbox" id="facSearchWed" value="3"> Wed
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox" id="facSearchThu" value="thu"> Thurs
+                      <input type="checkbox" id="facSearchThu" value="4"> Thurs
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox" id="facSearchFri" value="fri"> Fri
+                      <input type="checkbox" id="facSearchFri" value="5"> Fri
                     </label>
                   </div>
                   <div class="checkbox-inline">
                     <label>
-                      <input type="checkbox" id="facSearchSat" value="sat"> Sat
+                      <input type="checkbox" id="facSearchSat" value="6"> Sat
                     </label>
                   </div>
                 </div>
@@ -107,14 +109,14 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">Start Time</label>
               <div class="col-sm-4">
-                <input type="time" id="input_time_beginning" class="form-control" placeholder="time.start">
+                <input type="datetime-local" id="input_time_beginning" class="form-control" placeholder="time.start">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label">End Time</label>
               <div class="col-sm-4">
-                <input type="time" id="input_time_end" class="form-control" placeholder="time.end">
+                <input type="datetime-local" id="input_time_end" class="form-control" placeholder="time.end">
               </div>
             </div>
 
@@ -125,9 +127,9 @@
               <div class="col-sm-4">
                 <select class="form-control" name="facilityType" id="facType">
                   <option value="">-- Select a Facility --</option>
-                  <option value="classRm">Class Room</option>
-                  <option value="trainingRm">Training Room</option>
-                  <option value="meetingRm">Meeting Room</option>
+                  <option value="Class Room">Class Room</option>
+                  <option value="Training Room">Training Room</option>
+                  <option value="Meeting Room">Meeting Room</option>
                 </select>
               </div>
             </div>

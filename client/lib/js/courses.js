@@ -1,4 +1,5 @@
 Template.courseList.helpers({
+
 	"courses" : function listCourseEventHandler(e) {
 		console.log("here");
 		return Courses.find({});
@@ -29,9 +30,27 @@ Template.addCourseForm.events({
 });
 
 
-Template.course.helpers({
-	
-});
+// Template.addCourseTemplate.events({
+// 	"submit #courseAddForm" : function createCourseEventHandler(e) {
+// 		e.preventDefault();
+// 		//TODO: Validation of user
+// 		// if(Meteor.user.userType != "admin"){
+// 		// return false;
+// 		// }
+
+// 		//TODO: Validation of input
+// 		var cName = document.getElementById("courseAddName").value;
+// 		var cCode = document.getElementById("courseAddCourseCode").value;
+// 		var cFee = document.getElementById("courseAddFee").value;
+
+// 		// var cMin = document.getElementById("courseAddMin").value;
+// 		// var cMax = document.getElementById("courseAddMax").value;
+// 		var cDescription = document.getElementById("courseAddDescription").value;
+// 		var cTrainer = document.getElementById("courseAddTrainer").value;
+
+// 		Meteor.call("createCourse", cName, cCode, cFee, cDescription, cTrainer);
+// 	}
+// });
 
 Template.course.events({
 

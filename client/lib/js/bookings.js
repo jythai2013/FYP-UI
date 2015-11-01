@@ -7,9 +7,12 @@ Template.facilityManagement.events({
 		IfacType = document.getElementById("facType").value;
 		Icapacity = document.getElementById("input_capacity_min").value;
 		InumSessions = document.getElementById("facNumSessionSearch").value;
-		var startDateTime = document.getElementById("input_time_beginning").value;
-		var endinDateTime = document.getElementById("input_time_end").value;
+		var startDateTimeI = document.getElementById("input_time_beginning").value;
+		var endinDateTimeI = document.getElementById("input_time_end").value;
 		repeatOption = document.getElementById("facRepeatOptionSearch").value;
+		
+		startDateTime = new Date(startDateTimeI);
+		endinDateTime = new Date(endinDateTimeI);
 		
 		IDays = new Object();
 		IDays.mon = document.getElementById("facSearchMon").checked;
@@ -95,32 +98,35 @@ Template.facilityManagement.helpers({
 	
 	facilitySearchResult:function(){
 		console.log("facilitySearchResult Start");
-		results = new Array();
 		
 		details = new Object();
-		var today = new Date();
-		var todayS = (today.getHours()) +":" +today.getMinutes();
-		var todayE = (today.getHours() + 1) +":" +today.getMinutes();
-		var todayD = new Date(today.getFullYear(),today.getMonth(),today.getDate());
-		if (Session.get("facCapacitySearch") 									!= undefined) {details.capacity 		= Session.get("facCapacitySearch").value; }
+		if (Session.get("facCapacitySearch") 									!= undefined) {details.capacity 		= Session.get("facCapacitySearch"); }
 		else{Session.set("facCapacitySearch", 0);}		
 		// if (Session.get("facTypeSearch") 									!= undefined) {details.facType 			= Session.get("facTypeSearch").value;}
 		// if (Session.get("facRepeatOptionSearch") 					!= undefined) {details.repeatOption = Session.get("facRepeatOptionSearch").value;}
 		// if (Session.get("facNumSessionSearch") 						!= undefined) {details.numSessions 	= Session.get("facNumSessionSearch").value;}
 		if (Session.get("facStartDateTimeSearch") 			!= undefined) {details.start 		= Session.get("facStartDateTimeSearch").value;}
-		else{console.log("pls set date");Session.set("facStartDateTimeSearch", todayD);}
+		else{console.log("pls set date");}
 		// if (Session.get("facInput_date_endSearch") 				!= undefined) {details.endDate 			= Session.get("facInput_date_endSearch").value;}
 		if (Session.get("facEndDateTimeSearch") 			!= undefined) {details.end 		= Session.get("facEndDateTimeSearch").value;}
-		else{console.log("pls set start time");Session.set("facEndDateTimeSearch", todayS);}
-		if (Session.get("facDurationSearch") 						!= undefined) {details.duration 			= Session.get("facDurationSearch").value;}
-		else{console.log("pls set end time");Session.set("facDurationSearch", todayE);}
+		else{console.log("pls set start time");}
+		// if (Session.get("facDurationSearch") 						!= undefined) {details.duration 			= Session.get("facDurationSearch").value;}
+		// else{console.log("pls set end time");console.log(Session.get("facStartDateTimeSearch"));}
 		// if (Session.get("facDaysSearch") 									!= undefined) {details.endTime 			= Session.get("facDaysSearch").value;}
 		
 		
-		if( Session.get("facTypeSearch") != undefined){
-			matchingFacilities = Facilities.find({"facType":Session.get("facTypeSearch").value, "capacity": {$gte : Session.get("facCapacitySearch").value}});
+		if( Session.get("facTypeSearch") != undefined && Session.get("facTypeSearch").length > 0){
+			ascapacity = parseInt(Session.get("facCapacitySearch"));
+			typea = Session.get("facTypeSearch");
+			console.log(ascapacity);
+			console.log(typea);
+			matchingFacilities = Facilities.find({"facilityType":typea, "capacity": {$gte : ascapacity}}).fetch();
+			console.log(matchingFacilities);
 		} else{
-			matchingFacilities = Facilities.find({"capacity": {$gte : Session.get("facCapacitySearch").value}});
+			ascapacity = parseInt(Session.get("facCapacitySearch"));
+			console.log(ascapacity);
+			matchingFacilities = Facilities.find({"capacity": {$gte : ascapacity}}).fetch();
+			console.log(matchingFacilities);
 		}
 		// console.log("facilitySearchResult matchingFacilities");
 		// console.log(matchingFacilities.collection._docs._map);
@@ -128,87 +134,35 @@ Template.facilityManagement.helpers({
 		// console.log(details.facType);
 		// console.log(details.capacity);
 		
-		//converts the matchingFacilities.collection._docs._map into an array
-		var array = $.map(matchingFacilities.collection._docs._map, function(value, index) {
-				return [value];
-		});
+		// //converts the matchingFacilities.collection._docs._map into an array
+		// var array = $.map(matchingFacilities.collection._docs._map, function(value, index) {
+				// return [value];
+		// });
 		
-		array.forEach(function(facility){
+		resultsF = new Array();
+		console.log(resultsF);
+		matchingFacilities.forEach(function(facility){
 			console.log(facility);
-			available = findIfFacilityIsAvailable();
+			available = findIfFacilityIsAvailable(facility.facilityID);
 			// available = true;
 			console.log(available);
-			if(available) results.push(facility);
+			if(available){
+				console.log(facility);
+				resultsF.push(facility);
+			} 
 		});
 		
-		console.log("facilitySearchResult results");
-		console.log(results);
+		console.log("facilitySearchResult resultsF");
+		// console.log(resultsF);
 		
 		console.log("facilitySearchResult End");
 		
-		return results;
+		return resultsF;
 	}
 });
 
-
-function isFacilityAvailableOnThisTimeslot(facility, timeStart, timeEnd){
-	// results = new Array();
-	soFarSoGood = true;
-	// |				|
-	//    |		|
-	existingBookings = bookings.find({
-									"facId":facility._id,
-									"start":{$lte: timeStart },		
-									"end":{$gte: timeEnd }				
-								}).fetch();
-	if (existingBookings.length > 0){
-		// already have a booking sometime in that time so make sure it does not get returned
-		return false;
-	}
-	
-	
-	// |				|
-	//    |				|
-	existingBookings = bookings.find({
-									"facId":facility._id,
-									"start":{$lte: timeStart },	
-									"end":{$lte: timeEnd }				
-								}).fetch();
-	if (existingBookings.length > 0){
-		// already have a booking sometime in that time so make sure it does not get returned
-		return false;
-	}
-	
-	
-	// 			|				|
-	//    |		|
-	existingBookings = bookings.find({
-									"facId":facility._id,
-									"start":{$gte: timeStart },		
-									"end":{$gte: timeEnd }			
-								}).fetch();
-	if (existingBookings.length > 0){
-		// already have a booking sometime in that time so make sure it does not get returned
-		return false;
-	}
-	
-	
-	// 			|				|
-	//    |						|
-	existingBookings = bookings.find({
-									"facId":facility._id,
-									"start":{$gte: timeStart },		// 			|				|
-									"end":{$lte: timeEnd }				//    |						|
-								}).fetch();
-	if (existingBookings.length > 0){
-		// already have a booking sometime in that time so make sure it does not get returned
-		return false;
-	}
-	return soFarSoGood;
-}
-
 // facility, Iinput_date_beginning, Iinput_date_end, Iinput_time_beginning, Iinput_time_end, IrepeatOption
-function findIfFacilityIsAvailable() {
+function findIfFacilityIsAvailable(facIdI) {
 	dates = getDatesFromRepeat();
 	var canBook = true;
 	
@@ -217,11 +171,77 @@ function findIfFacilityIsAvailable() {
 		startDT = details.start; 
 		endinDT = details.end;
 		var available = isFacilityAvailableOnThisTimeslot(facIdI, startDT, endinDT) | false;
+		console.log(facIdI);
+		console.log(available);
 		if(!available){
 			return false;
 		}		 
 	});
+	return canBook;
 }
+
+
+function isFacilityAvailableOnThisTimeslot(facility, timeStart, timeEnd){
+	// results = new Array();
+	soFarSoGood = true;
+	// |				|
+	//    |		|
+	existingBookings = Bookings.find({
+									"facId":facility._id,
+									"start":{$lte: timeStart },		
+									"end":{$gte: timeEnd }				
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		console.log("false");
+		return false;
+	}
+	
+	
+	// |				|
+	//    |				|
+	existingBookings = Bookings.find({
+									"facId":facility._id,
+									"start":{$lte: timeStart },	
+									"end":{$lte: timeEnd }				
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		console.log("false");
+		return false;
+	}
+	
+	
+	// 			|				|
+	//    |		|
+	existingBookings = Bookings.find({
+									"facId":facility._id,
+									"start":{$gte: timeStart },		
+									"end":{$gte: timeEnd }			
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		console.log("false");
+		return false;
+	}
+	
+	
+	// 			|				|
+	//    |						|
+	existingBookings = Bookings.find({
+									"facId":facility._id,
+									"start":{$gte: timeStart },		// 			|				|
+									"end":{$lte: timeEnd }				//    |						|
+								}).fetch();
+	if (existingBookings.length > 0){
+		// already have a booking sometime in that time so make sure it does not get returned
+		console.log("false");
+		return false;
+	}
+	console.log(soFarSoGood);
+	return soFarSoGood;
+}
+
 
 function addDays(date, days) {
     var result = new Date(date);
@@ -246,16 +266,16 @@ function getDatesFromRepeat(){
 	repeatOption = Session.get("facReapeatOptionSearch");
 	startDateTime = Session.get("facStartDateTimeSearch");
 	endinDateTime = Session.get("facEndinDateTimeSearch");
+	// console.log(this);
+	// console.log(startDateTime);
 	
 	//for use in repeat calculations
 	var temp1 = new Date();
 			temp1.setHours(startDateTime.getHours());
 			temp1.setMinutes(startDateTime.getMinutes());
-			temp1.setSeconds()(startDateTime.getSeconds());
 	var temp2 = new Date();
-			temp2.setHours(endDateTime.getHours());
-			temp2.setMinutes(endDateTime.getMinutes());
-			temp2.setSeconds()(endDateTime.getSeconds());
+			temp2.setHours(endinDateTime.getHours());
+			temp2.setMinutes(endinDateTime.getMinutes());
 	var duration  = temp2 - temp1
 	var oneDay = 24*60*60*1000;
 	
@@ -365,7 +385,7 @@ function getDatesFromRepeat(){
 
 
 
-// 1) facility form change to datetime
+// 1) match the values
 // 2) facility form add course and session
 // 3) blast email button id, i cant find the template. maybe wrong git branch
 // 4) groups collection, the start date name. eg. "start" or "startDate"

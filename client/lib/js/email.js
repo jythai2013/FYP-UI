@@ -48,7 +48,7 @@ Template.blastReminder.events({
 		var someDate = new Date();
 		var numberOfDaysToAdd = 3;
 		someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
-		var groupsToBlast = Groups.find("start":{$lte: someDate})
+		var groupsToBlast = Groups.find({"start":{$lte: someDate}});
 		
 		
 		
