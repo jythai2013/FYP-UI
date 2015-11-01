@@ -6,7 +6,7 @@
 
 // }
 
-Template.adminDashboard.helpers({
+Template.dashboard.helpers({
   options: function() {
       return {
         header: {
@@ -121,7 +121,7 @@ Template.adminDashboard.helpers({
   }
 });
 
-Template.adminDashboard.events({
+Template.dashboard.events({
   "click .fc-widget-content": function() {
     Modal.show('exampleModal')
   }

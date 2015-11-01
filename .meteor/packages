@@ -31,3 +31,4 @@ twbs:bootstrap
 
 percolate:synced-cron
 email
+cfs:dropbox

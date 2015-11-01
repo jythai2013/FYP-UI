@@ -1,8 +1,4 @@
 template(name="course")
-  style.
-    .breakH4 {
-      margin-top: 40px;
-    }
   script(type='text/javascript').
       $('#myModal').modal('hide');
       $('body').removeClass('modal-open');
@@ -26,7 +22,10 @@ template(name="course")
                     th IS101
                   tr
                     th Course Name
-                    td Workplace Health & Safety
+                    td=courses.courseName
+                  tr
+                    th Course Type
+                    td=courses.courseType
                   tr
                     th Description
                     td Hands-on and Theory lesson with 2 practical test
@@ -39,7 +38,7 @@ template(name="course")
                   tr
                   tr
                     th Fees
-                    td $120
+                    td=courses.courseType
                   tr
                     td
                     td 
@@ -63,7 +62,7 @@ template(name="course")
                             th Course Code
                             td 
                               .form-group
-                                input.form-control(type="text", name="cCode", value="is101")
+                                input.form-control(type="text", name="cCode", value=course.courseCode)
                           tr
                             th Course Name
                             td 
@@ -117,7 +116,20 @@ template(name="course")
                       |, G2, G3
                     td(width="50px")
                       input(type="button", value="Update")
+                  tr
+                    th
+                    td
+                      |G2, G3
+                    td(width="50px")
+                      input(type="button", value="Update")
+                  tr
+                    
+              button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus
+                        | Class 
+              +addClass
             // /.table-responsive
+
             p.breakH4
             h4 Course Materials
             .table-responsive
@@ -159,9 +171,9 @@ template(name="course")
                         option Session 01
                         option Session 02
                         option Session 03                          
-                    input.myFileInput(type="file", name="courseMaterials")
+                    input#myFileInput(type="file", name="courseMaterials")
                   .modal-footer
-                    button.btn.admin-btn(type="button") Upload
+                    button.myFileInputButton.btn.admin-btn(type="button") Upload
                 // /.modal-content
               // /.modal-dialog
             // /.modal
@@ -173,3 +185,50 @@ template(name="course")
     // /.row
   // /#page-wrapper
 
+template(name="addClass")
+  #addClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialogs
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Course
+        .modal-body
+          form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table
+              tbody
+                tr
+                  th Course Code
+                  td(colspan="3")
+                    .form-group
+                      input.form-control(type="text", id="cCode", value="IS101")
+                tr
+                  th Session Timing  
+                  td 
+                    .form-group
+                      input.form-control(type="time", id="startTime")
+                  td  TO 
+                  td 
+                    .form-group
+                      input.form-control(type="time", id="endTime")
+                tr
+                  th Start Date
+                  td 
+                    .form-group
+                      input.form-control(type="date", id="startDate")
+                  th End Date
+                  td 
+                    .form-group
+                      input.form-control(type="date", id="endDate")
+                tr 
+                  th Payment Deadline
+                  td(colspan="3")
+                    .form-group
+                      input.form-control(type="date", id="deadline")
+                    
+          // /.table-responsive
+        .modal-footer
+          input.btn.btn-save(type="submit")
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal

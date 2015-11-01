@@ -12,3 +12,4 @@ mongo
 rzymek:fullcalendar
 session
 twbs:bootstrap
+cfs:dropbox

@@ -1,4 +1,3 @@
-
 Template.facilityManagement.events({
 	"change #facMgmtFormy" : function facilityManagementFormForMeteorOnChangeHandler(e){
 		e.preventDefault();

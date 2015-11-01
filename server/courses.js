@@ -1,17 +1,20 @@
 
 	Meteor.methods({ 
 		
-		'editCourse': function editCourse(_id, cName, cCode, cFee, cDescription, cTrainer){
+		'editCourse': function editCourse(_id, cName, cCode, cFee, cDescription, cTrainer,cType,cMin,cMax){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
 			Courses.update(_id, {
         $set: {
-					name: cName,
-					code: cCode,
-					fee: cFee,
-					description: cDescription,
-					trainer: cTrainer
+				courseName: cName,
+				courseCode: cCode,
+				courseFees: cFee,
+				description: cDescription,
+				trainers: cTrainer,
+				courseType: cType,
+				courseMin: cMin,
+				courseMax: cMax
 				}
       });
 		},
@@ -23,18 +26,21 @@
       Courses.remove(_id);
 		},
 		
-		'createCourse': function createCourse(cName, cCode, cFee, cDescription, cTrainer){
+		'createCourse': function createCourse(cName, cCode, cFee, cDescription, cTrainer, cType, cMin, cMax){
 			// debugger;
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-			
+			console.log("here2");
 			Courses.insert({
-				name: cName,
-				code: cCode,
-				fee: cFee,
+				courseName: cName,
+				courseCode: cCode,
+				courseFees: cFee,
 				description: cDescription,
-				trainer: cTrainer
+				trainers: cTrainer,
+				courseType: cType,
+				courseMin: cMin,
+				courseMax: cMax
 			});
 		}
 	});

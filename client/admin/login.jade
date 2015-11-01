@@ -40,6 +40,11 @@ template(name="loginModal")
   else 
     +loginPage
 
+template(name="checkUserLogin")
+  if isLoggedIn
+    // Do nothing
+  else 
+    +loginPage
 
 template(name="loginPage")
     .row
@@ -47,7 +52,7 @@ template(name="loginPage")
         .login-panel.panel.panel-default
           .panel-heading
             a.close(href="/website") &#215;
-            h3.panel-title Administrator Login
+            h3.panel-title Sterling Portal Login
               span.i.fa.fa-sign-in.fa-fw
           .panel-body
             form#sign-up-form(role="form")
