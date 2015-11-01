@@ -21,7 +21,7 @@ template(name="courseList")
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addCourse" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | Course
-            +addCourseForm
+              +addCourseForm
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -39,7 +39,7 @@ template(name="courseList")
                       td #{courseCode}  
                       td #{courseName}  
                       td #{courseType}  
-                      td #{courseFees}
+                      td #{courseFees}  
                       td
                         button#viewCourseDetailsButton.btn.admin-btn.btn-sn.viewCourse(data-toggle="modal", data-id='#{courseCode}', data-target="#viewCourse")
                           | More Details
@@ -47,27 +47,53 @@ template(name="courseList")
                       td
                         a.btn.admin-btn(href="#goDeleteCourse", data-toggle="modal", data-course-id="#{courseCode}") Delete
                       +deleteCourse
+                        form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+                          input.form-control(type="hidden", id="bookId2",value= "#{courseCode}")
+                          button#viewCourseDetailsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_courseCode}', data-target="#viewCourse")
+                            | More Details
+                          +viewCourseForm
+                      td
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{courseCode}',data-target="#deleteCourse")
+                          | Delete
+                        +deleteCourse 
 
-template(name="deleteCourse")
-  script.
-    $('#goDeleteCourse').on('show.bs.modal', function(e) {
-      var courseId = $(e.relatedTarget).data('course-id');
-      $(e.currentTarget).find('input[name="cID"]').val(courseId);
-    });
-  #goDeleteCourse.modal.adminFormDark
+
+template(name="viewCourseForm")
+  #viewCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#deleteCourseModal.modal-title Delete Course
+          h4#myModalLabel.modal-title Course Detail
         .modal-body
-          p Are you sure you want to delete
-          input(type="text" name="cID" value="" style="color:red")
+          form(role="form", id="viewDetails", action="facilityResult", method="post")
+          input.form-control(type="text", id="bookId",value="")
+          .table-responsive
+            table#dataTables-example.table
+              tbody
+
+                tr
+                  th(colspan="2") #{courseCode}, #{courseName}   
+                tr
+                  td Min
+                  td #{courseMin} 
+                tr
+                  td Max
+                  td #{courseMax} 
+                  tr
+                  td Description
+                  td #{description} 
+                tr
+                  td Fees
+                  td #{courseFees}
+                tr
+                  td Fees
+                  td input.form-control(type="text", id="bookId",value="")
         .modal-footer
-          a#deleteCourse.button.btn.admin-btn Confirm
+          a(href="course/?code=#{courseCode}", class="button btn admin-btn") Enter Course Page
       // /.modal-content
     // /.modal-dialog
-  // /.modal
+  // /.modal    
 
 template(name="addCourseForm")
   #addCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -77,10 +103,10 @@ template(name="addCourseForm")
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title Add New Course
         .modal-body
-          form(role="form", id="insert-addCourseForm", action="#", method="post")
+          form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
           .table-responsive
             table#dataTables-example.table
-               tbody
+              tbody
                 tr
                   th Course Code
                   td
@@ -95,12 +121,18 @@ template(name="addCourseForm")
                   th Course Type  
                   td 
                     .form-group
-                      input.form-control(type="text", id="cType") 
+                      input.form-control(type="text", id="cNewType") 
                 tr
                   th Description
                   td 
                     .form-group
-                      input.form-control(type="text", id="cNewDesc")
+                      input.form-control(type="comment", id="cNewDesc")
+                tr
+                  th No. Of Sessions
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="text", id="cNewNoOfSessions")
+                
                 tr
                   th Minimum
                   td 
@@ -121,49 +153,42 @@ template(name="addCourseForm")
                   th Trainers
                   td 
                     .form-group
-                      input.form-control(type="text", id="cTrainers")
+                      input.form-control(type="text", id="cNewTrainers")
             // /.table-responsive
-          .modal-footer
-            button#addCourseButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
+        .modal-footer
+          button#addCourseButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
       // /.modal-content
     // /.modal-dialog
   // /.modal
 
 
-template(name="viewCourseForm")
-  #viewCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+
+
+
+
+template(name="deleteCourse")
+  #deleteCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Course Detail
+          h4#myModalLabel.modal-title Delete Course
         .modal-body
-          form(id="viewDetails", name="", role="form", action="#", method="post")
+          form(name="", role="form", action="facilityResult", method="post")
           .table-responsive
-            table#dataTables-example.table(style="background-color:#333")
-              tbody
+            table#dataTables-example.table
+              tbody  
                 tr
-                  th(colspan="2") #{courseCode}, #{courseName}   
+                  td Are you sure you want to delete
                 tr
-                  td Min
-                  td 
-                    #{courseMin} 
+                  td Code
+                  td #{courseCode}
                 tr
-                  td Max
-                  td 
-                    #{courseMax} 
-                tr
-                  td Description
-                  td 
-                    #{courseMin} 
-                tr
-                  td Fees
-                  td #{courseFees}
+                  td Name
+                  td #{courseName}
           // /.table-responsive
         .modal-footer
-          a(href="course/?code=#{courseCode}", class="button btn admin-btn") Enter Course Page
+          a#deleteCourseButton(class="button btn admin-btn") Confirm
       // /.modal-content
     // /.modal-dialog
   // /.modal
-
-

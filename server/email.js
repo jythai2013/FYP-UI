@@ -3,7 +3,7 @@
 
 
 // process.env.MAIL_URL="smtp://username%40gmail.com:password@smtp.gmail.com:465/";
-process.env.MAIL_URL="smtp://GmailUsername%40gmail.com:GmailPassword@smtp.gmail.com:465/";
+process.env.MAIL_URL="smtp://asdf154dev%40gmail.com:1234512345a@smtp.gmail.com:465/";
 
 Meteor.methods({
 	"scheduleMail":function scheduleMail(details) { 

@@ -8,16 +8,26 @@ Router.map(function() {
 	    }
     });
 
-    this.route('Individual Course Sign up', {
+    this.route('Individual Course Signup', {
         path:'/courseSignup',
         template: 'registerForCourse',
-        layoutTemplate: "layoutWebsiteJade"
+        layoutTemplate: "layoutWebsite2Jade"
     });
 
     this.route('facDev', {
         path:'/facDev',
         template: 'facilityManagement',
-        layoutTemplate: "loginLayout"
+        layoutTemplate: "loginLayout",
+				waitOn: function(){
+					// console.log("READYYYY2");
+					// waitOn makes sure that this publication is ready before rendering your template
+					return Meteor.subscribe("facilitiesData");
+				},
+				data: function(){
+					// this will be used as the current data context in your template
+					t = Facilities.find();
+					return t;
+				}
     });
 
     this.route('loginPage', {
@@ -57,4 +67,13 @@ Router.map(function() {
         layoutTemplate: "mainLayout"
     });
     
+});
+
+Router.route('/CourseModule/course/:_id', {
+    template: 'course',
+    courseIdPage: function(){
+        var courseId = this.params._id;
+        console.log(Courses.findOne({ courseCode: courseId }));
+        return Courses.findOne({ courseCode: courseId });
+    }
 });

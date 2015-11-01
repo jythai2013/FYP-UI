@@ -38,5 +38,19 @@
           endTime: endTimeI,
           facId: facIdI
       });
-  }
+		},
+    
+    'createBooking2': function createBooking(startTimeI, endTimeI, facIdI, courseI, sessionNoI){
+      // debugger;
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+      Bookings.insert({
+          course: courseI,
+          sessionNo: sessionNoI,
+          start: startTimeI,
+          end: endTimeI,
+          facId: facIdI
+      });
+		}
  });
