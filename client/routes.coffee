@@ -11,7 +11,7 @@ navRoutes = [
   new NavRoute('courseList', '', {parentName: 'CourseModule', label: "Course List"})
   new NavRoute('course', '', {parentName: 'CourseModule', label: "Course"})
   new NavRoute('classHomepage', '', {parentName: 'CourseModule', label: "Class Homepage"})
-  new NavRoute('class', '', {parentName: 'CourseModule', label: "Class"})
+  new NavRoute('group', '', {parentName: 'CourseModule', label: "Class"})
 
   new NavRoute('forms', 'fa-edit')
   new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})

@@ -25,7 +25,7 @@ template(name="courseList")
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
-                tbody
+                thead
                   tr
                     th Code
                     th Name
@@ -33,21 +33,41 @@ template(name="courseList")
                     th Fees
                     th Details
                     th Remarks
-                  tr
-                    each courses
-                     td 
-                       a(href="/course/?code=is101") =courses.courseCode
-                     td=courses.courseName
-                     td=courses.courseType
-                     td=courses.fees
-                     td
-                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#viewCourse")
-                         | More Details
-                     td
-                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#deleteCourse")
-                         | Delete
-            +viewCourseForm
+                tbody
+                  each courses
+                    tr
+                      td #{courseCode}  
+                      td #{courseName}  
+                      td #{courseType}  
+                      td #{courseFees}
+                      td
+                        button#viewCourseDetailsButton.btn.admin-btn.btn-sn.viewCourse(data-toggle="modal", data-id='#{courseCode}', data-target="#viewCourse")
+                          | More Details
+                      td
+                        a.btn.admin-btn(href="#goDeleteCourse", data-toggle="modal", data-course-id="#{courseCode}") Delete
+                    +viewCourseForm
+                    +deleteCourse
 
+template(name="deleteCourse")
+  script.
+    $('#goDeleteCourse').on('show.bs.modal', function(e) {
+      var courseId = $(e.relatedTarget).data('course-id');
+      $(e.currentTarget).find('input[name="cID"]').val(courseId);
+    });
+  #goDeleteCourse.modal.adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#deleteCourseModal.modal-title Delete Course
+        .modal-body
+          p Are you sure you want to delete
+          input(type="text" name="cID" value="" style="color:red")
+        .modal-footer
+          a#deleteCourse.button.btn.admin-btn Confirm
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
 
 template(name="addCourseForm")
   #addCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -57,10 +77,10 @@ template(name="addCourseForm")
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title Add New Course
         .modal-body
-          form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+          form(role="form", id="insert-addCourseForm", action="#", method="post")
           .table-responsive
             table#dataTables-example.table
-              tbody
+               tbody
                 tr
                   th Course Code
                   td
@@ -81,6 +101,16 @@ template(name="addCourseForm")
                   td 
                     .form-group
                       input.form-control(type="text", id="cNewDesc")
+                tr
+                  th Minimum
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="text", id="cNewMin")
+                tr
+                  th Maximum
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="text", id="cNewMax")
                 tr
                   th Fees
                   td 
@@ -108,58 +138,32 @@ template(name="viewCourseForm")
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title Course Detail
         .modal-body
-          form(name="", role="form", action="facilityResult", method="post")
+          form(id="viewDetails", name="", role="form", action="#", method="post")
           .table-responsive
-            table#dataTables-example.table
+            table#dataTables-example.table(style="background-color:#333")
               tbody
                 tr
-                  th(colspan="2") courses.courseCode, courses.courseName   
+                  th(colspan="2") #{courseCode}, #{courseName}   
                 tr
                   td Min
                   td 
-                    courses.min
+                    #{courseMin} 
                 tr
                   td Max
                   td 
-                    courses.max
+                    #{courseMax} 
                 tr
                   td Description
                   td 
-                    courses.description
+                    #{courseMin} 
                 tr
                   td Fees
-                  td courses.fees
+                  td #{courseFees}
           // /.table-responsive
         .modal-footer
-          a(href="course/?code=is101", class="button btn admin-btn") Enter Course Page
+          a(href="course/?code=#{courseCode}", class="button btn admin-btn") Enter Course Page
       // /.modal-content
     // /.modal-dialog
   // /.modal
 
 
-  template(name="deleteCourse")
-  #deleteCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Course Detail
-        .modal-body
-          form(name="", role="form", action="facilityResult", method="post")
-          .table-responsive
-            table#dataTables-example.table
-              tbody  
-                tr
-                  td Are you sure you want to delete
-                tr
-                  td Code
-                  td course.courseCode
-                tr
-                  td Name
-                  td course.courseName
-          // /.table-responsive
-        .modal-footer
-          a#deleteCourse(class="button btn admin-btn") Confirm
-      // /.modal-content
-    // /.modal-dialog
-  // /.modal

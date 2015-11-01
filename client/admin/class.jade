@@ -1,4 +1,4 @@
-template(name="class")
+template(name="group")
   #page-wrapper
     .row
       .col-lg-12
@@ -10,6 +10,8 @@ template(name="class")
         .panel.panel-default
           .panel-body
             h4 Course Details: IS101 G1
+            button.btn.btn.btn-sm(data-toggle="modal", data-target="#editClass" style="position: absolute; right: 6%; background: #333; color:#fff")
+              i.fa.fa-pencil-square-o  Edit
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
                 tbody
@@ -32,30 +34,16 @@ template(name="class")
                     th End Date
                     td 27 November 2015
             // /.table-responsive
+            +editClassDetails
 
+            p.breakH4
+            button.btn.btn.btn-sm(data-toggle="modal", data-target="#postNotification" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus  Notification
+            +notificationForm
             h4 Notification Panel
-            .table-responsive
-              table#dataTables-example.table.table-striped.table-bordered
-                tbody
-                  tr
-                    th Title
-                    th Details
-                    th Date
-                    th Author
-                  tr
-                    td Deadline for Assignment 3
-                    td Class, do take note Assignmmment 3 is due next Monday
-                    td 10 October 2015
-                  tr
-                    td Lecture Notes 13
-                    td Lecture notes for session 13 has been uploaded
-                    td 30 September 2015
-                  tr
-                    th Rescheduling of this week Wednesday's Class
-                    td This Wednesday's class is rescheduled to Saturday (12/09/2015)
-                    td 04 September 2015
-            // /.table-responsive
-            
+            +displayAnnoucements
+
+            p.breakH4
             h4 Class Management
             .table-responsive
               table#dataTables-example.table.table-bordered.table-hover
@@ -68,7 +56,7 @@ template(name="class")
                     td  
                       input(type="button", value="Assessment")
                     td 
-                      input(type="button", value="Drop Student")
+                      input(type="button", value="Remove Student")
                    tr 
                     th Student 2
                     td  
@@ -83,3 +71,77 @@ template(name="class")
     // /.row
   // /#page-wrapper
 
+
+template(name="notificationForm")
+  #postNotification.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Post New Notification
+        .modal-body
+          form(name="postNotification", role="form", action="insertNotification", method="post")
+          .table-responsive
+            table#dataTables-example.table
+              tbody
+                tr
+                  td Title
+                  td 
+                    input.form-control(id='annouTitle',type='text',value='',placeholder='Notification Title', style="max-width: 500px;")
+                tr
+                  td Details
+                  td 
+                    textarea.form-control(id='annouDetails',type='text',value='',placeholder='Details Here', style="max-width: 500px;")
+          // /.table-responsive
+        .modal-footer
+          input.btn.admin-btn#submitButton(type='submit',value='Post Notification',data-transition='fade', data-theme='c', data-dismiss="modal")
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+template(name="displayAnnoucements")
+  .table-responsive
+    table#dataTables-example.table.table-striped.table-bordered
+      thead
+         tr
+          th Title
+          th Details
+          th Date
+          th Author
+      tbody 
+        tr
+          td Deadline for Assignment 3
+          td Class, do take note Assignmmment 3 is due next Monday
+          td 10 October 2015
+          td CHIA Wei Ting
+        tr
+          td Lecture Notes 13
+          td Lecture notes for session 13 has been uploaded
+          td 30 September 2015
+          td Course Head
+        tr
+          th Rescheduling of this week Wednesday's Class
+          td This Wednesday's class is rescheduled to Saturday (12/09/2015)
+          td 04 September 2015
+          td Administrator
+  // /.table-responsive
+
+template(name="editClassDetails")
+ #editClass.modal.fade(tabindex="-1", role="dialog", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Edit Class Details
+        .modal-body
+          form(name="editCourseDetails", role="form", action="insertNotification", method="post")
+          .table-responsive
+            table#dataTables-example.table
+              tbody
+                tr
+                  td Venue
+                  td 
+                    input.form-control(id='annouTitle',type='text',value='',placeholder='Notification Title', style="max-width: 500px;")
+           // /.table-responsive
+        .modal-footer
+          input.btn.admin-btn#submitButton(type='submit',value='Edit',data-transition='fade', data-theme='c', data-dismiss="modal")
