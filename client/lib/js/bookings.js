@@ -34,12 +34,14 @@ Template.facilityManagement.events({
 
 Template.facilityManagement.events({
 	
-	"submit #facMgmtFormy" : function(){
+	"submit #facMgmtFormy" : function(e){
 		e.preventDefault();
 		// createBooking': function createBooking(bookingDateI, courseI, sessionNoI, startTimeI, endTimeI, facIdI){
 		dates = getDatesFromRepeat();
+		courseI = document.getElementById("courseId").value;
+		sessionI = document.getElementById("groupId").value;
 		dates.forEach(function(details){
-			Meteor.call("createBookingDateTime", details.startDateTime, details.endDateTime, document.getElementById("fac").value, courseI, sessionI);
+			Meteor.call("createBooking2", details.start, details.end, document.getElementById("fac").value, courseI, sessionI);
 		});
 	},
 
@@ -143,7 +145,7 @@ Template.facilityManagement.helpers({
 		console.log(resultsF);
 		matchingFacilities.forEach(function(facility){
 			console.log(facility);
-			available = findIfFacilityIsAvailable(facility.facilityID);
+			available = findIfFacilityIsAvailable(facility);
 			// available = true;
 			console.log(available);
 			if(available){

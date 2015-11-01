@@ -18,7 +18,7 @@ Template.addFacilityForm.events({
     //TODO: Validation of input
     var cType = document.getElementById("cNewType").value;
     var cName = document.getElementById("cNewName").value;
-    var cCapicity = document.getElementById("cNewCapacity").value;
+    var cCapicity = parseInt(document.getElementById("cNewCapacity").value);
     var cDescription = document.getElementById("cNewDesc").value;
 
     Meteor.call("createFacility", cType, cName, cCapicity, cDescription);
