@@ -1,6 +1,6 @@
  Meteor.methods({ 
 
-  'editMaterial': function editMaterial(_id, groupIdI, courseI, fileNameI, fileI){
+  'editMaterial': function editMaterial(_id, courseI, sessionNoI, fileIdI){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
@@ -8,10 +8,9 @@
       // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
       Materials.update(_id, {
         $set: {
-          groupId: groupIdI,
           course: courseI,
-          fileName: fileNameI,
-          file: fileI
+          sessionNo: sessionNoI,
+          fileName: fileIdI
         }
       });
     },
@@ -23,16 +22,15 @@
       Materials.remove(_id);
     },
     
-    'createMaterial': function createMaterial(groupIdI, courseI, fileNameI, fileI){
+    'createMaterial': function createMaterial(courseI, sessionNoI, fileIdI){
       // debugger;
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
       Materials.insert({
-          groupId: groupIdI,
           course: courseI,
-          fileName: fileNameI,
-          file: fileI
+          sessionNo: sessionNoI,
+          fileName: fileIdI
       });
   }
  });
