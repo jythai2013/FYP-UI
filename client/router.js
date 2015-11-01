@@ -8,7 +8,7 @@ Router.map(function() {
 	    }
     });
 
-    this.route('Individual Course Sign up', {
+    this.route('Individual Course Signup', {
         path:'/courseSignup',
         template: 'registerForCourse',
         layoutTemplate: "layoutWebsite2Jade"
