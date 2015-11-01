@@ -11,7 +11,7 @@ Router.map(function() {
     this.route('Individual Course Sign up', {
         path:'/courseSignup',
         template: 'registerForCourse',
-        layoutTemplate: "layoutWebsiteJade"
+        layoutTemplate: "layoutWebsite2Jade"
     });
 
     this.route('facDev', {
@@ -57,4 +57,13 @@ Router.map(function() {
         layoutTemplate: "mainLayout"
     });
     
+});
+
+Router.route('/CourseModule/course/:_id', {
+    template: 'course',
+    courseIdPage: function(){
+        var courseId = this.params._id;
+        console.log(Courses.findOne({ courseCode: courseId }));
+        return Courses.findOne({ courseCode: courseId });
+    }
 });
