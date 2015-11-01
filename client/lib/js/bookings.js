@@ -75,6 +75,11 @@ Template.facilityManagement.helpers({
 				return [value];
 		});
 		
+		array.forEach(function(booking){
+			courseName = Courses.findOne({courseCode:booking.course}).courseName;
+			booking.title = courseName + "-" + booking.sessionNo;
+		});
+		
 		return {
 			// events: [
 								// {
