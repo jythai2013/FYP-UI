@@ -7,6 +7,7 @@ template(name="course")
     .row
       .col-lg-12
         h1.page-header Course: IS101
+          {{_id}}
       // /.col-lg-12
     // /.row
     .row
@@ -62,7 +63,7 @@ template(name="course")
                             th Course Code
                             td 
                               .form-group
-                                input.form-control(type="text", name="cCode", value=course.courseCode)
+                                input.form-control(type="text", name="cCode", value=courses.courseCode)
                           tr
                             th Course Name
                             td 

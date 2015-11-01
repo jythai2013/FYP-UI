@@ -1,7 +1,7 @@
 
 Meteor.methods({ 
 	
-	'editFacility': function editFacility(_id, capacityI, facTypeI, facI, cDescriptionI){
+	'editFacility': function editFacility(_id, typeI, nameI, capacityI, descriptionI){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
@@ -9,10 +9,10 @@ Meteor.methods({
 			// if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
 			Facilities.update(_id, {
 				$set: {
+					facType: typeI,
+					fac: nameI,
 					capacity: capacityI,
-					facType: facTypeI,
-					fac: facI,
-					description: cDescriptionI
+					description: descriptionI
 				}
 			});
 		},
@@ -24,18 +24,18 @@ Meteor.methods({
 			Facilities.remove(_id);
 		},
 		
-		'createFacility': function createFacility(input_capacity_maxI, facTypeI, facI, cDescriptionI){
+		'createFacility': function createFacility(typeI, nameI, capacityI, descriptionI){
 			// debugger;
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-			
+			console.log("stuff");
 			if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
 			Facilities.insert({
-				capacity: capacityI,
-				facType: facTypeI,
-				fac: facI,
-				description: cDescriptionI
+					facType: typeI,
+					fac: nameI,
+					capacity: capacityI,
+					description: descriptionI
 			});
 		}
 	});

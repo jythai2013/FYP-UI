@@ -1,6 +1,173 @@
 template(name="registerForCourse")
-   .gray-section
-     .container
-       .col-lg-8col-lg-offset-1
-         .row
-           h1 TEST
+	#sectionPageWrapper
+		.row
+			.col-lg-8.col-lg-offset-2
+				h1.page-header Course Enrollment Form
+		form(role="form")
+		.row
+			.col-lg-8.col-lg-offset-2
+				.panel.panel-primary
+					h4(style="padding-left:5px;")  Personal Particulars
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label First Name
+					.col-sm-4
+						input.form-control(type="text", name="firstName")
+					label.col-sm-2.control-label Last Name
+					.col-sm-4
+						input.form-control(type="text", name="lastName")
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label Gender
+					.col-sm-4
+						label.radio-inline
+							input(type="radio", name="gender", value="male", checked="")
+							| Male
+						label.radio-inline
+							input(type="radio", name="gender", value="female")
+							| Female
+
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label Date of Birth*
+					.col-sm-4
+						input.form-control(type="date", name="DOB")
+			
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label ID Type. *
+					.col-sm-4
+						select.form-control(name="idType" id="s2_country")
+
+							option(value="") Select an ID Type
+							option(value="NRIC") NRIC
+							option(value="FIN") FIN
+							option(value="Employement Pass") Employement Pass
+							option(value="Student Pass") Student Pass
+							option(value="Others")  Others
+					label.col-sm-2.control-label ID No. *
+					.col-sm-4
+						input.form-control(type="text", name="IDnum", placeholder="E.g. S1234567A")
+			
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label Nationality
+					.col-sm-4
+						select.form-control(name="resStatus" id="s2_country")
+							option(value="")  -- Select a Status --
+							option(value="Singapore")  Singapore
+							option(value="China") China
+							option(value="India") India
+							option(value="Indonesia")  Indonesia
+							option(value="Vietnam")  Vietnam
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label Company
+					.col-sm-6
+						input.form-control(type="text", placeholder="Company Name")
+					label.col-sm-2.control-label Residence No. 
+					.col-sm-2
+						input.form-control(type="text", placeholder="Home")
+
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label Postal Code
+					.col-sm-6
+						input.form-control(type="text", placeholder="Postal Code")
+					label.col-sm-2.control-label Mobile No. 
+					.col-sm-2
+						input.form-control(type="text", placeholder="Mobile")
+
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label Address*
+					.col-sm-6
+						input.form-control(type="text", placeholder="Building Name and Street")
+					label.col-sm-2.control-label Office No. 
+					.col-sm-2
+						input.form-control(type="text", placeholder="Office")
+			
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					label.col-sm-2.control-label Proficiency In
+					.col-sm-4
+						select.form-control(name="language" id="language")
+							option(value="english")  Engish
+							option(value="chinese")  Mandarine
+							option(value="tamil") Tamil
+							option(value="others") Others
+		
+		+QualificationDetails
+		+EmergencyContact
+
+		.row
+			.col-lg-8.col-lg-offset-2
+				.form-group
+					.col-sm-2
+						button.btn.pull-right.btn-primary(href="{{pathFor route='Individual Course Signup'}}") Back
+					.col-sm-10
+						button.btn.pull-right.btn-primary(type="submit") Make Payment
+
+template(name="QualificationDetails")
+	.row
+		.col-lg-8.col-lg-offset-2
+			.panel.panel-primary
+				h4(style="padding-left:5px;")  Qualification Details
+	.row
+		.col-lg-8.col-lg-offset-2
+			.form-group.has-warning.has-feedback
+				label.col-sm-2.control-label Highest Education Level
+				.col-sm-4
+					Select.form-control(type="text", name="qualificationLevel")
+						option(value="PSLE") PSLE
+						option(value="O'Level") O' Levels
+						option(value="A'Level") A' Levels
+						option(value="Diploma") Diploma (Polytechnic)
+						option(value="Others") Others
+
+template(name="EmergencyContact")
+	.row
+		.col-lg-8.col-lg-offset-2
+			.panel.panel-primary
+				h4(style="padding-left:5px;")  Emergency Contact
+	.row
+		.col-lg-8.col-lg-offset-2
+			.form-group.has-warning.has-feedback
+				label.col-sm-2.control-label Name
+				.col-sm-4
+					input.form-control(type="text", id="NOKName", placeholder="Next of Kin Name")
+				label.col-sm-2.control-label Relationship
+				.col-sm-4
+					Select.form-control(type="text", name="NOKrelatioship")
+						option(value="Employer") Employer
+						option(value="Family") Family
+						option(value="Friend") Friend
+						option(value="Relative") Relative
+						option(value="Spouse") Spouse
+						option(value="Others") Others
+
+	.row
+		.col-lg-8.col-lg-offset-2
+			.form-group.has-warning.has-feedback
+				label.col-sm-2.control-label Telephone No.
+				.col-sm-4
+					input.form-control(type="text", id="NOKTel", placeholder="Their Contact Number")
+
+	.row
+		.col-lg-8.col-lg-offset-2
+			.form-group.has-warning.has-feedback
+				label.col-sm-2.control-label Address*
+				.col-sm-6
+					input.form-control(type="text", placeholder="Building Name and Street")
+				label.col-sm-2.control-label Postal Code
+				.col-sm-2
+					input.form-control(type="text", placeholder="Postal Code")

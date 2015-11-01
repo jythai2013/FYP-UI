@@ -1,0 +1,33 @@
+template(name="layoutWebsite2Jade")
+  style.
+    span.icon-bar{
+      background-color: #42DCA3;
+    }
+  // Navigation
+  nav.grayscale2-navbar.grayscale-navbar-custom.navbar-fixed-top.grayscale-top-nav-collapse(role="navigation", style="margin-bottom:0px")
+    .container
+      .navbar-header
+        button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/website#page-top") 
+         span.light STERLING 
+         | HUB
+      .navbar-collapse.links.navbar-right.navbar-maincollapse
+        ul.nav.navbar-nav
+          li
+            a.grayscale-page-scroll(href="/website#about") About
+          li
+            a.grayscale-page-scroll(href="/website#courses") Courses
+          li
+            a.grayscale-page-scroll(href="/website#contact") Contact
+          li(style="padding-top: 10px;")
+            button.btn.btn.btn-sm.greenHoverColor(style="background-color:#333; color:white", onclick="window.location.replace('{{pathFor route='loginPage'}}')") Portal Login
+  +yield
+
+
+
+  
+            
