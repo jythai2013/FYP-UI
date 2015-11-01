@@ -120,7 +120,7 @@ Template.facilityManagement.helpers({
 			typea = Session.get("facTypeSearch");
 			console.log(ascapacity);
 			console.log(typea);
-			matchingFacilities = Facilities.find({"facilityType":typea, "capacity": {$gte : ascapacity}}).fetch();
+			matchingFacilities = Facilities.find({"facType":typea, "capacity": {$gte : ascapacity}}).fetch();
 			console.log(matchingFacilities);
 		} else{
 			ascapacity = parseInt(Session.get("facCapacitySearch"));
