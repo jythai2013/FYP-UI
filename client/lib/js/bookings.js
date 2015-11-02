@@ -52,21 +52,6 @@ Template.facilityManagement.events({
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Template.facilityManagement.helpers({
 	calOptions: function(){
 		
