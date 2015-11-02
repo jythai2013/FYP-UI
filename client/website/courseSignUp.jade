@@ -28,7 +28,7 @@ template(name="registerForCourse")
 		.row
 			.col-lg-10.col-lg-offset-1
 				p.templateLineBreak
-				button.btn.pull-right.admin-btn(type="submit", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Make Payment
+				button#submitSignUpButton.btn.pull-right.admin-btn(type="submit", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Make Payment
 				a.btn.pull-right.admin-btn(onclick="window.history.back()") Back
 
 template(name="courseInfoIndvSignup")
@@ -83,20 +83,20 @@ template(name="PersonalParticular")
 			.form-group
 				label.col-sm-2.control-label First Name
 				.col-sm-4
-					input#firstName.form-control(type="text", name="firstName", placeholder="First Name")
+					input#pfirstName.form-control(type="text", name="firstName", placeholder="First Name")
 				label.col-sm-2.control-label Last Name
 				.col-sm-4
-					input#firstName.form-control(type="text", name="lastName", placeholder="Last Name / Surname")
+					input#plastName.form-control(type="text", name="lastName", placeholder="Last Name / Surname")
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group
 				label.col-sm-2.control-label Gender
 				.col-sm-4
 					label.radio-inline
-						input#gender(type="radio", name="gender", value="male", checked="")
+						input#pgender(type="radio", name="gender", value="male", checked="")
 						| Male
 					label.radio-inline
-						input#gender(type="radio", name="gender", value="female")
+						input#pgender(type="radio", name="gender", value="female")
 						| Female
 
 	.row
@@ -104,7 +104,7 @@ template(name="PersonalParticular")
 			.form-group
 				label.col-sm-2.control-label Date of Birth*
 				.col-sm-4
-					input#DOB.form-control(type="date", name="DOB")
+					input#pDOB.form-control(type="date", name="DOB")
 				label.col-sm-2.control-label Email*
 				.col-sm-4
 					input#pemail.form-control(type="text", name="pemail", placeholder="Email Address")
@@ -114,7 +114,7 @@ template(name="PersonalParticular")
 			.form-group
 				label.col-sm-2.control-label ID Type. *
 				.col-sm-4
-					select#idType.form-control(name="idType")
+					select#pidType.form-control(name="idType")
 						option(value="") Select an ID Type
 						option(value="NRIC") NRIC
 						option(value="FIN") FIN
@@ -123,14 +123,14 @@ template(name="PersonalParticular")
 						option(value="Others")  Others
 				label.col-sm-2.control-label ID No. *
 				.col-sm-4
-					input.form-control(type="text", name="IDnum", placeholder="E.g. S1234567A")
+					input#pIDNum.form-control(type="text", name="IDnum", placeholder="E.g. S1234567A")
 		
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group
 				label.col-sm-2.control-label Nationality
 				.col-sm-4
-					select#nationality.form-control(name="nationality")
+					select#pnationality.form-control(name="nationality")
 						option(value="Singapore")  Singapore
 						option(value="China") China
 						option(value="India") India
@@ -141,38 +141,38 @@ template(name="PersonalParticular")
 			.form-group
 				label.col-sm-2.control-label Postal Code
 				.col-sm-4
-					input#postalCode.form-control(type="text", name="postalCode", placeholder="Postal Code")
+					input#ppostalCode.form-control(type="text", name="postalCode", placeholder="Postal Code")
 				.col-sm-2
 				label.col-sm-2.control-label Residence No. 
 				.col-sm-2
-					input#resNo.form-control(type="text", name="resNo", placeholder="Home")
+					input#presNo.form-control(type="text", name="resNo", placeholder="Home")
 
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group
 				label.col-sm-2.control-label Residential Address
 				.col-sm-6
-					input#compName.form-control(type="text", name="pAddr" placeholder="Block Name, Street Name, Unit No.")
+					input#pAdd.form-control(type="text", name="pAddr" placeholder="Block Name, Street Name, Unit No.")
 				label.col-sm-2.control-label Mobile No. 
 				.col-sm-2
-					input#mobNo.form-control(type="text", name="mobNo", placeholder="Mobile")
+					input#pmobNo.form-control(type="text", name="mobNo", placeholder="Mobile")
 
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group
 				label.col-sm-2.control-label Company Name
 				.col-sm-6
-					input#compName.form-control(type="text", name="compName" placeholder="Company Name")
+					input#pcompName.form-control(type="text", name="compName" placeholder="Company Name")
 				label.col-sm-2.control-label Office No. 
 				.col-sm-2
-					input#offNo.form-control(type="text", name="offNo", placeholder="Office")				
+					input#poffNo.form-control(type="text", name="offNo", placeholder="Office")				
 
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group
 				label.col-sm-2.control-label Proficiency In
 				.col-sm-4
-					select.form-control(name="language" id="language")
+					select.form-control(name="language" id="planguage")
 						option(value="english")  Engish
 						option(value="chinese")  Mandarine
 						option(value="tamil") Tamil
@@ -188,7 +188,7 @@ template(name="QualificationDetails")
 			.form-group.has-warning
 				label.col-sm-3.control-label Highest Education Level
 				.col-sm-5
-					Select#qualificationLevel.form-control(type="text", name="qualificationLevel")
+					Select#pqualificationLevel.form-control(type="text", name="qualificationLevel")
 						option(value="PSLE") PSLE
 						option(value="O'Level") O' Levels
 						option(value="A'Level") A' Levels
@@ -208,7 +208,7 @@ template(name="EmergencyContact")
 					input.form-control(type="text", id="NOKName", name="NOKName", placeholder="Next of Kin Name")
 				label.col-sm-2.control-label Relationship
 				.col-sm-4
-					Select#NOKrelatioship.form-control(type="text", name="NOKrelatioship")
+					Select#NOKrelationship.form-control(type="text", name="NOKrelatioship")
 						option(value="Employer") Employer
 						option(value="Family") Family
 						option(value="Friend") Friend

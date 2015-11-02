@@ -52,7 +52,7 @@
         // }
         console.log("in create users fk you");
 
-        Users.insert({
+        Userss.insert({
                 userFirstName: uFirstName,
                 userLastName: uLastName,
                 userGender: uGender,

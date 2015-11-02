@@ -27,3 +27,8 @@ Meteor.publish('bookingsData',function() {
 		// if(!this.userId) return null; //TODO: test make sure that it returns only the sessions taught by the current logged in user
 		return Bookings.find({});
 });
+
+Meteor.publish('usersData',function() {
+		// if(!this.userId) return null; //TODO: test make sure that it returns only the sessions taught by the current logged in user
+		return Userss.find({});
+});
