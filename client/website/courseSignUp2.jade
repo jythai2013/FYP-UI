@@ -1,0 +1,257 @@
+template(name="registerForCourse2")
+	style.
+		p.templateLineBreak {
+			padding-bottom: 10px;
+			margin: 5px;
+			border-bottom: 1px solid #eee;
+		}
+
+		.table tbody > tr > td, 
+		.table tbody > tr > th {
+			border-top:0px;
+		}
+		body {
+			font-size: 16px;
+		}
+	#sectionPageWrapper
+		.row
+			.col-lg-10.col-lg-offset-1
+				h1.page-header Course Enrollment Form
+		form(role="form")
+		+courseInfoIndvSignup2
+		+PersonalParticular2
+		p
+		+QualificationDetails2
+		p
+		+EmergencyContact2
+
+		.row
+			.col-lg-10.col-lg-offset-1
+				p.templateLineBreak
+				button#submitSignUpButton.btn.pull-right.admin-btn(data-toggle="modal", data-target="#alertEmail", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Enroll Me Now
+				a.btn.pull-right.admin-btn(onclick="window.history.back()") Back
+			+alertEmailForm
+
+template(name="courseInfoIndvSignup2")
+	.row
+		.col-lg-10.col-lg-offset-1.col-sm-10
+			.panel.panel-primary
+				.table-responsive
+					table.table(style="background-color: black;")
+						tbody
+							tr
+								th 
+									label COURSE ID
+								td
+									input#disabledInput.form-control(type="hidden", name="cId" value="is101", disabled="")
+									| WSH01
+							tr
+								th 
+									label COURSE NAME
+								td
+									input#disabledInput.form-control(type="hidden", name="cName" value="WPA Course 1", disabled="")
+									| WSQ Certificate in Workplace Safety and Health Level A
+							tr
+								th  
+									label START DATE
+								td  1st September 2016
+							tr
+								th 
+									label END DATE
+								td 29th September 2016
+							tr
+								th 
+									label No. of Sessions
+								td 5
+
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label Session
+				.col-sm-6
+					label.radio
+						input#group(type="radio", name="group", value="Class 1", checked="")
+						| Class 1 (Thursday, 13:00 to 15:00)
+					label.radio
+						input#group(type="radio", name="group", value="Class 2")
+						| Class 2 (Thursday, 15:30 to 17:00)
+
+template(name="PersonalParticular2")
+	.row
+		.col-lg-10.col-lg-offset-1
+			.panel.panel-primary
+				h4 Personal Particulars
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label First Name
+				.col-sm-4
+					input#pfirstName.form-control(type="text", name="firstName", placeholder="First Name")
+				label.col-sm-2.control-label Last Name
+				.col-sm-4
+					input#plastName.form-control(type="text", name="lastName", placeholder="Last Name / Surname")
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label Gender
+				.col-sm-4
+					label.radio-inline
+						input#pgender(type="radio", name="gender", value="male", checked="")
+						| Male
+					label.radio-inline
+						input#pgender(type="radio", name="gender", value="female")
+						| Female
+
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label Date of Birth*
+				.col-sm-4
+					input#pDOB.form-control(type="date", name="DOB")
+				label.col-sm-2.control-label Email*
+				.col-sm-4
+					input#pemail.form-control(type="text", name="pemail", placeholder="Email Address")
+		
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label ID Type. *
+				.col-sm-4
+					select#pidType.form-control(name="idType")
+						option(value="") Select an ID Type
+						option(value="NRIC") NRIC
+						option(value="FIN") FIN
+						option(value="Employement Pass") Employement Pass
+						option(value="Student Pass") Student Pass
+						option(value="Others")  Others
+				label.col-sm-2.control-label ID No. *
+				.col-sm-4
+					input#pIDNum.form-control(type="text", name="IDnum", placeholder="E.g. S1234567A")
+		
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label Nationality
+				.col-sm-4
+					select#pnationality.form-control(name="nationality")
+						option(value="Singapore")  Singapore
+						option(value="China") China
+						option(value="India") India
+						option(value="Indonesia")  Indonesia
+						option(value="Vietnam")  Vietnam
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label Postal Code
+				.col-sm-4
+					input#ppostalCode.form-control(type="text", name="postalCode", placeholder="Postal Code")
+				.col-sm-2
+				label.col-sm-2.control-label Residence No. 
+				.col-sm-2
+					input#presNo.form-control(type="text", name="resNo", placeholder="Home")
+
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label Residential Address
+				.col-sm-6
+					input#pAdd.form-control(type="text", name="pAddr" placeholder="Block Name, Street Name, Unit No.")
+				label.col-sm-2.control-label Mobile No. 
+				.col-sm-2
+					input#pmobNo.form-control(type="text", name="mobNo", placeholder="Mobile")
+
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label Company Name
+				.col-sm-6
+					input#pcompName.form-control(type="text", name="compName" placeholder="Company Name")
+				label.col-sm-2.control-label Office No. 
+				.col-sm-2
+
+					input#poffNo.form-control(type="text", name="offNo", placeholder="Office")				
+
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group
+				label.col-sm-2.control-label Proficiency In
+				.col-sm-4
+					select.form-control(name="language" id="planguage")
+						option(value="english")  Engish
+						option(value="chinese")  Mandarine
+						option(value="tamil") Tamil
+						option(value="others") Others
+
+template(name="QualificationDetails2")
+	.row
+		.col-lg-10.col-lg-offset-1
+			.panel.panel-primary
+				h4(style="padding-left:5px;")  Qualification Details
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group.has-warning
+				label.col-sm-3.control-label Highest Education Level
+				.col-sm-5
+					Select#pqualificationLevel.form-control(type="text", name="qualificationLevel")
+						option(value="PSLE") PSLE
+						option(value="O'Level") O' Levels
+						option(value="A'Level") A' Levels
+						option(value="Diploma") Diploma (Polytechnic)
+						option(value="Others") Others
+
+template(name="EmergencyContact2")
+	.row
+		.col-lg-10.col-lg-offset-1
+			.panel.panel-primary
+				h4(style="padding-left:5px;")  Emergency Contact
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group.has-warning
+				label.col-sm-2.control-label Name
+				.col-sm-4
+					input.form-control(type="text", id="NOKName", name="NOKName", placeholder="Next of Kin Name")
+				label.col-sm-2.control-label Relationship
+				.col-sm-4
+					Select#NOKrelationship.form-control(type="text", name="NOKrelatioship")
+						option(value="Employer") Employer
+						option(value="Family") Family
+						option(value="Friend") Friend
+						option(value="Relative") Relative
+						option(value="Spouse") Spouse
+						option(value="Others") Others
+
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group.has-warning
+				label.col-sm-2.control-label Telephone No.
+				.col-sm-4
+					input.form-control(type="text", id="NOKTel", name="NOKTel", placeholder="Their Contact Number")
+
+	.row
+		.col-lg-10.col-lg-offset-1
+			.form-group.has-warning
+				label.col-sm-2.control-label Address*
+				.col-sm-6
+					input.form-control(type="text", name="NOKAddr", id="NOKAddr", placeholder="Building Name and Street")
+				label.col-sm-2.control-label Postal Code
+				.col-sm-2
+					input.form-control(type="text", name="NOKPostalCode", id="NOKPostalCode", placeholder="Postal Code")
+
+template(name="alertEmailForm2")
+	#alertEmail.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+					h4#myModalLabel.modal-title Signup Form Submitted
+				.modal-body
+					form(role="form", id="insert-request", action="#", method="post")
+					.table-responsive
+						table#dataTables-example.table(style="background:#333")
+							tbody
+								tr
+									th Your application is being been processessed
+								tr
+									td Please check your email for a confrimation email. Details will be emailed to you in 1-3 working daysbutton.btn.btn-save(type="button", data-dismiss="modal", value='I'll check my email", onclick="window.location.href='/website'") Confirm
+				.modal-footer
+					button.btn.btn-save(type="button", data-dismiss="modal", onclick="window.location.href='/website'") I'll check my email
