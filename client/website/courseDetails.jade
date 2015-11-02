@@ -20,7 +20,22 @@ template(name="websiteCourseDetails")
 		+websiteCourseDetailsForm
 		.row
 			.col-lg-10.col-lg-offset-1
-				p Harlow World
+				.form-group
+					label.col-sm-2.control-label Session Timings
+					.col-sm-6
+						| Class 1 (Wednesdays, 13:00 to 15:00)
+						.br
+						| Class 2 (Wednesdays, 15:30 to 17:00)
+
+		.row
+			.col-lg-10.col-lg-offset-1
+				p This framework consists of more than 280 Competency Standards, covering all major occupations such as Machinist, CNC Programmer, Maintenance Technician, Mold Design Technician, Metrologist, Production Engineer Mechanical Engineer and others. 
+				.br
+				p Weightage and Assignments:
+				ul
+					li Assembly and Test (50%)
+					li Practical (40%)
+					li Theory (10%)
 
 		.row
 			.col-lg-10.col-lg-offset-1
@@ -34,7 +49,7 @@ template(name="websiteCourseDetailsForm")
 			.form-group
 				.col-lg-5
 					.pull-left
-					img(src="img/courses/CGM01v3.jpg" height="320px" width="450px" alt="CGM01v3")
+					img(src="http://i.imgur.com/a8b7WaW.jpg" height="320px" width="450px" alt="CGM01v3")
 				.col-lg-6.col-lg-offset-1
 					input#disabledInput.form-control(type="hidden", name="cId" value="is101", disabled="")
 					input#disabledInput.form-control(type="hidden", name="cName" value="WPA Course 1", disabled="")
@@ -47,17 +62,7 @@ template(name="websiteCourseDetailsForm")
 						.br From 1st January 2016 to 31st July 2016
 						.br
 						label No. of Sessions 
-						| 30
+						.br 30
 
-	.row
-		.col-lg-10.col-lg-offset-1
-			.form-group
-				label.col-sm-2.control-label Session Timings
-				.col-sm-6
-					label.radio
-						input#group(type="radio", name="group", value="Class 1", checked="")
-						| Class 1 (Wednesdays, 13:00 to 15:00)
-					label.radio
-						input#group(type="radio", name="group", value="Class 2")
-						| Class 2 (Wednesdays, 15:30 to 17:00)
+
 

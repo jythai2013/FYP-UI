@@ -20,12 +20,6 @@ template(name="layoutWebsite2Jade")
          | HUB
       .navbar-collapse.links.navbar-right.navbar-maincollapse
         ul.nav.navbar-nav
-          li
-            a.grayscale-page-scroll(href="/website#about") About
-          li
-            a.grayscale-page-scroll(href="/website#courses") Courses
-          li
-            a.grayscale-page-scroll(href="/website#contact") Contact
           li(style="padding-top: 10px;")
             button.btn.btn.btn-sm.greenHoverColor(style="background-color:#333; color:white", onclick="window.location.replace('{{pathFor route='loginPage'}}')") Portal Login
   +yield
