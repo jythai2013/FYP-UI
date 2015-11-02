@@ -10,19 +10,33 @@
         $set: {
           courseCode: courseCodeI,
           grpNum: grpNumI,
-          dateTimeSession: dateTimeSessionI,
           startDate: startDateI,
           endDate: endDateI,
-          studentList: studentListI,
-          trainers: trainersI,
-          grades: gradesI,
+          startTime: startTimeI,
+          endTime:endTimeI,
+          studentList: studentList,
           paymentDeadline: paymentDeadlineI,
-          min: minI,
-          max: maxI,
-          attendance: attendanceI,
           status: statusI
         }
       });
+    },
+
+  'addStudent': function addStudent(_id, cCode, sFirstName, sLastName){
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+      
+      // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
+      Groups.update( 
+        {courseCode: cCode},
+        {
+          studentList:{
+            studFirstName: sFirstName, 
+            studLastName: sLastName
+          } 
+        },
+        {upsert:true}
+      );
     },
     
     'deleteGroup': function deleteGroup(_id){
@@ -31,26 +45,41 @@
       // }
       Groups.remove(_id);
     },
+
+    'deleteStudent': function deleteStudent(sFirstName, sLastName){
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+
+      Groups.remove({ studFirstName: sFirstName, studLastName: sLastName });
+    },
     
-    'createGroup': function createGroup(courseI, sessionI, questionsI, answersI){
+
+
+    'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI){
       // debugger;
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
-      Groups.insert({
+      console.log("In server");
+
+      //var grpNumI = "G2" ;
+
+      console.log(courseCodeI);
+
+      var id = Groups.insert({
           courseCode: courseCodeI,
-          grpNum: grpNumI,
-          dateTimeSession: dateTimeSessionI,
+          grpNum: grpNumI1,
+          startTime: startTimeI,
+          endTime:endTimeI,
           startDate: startDateI,
           endDate: endDateI,
-          studentList: studentListI,
-          trainers: trainersI,
-          grades: gradesI,
           paymentDeadline: paymentDeadlineI,
-          min: minI,
-          max: maxI,
-          attendance: attendanceI,
-          status: statusI
+          status: "Scheduled"
       });
+
+      console.log(id);
+      
+      console.log("In server 2");
   }
  }); 

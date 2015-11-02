@@ -2,19 +2,8 @@ Template.courseList.helpers({
 
 	"courses" : function listCourseEventHandler(e) {
 		console.log("here");
-		return Courses.find({});
-	},
 
-	"click #viewCourseDetailsButton" : function viewCourseDetailsEventHandler(e) {
-		e.preventDefault();
-		//TODO: Validation of user
-		// if(Meteor.user.userType != "admin"){
-		// return false;
-		// }
-		console.log(this.courseCode);
-		Session.set('currentCourseCode', this.courseCode);
-		  //modal.find('.modal-title').text('New message to ' + recipient)
-		  //modal.find('.modal-body input').val(recipient)
+		return Courses.find({});
 	}
 });
 
@@ -23,13 +12,45 @@ Template.viewCourseForm.helpers({
 	"currentCourseCode" : function listCourseEventHandler(e) {
 		console.log("herecourse");
 		var currentCode = Session.get('currentCourseCode');
-		Session.set('currentCourseCode', null);
-		var currentCourse = Courses.find({courseCode:currentCode})
+		//Session.set('currentCourseCode', null);
+		var currentCourse = Courses.find({courseCode:currentCode}).fetch();
 
-		console.log(currentCode);
+		console.log(currentCode + " current codes bitch");
+		//console.log(currentCourse);
 		console.log(currentCourse);
-		console.log(currentCourse.courseMin);
-		//return ;
+		return currentCourse[0];
+	}
+});
+
+
+Template.viewCourseForm.events({
+	"click #enterCoursePageButton" : function viewCoursePageEventHandler(e) {
+		e.preventDefault();
+		//TODO: Validation of user
+		// if(Meteor.user.userType != "admin"){
+		// return false;
+		// }
+		console.log(this.courseCode);
+
+		Session.set('currentCourseCode', this.courseCode);
+		  //modal.find('.modal-title').text('New message to ' + recipient)
+		  //modal.find('.modal-body input').val(recipient)
+	}
+});
+
+Template.courseList.events({
+	"click #viewCourseDetailsButton" : function viewCourseDetailsEventHandler(e) {
+		e.preventDefault();
+		//TODO: Validation of user
+		// if(Meteor.user.userType != "admin"){
+		// return false;
+		// }
+		console.log(this.courseCode);
+
+		Session.set('currentCourseCode', this.courseCode);
+		console.log(this.courseCode + " after settting in session");
+		  //modal.find('.modal-title').text('New message to ' + recipient)
+		  //modal.find('.modal-body input').val(recipient)
 	}
 });
 
@@ -62,8 +83,7 @@ Template.addCourseForm.events({
 
 Template.deleteCourse.events({
 	"click #deleteCourseButton" : function deleteCourseEventHandler(e) {
-		e.preventDefault();
-		console.log(this._id);
-		Meteor.call("deleteCourse", this._id);
+			console.log(this._id);
+			Meteor.call("deleteCourse", this._id);
 	}
 });

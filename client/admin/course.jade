@@ -6,8 +6,7 @@ template(name="course")
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header Course: IS101
-          {{_id}}
+        h1.page-header Course: #{courseCode}
       // /.col-lg-12
     // /.row
     .row
@@ -20,86 +19,31 @@ template(name="course")
                 tbody
                   tr
                     th Course Code
-                    th IS101
+                    th #{courseCode}
                   tr
                     th Course Name
-                    td=courses.courseName
+                    td #{courseName}
                   tr
                     th Course Type
-                    td=courses.courseType
+                    td #{courseType}
                   tr
                     th Description
-                    td Hands-on and Theory lesson with 2 practical test
+                    td #{description}
                   tr 
                     th No. of Session(s)
-                    td 10
+                    td #{courseNoOfSessions}
                   tr 
                     th Capacity
-                    td 10(min), 30(max)
-                  tr
+                    td #{courseMin} (min), #{courseMax} (max)
                   tr
                     th Fees
-                    td=courses.courseType
+                    td #{courseFees}
                   tr
                     td
                     td 
                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#myModal")
                         | Edit Details
-            // /.table-responsive
-            // Button trigger modal
-            // Modal
-            #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
-              .modal-dialog
-                .modal-content
-                  .modal-header
-                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-                    h4#myModalLabel.modal-title Edit Course Detail
-                  .modal-body
-                    form(name="", role="form", action="facilityResult", method="post")
-                    .table-responsive
-                      table#dataTables-example.table
-                        tbody
-                          tr
-                            th Course Code
-                            td 
-                              .form-group
-                                input.form-control(type="text", name="cCode", value=courses.courseCode)
-                          tr
-                            th Course Name
-                            td 
-                              .form-group
-                                input.form-control(type="text", name="cName", value="is101")
-                          tr
-                            th Description
-                            td 
-                              .form-group
-                                textarea.form-control(name="cDesc")
-                          tr
-                            th No. of Session(s)
-                            td
-                              .form-group
-                                select.form-control(name="cSession")
-                                  option 1
-                                  option 2
-                                  option 3
-                                  option 4
-                                  option 5
-                                  option 6
-                                  option 7
-                          tr
-                            th Fees
-                            td
-                              .form-group.input-group
-                                span.input-group-addon $
-                                input.form-control(type="text")
-                                span.input-group-addon .00
-                    // /.table-responsive
-                  .modal-footer
-                    //button.btn.btn-default(type="button", data-dismiss="modal") Close
-                    button.btn.btn-save(type="button") Save changes
-                // /.modal-content
-              // /.modal-dialog
-            // /.modal
+                      +editCourseForm
             p.breakH4
             h4 Class Management
             .table-responsive
@@ -107,14 +51,15 @@ template(name="course")
                 tbody
                   tr
                     th Trainer
-                    td CHIA Wei Ting, POON Lee Wang
+                    td #{trainers}
                     td 
                       input(type="button", value="Remove Trainer(s)")
                   tr 
                     th Classes
                     td
-                      a(href="class") G1
-                      |, G2, G3
+                      each groupsCourse
+                        a(href="class/?cCode=#{courseCode}&cgrpNum=#{grpNum}") #{grpNum}
+                        | ,
                     td(width="50px")
                       input(type="button", value="Remove Class(es)")
                     
@@ -168,16 +113,7 @@ template(name="course")
                     input#myFileInput(type="file", name="courseMaterials")
                   .modal-footer
                     button.myFileInputButton.btn.admin-btn(type="button") Upload
-                // /.modal-content
-              // /.modal-dialog
-            // /.modal
-            // /.table-responsive
-            // /.row
-          // /.panel-body
-        // /.panel
-      // /.col-lg-12
-    // /.row
-  // /#page-wrapper
+
 
 template(name="addClass")
   #addClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -195,34 +131,103 @@ template(name="addClass")
                   th Course Code
                   td(colspan="3")
                     .form-group
-                      input.form-control(type="text", id="cCode", value="IS101")
+                      input.form-control(type="text", id="gCourseCode", value="#{courseCode}")
                 tr
                   th Session Timing  
                   td 
                     .form-group
-                      input.form-control(type="time", id="startTime")
+                      input.form-control(type="time", id="gNewStartTime")
                   td  TO 
                   td 
                     .form-group
-                      input.form-control(type="time", id="endTime")
+                      input.form-control(type="time", id="gNewEndTime")
                 tr
                   th Start Date
                   td 
                     .form-group
-                      input.form-control(type="date", id="startDate")
+                      input.form-control(type="date", id="gNewStartDate")
                   th End Date
                   td 
                     .form-group
-                      input.form-control(type="date", id="endDate")
+                      input.form-control(type="date", id="gNewEndDate")
                 tr 
                   th Payment Deadline
                   td(colspan="3")
                     .form-group
-                      input.form-control(type="date", id="deadline")
+                      input.form-control(type="date", id="gNewDeadline")
                     
           // /.table-responsive
         .modal-footer
-          input.btn.btn-save(type="submit")
+          button#addGroupButton.btn.btn-save(type="button", data-dismiss="modal") Add 
       // /.modal-content
     // /.modal-dialog
   // /.modal
+
+
+template(name="editCourseForm")
+  #myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Edit Course Detail
+        .modal-body
+          form(name="", role="form", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody
+                tr
+                  th Course Code
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cCCode", value= "#{courseCode}")
+                tr
+                  th Course Name
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cCName", value="#{courseName}")
+                tr
+                  th Description
+                  td 
+                    .form-group
+                      textarea.form-control(id="cCDesc", value="#{description}")
+                tr
+                  th No. of Session(s)
+                  td
+                    .form-group
+                      select.form-control(name="cSession", id="cCSession",)
+                        option 1
+                        option 2
+                        option 3
+                        option 4
+                        option 5
+                        option 6
+                        option 7
+                tr
+                  th Fees
+                  td
+                    .form-group.input-group
+                      span.input-group-addon $
+                      input.form-control(type="text", id="cCFees", value="#{courseFees}")
+                tr
+                  th Min
+                  td
+                    .form-group.input-group
+                      input.form-control(type="text", id="cCMin", value="#{courseMin}")
+                tr
+                  th Max
+                  td
+                    .form-group.input-group
+                      input.form-control(type="text", id="cCMax", value="#{courseMax}")
+                tr
+                  th Type
+                  td
+                    .form-group.input-group
+                      input.form-control(type="text", id="cCType", value="#{courseType}")
+                tr
+                  th Trainers
+                  td
+                    .form-group.input-group
+                      input.form-control(type="text", id="cCTrainers", value="#{trainers}")
+        .modal-footer
+          button#editCourseButton.btn.btn-save(type="button", data-dismiss="modal") Save Changes

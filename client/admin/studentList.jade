@@ -1,0 +1,164 @@
+template(name="studentList")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Student List
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Student List Management
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addstudAcct" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus
+                        | Student
+            +addStudentAcctForm
+
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                thead
+                  tr
+                    th Name
+                    th Particulars
+                    th Credentials
+                    th Remarks
+                tbody
+                  each students
+                    tr
+                      td #{firstName}  #{lastName} 
+                      td  
+                        form(role="form", id="insert-addCourseForm", action="#", method="post")
+                          a(href="?profile=#{currentCourseCode.firstName}&#{currentCourseCode.lastName}", class="button btn admin-btn") Particulars
+                      td
+                        form(role="form", id="insert-viewCredForm", action="#", method="post")
+                          button#viewStudCredentialsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_email}', data-target="#viewCredentials")
+                            | Edit Credentials
+                        +viewCredentialsForm
+                      td
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteStudent")
+                          | Delete
+                        +deleteStudentForm 
+
+
+template(name="viewCredentialsForm")
+  #viewCredentials.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Course Detail
+        .modal-body
+          form(role="form", id="viewDetails", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              currentStud
+              tbody
+                tr
+                  th Email
+                  td
+                    .form-group
+                      input.form-control(type="text", id="studAcctUserName", value="#{currentStud.email}")
+                tr
+                  th Password
+                  td 
+                    .form-group
+                      input.form-control(type="hidden", id="studAcctPwd", value="#{currentStud.password}")
+                tr
+                  td Fees
+                  td 
+                    .form-group
+                      input.form-control(type='texr',value='#{currentStud.fees}', id='studFees')
+                tr
+                  td Paid
+                  td 
+                    label.radio
+                      input#gender_filter(type="radio", name="gender_filter", value="1", checked="")
+                      | Yes
+                    label.radio
+                      input#gender_filter(type="radio", name="gender_filter", value="0")
+                      | No
+                tr
+                  td Remarks
+                  td 
+                    input.form-control(type='text', id='studRemarks')
+                    | password
+        .modal-footer
+          button#editStudAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteStudent")
+             | Save Changes
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal    
+
+template(name="addStudentAcctForm")
+  #addstudAcct.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Course
+        .modal-body
+          form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody
+                tr
+                  th First Name
+                  td
+                    .form-group
+                      input.form-control(type="text", id="studFirstName", placeholder="eg. IS101")
+                tr
+                  th Last Name  
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="studLastName") 
+                tr
+                  td Student Email
+                  td 
+                    input.form-control(type='hidden',value='studentEmailHere', id='studEmail')
+                    | studentEmailHere
+                tr
+                  td Student Password
+                  td 
+                    input.form-control(type='hidden',value='password', id='studPassword')
+                    | password
+                tr
+                  td Remarks
+                  td 
+                    textarea.form-control(type='text',value='',id='studRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
+            // /.table-responsive
+        .modal-footer
+          button#addStudentAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+
+
+
+template(name="deleteStudentForm")
+  #deleteStudent.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Delete Course
+        .modal-body
+          form(name="", role="form", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody  
+                tr
+                  td Are you sure you want to delete
+                tr
+                  td First Name
+                  td blah
+                tr
+                  td Last Name
+                  td #{currentCourseCode.courseName}
+          // /.table-responsive
+        .modal-footer
+          button#deleteStudentButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal

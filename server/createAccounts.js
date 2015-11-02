@@ -1,6 +1,6 @@
 	Meteor.methods({ 
 		
-		'createTrainerAccount': function createTrainerAccount(email, password){
+		'createTrainerAccount': function createTrainerAccount(email, password, fFirstName, fLastName, fremarks){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
@@ -8,12 +8,15 @@
 			var options = {
 				email: email,
 				password: password,
+				firstName: fFirstName,
+				lastName: fLastName,
+				remarks: fremarks,
 				userType: userTypeObj
 			};
 			Accounts.createUser(options);
 		},
 		
-		'createLearnerAccount': function createLearnerAccount(email, password){
+		'createLearnerAccount': function createLearnerAccount(email, password, sFirstName, sLastName, sRemarks){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
@@ -21,12 +24,45 @@
 			var options = {
 				email: email,
 				password: password,
+				firstName: sFirstName,
+				lastName: sLastName,
+				fees: sFees,
+				paidStatus: spaidStatus,
+				remarks: sRemarks,
 				userType: userTypeObj
 			};
 			Accounts.createUser(options);
 		},
 		
-		'createAdminAccount': function createAdminAccount(email, password){
+		'editLearnerAccount': function editLearnerAccount(_id, sEmail, sPassword, sFees, sPaidStatus, sRemarks){
+			// if(Meteor.user.userType != "admin"){
+				// return false; //TODO: output error message in client
+			// }
+			var userTypeObj = {learner: true};
+			Accounts.update(_id, {
+        	$set: {
+				email: email,
+				password: password,
+				firstName: sFirstName,
+				lastName: sLastName,
+				fees: sFees,
+				paidStatus: spaidStatus,
+				remarks: sRemarks,
+				userType: userTypeObj
+				}
+      		});
+		},
+
+		'deleteLearnerAccount': function deleteLearnerAccount(_id){
+			// if(Meteor.user.userType != "admin"){
+				// return false; //TODO: output error message in client
+			// }
+      		Accounts.remove(_id);
+		},
+
+
+		
+		'createAdminAccount': function createAdminAccount(email, password, sFirstName, sLastName){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
@@ -34,6 +70,8 @@
 			var options = {
 				email: email,
 				password: password,
+				aFirstName: sFirstName,
+				aLastName: sLastName,
 				userType: userTypeObj
 			};
 			Accounts.createUser(options);

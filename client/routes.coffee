@@ -1,10 +1,14 @@
 navRoutes = [
   new NavRoute('dashboard', 'fa-dashboard')
 
+  #Accounts
+  new NavRoute('AccountsMgmt', 'fa-group ', {label: "Accounts Management"})
+  new NavRoute('studentList', '', {parentName: 'AccountsMgmt', label: "Student List"})
+
   # Facility
-  new NavRoute('FacilityModule', 'fa-table', {label: "Facility Management"})
-  new NavRoute('facility', 'fa-wrench', {parentName: 'FacilityModule', label: "View Facilities"})
-  new NavRoute('facilityBooking', 'fa-wrench', 
+  new NavRoute('FacilityModule', 'fa-institution', {label: "Facility Management"})
+  new NavRoute('facility', 'fa-institution', {parentName: 'FacilityModule', label: "View Facilities"})
+  new NavRoute('facilityBooking', 'fa-institution', 
     {
       parentName: 'FacilityModule', 
       label: "Book Facilities",
@@ -24,8 +28,6 @@ navRoutes = [
   #new NavRoute('pages', 'fa-files-o', {label: "Sample Pages"})
   #new NavRoute('blank', '', {parentName: 'pages', label: "Blank Page"})
   #new NavRoute('loginModal', '', {parentName: 'pages', label: "Sign In Modal", layoutTemplate: 'loginLayout'})
-
-  new NavRoute('', '', {isMainNav: false, label: "redirect", template: 'dashboard'})
 ]
 
 navRouteList = new NavRouteList(navRoutes)
