@@ -41,7 +41,7 @@ Template.registerLearner.events({
 	}
 });
 
-Template.registerAdmin.events({
+Template.addAdminAcctForm.events({
 	"click #addAdminAcctButton" : function registerAdmin(event) {
 		event.preventDefault();
 		alert();
