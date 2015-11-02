@@ -85,7 +85,7 @@ Template.addStudentAcctForm.events({
 
 });
 
-Template.deleteStudent.events({
+Template.deleteStudentForm.events({
 	"click #deleteStudentButton" : function deleteStudentEventHandler(e) {
 			console.log(this._id);
 			Meteor.call("deleteLearnerAccount", this._id);
