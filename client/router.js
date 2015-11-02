@@ -14,21 +14,12 @@ Router.map(function() {
         layoutTemplate: "layoutWebsite2Jade"
     });
 
-    this.route('facDev', {
-        path:'/facDev',
-        template: 'facilityManagement',
-        layoutTemplate: "loginLayout",
-				waitOn: function(){
-					// console.log("READYYYY2");
-					// waitOn makes sure that this publication is ready before rendering your template
-					return Meteor.subscribe("facilitiesData");
-				},
-				data: function(){
-					// this will be used as the current data context in your template
-					t = Facilities.find();
-					return t;
-				}
+    this.route('Course Details', {
+        path:'/website/courseDetails',
+        template: 'websitCourseDetails',
+        layoutTemplate: "layoutWebsite2Jade"
     });
+
 
     this.route('loginPage', {
         path:'/login',
@@ -75,5 +66,19 @@ Router.route('/CourseModule/course/:_id', {
         var courseId = this.params._id;
         console.log(Courses.findOne({ courseCode: courseId }));
         return Courses.findOne({ courseCode: courseId });
+    }
+});
+
+Router.route('/CourseModule/facilityManagement', {
+    template: 'facilityManagement',
+    waitOn: function(){
+        // console.log("READYYYY2");
+        // waitOn makes sure that this publication is ready before rendering your template
+        return Meteor.subscribe("facilitiesData");
+    },
+    data: function(){
+        // this will be used as the current data context in your template
+        t = Facilities.find();
+        return t;
     }
 });

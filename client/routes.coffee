@@ -3,9 +3,13 @@ navRoutes = [
 
   # Facility
   new NavRoute('FacilityModule', 'fa-table', {label: "Facility Management"})
-  new NavRoute('facilityMgmt', 'fa-wrench', {parentName: 'FacilityModule', label: "View Facilities"})
-  new NavRoute('facilityBooking', 'fa-wrench', {parentName: 'FacilityModule', label: "Book Facilities"})
-  new NavRoute('facility', 'fa-wrench', {parentName: 'FacilityModule', label: "Facilities"})
+  new NavRoute('facility', 'fa-wrench', {parentName: 'FacilityModule', label: "View Facilities"})
+  new NavRoute('facilityBooking', 'fa-wrench', 
+    {
+      parentName: 'FacilityModule', 
+      label: "Book Facilities",
+      template: 'facilityManagement'
+    })
 
   new NavRoute('CourseModule', 'fa-table', {label: "Course Management"})
   new NavRoute('courseList', '', {parentName: 'CourseModule', label: "Course List"})
@@ -13,7 +17,7 @@ navRoutes = [
   new NavRoute('classHomepage', '', {parentName: 'CourseModule', label: "Class Homepage"})
   new NavRoute('group', '', {parentName: 'CourseModule', label: "Class"})
 
-  #new NavRoute('forms', 'fa-edit')
+  new NavRoute('forms', 'fa-edit')
   #new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})
   #new NavRoute('grid', '', {parentName: 'ui-elements'})
   #new NavRoute('panels-and-wells', '', {parentName: 'ui-elements', label: 'Panels and Wells'})
