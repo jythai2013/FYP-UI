@@ -9,24 +9,24 @@ Template.facilityManagement.events({
 		InumSessions = document.getElementById("facNumSessionSearch").value;
 		var startDateTimeI = document.getElementById("input_time_beginning").value;
 		var endinDateTimeI = document.getElementById("input_time_end").value;
-		// repeatOption = document.getElementById("facRepeatOptionSearch").value;
+		repeatOption = document.getElementById("facRepeatOptionSearch").value;
 		
 		startDateTime = new Date(startDateTimeI);
 		endinDateTime = new Date(endinDateTimeI);
 		
-		// IDays = new Object();
-		// IDays.mon = document.getElementById("facSearchMon").checked;
-		// IDays.tue = document.getElementById("facSearchTue").checked;
-		// IDays.wed = document.getElementById("facSearchWed").checked;
-		// IDays.thu = document.getElementById("facSearchThu").checked;
-		// IDays.fri = document.getElementById("facSearchFri").checked;
-		// IDays.sat = document.getElementById("facSearchSat").checked;
+		IDays = new Object();
+		IDays.mon = document.getElementById("facSearchMon").checked;
+		IDays.tue = document.getElementById("facSearchTue").checked;
+		IDays.wed = document.getElementById("facSearchWed").checked;
+		IDays.thu = document.getElementById("facSearchThu").checked;
+		IDays.fri = document.getElementById("facSearchFri").checked;
+		IDays.sat = document.getElementById("facSearchSat").checked;
 		
-		// Session.set("facDaysSearch", IDays);
+		Session.set("facDaysSearch", IDays);
 		Session.set("facTypeSearch", IfacType);
 		Session.set("facCapacitySearch", Icapacity);
 		Session.set("facNumSessionSearch", InumSessions);
-		// Session.set("facReapeatOptionSearch", repeatOption);
+		Session.set("facReapeatOptionSearch", repeatOption);
 		Session.set("facStartDateTimeSearch", startDateTime);
 		Session.set("facEndinDateTimeSearch", endinDateTime);
 	}
@@ -87,10 +87,12 @@ Template.facilityManagement.helpers({
 							// ]
 			events: array
 		};
-	}
-});
+	},
 	
-Template.bookingFacilityForm.helpers({
+  facilities: function () {
+    return Facilities.find(); // Where Images is an FS.Collection instance
+  },
+	
 	facilitySearchResult:function(){
 		console.log("facilitySearchResult Start");
 		
@@ -116,14 +118,11 @@ Template.bookingFacilityForm.helpers({
 			console.log(ascapacity);
 			console.log(typea);
 			matchingFacilities = Facilities.find({"facType":typea, "capacity": {$gte : ascapacity}}).fetch();
-			matchingFacilities = Facilities.find({"capacity": {$gte : ascapacity}}).fetch();
-			if(isNaN(ascapacity)){matchingFacilities = Facilities.find({"facType":typea}).fetch();}
 			console.log(matchingFacilities);
 		} else{
 			ascapacity = parseInt(Session.get("facCapacitySearch"));
 			console.log(ascapacity);
 			matchingFacilities = Facilities.find({"capacity": {$gte : ascapacity}}).fetch();
-			if(isNaN(ascapacity)){matchingFacilities = Facilities.find({}).fetch();}
 			console.log(matchingFacilities);
 		}
 		// console.log("facilitySearchResult matchingFacilities");
