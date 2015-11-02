@@ -21,7 +21,7 @@ template(name="courseList")
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addCourse" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | Course
-              +addCourseForm
+            +addCourseForm
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -168,7 +168,7 @@ template(name="deleteCourse")
                   td Are you sure you want to delete
                 tr
                   td Course Code
-                  td #{currentCourseCode.courseCode} 
+                  td #{courseCode} 
                 tr
                   td Course Name
                   td #{currentCourseCode.courseName}
