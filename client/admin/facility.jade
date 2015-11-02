@@ -31,7 +31,6 @@ template(name="facility")
                     th Facility Name
                     th Capacity
                     th Description
-                    th Details
                     th Remarks                    
                 tbody
                   each facilities
@@ -41,33 +40,29 @@ template(name="facility")
                       td #{capacity}  
                       td #{description}
                       td
-                        button#viewFacilityDetailsButton.btn.admin-btn.btn-sn.viewFacility(data-toggle="modal", data-id='#{_id}', data-target="#viewFacility")
-                          | More Details
-                        +viewFacilityForm
-                      td
-                        a.btn.admin-btn(href="#goDeleteFacility", data-toggle="modal", data-facility-id="#{_id}") Delete
+                        a.btn.admin-btn(data-target="#goDeleteFacility", data-toggle="modal", data-facility-id="#{_id}") Delete
                       +deleteFacility
 
 template(name="deleteFacility")
-  script.
-    $('#goDeleteFacility').on('show.bs.modal', function(e) {
-      var facilityId = $(e.relatedTarget).data('facility-id');
-      $(e.currentTarget).find('input[name="_id"]').val(_id);
-    });
-  #goDeleteFacility.modal.adminFormDark
+  #goDeleteFacility.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#deleteFacilityModal.modal-title Delete Facility
+          h4#myModalLabel.modal-title Delete Facility
         .modal-body
-          p Are you sure you want to delete
-          input(type="text" name="_id" value="" style="color:red")
+          form(name="", role="form", action="", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody  
+                tr
+                  td Are you sure you want to delete
+                tr
+                  td Facility Name
+                  td #{facType} #{fac} 
+          // /.table-responsive
         .modal-footer
-          a#deleteFacility.button.btn.admin-btn Confirm
-      // /.modal-content
-    // /.modal-dialog
-  // /.modal
+          button#deleteFacilityButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
 
 template(name="addFacilityForm")
   #addFacility.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -107,38 +102,3 @@ template(name="addFacilityForm")
             // /.table-responsive
           .modal-footer
             button#addFacilityButton.btn.btn-save(type="button", data-dismiss="modal") Add Facility
-      // /.modal-content
-    // /.modal-dialog
-  // /.modal
-
-
-template(name="viewFacilityForm")
-  #viewFacility.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Facility Detail
-        .modal-body
-          form(id="viewFacilityDetails", name="", role="form", action="#", method="post")
-          .table-responsive
-            table#dataTables-example.table(style="background-color:#333")
-              tbody
-                tr
-                  th(colspan="2") #{facType} #{fac}   
-                tr
-                  td Capacity
-                  td 
-                    #{capacity} 
-                tr
-                  td Description
-                  td 
-                    #{description} 
-          // /.table-responsive
-        .modal-footer
-          a.button.btn.admin-btn(href="facility/?id=#{_id}") Enter Facility Page
-      // /.modal-content
-    // /.modal-dialog
-  // /.modal
-
-
