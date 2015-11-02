@@ -4,6 +4,14 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+ $(window).scroll(function() {
+    if ($(".grayscale-navbar").offset().top > 50) {
+        $(".navbar-fixed-top").addClass("grayscale-top-nav-collapse");
+    } else {
+        $(".navbar-fixed-top").removeClass("grayscale-top-nav-collapse");
+    }
+});
+
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $(function() {
     $('a.grayscale-page-scroll').bind('click', function(event) {

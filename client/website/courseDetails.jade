@@ -25,38 +25,29 @@ template(name="websiteCourseDetails")
 		.row
 			.col-lg-10.col-lg-offset-1
 				p.templateLineBreak
-				button.btn.pull-right.admin-btn(type="submit", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Make Payment
+				a.btn.pull-right.admin-btn(href="/website/courseSignup/CGM01v3", type="button", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Sign Up Now
 				a.btn.pull-right.admin-btn(onclick="window.history.back()") Back
 
 template(name="websiteCourseDetailsForm")
 	.row
 		.col-lg-10.col-lg-offset-1
-			.panel.panel-primary
-				.table-responsive
-					table.table(style="background-color: black;")
-						tbody
-							tr
-								th 
-									label COURSE ID
-								td
-									input#disabledInput.form-control(type="hidden", name="cId" value="is101", disabled="")
-									| is101
-								th 
-									label COURSE NAME
-								td
-									input#disabledInput.form-control(type="hidden", name="cName" value="WPA Course 1", disabled="")
-									| WPA Course 1
-							tr
-								th  
-									label START DATE
-								td  1st January 2016
-								th 
-									label END DATE
-								td 31st July 2016
-							tr
-								th 
-									label No. of Sessions
-								td 30
+			.form-group
+				.col-lg-5
+					.pull-left
+					img(src="img/courses/CGM01v3.jpg" height="320px" width="450px" alt="CGM01v3")
+				.col-lg-6.col-lg-offset-1
+					input#disabledInput.form-control(type="hidden", name="cId" value="is101", disabled="")
+					input#disabledInput.form-control(type="hidden", name="cName" value="WPA Course 1", disabled="")
+					.pull-left
+						h3. CGM01v3
+						h3. WSQ Certificate in Generic Manufacturing
+						.br WDA Course
+						.br(style="margin-bottom: 20px")
+						label Lesson Schedule 
+						.br From 1st January 2016 to 31st July 2016
+						.br
+						label No. of Sessions 
+						| 30
 
 	.row
 		.col-lg-10.col-lg-offset-1

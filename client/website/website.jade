@@ -3,15 +3,6 @@ template(name="layoutWebsiteJade")
     span.icon-bar {
       background-color: #42DCA3;
     }
-  script.
-    // jQuery to collapse the navbar on scroll
-    $(window).scroll(function() {
-        if ($(".grayscale-navbar").offset().top > 50) {
-            $(".navbar-fixed-top").addClass("grayscale-top-nav-collapse");
-        } else {
-            $(".navbar-fixed-top").removeClass("grayscale-top-nav-collapse");
-        }
-    });
   .grayscale.page-top(data-spy="scroll", data-target=".navbar-fixed-top")
     // Navigation
     nav.grayscale-navbar.grayscale-navbar-custom.navbar-fixed-top(role="navigation", style="margin-bottom: 0")

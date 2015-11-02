@@ -40,11 +40,11 @@ template(name="facility")
                       td #{capacity}  
                       td #{description}
                       td
-                        button.btn.admin-btn.bt-sn(data-target="#goDeleteFacility", data-toggle="modal", data-facility-id="#{_id}") Delete
+                        a.btn.admin-btn.bt-sn(data-target="#goDeleteFacility#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                       +deleteFacility
 
 template(name="deleteFacility")
-  #goDeleteFacility.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="goDeleteFacility#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
