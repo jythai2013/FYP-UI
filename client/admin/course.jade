@@ -106,10 +106,8 @@ template(name="course")
                   .modal-body
                     | Select Course Material For Session:
                     .form-group
-                      select.form-control(name="cSession")
-                        option Session 01
-                        option Session 02
-                        option Session 03                          
+                      input.form-control(type="text", id="cUploadSession")
+                      input(type ="hidden", value = "#{courseCode}", id ="cUploadCourseCode")                
                     input#myFileInput(type="file", name="courseMaterials")
                   .modal-footer
                     button.myFileInputButton.btn.admin-btn(type="button") Upload

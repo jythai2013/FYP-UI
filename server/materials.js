@@ -27,6 +27,7 @@
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
+      console.log("materialdbbb")
       Materials.insert({
           course: courseI,
           sessionNo: sessionNoI,

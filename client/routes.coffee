@@ -19,7 +19,7 @@ navRoutes = [
 
   new NavRoute('CourseModule', 'fa-table', {label: "Course Management"})
   new NavRoute('courseList', '', {parentName: 'CourseModule', label: "Course List"})
-  new NavRoute('course', '', {parentName: 'CourseModule', label: "Course"})
+  # new NavRoute('course', '', {parentName: 'CourseModule', label: "Course"})
   new NavRoute('classHomepage', '', {parentName: 'CourseModule', label: "Class Homepage"})
   new NavRoute('group', '', {parentName: 'CourseModule', label: "Class"})
 
