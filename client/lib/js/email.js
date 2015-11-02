@@ -1,27 +1,36 @@
 
-// Template.sendEmail.events({
-//   'click #sendTestEmailButton': function(e) {
-// 	e.preventDefault();
-// 	classlist = e.target.value;
-// 	var subject = "test Subject";
-// 	var text = "test content";
-// 	//to, from, subject, text
-//     tDate = new Date();
-//     // tDate.setMinutes(tDate.getMinutes() + 1) // send email 1 minute from now
+Template.sendEmail.events({
+  'click #sendTestEmailButton': function(e) {
+	e.preventDefault();
+	// classlist = e.target.value;
+	var subject = "test Subject";
+	var text = "test content";
+	text = 	"Dear Sir/Mdm,\n"+
+							"\n"+
+							"Thank you for showing your interest in {courseName}\n"+
+							"The payment deadline for {courseName} is due in 3 days time. Please make your payment otherwise we not allow you to attend the course.\n"+
+							"\n"+
+							"Best regards,\n"+
+							"Sterling Training Hub\n"+
+							"\n"+
+// 								"Disclaimer: If you have already paid for the course, please ignore this email.";
+	//to, from, subject, text
+    tDate = new Date();
+    // tDate.setMinutes(tDate.getMinutes() + 1) // send email 1 minute from now
 		
-// 		//loop through the users in this class and send
-// 		classlist.forEach(function(student){
-// 			toEmail = student.email[0];
-// 			details = {to:toEmail, from:"asdf154+from@gmail.com", subject:subject, text:text, date:tDate}
-// 			Meteor.call("scheduleMail", details)
-// 		});
+		// //loop through the users in this class and send
+		// classlist.forEach(function(student){
+			// toEmail = student.email[0];
+			// details = {to:toEmail, from:"asdf154+from@gmail.com", subject:subject, text:text, date:tDate}
+			// Meteor.call("scheduleMail", details)
+		// });
 		
-// 		// //Original send to only 1 person code:
-// 		// toEmail = "asdf154@gmail.com";
-//     // details = {to:toEmail, from:"asdf154+from@gmail.com", subject:subject, text:text, date:tDate}
-// 		// Meteor.call("scheduleMail", details)
-//   }
-// });
+		//Original send to only 1 person code:
+		toEmail = "asdf154@gmail.com";
+    details = {to:toEmail, from:"asdf154+from@gmail.com", subject:subject, text:text, date:tDate}
+		Meteor.call("scheduleMail", details)
+  }
+});
 
 
 // Template.blastReminder.events({
