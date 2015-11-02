@@ -61,7 +61,11 @@ Template.facilityManagement.helpers({
 		});
 		
 		array.forEach(function(booking){
-			courseName = Courses.findOne({courseCode:booking.course}).courseName;
+			oneCourse = Courses.findOne({courseCode:booking.course});
+			if(oneCourse != undefined)
+				courseName = oneCourse.courseName;
+			else
+				courseName = booking.course
 			booking.title = courseName + "-" + booking.sessionNo;
 		});
 		
