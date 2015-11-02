@@ -1,0 +1,176 @@
+template(name="administratorList")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Administrator List
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Administrator List Management
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addAdminAcct" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus
+                        | Administrator
+            +addAdminAcctForm
+
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                thead
+                  tr
+                    th Name
+                    th Particulars
+                    th AccessRights
+                    th Remarks
+                tbody
+                  each students
+                    tr
+                      td #{firstName}  #{lastName} 
+                      td  
+                        form(role="form", id="insert-addAdminForm", action="#", method="post")
+                          a(href="?profile=#{currentCourseCode.firstName}&#{currentCourseCode.lastName}", class="button btn admin-btn") Particulars
+                      td
+                        form(role="form", id="insert-viewCredForm", action="#", method="post")
+                          button#viewStudAccessRightsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_email}', data-target="#viewAccessRights")
+                            | Edit Access Rights
+                        +viewAccessRightsForm
+                      td
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteAdmin")
+                          | Delete
+                        +deleteAdminForm 
+
+
+template(name="viewAccessRightsForm")
+  #viewAccessRights.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Administrator Detail
+        .modal-body
+          form(role="form", id="viewDetails", action="#", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              currentStud
+              tbody
+                tr
+                  th Email
+                  td
+                    .form-group
+                      input.form-control(type="text", id="studAcctUserName", value="#{currentStud.email}")
+                tr
+                  th Password
+                  td 
+                    .form-group
+                      input.form-control(type="hidden", id="studAcctPwd", value="#{currentStud.password}")
+                tr
+                  td Access Rights
+                  td 
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox")
+                        | 1
+                      label.checkbox-inline
+                        input(type="checkbox")
+                        | 2
+                      label.checkbox-inline
+                        input(type="checkbox")
+                        | 3
+                tr
+                  td Remarks
+                  td 
+                    input.form-control(type='text', id='studRemarks')
+                    | password
+        .modal-footer
+          button#editAdminAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteAdmin")
+             | Save Changes
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal    
+
+template(name="addAdminAcctForm")
+  #addAdminAcct.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Administrator
+        .modal-body
+          form(role="form", id="insert-addAdminForm", action="#", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody
+                tr
+                  th First Name
+                  td
+                    .form-group
+                      input.form-control(type="text", id="studFirstName", placeholder="eg. IS101")
+                tr
+                  th Last Name  
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="studLastName") 
+                tr
+                  td Email
+                  td 
+                    input.form-control(type='hidden',value='studentEmailHere', id='studEmail')
+                    | studentEmailHere
+                tr
+                  td Student Password
+                  td 
+                    input.form-control(type='hidden',value='password', id='studPassword')
+                    | password
+                tr
+                  td Access Rights
+                  td 
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox")
+                        | 1
+                      label.checkbox-inline
+                        input(type="checkbox")
+                        | 2
+                      label.checkbox-inline
+                        input(type="checkbox")
+                        | 3
+                tr
+                  td Remarks
+                  td 
+                    textarea.form-control(type='text',value='',id='studRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
+            // /.table-responsive
+        .modal-footer
+          button#addStudentAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+
+
+
+template(name="deleteAdminForm")
+  #deleteAdmin.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Delete Administrator
+        .modal-body
+          form(name="", role="form", action="#", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody  
+                tr
+                  td Are you sure you want to delete
+                tr
+                  td First Name
+                  td blah
+                tr
+                  td Last Name
+                  td #{currentCourseCode.courseName}
+          // /.table-responsive
+        .modal-footer
+          button#deleteAdminButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
