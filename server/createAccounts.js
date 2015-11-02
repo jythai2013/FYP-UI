@@ -1,3 +1,14 @@
+	Accounts.onCreateUser( function onCreateUserEventHandler(options, user) {
+		
+		// We still want the default hook's 'profile' behavior. //not really
+		// user.profile = options.profile;
+		
+		user.userType = options.userType;
+		console.log(user);
+		return user;
+	});
+
+
 	Meteor.methods({ 
 		
 		'createTrainerAccount': function createTrainerAccount(email, password, fFirstName, fLastName, fremarks){
