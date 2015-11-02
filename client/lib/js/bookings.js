@@ -66,6 +66,11 @@ Template.facilityManagement.helpers({
 		});
 		
 		return {
+			header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
 			// events: [
 								// {
 									// title  : 'Workplace Health and Safety',
