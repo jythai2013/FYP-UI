@@ -114,12 +114,12 @@ template(name="addAdminAcctForm")
                 tr
                   td Email
                   td 
-                    input.form-control(type='hidden',value='studentEmailHere', id='studEmail')
+                    input.form-control(type='text',value='studentEmailHere', id='adminEmail')
                     | studentEmailHere
                 tr
                   td Student Password
                   td 
-                    input.form-control(type='hidden',value='password', id='studPassword')
+                    input.form-control(type='password',value='password', id='adminPassword')
                     | password
                 tr
                   td Access Rights
@@ -140,7 +140,7 @@ template(name="addAdminAcctForm")
                     textarea.form-control(type='text',value='',id='studRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
             // /.table-responsive
         .modal-footer
-          button#addStudentAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
+          button#addAdminAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
       // /.modal-content
     // /.modal-dialog
   // /.modal
