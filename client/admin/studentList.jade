@@ -115,13 +115,14 @@ template(name="addStudentAcctForm")
                 tr
                   td Student Email
                   td 
-                    input.form-control(type='hidden',value='studentEmailHere', id='studEmail')
-                    | studentEmailHere
+                    input.form-control(type='text', placeholder="studentEmailHere", id='studEmail')
                 tr
                   td Student Password
                   td 
-                    input.form-control(type='hidden',value='password', id='studPassword')
-                    | password
+                    input.form-control(type='password', id='studPassword')
+                  td Reenter Password
+                  td 
+                    input.form-control(type='password', id='studPassword2')
                 tr
                   td Remarks
                   td 

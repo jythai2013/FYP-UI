@@ -6,7 +6,7 @@
 process.env.MAIL_URL="smtp://asdf154dev%40gmail.com:1234512345a@smtp.gmail.com:465/";
 
 Meteor.methods({
-	"scheduleMail":function scheduleMail(details) { 
+	"scheduleMail":function scheduleMail(details) {
 		if (details.date < new Date()) {
 			sendMail(details);
 		} else {

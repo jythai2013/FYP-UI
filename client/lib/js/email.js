@@ -4,16 +4,16 @@ Template.sendEmail.events({
 	e.preventDefault();
 	// classlist = e.target.value;
 	var subject = "test Subject";
-	var text = "test content";
-	text = 	"Dear Sir/Mdm,\n"+
-							"\n"+
-							"Thank you for showing your interest in {courseName}\n"+
-							"The payment deadline for {courseName} is due in 3 days time. Please make your payment otherwise we not allow you to attend the course.\n"+
+	// var text = "test content";
+	var courseName = "testCourseName";
+	var text = "Dear Sir/Mdm,\n"+
+							"\n"+"Thank you for showing your interest in "+{courseName}+"\n"+
+							"The payment deadline for "+courseName+" is due in 3 days time. Please make your payment otherwise we not allow you to attend the course.\n"+
 							"\n"+
 							"Best regards,\n"+
 							"Sterling Training Hub\n"+
 							"\n"+
-// 								"Disclaimer: If you have already paid for the course, please ignore this email.";
+								"Disclaimer: If you have already paid for the course, please ignore this email.";
 	//to, from, subject, text
     tDate = new Date();
     // tDate.setMinutes(tDate.getMinutes() + 1) // send email 1 minute from now

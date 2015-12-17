@@ -6,3 +6,4 @@ local/shell
 !local/db/
 !local/db/*
 local/db/mongod*
+local

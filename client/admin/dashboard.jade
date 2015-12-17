@@ -1,13 +1,21 @@
+template(name="sendEmail")
+  button#sendTestEmailButton
+    | SEND
+    
+    
 template(name="dashboard")
-
   #page-wrapper
     .row
       .col-lg-12
         h1.page-header Dashboard
       // /.col-lg-12
     // /.row
-    
     .row
+      .col-lg-8
+        .panel.panel-default
+          .panel-heading
+              +sendEmail
+              +accessControlTest
       .col-lg-8
         .panel.panel-default
           .panel-heading

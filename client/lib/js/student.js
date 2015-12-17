@@ -1,24 +1,20 @@
 Template.studentList.helpers({
 
-	"students" : function listCourseEventHandler(e) {
-		console.log("here");
-
-		return Accounts.find({userType: "learner"});
+	"students" : function studentList(e) {
+		return Meteor.users.find({userType:{"learner":true}});
 	}
 });
 
 Template.viewCredentialsForm.helpers({
-
 	"currentStud" : function listStudCredentialsEventHandler(e) {
-		console.log("herecourse");
 		var studEmail = Session.get('currentStudEmail');
 		//Session.set('currentCourseCode', null);
-		var currentStudent = Accounts.find({userType: learner, email: studEmail}).fetch();
+		var currentStudent = Meteor.users.findOne({userType:{"learner":true}, email: studEmail});
 
 		//console.log(currentCode + " current codes bitch");
 		//console.log(currentCourse);
 		console.log(currentStudent);
-		return currentStudent[0];
+		return currentStudent;
 	}
 });
 
@@ -78,11 +74,9 @@ Template.addStudentAcctForm.events({
 		var cPassword = document.getElementById("studPassword").value;
 		var cRemarks = document.getElementById("studRemarks").value;
 
-		console.log("here8");
+		console.log("here2");
 		Meteor.call("createLearnerAccount", cEmail, cPassword, cFirstName, cLastName, cRemarks);
 	}
-
-
 });
 
 Template.deleteStudentForm.events({
