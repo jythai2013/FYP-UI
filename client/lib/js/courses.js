@@ -81,6 +81,33 @@ Template.addCourseForm.events({
 
 });
 
+Template.editCourseForm.events({
+	"click #editCourseButton" : function editCourseEventHandler(e) {
+		e.preventDefault();
+		//TODO: Validation of user
+		// if(Meteor.user.userType != "admin"){
+		// return false;
+		// }
+		console.log("editting");
+
+		//TODO: Validation of input
+		var cCode = document.getElementById("cCCode").value;
+		var cName = document.getElementById("cCName").value;
+		var cDesc = document.getElementById("cCDesc").value;
+		var cSession = document.getElementById("cCSession").value;
+		var cFees = document.getElementById("cCFees").value;
+		var cMin = document.getElementById("cCMin").value;
+		var cMax = document.getElementById("cCMax").value;
+		var cType = document.getElementById("cCType").value;
+		var cTrainers = document.getElementById("cCTrainers").value;
+
+		console.log("here8");
+		Meteor.call("editCourse", cCode, cName, cDesc, cSession, cFees, cMin, cMax, cType, cTrainers);
+	}
+
+
+});
+
 Template.deleteCourse.events({
 	"click #deleteCourseButton" : function deleteCourseEventHandler(e) {
 			console.log(this._id);

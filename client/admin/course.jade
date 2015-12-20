@@ -61,7 +61,8 @@ template(name="course")
                         a(href="class/?cCode=#{courseCode}&cgrpNum=#{grpNum}") #{grpNum}
                         | ,
                     td(width="50px")
-                      input(type="button", value="Remove Class(es)")
+                      input(type="button", value="Remove Class(es)", data-toggle="modal", data-target="#removeClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                      +removeClass
                     
               button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
@@ -157,6 +158,42 @@ template(name="addClass")
           // /.table-responsive
         .modal-footer
           button#addGroupButton.btn.btn-save(type="button", data-dismiss="modal") Add 
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+
+template(name="removeClass")
+  #removeClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Remove Class
+        .modal-body
+          form(name="removeClassForm", role="form", id="insert-removeClassForm", action="facilityResult", method="post")
+              p Remove the follwing classes
+            //.table-responsive
+              //table#dataTables-example.table.table-bordered.table-hover
+                //tbody
+                  //tr 
+                    //th Classes
+                    //td
+              label Checkboxes
+                .checkbox
+                  label
+                    input(type="checkbox", value="hi")
+                    | hi                  
+                //each groupsCourse
+                  //.checkbox
+                    //label
+                 // input(type="checkbox", value=#{grpNum})
+                   //| #{grpNum}
+
+                    
+          // /.table-responsive
+        .modal-footer
+          button#removeGroupButton.btn.btn-save(type="button", data-dismiss="modal") Remove 
       // /.modal-content
     // /.modal-dialog
   // /.modal
