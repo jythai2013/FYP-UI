@@ -1,23 +1,23 @@
-Template.course.helpers({
+// Template.course.helpers({
 
-	"groupsCourse" : function listGroupsEventHandler(e) {
-		console.log("here");
-		console.log(Groups.find().count());
-		//var currentCourse = Session.get('currentCourseCode');
-		var str =  window.location.href;
-		var position = str.indexOf('=');
-		console.log(position + " = sign");
-		console.log(str + "stri");
+// 	"groupsCourse" : function listGroupsEventHandler(e) {
+// 		console.log("here");
+// 		console.log(Groups.find().count());
+// 		//var currentCourse = Session.get('currentCourseCode');
+// 		var str =  window.location.href;
+// 		var position = str.indexOf('=');
+// 		console.log(position + " = sign");
+// 		console.log(str + "stri");
 		
-		var currentCourse=str.substr(position+1);
-		console.log(currentCourse + "Code");
+// 		var currentCourse=str.substr(position+1);
+// 		console.log(currentCourse + "Code");
 
-		var size = Groups.find({courseCode:currentCourse}).count();
-		console.log(size + "Code");
-		return Groups.find({courseCode:currentCourse}).count();
+// 		var size = Groups.find({courseCode:currentCourse}).count();
+// 		console.log(size + "Code");
+// 		return Groups.find({courseCode:currentCourse}).count();
 		
-	}
-});
+// 	}
+// });
 
 
 Template.registerForCourse.events({

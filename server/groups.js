@@ -67,7 +67,8 @@
 
       console.log(courseCodeI);
 
-      var id = Groups.insert({
+      //var id = 
+      Groups.insert({
           courseCode: courseCodeI,
           grpNum: grpNumI1,
           startTime: startTimeI,
@@ -75,10 +76,12 @@
           startDate: startDateI,
           endDate: endDateI,
           paymentDeadline: paymentDeadlineI,
-          status: "Scheduled"
+          status: statusI
       });
 
-      console.log(id);
+    //var grpNumI1 = Groups.find().count();
+      //console.log(id);
+      console.log(Groups.find().count());
       
       console.log("In server 2");
   }

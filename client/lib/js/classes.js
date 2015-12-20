@@ -8,26 +8,26 @@ Template.addClass.helpers({
 });
 
 
-Template.addClass.events({
-	"click #addGroupButton" : function createGroupEventHandler(e) {
-		e.preventDefault();
-		//TODO: Validation of user
-		// if(Meteor.user.userType != "admin"){
-		// return false;
-		// }
-		console.log("here1");
+// Template.addClass.events({
+// 	"click #addGroupButton" : function createGroupEventHandler(e) {
+// 		e.preventDefault();
+// 		//TODO: Validation of user
+// 		// if(Meteor.user.userType != "admin"){
+// 		// return false;
+// 		// }
+// 		console.log("here1");
 
-		//TODO: Validation of input
-		var gCourseCode = document.getElementById("gCourseCode").value;
-		var gGroupNum = document.getElementById("gNewGroupNum").value;
-		var gStartDate = document.getElementById("gNewStartDate").value;
-		var gEndDate = document.getElementById("gNewEndDate").value;
-		var gDeadline = document.getElementById("cNewDeadline").value;
-		var gStatus = document.getElementById("gNewStatus").value;
+// 		//TODO: Validation of input
+// 		var gCourseCode = document.getElementById("gCourseCode").value;
+// 		var gGroupNum = document.getElementById("gNewGroupNum").value;
+// 		var gStartDate = document.getElementById("gNewStartDate").value;
+// 		var gEndDate = document.getElementById("gNewEndDate").value;
+// 		var gDeadline = document.getElementById("cNewDeadline").value;
+// 		var gStatus = document.getElementById("gNewStatus").value;
 
-		Meteor.call("createGroup", gCourseCode, gGroupNum, gStartDate, gEndDate, gDeadline, gStatus);
-	}
-});
+// 		Meteor.call("createGroup", gCourseCode, gGroupNum, gStartDate, gEndDate, gDeadline, gStatus);
+// 	}
+// });
 
 
 // Template.Class.events({

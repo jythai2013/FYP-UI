@@ -2,7 +2,7 @@ Template.course.helpers({
 
 	"groupsCourse" : function listGroupsEventHandler(e) {
 		console.log("here");
-		console.log(Groups.find().count());
+		console.log(Groups.find().count() + " in class.js");
 		//var currentCourse = Session.get('currentCourseCode');
 		var str =  window.location.href;
 		var position = str.indexOf('=');
@@ -40,7 +40,7 @@ Template.addClass.events({
 		var grpNumI1 = Groups.find().count();
 		var grpNumI2 = grpNumI1+1;
 		var grpNumI = "G"+grpNumI2;
-      //console.log(grpNumI);
+      console.log(grpNumI);
 		console.log("here4");
 		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gStartDate, gEndDate, gDeadline, gStatus);
 		//console.log(Groups.find({}).fetch();
