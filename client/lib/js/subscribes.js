@@ -1,6 +1,6 @@
 
 Deps.autorun(function () {
-	Meteor.subscribe('images');
+	// Meteor.subscribe('images');
 	Meteor.subscribe('userData');
 	Meteor.subscribe('courseData');
 	Meteor.subscribe('sessionsData');

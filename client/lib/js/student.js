@@ -5,6 +5,14 @@ Template.studentList.helpers({
 	}
 });
 
+Template.usersSearchBox.helpers({
+  // usersIndex: function(){
+		// console.log(UsersIndex);
+		// return () => UsersIndex
+	// }
+	usersIndex : () => UsersIndex
+});
+
 Template.viewCredentialsForm.helpers({
 	"currentStud" : function listStudCredentialsEventHandler(e) {
 		var studEmail = Session.get('currentStudEmail');
@@ -82,6 +90,7 @@ Template.addStudentAcctForm.events({
 Template.deleteStudentForm.events({
 	"click #deleteStudentButton" : function deleteStudentEventHandler(e) {
 			console.log(this._id);
-			Meteor.call("deleteLearnerAccount", this._id);
+			// Meteor.call("deleteLearnerAccount", this._id);
+			Meteor.call("deleteUsers", this._id);
 	}
 });
