@@ -109,28 +109,32 @@ template(name="addStudentAcctForm")
                     .form-group
                       input.form-control(type="text", id="studFirstName", placeholder="eg. IS101")
                 tr
-                  th Last Name  
+                  th Last Name
                   td 
                     .form-group
                       input.form-control(type="text", id="studLastName") 
                 tr
-                  td Student Email
+                  td Email
                   td 
                     input.form-control(type='text', placeholder="studentEmailHere", id='studEmail')
                 tr
-                  td Student Password
+                  td Set Default Password
                   td 
                     input.form-control(type='password', id='studPassword')
-                  td Reenter Password
+                  td Reenter Default Password
                   td 
                     input.form-control(type='password', id='studPassword2')
+                tr
+                  td Mobile Number
+                  td 
+                    input.form-control(type='text', id='mobileNo')
                 tr
                   td Remarks
                   td 
                     textarea.form-control(type='text',value='',id='studRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
             // /.table-responsive
         .modal-footer
-          button#addStudentAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
+          button#addStudentAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Student
       // /.modal-content
     // /.modal-dialog
   // /.modal
@@ -158,6 +162,9 @@ template(name="deleteStudentForm")
                 tr
                   td Last Name
                   td #{currentCourseCode.courseName}
+                tr
+                  td Mobile No
+                  td #{currentCourseCode.mobileNo}
           // /.table-responsive
         .modal-footer
           button#deleteStudentButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
