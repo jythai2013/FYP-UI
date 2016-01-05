@@ -85,7 +85,7 @@
 			// blastReminderCall(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI);
 			
       console.log(Groups.find().count());
-		}
+		},
 		
 		//can use this on a button to test also. after testing can just remove and use the above one
 		'blastReminder':function blast(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI){

@@ -4,14 +4,14 @@
 		// user.profile = options.profile;
 		
 		user.userType = options.userType;
-		user.firstName: options.firstName;
-		user.lastName: options.lastName;
+		user.firstName = options.firstName;
+		user.lastName = options.lastName;
 		
 		if(options.userType.learner == true){
 			console.log("createAccounts onCreateUser learner");
-			user.fees: options.fees;
-			user.paidStatus: options.paidStatus;
-			user.remarks: options.remarks;
+			user.fees = options.fees;
+			user.paidStatus = options.paidStatus;
+			user.remarks = options.remarks;
 		} else if(options.userType.admin == true){
 			console.log("createAccounts onCreateUser admin");
 			
