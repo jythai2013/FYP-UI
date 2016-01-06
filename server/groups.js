@@ -1,4 +1,4 @@
- Meteor.methods({ 
+Meteor.methods({ 
 
   'editGroup': function editGroup(_id, courseCodeI, grpNumI, dateTimeSessionI, startDateI,endDateI, studentListI, trainersI, gradesI, paymentDeadlineI, minI, maxI, attendanceI, statusI){
       // if(Meteor.user.userType != "admin"){

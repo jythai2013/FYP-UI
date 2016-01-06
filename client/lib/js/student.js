@@ -1,5 +1,4 @@
 Template.studentList.helpers({
-
 	"students" : function studentList(e) {
 		return Meteor.users.find({userType:{"learner":true}});
 	}

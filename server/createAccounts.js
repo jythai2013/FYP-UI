@@ -3,20 +3,47 @@
 		// We still want the default hook's 'profile' behavior. //not really
 		// user.profile = options.profile;
 		
+		var telephoneObj = {
+			residence: residenceTel,
+			mobile: mobileTel,
+			office: officeTel
+		};
+		
+		var emerContObj = {
+			name: emerContName,
+			contact: emerContContact,
+			address: emerContAddress,
+			relationship: emerContRel
+		};
+		
 		user.userType = options.userType;
 		user.firstName = options.firstName;
 		user.lastName = options.lastName;
+		user.email = email;
+		user.password = password;
+		user.gender = abcde;
+		user.userID = abcde;
+		user.userIDType = abcde;
+		user.company = abcde;
+		user.address = abcde;
+		user.postalCode = abcde;
+		user.dateOfBirth = abcde;
+		user.nationality = abcde;
+		user.preferredLanguage = abcde;
+		user.emergencyContact = emerContObj;
+		user.telephone = telephoneObj;
+		user.remarks = options.remarks;
 		
 		if(options.userType.learner == true){
 			console.log("createAccounts onCreateUser learner");
 			user.fees = options.fees;
 			user.paidStatus = options.paidStatus;
-			user.remarks = options.remarks;
 		} else if(options.userType.admin == true){
 			console.log("createAccounts onCreateUser admin");
 			
 		}else if(options.userType.trainer == true){
 			console.log("createAccounts onCreateUser trainer");
+				highestQualification: tHighestQualification
 			
 		}
 		console.log(user);
@@ -26,18 +53,39 @@
 
 	Meteor.methods({ 
 		
-		'createTrainerAccount': function createTrainerAccount(email, password, fFirstName, fLastName, fRemarks){
+		'createTrainerAccount': function createTrainerAccount(email, password, fFirstName, fLastName, fRemarks, tHighestQualification){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
 			var userTypeObj = {trainer: true};
+			var telephoneObj = {
+				residence: residenceTel,
+				mobile: mobileTel,
+				office: officeTel
+			};
+			var emerContObj = {
+				name: emerContName,
+				contact: emerContContact,
+				address: emerContAddress,
+				relationship: emerContRel
+			};
 			var options = {
 				email: email,
 				password: password,
 				firstName: fFirstName,
 				lastName: fLastName,
-				remarks: fRemarks,
-				userType: userTypeObj
+				gender: abcde,
+				userID: abcde,
+				userIDType: abcde,
+				company: abcde,
+				address: abcde,
+				postalCode: abcde,
+				dateOfBirth: abcde,
+				nationality: abcde,
+				preferredLanguage: abcde,
+				emergencyContact: emerContObj,
+				telephone: telephoneObj,
+				userType: userTypeObj,
 			};
 			Accounts.createUser(options);
 		},
