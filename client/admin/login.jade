@@ -26,7 +26,10 @@ template(name="loginLayout")
       top: 50%;
       left: 50%;
       margin-right: -50%;
-      transform: translate(-50%, -50%) 
+      transform: translate(-50%, -50%)
+    }
+    a{
+      text-align: middle;
     }
 
   .container.alignMiddle
@@ -37,13 +40,13 @@ template(name="loginModal")
   if isLoggedIn
     .alert.alert-success
       | Redirecting to Admin Dashboard
-  else 
+  else
     +login
 
 template(name="checkUserLogin")
   if isLoggedIn
     // Do nothing
-  else 
+  else
     +login
 
 template(name="login")
@@ -60,7 +63,7 @@ template(name="login")
                 .form-group.input-group
                   span.input-group-addon(style="background-color: #333; border-color: #42dca3")
                     i.fa.fa-envelope.fa-fw
-                  input#login-email.form-control(type="email", placeholder="E-mail", name="email", autofocus="")
+                  input#login-email.form-control(type="text", placeholder="E-mail", name="email", autofocus="")
                 .form-group.input-group
                   span.input-group-addon(style="background-color: #333; border-color: #42dca3")
                     i.fa.fa-key.fa-fw
@@ -75,4 +78,5 @@ template(name="login")
                 input#login-button.admin-btn.form-control(type="submit", value="LOGIN")
             .row
               .col-sm-12.col-xs-12
-                button#sign-up-button.btn.btn-link.form-control(type="button", onClick='location.href="resetPassword"') Forget Password
+                a(href='resetPassword', class='button', style="text-align:center;") FORGOT PASSWORD?
+                
