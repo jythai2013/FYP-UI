@@ -5,6 +5,27 @@ template(name="studentList")
         h1.page-header Student List
       // /.col-lg-12
     // /.row
+
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Search courses
+              //+addCourseForm
+          
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                tbody
+                  tr
+                    th Search  
+                    td  
+                    th Type
+                    td
+                      select(id="type")
+                        option(value="wda") "WDA"
+                        option(value="nonwda") "Non-WDA"
+            
+            button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter 
     .row
       .col-lg-12
         .panel.panel-default
@@ -14,7 +35,7 @@ template(name="studentList")
                         i.fa.fa-plus
                         | Student
             +addStudentAcctForm
-            +studentsSearchBox
+            +usersSearchBox
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
