@@ -38,15 +38,15 @@ template(name="loginModal")
     .alert.alert-success
       | Redirecting to Admin Dashboard
   else 
-    +loginPage
+    +login
 
 template(name="checkUserLogin")
   if isLoggedIn
     // Do nothing
   else 
-    +loginPage
+    +login
 
-template(name="loginPage")
+template(name="login")
     .row
       .col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
         .login-panel.panel.panel-default
@@ -75,4 +75,4 @@ template(name="loginPage")
                 input#login-button.admin-btn.form-control(type="submit", value="LOGIN")
             .row
               .col-sm-12.col-xs-12
-                button#sign-up-button.btn.btn-link.form-control(type="button") Forget Password
+                button#sign-up-button.btn.btn-link.form-control(type="button", onClick='resetPassword') Forget Password
