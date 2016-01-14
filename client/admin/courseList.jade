@@ -10,9 +10,33 @@ template(name="courseList")
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header Course List
+        h1.page-header course list
       // /.col-lg-12
     // /.row
+
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Search courses
+              //+addCourseForm
+          
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                tbody
+                  tr
+                    th Search  
+                    td 
+                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
+                      
+                    th Type
+                    td
+                      select(id="type")
+                        option(value="wda")= "WDA"
+                        option(value="nonwda")= "Non-WDA"
+            
+            button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter          
+
     .row
       .col-lg-12
         .panel.panel-default
@@ -22,7 +46,7 @@ template(name="courseList")
                         i.fa.fa-plus
                         | Course
               +addCourseForm
-
+          
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
                 thead
@@ -110,7 +134,9 @@ template(name="addCourseForm")
                   th Course Type  
                   td 
                     .form-group
-                      input.form-control(type="text", id="cNewType") 
+                      select(id="type")
+                        option(value="wda") = "WDA"
+                        option(value="nonwda") = "Non-WDA"
                 tr
                   th Description
                   td 

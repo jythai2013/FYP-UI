@@ -10,14 +10,17 @@ template(name="group")
         .panel.panel-default
           .panel-body
             h4 Course Details: IS101 G1
-            button.btn.btn.btn-sm(data-toggle="modal", data-target="#editClass" style="position: absolute; right: 6%; background: #333; color:#fff")
-              i.fa.fa-pencil-square-o  Edit
+              button.btn.btn.btn-sn.pull-right(data-toggle="modal", data-target="#editClass" style="margin-top: -1%; background: #333; color:#fff")
+                    i.fa.fa-pencil-square-o  
+                    | Edit
+              +editClassDetails
+
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
                 tbody
                   tr
                     th Course
-                    td Workplace Health & Safety
+                    td #{courseName}
                   tr
                     th Venue
                     td Classroom 2.1
@@ -34,14 +37,16 @@ template(name="group")
                     th End Date
                     td 27 November 2015
             // /.table-responsive
-            +editClassDetails
+            
 
             p.breakH4
-            button.btn.btn.btn-sm(data-toggle="modal", data-target="#postNotification" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
-                        i.fa.fa-plus  Notification
-            +notificationForm
-            h4 Notification Panel
-            +displayAnnoucements
+            h4 Announcement Panel
+              button.btn.btn.btn-sn.pull-right(data-toggle="modal", data-target="#postNotification" style="margin-top: -1%;  background: #333; color:#fff")
+                i.fa.fa-plus  
+                | Announcement 
+              +announcementForm
+            
+            +displayAnnouncements
 
             p.breakH4
             h4 Class Management
@@ -72,13 +77,13 @@ template(name="group")
   // /#page-wrapper
 
 
-template(name="notificationForm")
+template(name="announcementForm")
   #postNotification.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Post New Notification
+          h4#myModalLabel.modal-title New Announcement
         .modal-body
           form(name="postNotification", role="form", action="insertNotification", method="post")
           .table-responsive
@@ -87,19 +92,20 @@ template(name="notificationForm")
                 tr
                   td Title
                   td 
-                    input.form-control(id='annouTitle',type='text',value='',placeholder='Notification Title', style="max-width: 500px;")
+                    input.form-control(id='annouTitle',type='text',value='',placeholder='Title', style="max-width: 500px;")
                 tr
                   td Details
                   td 
                     textarea.form-control(id='annouDetails',type='text',value='',placeholder='Details Here', style="max-width: 500px;")
           // /.table-responsive
         .modal-footer
-          input.btn.admin-btn#submitButton(type='submit',value='Post Notification',data-transition='fade', data-theme='c', data-dismiss="modal")
+          //input.btn.admin-btn#submitButton(type='submit',value='Post Annoucenment',data-transition='fade', data-theme='c', data-dismiss="modal")
+          button#addAnnouncementButton.btn.btn-save(type="button", data-dismiss="modal") Post Announcement
       // /.modal-content
     // /.modal-dialog
   // /.modal
 
-template(name="displayAnnoucements")
+template(name="displayAnnouncements")
   .table-responsive
     table#dataTables-example.table.table-striped.table-bordered
       thead
@@ -109,21 +115,12 @@ template(name="displayAnnoucements")
           th Date
           th Author
       tbody 
-        tr
-          td Deadline for Assignment 3
-          td Class, do take note Assignmmment 3 is due next Monday
-          td 10 October 2015
-          td CHIA Wei Ting
-        tr
-          td Lecture Notes 13
-          td Lecture notes for session 13 has been uploaded
-          td 30 September 2015
-          td Course Head
-        tr
-          th Rescheduling of this week Wednesday's Class
-          td This Wednesday's class is rescheduled to Saturday (12/09/2015)
-          td 04 September 2015
-          td Administrator
+        each groupAnnouncements
+          tr
+            td #{title}
+            td #{content}
+            td {{formatDate dateTime}}
+            td #{author} 
   // /.table-responsive
 
 template(name="editClassDetails")

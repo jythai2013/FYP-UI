@@ -33,5 +33,6 @@ percolate:synced-cron
 email
 cfs:dropbox
 easy:search
-autopublish
-insecure
+
+accounts-password
+momentjs:moment
