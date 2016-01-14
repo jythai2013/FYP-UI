@@ -13,6 +13,50 @@ template(name="facility")
         h1.page-header Facility List
       // /.col-lg-12
     // /.row
+
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Search courses
+              //+addCourseForm
+          
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                tbody
+                  tr
+                    th Name  
+                    td 
+                      input.form-control(type="text", id="facilityName")
+                      
+                    th Type
+                    td
+                      select(id="type")
+                        option(value="wda")= "Class Room"
+                        option(value="nonwda")= "Practical Room"
+                  tr
+                    th Capacity
+                    td 
+                      .form-group
+                        .radio
+                          label.radio-inline
+                            input#optionsRadios1(type="radio", name="optionsRadios", value="less", checked="")
+                            | less than
+                        .radio
+                          label
+                            input#optionsRadios2(type="radio", name="optionsRadios", value="equal")
+                            | equal to
+                        
+                        .radio
+                          label
+                            input#optionsRadios3(type="radio", name="optionsRadios", value="more")
+                            | more than
+                    td   
+                       input.form-control(type="text", id="fCapacity", placeholder="eg. IS101") 
+            
+            button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter 
+
+
     .row
       .col-lg-12
         .panel.panel-default

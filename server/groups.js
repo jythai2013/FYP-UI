@@ -1,4 +1,4 @@
-Meteor.methods({ 
+ Meteor.methods({ 
 
   'editGroup': function editGroup(_id, courseCodeI, grpNumI, dateTimeSessionI, startDateI,endDateI, studentListI, trainersI, gradesI, paymentDeadlineI, minI, maxI, attendanceI, statusI){
       // if(Meteor.user.userType != "admin"){
@@ -19,6 +19,27 @@ Meteor.methods({
           status: statusI
         }
       });
+    },
+
+  'insertGroupAnnouncement': function editGroupAnnounce(_id, aTitle, aDetails, aAuthor){
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+      console.log("in SERVER");
+      console.log(aTitle);
+      // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
+      Groups.update(_id, {
+        $push: {
+          announcement: 
+          {
+          title: aTitle,
+          content:aDetails,
+          author:aAuthor,
+          dateTime: new Date()
+          }
+        }
+      });
+      console.log("in SERVER");
     },
 
   'addStudent': function addStudent(_id, cCode, sFirstName, sLastName){
