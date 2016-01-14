@@ -53,7 +53,7 @@
 
 	Meteor.methods({ 
 		
-		'createTrainerAccount': function createTrainerAccount(email, password, fFirstName, fLastName, fRemarks, tHighestQualification){
+		'createTrainerAccount': function createTrainerAccount(email, password, fFirstName, fLastName, ingender, inuserID, inuserIDType, inCompany, inAddress, inPostalCode, inDOB, inNationality, inLang, residenceTel, mobileTel, officeTel, emerContName, emerContContact, emerContAddress, emerContRel, fRemarks, tHighestQualification){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
@@ -74,15 +74,15 @@
 				password: password,
 				firstName: fFirstName,
 				lastName: fLastName,
-				gender: abcde,
-				userID: abcde,
-				userIDType: abcde,
-				company: abcde,
-				address: abcde,
-				postalCode: abcde,
-				dateOfBirth: abcde,
-				nationality: abcde,
-				preferredLanguage: abcde,
+				gender: ingender,
+				userID: inuserID,
+				userIDType: inuserIDType,
+				company: inCompany,
+				address: inAddress,
+				postalCode: inPostalCode,
+				dateOfBirth: inDOB,
+				nationality: inNationality,
+				preferredLanguage: inLang,
 				emergencyContact: emerContObj,
 				telephone: telephoneObj,
 				userType: userTypeObj,
