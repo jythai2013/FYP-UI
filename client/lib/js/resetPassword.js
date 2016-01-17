@@ -6,7 +6,7 @@ Template.resetPassword.events({
 		// alert("reset password");
 		// var emailI = prompt("Please enter your email");
 		var options = new Object();
-		options.email = document.getElementById("login- email").value;
+		options.email = document.getElementById("login-email").value;
 		//fires the forgotPassword(option, callback) method
 		Accounts.forgotPassword(options, function(e){
 			if(e != undefined)console.log(e); //got error
