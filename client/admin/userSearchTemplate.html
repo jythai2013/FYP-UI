@@ -1,8 +1,8 @@
 <template name="studentsSearchBox">
-    {{> EasySearch.Input index=usersIndex }}
+    {{> EasySearch.Input index=studentsIndex }}
 
     <ul>
-        {{#EasySearch.Each index=usersIndex }}
+        {{#EasySearch.Each index=studentsIndex }}
             <li>Name of the player: {{username}}</li>
         {{/EasySearch.Each}}
     </ul>

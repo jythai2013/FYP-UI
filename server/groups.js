@@ -27,7 +27,6 @@
       // }
       console.log("in SERVER");
       console.log(aTitle);
-      console.log(aTitle);
       // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
       Groups.update(_id, {
         $push: {
