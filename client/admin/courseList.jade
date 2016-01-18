@@ -98,7 +98,7 @@ template(name="viewCourseForm")
                   td #{currentCourseCode.courseMax} 
                 tr
                   td Description
-                  td #{currentCourseCode.description} 
+                  td #{currentCourseCode.courseDescription} 
                 tr
                   td Fees
                   td #{currentCourseCode.courseFees}
@@ -133,10 +133,11 @@ template(name="addCourseForm")
                 tr
                   th Course Type  
                   td 
-                    .form-group
-                      select(id="type")
-                        option(value="wda") = "WDA"
-                        option(value="nonwda") = "Non-WDA"
+                    .form-group()
+                      select(id="type", style="color: black")
+                        option(value="WSQ") WSQ
+                        option(value="Non-WSQ") Non-WSQ
+                        option(value="Others") Others
                 tr
                   th Description
                   td 
