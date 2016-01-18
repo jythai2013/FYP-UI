@@ -28,7 +28,7 @@ template(name="course")
                     td #{courseType}
                   tr
                     th Description
-                    td #{description}
+                    td #{courseDescription}
                   tr 
                     th No. of Session(s)
                     td #{courseNoOfSessions}
@@ -51,9 +51,10 @@ template(name="course")
                 tbody
                   tr
                     th Trainer
-                    td #{trainers}
+                    td #{courseTrainers}
                     td 
-                      input(type="button", value="Remove Trainer(s)")
+                      input(type="button", value="Remove Trainer(s)", data-toggle="modal", data-target="#removeTrainers", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                      +removeTrainers
                   tr 
                     th Classes
                     td
@@ -179,11 +180,65 @@ template(name="removeClass")
                   //tr 
                     //th Classes
                     //td
-              label Checkboxes
-                .checkbox
-                  label
-                    input(type="checkbox", value="hi")
-                    | hi                  
+               .form-group
+                    label Checkboxes
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 1
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 2
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 3               
+                //each groupsCourse
+                  //.checkbox
+                    //label
+                 // input(type="checkbox", value=#{grpNum})
+                   //| #{grpNum}
+
+                    
+          // /.table-responsive
+        .modal-footer
+          button#removeGroupButton.btn.btn-save(type="button", data-dismiss="modal") Remove 
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+
+template(name="removeTrainers")
+  #removeTrainers.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Remove Class
+        .modal-body
+          form(name="removeClassForm", role="form", id="insert-removeClassForm", action="facilityResult", method="post")
+              p Remove the following trainer(s)
+            //.table-responsive
+              //table#dataTables-example.table.table-bordered.table-hover
+                //tbody
+                  //tr 
+                    //th Classes
+                    //td
+               .form-group
+                    label Checkboxes
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 1
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 2
+                    .checkbox
+                      label
+                        input(type="checkbox", value="")
+                        | Checkbox 3               
                 //each groupsCourse
                   //.checkbox
                     //label
