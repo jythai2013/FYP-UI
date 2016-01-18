@@ -2,14 +2,14 @@ template(name="group")
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header IS101 G1
+        h1.page-header #{courseCode} #{grpNum}
       // /.col-lg-12
     // /.row
     .row
       .col-lg-12
         .panel.panel-default
           .panel-body
-            h4 Course Details: IS101 G1
+            h4 Course Details
               button.btn.btn.btn-sn.pull-right(data-toggle="modal", data-target="#editClass" style="margin-top: -1%; background: #333; color:#fff")
                     i.fa.fa-pencil-square-o  
                     | Edit
@@ -20,7 +20,7 @@ template(name="group")
                 tbody
                   tr
                     th Course
-                    td #{courseName}
+                    td #{courseCode}
                   tr
                     th Venue
                     td Classroom 2.1
@@ -32,10 +32,10 @@ template(name="group")
                     td Monday and Friday, 10am - 5pm
                   tr
                     th Start Date
-                    td 02 September 2015
+                    td #{startDate}
                   tr
                     th End Date
-                    td 27 November 2015
+                    td #{endDate}
             // /.table-responsive
             
 
@@ -138,7 +138,7 @@ template(name="editClassDetails")
                 tr
                   td Venue
                   td 
-                    input.form-control(id='annouTitle',type='text',value='',placeholder='Notification Title', style="max-width: 500px;")
+                    input.form-control(id='annouTitle',type='text',value='',placeholder='Venue', style="max-width: 500px;")
            // /.table-responsive
         .modal-footer
           input.btn.admin-btn#submitButton(type='submit',value='Edit',data-transition='fade', data-theme='c', data-dismiss="modal")

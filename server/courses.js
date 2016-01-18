@@ -31,6 +31,7 @@
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
+			console.log(_id);
       		Courses.remove(_id);
 		},
 		

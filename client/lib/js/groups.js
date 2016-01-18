@@ -19,6 +19,27 @@ Template.course.helpers({
 	}
 });
 
+Template.removeClass.helpers({
+
+	"groupsCourse2" : function listGroups2EventHandler(e) {
+		console.log("here");
+		console.log(Groups.find().count() + " asdf adgfear fsdvgr fg in class.js");
+		//var currentCourse = Session.get('currentCourseCode');
+		var str =  window.location.href;
+		var position = str.indexOf('=');
+		console.log(position + " = sign");
+		console.log(str + "stri");
+		
+		var currentCourse=str.substr(position+1);
+		console.log(currentCourse + "Code");
+
+		var size = Groups.find({courseCode:currentCourse}).count();
+		console.log(size + "Code");
+		return Groups.find({courseCode:currentCourse});
+		
+	}
+});
+
 Template.displayAnnouncements.helpers({
 
 	"groupAnnouncements" : function listGroupAnnouncementsEventHandler(e) {
@@ -120,4 +141,13 @@ Template.announcementForm.events({
 Template.registerHelper('formatDate', function(date){
 	return moment(date).format("DD-MM-YYYY HH:mm:ss");
 
+});
+
+
+
+Template.removeClass.events({
+	"click #removeGroupButton" : function deleteCourseEventHandler(e) {
+			console.log(this._id);
+			Meteor.call("deleteCourse", this._id);
+	}
 });

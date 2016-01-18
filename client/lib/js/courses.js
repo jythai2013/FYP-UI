@@ -61,16 +61,18 @@ Template.addCourseForm.events({
 		// if(Meteor.user.userType != "admin"){
 		// return false;
 		// }
-		console.log("here1");
 
 		//TODO: Validation of input
 		var cName = document.getElementById("cNewName").value;
 		var cCode = document.getElementById("cNewCode").value;
+		console.log( cCode +" cCode");
 		var cFee = document.getElementById("cNewFee").value;
 		var cNoOfSessions = document.getElementById("cNewNoOfSessions").value;
 		var cDescription = document.getElementById("cNewDesc").value;
 		var cTrainers = document.getElementById("cNewTrainers").value;
-		var cType = document.getElementById("cNewType").value;
+		//var cType = document.getElementById("cNewType").value;
+		var cType = $('#type option:selected').val();
+		console.log(cType+"   cType");
 		var cMin = document.getElementById("cNewMin").value;
 		var cMax = document.getElementById("cNewMax").value;
 
@@ -111,6 +113,6 @@ Template.editCourseForm.events({
 Template.deleteCourse.events({
 	"click #deleteCourseButton" : function deleteCourseEventHandler(e) {
 			console.log(this._id);
-			Meteor.call("deleteCourse", this._id);
+			Meteor.call("deleteGroup", this._id);
 	}
 });
