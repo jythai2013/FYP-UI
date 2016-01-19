@@ -10,7 +10,6 @@ Template.courseList.helpers({
 Template.viewCourseForm.helpers({
 
 	"currentCourseCode" : function listCourseEventHandler(e) {
-		console.log("herecourse");
 		var currentCode = Session.get('currentCourseCode');
 		//Session.set('currentCourseCode', null);
 		var currentCourse = Courses.find({courseCode:currentCode}).fetch();
@@ -71,7 +70,9 @@ Template.addCourseForm.events({
 		var cDescription = document.getElementById("cNewDesc").value;
 		var cTrainers = document.getElementById("cNewTrainers").value;
 		//var cType = document.getElementById("cNewType").value;
-		var cType = $('#type option:selected').val();
+		var cType = document.getElementById("cNewType").value;
+
+		//var cType = document.getElementsByName('type');
 		console.log(cType+"   cType");
 		var cMin = document.getElementById("cNewMin").value;
 		var cMax = document.getElementById("cNewMax").value;
