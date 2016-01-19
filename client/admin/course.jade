@@ -76,32 +76,28 @@ template(name="course")
                         //| Class 
               //+addClass
             // /.table-responsive
-
             p.breakH4
             h4 Course Materials
             .table-responsive
               table#dataTables-example.table.table-bordered.table-hover
-                tbody
+                thead
                   tr
                     th Session
                     th Topic
                     th(colspan="2") Course Materials
-                  tr 
-                    td 01
-                    td Theory 101
-                    td Files here
-                    td(width="50px") 
-                      input(type="button", value="Remove")
-                  tr 
-                    td 02
-                    td Hands-on 101
-                    td Files here
-                    td(width="50px") 
-                      input(type="button", value="Remove")
-                  tr
-                    td(colspan="4")
-                      button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
-                        | Upload Course Material(s)
+                    th Download File
+                tbody
+                  each uploads                   
+                    tr 
+                      td 01
+                      td #{name}
+                      td Files here
+                      td(width="50px") 
+                        a(href="{{url download = true}}", class="button btn admin-btn") Download 
+                    tr
+                      td(colspan="4")
+                        button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
+                          | Upload Course Material(s)
             // /.table-responsive
             // Button trigger modal
             // Modal
