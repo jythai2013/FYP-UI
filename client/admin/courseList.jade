@@ -31,9 +31,10 @@ template(name="courseList")
                       
                     th Type
                     td
-                      select(id="type")
-                        option(value="wda")= "WDA"
-                        option(value="nonwda") = "Non-WDA"
+                      select(name="type", id="cNewType", style="color: black")
+                        option(value="WSQ") WSQ
+                        option(value="Non-WSQ") Non-WSQ
+                        option(value="Others") Others
             
             button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter          
 

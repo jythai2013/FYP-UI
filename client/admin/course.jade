@@ -66,10 +66,10 @@ template(name="course")
                         | ,
                     td(width="50px")
                       input(type="button", value="Add Class", data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
-                      +addClass
+                    +addClass
                     td(width="50px")
                       input(type="button", value="Remove Class(es)", data-toggle="modal", data-target="#removeClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
-                      +removeClass
+                    +removeClass
                     
               //button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                         //i.fa.fa-plus
@@ -144,6 +144,28 @@ template(name="addClass")
                     .form-group
                       input.form-control(type="time", id="gNewEndTime")
                 tr
+                  th Days
+                  td 
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Monday")
+                        | Monday
+                      label.checkbox-inline
+                        input(type="checkbox", value="Tuesday")
+                        | Tuesday
+                      label.checkbox-inline
+                        input(type="checkbox", value="Wednesday")
+                        | Wednesday
+                      label.checkbox-inline
+                        input(type="checkbox", value="Thursday")
+                        | Thursday
+                      label.checkbox-inline
+                        input(type="checkbox", value="Friday")
+                        | Friday
+                      label.checkbox-inline
+                        input(type="checkbox", value="Saturday")
+                        | Saturday
+                tr
                   th Start Date
                   td 
                     .form-group
@@ -180,8 +202,19 @@ template(name="addTrainer")
           h4#myModalLabel.modal-title Add New Trainer
         .modal-body
           form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
-          TBC
-                    
+            .form-group
+              tr
+                td(colspan="2")
+                  select(id="trainer", style="color: black; width: 300px")
+                    option(value="WSQ") WSQ
+                    option(value="Non-WSQ") Non-WSQ
+                    option(value="Others") Others     
+                td  
+                  button#removeThisTrainer.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                        i.fa.fa-minus 
+                td
+                  button#addMoreTrainer.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                        i.fa.fa-plus         
           // /.table-responsive
         .modal-footer
           button#addTrainerButton.btn.btn-save(type="button", data-dismiss="modal") Add 
@@ -211,7 +244,7 @@ template(name="removeClass")
               each groupsCourse2
                 .checkbox
                   label
-                    input(type="checkbox", value="huh")
+                    input(type="checkbox", value="#{grpNum}")
                     | #{grpNum}              
                 //each groupsCourse
                   //.checkbox
