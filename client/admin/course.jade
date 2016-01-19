@@ -148,22 +148,22 @@ template(name="addClass")
                   td 
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Monday")
+                        input(type="checkbox", value="Monday", name="day")
                         | Monday
                       label.checkbox-inline
-                        input(type="checkbox", value="Tuesday")
+                        input(type="checkbox", value="Tuesday", name="day")
                         | Tuesday
                       label.checkbox-inline
-                        input(type="checkbox", value="Wednesday")
+                        input(type="checkbox", value="Wednesday", name="day")
                         | Wednesday
                       label.checkbox-inline
-                        input(type="checkbox", value="Thursday")
+                        input(type="checkbox", value="Thursday", name="day")
                         | Thursday
                       label.checkbox-inline
-                        input(type="checkbox", value="Friday")
+                        input(type="checkbox", value="Friday", name="day")
                         | Friday
                       label.checkbox-inline
-                        input(type="checkbox", value="Saturday")
+                        input(type="checkbox", value="Saturday", name="day")
                         | Saturday
                 tr
                   th Start Date
@@ -205,10 +205,11 @@ template(name="addTrainer")
             .form-group
               tr
                 td(colspan="2")
-                  select(id="trainer", style="color: black; width: 300px")
-                    option(value="WSQ") WSQ
-                    option(value="Non-WSQ") Non-WSQ
-                    option(value="Others") Others     
+                  select( id="newTrainers", style="color: black; width: 300px")
+                    option(value="Twinnings") Twinnings
+                    option(value="Lipton") Lipton
+                    option(value="TWG") TWG
+                    option(value="Dilmah") Dilmah     
                 td  
                   button#removeThisTrainer.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background-color: white; color:#333")
                         i.fa.fa-minus 
@@ -282,13 +283,13 @@ template(name="removeTrainer")
               //each groupsCourse2
               .checkbox
                 label
-                  input(type="checkbox", value="huh")
+                  input(type="checkbox", name="currentTrainers", value="#{courseTrainers} ")
                   | #{courseTrainers}     
 
                     
           // /.table-responsive
         .modal-footer
-          button#removeGroupButton.btn.btn-save(type="button", data-dismiss="modal") Remove 
+          button#removeTrainerButton.btn.btn-save(type="button", data-dismiss="modal") Remove 
       // /.modal-content
     // /.modal-dialog
   // /.modal
@@ -354,10 +355,5 @@ template(name="editCourseForm")
                   td
                     .form-group.input-group
                       input.form-control(type="text", id="cCType", value="#{courseType}")
-                tr
-                  th Trainers
-                  td
-                    .form-group.input-group
-                      input.form-control(type="text", id="cCTrainers", value="#{trainers}")
         .modal-footer
           button#editCourseButton.btn.btn-save(type="button", data-dismiss="modal") Save Changes

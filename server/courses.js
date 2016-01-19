@@ -8,7 +8,7 @@
 			});
 		},
 		
-		'editCourse': function editCourse(cCode, cName, cDescription, cNoOfSession, cFees, cMin, cMax, cType, cTrainer){
+		'editCourse': function editCourse(cCode, cName, cDescription, cNoOfSession, cFees, cMin, cMax, cType){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
@@ -22,7 +22,7 @@
 					courseMin: cMin,
 					courseMax: cMax,
 					courseType: cType,
-					courseTrainers: cTrainer
+					//courseTrainers: cTrainer
 				}
       		});
 		},
@@ -34,8 +34,35 @@
 			console.log(_id);
       		Courses.remove(_id);
 		},
+				
+		'removeTrainer': function removeTrainer(id, removeCurrentTrainersArr){
+			// if(Meteor.user.userType != "admin"){
+				// return false; //TODO: output error message in client
+			// }
+			console.log(removeCurrentTrainersArr);
+
+			for(var trainer in removeCurrentTrainersArr){
+				//removeCurrentTrainersArr.push(removeCurrentTrainers[x].value);
+				Courses.remove({_id:id, courseTrainers: trainer});
+    		}
+      		
+		},
+				
+		// 'addTrainer': function addTrainer(_id, addTrainersArr){
+		// 	// if(Meteor.user.userType != "admin"){
+		// 		// return false; //TODO: output error message in client
+		// 	// }
+		// 	for(var trainer in addTrainersArr){
+		// 		Courses.update(_id, {
+	 //        		$push: {
+	 //          			courseTrainers: 
+	 //          			{trainer}
+	 //        		}
+	 //      		});
+  //     		//}
+		// },
 		
-		'createCourse': function createCourse(cName, cCode, cFee, cNoOfSessions, cTrainers, cDescription, cType, cMin, cMax){
+		'createCourse': function createCourse(cName, cCode, cFee, cNoOfSessions, cDescription, cType, cMin, cMax){
 			// debugger;
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
@@ -47,7 +74,7 @@
 				courseFees: cFee,
 				courseNoOfSessions: cNoOfSessions,
 				courseDescription: cDescription,
-				courseTrainers: cTrainers,
+				//courseTrainers: cTrainers,
 				courseType: cType,
 				courseMin: cMin,
 				courseMax: cMax

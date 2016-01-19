@@ -148,6 +148,6 @@ Template.registerHelper('formatDate', function(date){
 Template.removeClass.events({
 	"click #removeGroupButton" : function deleteCourseEventHandler(e) {
 			console.log(this._id);
-			Meteor.call("deleteCourse", this._id);
+			Meteor.call("deleteGroup", this._id);
 	}
 });
