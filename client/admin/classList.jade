@@ -1,0 +1,204 @@
+template(name="classList")
+  style.
+    .panel-body{
+      padding: 3%;
+    }
+    .col-lg-12{
+      padding-left: 2%;
+      padding-right: 2%;
+    }
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header course list
+      // /.col-lg-12
+    // /.row
+
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Search courses
+              //+addCourseForm
+          
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                tbody
+                  tr
+                    th Search  
+                    td 
+                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
+                      
+                    th Type
+                    td
+                      select(id="type")
+                        option(value="wda")= "WDA"
+                        option(value="nonwda")= "Non-WDA"
+            
+            button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter          
+
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Course Details
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addCourse" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus
+                        | Class
+              +addClassForm
+          
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                thead
+                  tr
+                    th Code
+                    th Class
+                    th Type
+                    th Fees
+                    th Details
+                    th Remarks
+                tbody
+                  each classes
+                    tr
+                      td #{courseCode}  
+                      td #{grpNum}  
+                      td #{courseType}  
+                      td #{courseFees}  
+                      td
+                        form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+                          button#viewCourseDetailsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_courseCode}', data-target="#viewCourse")
+                            | More Details
+                          +viewClassForm
+                      td
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteCourse#{_id}")
+                          | Delete
+                        +deleteCourse 
+
+
+template(name="viewClassForm")
+  #viewCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Course Detail
+        .modal-body
+          form(role="form", id="viewDetails", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              currentCourseCode
+              tbody
+                tr
+                  th(colspan="2") #{currentCourseCode.courseName}   
+                tr
+                  td Min
+                  td #{currentCourseCode.courseCode} 
+                tr
+                  td Max
+                  td #{currentCourseCode.courseMax} 
+                tr
+                  td Description
+                  td #{currentCourseCode.description} 
+                tr
+                  td Fees
+                  td #{currentCourseCode.courseFees}
+        .modal-footer
+          a(href="course?cCode=#{currentCourseCode.courseCode}", class="button btn admin-btn") Enter Course Page
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal    
+
+template(name="addClassForm")
+  #addCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Course
+        .modal-body
+          form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody
+                tr
+                  th Course Code
+                  td
+                    .form-group
+                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
+                tr
+                  th Course Name  
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cNewName") 
+                tr
+                  th Course Type  
+                  td 
+                    .form-group
+                      select(id="type")
+                        option(value="wda") = "WDA"
+                        option(value="nonwda") = "Non-WDA"
+                tr
+                  th Description
+                  td 
+                    .form-group
+                      input.form-control(type="comment", id="cNewDesc")
+                tr
+                  th No. Of Sessions
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="text", id="cNewNoOfSessions")
+                tr
+                  th Minimum
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="text", id="cNewMin")
+                tr
+                  th Maximum
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="text", id="cNewMax")
+                tr
+                  th Fees
+                  td 
+                    .form-group.input-group
+                      span.input-group-addon $
+                      input.form-control(type="text", id="cNewFee")
+                tr
+                  th Trainers
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="cNewTrainers")
+            // /.table-responsive
+        .modal-footer
+          button#addCourseButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+
+
+
+template(name="deleteClass")
+  div.modal(id = "deleteCourse#{_id}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Delete Course
+        .modal-body
+          form(name="", role="form", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              currentCourseCode
+                tbody  
+                  tr
+                    td Are you sure you want to delete
+                  tr
+                    td Course Code
+                    td #{courseCode} 
+                  tr
+                    td Course Name
+                    td #{courseName}
+        .modal-footer
+          button#deleteCourseButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
+
