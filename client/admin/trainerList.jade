@@ -24,12 +24,12 @@ template(name="trainerList")
                     th Credentials
                     th Remarks
                 tbody
-                  each students
+                  each trainers
                     tr
                       td #{firstName}  #{lastName} 
                       td  
                         form(role="form", id="insert-addTrainerForm", action="#", method="post")
-                          a(href="?profile=#{currentCourseCode.firstName}&#{currentCourseCode.lastName}", class="button btn admin-btn") Particulars
+                          a(href="?profile=#{firstName}&#{lastName}", class="button btn admin-btn") Particulars
                       td
                         form(role="form", id="insert-viewCredForm", action="#", method="post")
                           button#viewTrainerCredentialsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_email}', data-target="#viewCV")

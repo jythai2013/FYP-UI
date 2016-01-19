@@ -33,17 +33,13 @@ Template.viewCredentialsForm.events({
 		// if(Meteor.user.userType != "admin"){
 		// return false;
 		// }
-		console.log("here1");
-
 		//TODO: Validation of input
-		var sEmail = document.getElementById("studAcctUserName").value;
-		var sPassword = document.getElementById("studAcctPwd").value;
-		var sFees = document.getElementById("studFees").value;
-		var sPaidStatus = document.getElementById("studPaidStatus").value;
+		var sMobile = document.getElementById("studMobile").value;
+		var sAddr = document.getElementById("studAddr").value;
 		var sRemarks = document.getElementById("studRemarks").value;
 
 		console.log("here8");
-		Meteor.call("editLearnerAccount", sEmail, sPassword, sFees, sPaidStatus, sRemarks);
+		Meteor.call("editLearnerAccount", sEmail, sMobile, sAddr, sRemarks);
 	
 		  //modal.find('.modal-title').text('New message to ' + recipient)
 		  //modal.find('.modal-body input').val(recipient)
@@ -80,10 +76,12 @@ Template.addStudentAcctForm.events({
 		var cLastName = document.getElementById("studLastName").value;
 		var cEmail = document.getElementById("studEmail").value;
 		var cPassword = document.getElementById("studPassword").value;
+		var cMobile = document.getElementById("mobileNo").value;
+		var cAddr = document.getElementById("studAddr").value;
 		var cRemarks = document.getElementById("studRemarks").value;
 
 		console.log("here2");
-		Meteor.call("createLearnerAccount", cEmail, cPassword, cFirstName, cLastName, cRemarks);
+		Meteor.call("createLearnerAccount", cEmail, cPassword, cFirstName, cLastName, cMobile, cAddr, cRemarks);
 	}
 });
 

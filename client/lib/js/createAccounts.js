@@ -20,10 +20,10 @@ Template.registerTrainer.events({
 		// alert("You are not an admin"); //TODO: make a nice message
 		// return false;
 		// }
-		var emailInput = document.getElementById("registerTrainer-Email").value;
-		var passwordInput = document.getElementById("registerTrainer-Password").value;
-		// email, password, fFirstName, fLastName, ingender, inuserID, inuserIDType, inCompany, inAddress, inPostalCode, inDOB, inNationality, inLang, residenceTel, mobileTel, officeTel, emerContName, emerContContact, emerContAddress, emerContRel, fRemarks, tHighestQualification
-		Meteor.call("createTrainerAccount", emailInput, passwordInput, fFirstName, fLastName, ingender, inuserID, inuserIDType, inCompany, inAddress, inPostalCode, inDOB, inNationality, inLang, residenceTel, mobileTel, officeTel, emerContName, emerContContact, emerContAddress, emerContRel, fRemarks, tHighestQualification);
+		var emailInput = document.getElementById("registerTrainer-Email");
+		var passwordInput = document.getElementById("registerTrainer-Password");
+
+		Meteor.call("createTrainerAccount", emailInput.value, passwordInput.value);
 	}
 });
 
