@@ -34,8 +34,9 @@ template(name="courseList")
                     td
                       select(id="courseSearchType")
                         option(value="")= "Do not care"
-                        option(value="wda")= "WDA"
-                        option(value="nonwda") = "Non-WDA"
+                        option(value="WSQ") WSQ
+                        option(value="Non-WSQ") Non-WSQ
+                        option(value="Others") Others
             
             button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter          
 
@@ -136,7 +137,7 @@ template(name="addCourseForm")
                   th Course Type  
                   td 
                     .form-group()
-                      select(id="type", style="color: black")
+                      select(name="type", id="cNewType", style="color: black")
                         option(value="WSQ") WSQ
                         option(value="Non-WSQ") Non-WSQ
                         option(value="Others") Others
@@ -166,11 +167,6 @@ template(name="addCourseForm")
                     .form-group.input-group
                       span.input-group-addon $
                       input.form-control(type="text", id="cNewFee")
-                tr
-                  th Trainers
-                  td 
-                    .form-group
-                      input.form-control(type="text", id="cNewTrainers")
             // /.table-responsive
         .modal-footer
           button#addCourseButton.btn.btn-save(type="button", data-dismiss="modal") Add Course

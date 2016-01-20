@@ -1,0 +1,80 @@
+template(name="formRespo")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header LSP Form Repository
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 LSP Form
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus
+                        | Trainer
+            +addLSPFormForm
+
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                thead
+                  tr
+                    th Form Name
+                    th Category
+                    th Upload Date
+                    th Remarks
+                tbody
+                  each students
+                    tr
+                      td #{firstName}  #{lastName} 
+                      td  
+                        form(role="form", id="insert-addTrainerForm", action="#", method="post")
+                          a(href="?profile=#{currentCourseCode.firstName}&#{currentCourseCode.lastName}", class="button btn admin-btn") Particulars
+                      td
+                        form(role="form", id="insert-viewCredForm", action="#", method="post")
+                          button#viewTrainerCredentialsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_email}', data-target="#viewCV")
+                            | Edit Credentials
+                        +viewCVForm
+                      td
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteTrainer")
+                          | Delete
+                        +deleteTrainerForm 
+
+
+template(name="addLSPFormForm")
+  #addtrainerAcct.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Trainer
+        .modal-body
+          form(role="form", id="insert-addLSPForm", action="#", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody
+                tr
+                  th Form Name
+                  td
+                    .form-group
+                      input.form-control(type="text", id="formName", placeholder="eg. Trainer's Feedback")
+                tr
+                  th Category
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="categoryName") 
+                tr
+                  td Upload File
+                  td
+                    input#myFileInput(type="file", name="formFile")
+                tr
+                  td Remarks
+                  td 
+                    textarea.form-control(type='text',value='',id='formRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
+            // /.table-responsive
+        .modal-footer
+          button#addFormButton.btn.btn-save(type="button", data-dismiss="modal") Add Form
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+

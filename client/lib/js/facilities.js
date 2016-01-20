@@ -95,7 +95,7 @@ Template.addFacilityForm.events({
     // if(Meteor.user.userType != "admin"){
     // return false;
     // }
-    console.log("here1");
+    console.log("here2");
 
     //TODO: Validation of input
     var cType = document.getElementById("cNewType").value;

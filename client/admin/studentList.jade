@@ -5,27 +5,6 @@ template(name="studentList")
         h1.page-header Student List
       // /.col-lg-12
     // /.row
-
-    .row
-      .col-lg-12
-        .panel.panel-default
-          .panel-body
-            h4 Search courses
-              //+addCourseForm
-          
-            .table-responsive
-              table#dataTables-example.table.table-striped.table-bordered
-                tbody
-                  tr
-                    th Search  
-                    td  
-                    th Type
-                    td
-                      select(id="type")
-                        option(value="wda") "WDA"
-                        option(value="nonwda") "Non-WDA"
-            
-            button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter 
     .row
       .col-lg-12
         .panel.panel-default
@@ -48,65 +27,55 @@ template(name="studentList")
                 tbody
                   each students
                     tr
-                      td #{firstName}  #{lastName} 
-                      td  
-                        form(role="form", id="insert-addCourseForm", action="#", method="post")
-                          a(href="?profile=#{currentCourseCode.firstName}&#{currentCourseCode.lastName}", class="button btn admin-btn") Particulars
+                      td #{firstName}  #{lastName}  #{mobileNo}
                       td
-                        form(role="form", id="insert-viewCredForm", action="#", method="post")
-                          button#viewStudCredentialsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_email}', data-target="#viewCredentials")
+                        a.btn.admin-btn.bt-sn(data-target="#viewParticulars#{_id}", data-toggle="modal", data-id="#{_id}")
+                          | Particulars
+                        +viewParticularsForm
+                      td
+                        form(role="form", id="viewCredForm", action="#", method="post")
+                          button#viewStudCredentialsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_id}', data-target="#viewCredentials#{_id}")
                             | Edit Credentials
                         +viewCredentialsForm
                       td
-                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteStudent")
+                        a.btn.admin-btn.bt-sn(data-target="#deleteStudent#{_id}", data-toggle="modal", data-id="#{_id}") 
                           | Delete
-                        +deleteStudentForm 
+                        +deleteStudentForm
 
 
-template(name="viewCredentialsForm")
-  #viewCredentials.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+template(name="viewParticularsForm")
+  div.modal(id="viewParticulars#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Course Detail
+          h4#myModalLabel.modal-title Student Detail - View/Update
         .modal-body
-          form(role="form", id="viewDetails", action="facilityResult", method="post")
+          form(role="form", id="viewDetails", action="", method="post")
           .table-responsive
             table#dataTables-example.table(style="background:#333")
-              currentStud
               tbody
                 tr
                   th Email
                   td
                     .form-group
-                      input.form-control(type="text", id="studAcctUserName", value="#{currentStud.email}")
+                      input.form-control(type="text", id="studEmail", value="#{email}")
                 tr
-                  th Password
+                  th Mobile
                   td 
                     .form-group
-                      input.form-control(type="hidden", id="studAcctPwd", value="#{currentStud.password}")
+                      input.form-control(type="text", id="studMobile", value="#{mobileNo}")
                 tr
-                  td Fees
+                  th Address
                   td 
                     .form-group
-                      input.form-control(type='texr',value='#{currentStud.fees}', id='studFees')
-                tr
-                  td Paid
-                  td 
-                    label.radio
-                      input#gender_filter(type="radio", name="gender_filter", value="1", checked="")
-                      | Yes
-                    label.radio
-                      input#gender_filter(type="radio", name="gender_filter", value="0")
-                      | No
+                      input.form-control(type="text", id="studAddr", value="#{address}")
                 tr
                   td Remarks
                   td 
                     input.form-control(type='text', id='studRemarks')
-                    | password
         .modal-footer
-          button#editStudAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteStudent")
+          button#editStudAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{mobileNo}',data-target="#updateStudent")
              | Save Changes
       // /.modal-content
     // /.modal-dialog
@@ -118,7 +87,7 @@ template(name="addStudentAcctForm")
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Add New Course
+          h4#myModalLabel.modal-title Add Student - Enter Information
         .modal-body
           form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
           .table-responsive
@@ -128,30 +97,30 @@ template(name="addStudentAcctForm")
                   th First Name
                   td
                     .form-group
-                      input.form-control(type="text", id="studFirstName", placeholder="eg. IS101")
-                tr
+                      input.form-control(type="text", id="studFirstName", placeholder="eg. First Name")
                   th Last Name
                   td 
                     .form-group
-                      input.form-control(type="text", id="studLastName") 
+                      input.form-control(type="text", id="studLastName", placeholder="eg. Last Name") 
                 tr
                   td Email
-                  td 
-                    input.form-control(type='text', placeholder="studentEmailHere", id='studEmail')
+                  td(colspan="3")
+                    input.form-control(type='text', placeholder="Email Here", id='studEmail')
                 tr
                   td Set Default Password
                   td 
-                    input.form-control(type='password', id='studPassword')
-                  td Reenter Default Password
-                  td 
-                    input.form-control(type='password', id='studPassword2')
+                    input.form-control(type='password', id='studPassword', placeholder="Default Password")
                 tr
                   td Mobile Number
                   td 
                     input.form-control(type='text', id='mobileNo')
                 tr
+                  td Address
+                  td(colspan="3")
+                    textarea.form-control(type='text',value='',id='studAddr', placeholder='Singapore Address', style="max-width: 500px;")
+                tr
                   td Remarks
-                  td 
+                  td(colspan="3")
                     textarea.form-control(type='text',value='',id='studRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
             // /.table-responsive
         .modal-footer
@@ -164,12 +133,12 @@ template(name="addStudentAcctForm")
 
 
 template(name="deleteStudentForm")
-  #deleteStudent.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="deleteStudent#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Delete Course
+          h4#myModalLabel.modal-title Delete Student - Check Student Details
         .modal-body
           form(name="", role="form", action="facilityResult", method="post")
           .table-responsive
@@ -179,16 +148,57 @@ template(name="deleteStudentForm")
                   td Are you sure you want to delete
                 tr
                   td First Name
-                  td blah
+                  td #{firstname}
                 tr
                   td Last Name
-                  td #{currentCourseCode.courseName}
+                  td #{lastname}
                 tr
                   td Mobile No
-                  td #{currentCourseCode.mobileNo}
+                  td #{mobileNo}
+                tr
+                  td Email
+                  td #{email}
           // /.table-responsive
         .modal-footer
-          button#deleteStudentButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
+          button#deleteStudentButton.btn.btn-save(type="button", data-dismiss="modal") Confirm Delete
       // /.modal-content
     // /.modal-dialog
   // /.modal
+
+template(name="viewCredentialsForm")
+  div.modal(id="viewCredentials#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Update Student Detail
+        .modal-body
+          form(role="form", id="viewDetails", action="facilityResult", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody
+                tr
+                  th Email
+                  td
+                    .form-group
+                      input.form-control(type="text", id="studAcctUserName", value="#{email}")
+                tr
+                  th Mobile
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="studAcctPwd", value="#{mobileNo}")
+                tr
+                  th Address
+                  td 
+                    .form-group
+                      input.form-control(type="text", id="studAddr", value="#{address}")
+                tr
+                  td Remarks
+                  td 
+                    input.form-control(type='text', id='studRemarks')
+        .modal-footer
+          button#editStudAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{mobileNo}',data-target="#deleteStudent")
+             | Save Changes
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal    
