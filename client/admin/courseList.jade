@@ -28,10 +28,12 @@ template(name="courseList")
                     th Search  
                     td 
                       input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
-                      
+                      if courseSearchCodeError
+                        h1 error, not alphanumeric
                     th Type
                     td
-                      select(id="type")
+                      select(id="courseSearchType")
+                        option(value="")= "Do not care"
                         option(value="wda")= "WDA"
                         option(value="nonwda") = "Non-WDA"
             

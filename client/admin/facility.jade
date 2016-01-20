@@ -26,21 +26,21 @@ template(name="facility")
                 tbody
                   tr
                     th Name  
-                    td 
+                    td
                       input.form-control(type="text", id="facilityName")
-                      
                     th Type
                     td
-                      select(id="type")
-                        option(value="wda")= "Class Room"
-                        option(value="nonwda")= "Practical Room"
+                      select(id="facilitySearchType")
+                        option(value="")= "Do not care"
+                        option(value="class room")= "Class Room"
+                        option(value="practical room")= "Practical Room"
                   tr
                     th Capacity
                     td 
                       .form-group
                         .radio
                           label.radio-inline
-                            input#optionsRadios1(type="radio", name="optionsRadios", value="less", checked="")
+                            input#optionsRadios1(type="radio", name="optionsRadios", value="less")
                             | less than
                         .radio
                           label
@@ -51,6 +51,11 @@ template(name="facility")
                           label
                             input#optionsRadios3(type="radio", name="optionsRadios", value="more")
                             | more than
+                        
+                        .radio
+                          label
+                            input#optionsRadios4(type="radio", name="optionsRadios", value="nil", checked="")
+                            | do not care
                     td   
                        input.form-control(type="text", id="fCapacity", placeholder="eg. IS101") 
             

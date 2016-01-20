@@ -1,23 +1,87 @@
+Template.courseList.onRendered(function(){
+	Session.set("courseSearchCode", null);
+	Session.set("courseSearchType", null);
+});
+
 Template.courseList.helpers({
+	"courseSearchCodeError":function(){
+		console.log(validator);
+		var courseCode = Session.get("courseSearchCode");
+		var valid = validator.isAlphanumeric(courseCode);
+		if(courseCode.length == 0) valid = true;
+		console.log(valid);
+		return !valid;
+	},
+	
+	"courseSearchAllOk":function(){
+		var courseCode = Session.get("courseSearchCode");
+		var valid = validator.isAlphanumeric(courseCode);
+		if(courseCode.length == 0) valid = true;
+		if (!valid) return !valid;
+		return valid;
+	},
 
 	"courses" : function listCourseEventHandler(e) {
-		console.log("here");
+		var verbose = !true;
+		var courseCode = Session.get("courseSearchCode");
+		var courseType = Session.get("courseSearchType");
+		var v = Courses.find({}).fetch();
+		//fields in db
+		//courseCode
+		//courseDescription
+		//courseFees
+		//courseMax
+		//courseMin
+		//courseName
+		//courseNoOfSessions
+		//courseTrainers
+		//courseType
+		if(courseCode != null && courseCode != undefined && courseCode.length > 0){
+			v = v.filter(function(e){
+				if(verbose){
+					console.log(e);
+					console.log(e.courseCode.toLowerCase().indexOf(courseCode.toLowerCase())>-1);
+				}
+				return (e.courseCode.toLowerCase().indexOf(courseCode.toLowerCase())>-1);
+			});
+		}
+		if(courseType != null && courseType != undefined && courseType.length > 0){
+			v = v.filter(function(e){
+				if(verbose){
+					console.log(e);
+					console.log(e.courseCode.toLowerCase().indexOf(courseCode.toLowerCase())>-1);
+				}
+				return (e.courseCode.toLowerCase().indexOf(courseCode.toLowerCase())>-1);
+			});
+		}
+		if(verbose){
+			console.log(v);
+		}
+		return v;
+	}
+});
 
-		return Courses.find({});
+
+Template.courseList.events({
+	"click #filter" : function doSearch(e){
+		console.log(e);
+		var cCode = document.getElementById("cNewCode").value;
+		var cType = document.getElementById("courseSearchType").value;
+		Session.set("courseSearchCode", cCode);
+		Session.set("courseSearchType", cType);
 	}
 });
 
 Template.viewCourseForm.helpers({
-
 	"currentCourseCode" : function listCourseEventHandler(e) {
-		console.log("herecourse");
+		//console.log("herecourse");
 		var currentCode = Session.get('currentCourseCode');
 		//Session.set('currentCourseCode', null);
 		var currentCourse = Courses.find({courseCode:currentCode}).fetch();
 
-		console.log(currentCode + " current codes bitch");
+		//console.log(currentCode + " current codes bitch");
 		//console.log(currentCourse);
-		console.log(currentCourse);
+		//console.log(currentCourse);
 		return currentCourse[0];
 	}
 });
