@@ -27,13 +27,11 @@ template(name="classList")
                   tr
                     th Search  
                     td 
-                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101 or Workplace Safety and Health")
+                      input.form-control(type="text", id="courseCode", placeholder="eg. IS101 or Workplace Safety and Health")
                       
-                    th Type
+                    th Group
                     td
-                      select(id="type")
-                        option(value="wda")= "WDA"
-                        option(value="nonwda")= "Non-WDA"
+                      input.form-control(type="text", id="grpNo", placeholder="eg. G1")
             
             button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter          
 
