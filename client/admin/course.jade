@@ -44,6 +44,7 @@ template(name="course")
                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#myModal")
                         | Edit Details
                       +editCourseForm
+
             p.breakH4
             h4 Class Management
             .table-responsive
@@ -65,10 +66,15 @@ template(name="course")
                         a(href="class/?cCode=#{courseCode}&cgrpNum=#{grpNum}") #{grpNum}
                         | ,
                     td(width="50px")
+<<<<<<< HEAD
                       button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | Class 
                       +addClass
+=======
+                      input(type="button", value="Add Class", data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; color:#fff")
+                    +addClass
+>>>>>>> origin/master
                     td(width="50px")
                       input(type="button", value="Remove Class(es)", data-toggle="modal", data-target="#removeClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                     +removeClass
@@ -89,13 +95,14 @@ template(name="course")
                     th(colspan="2") Course Materials
                     th Download File
                 tbody
-                  each uploads                   
+                  each uploads                 
                     tr 
                       td 01
                       td #{name}
                       td Files here
                       td(width="50px") 
                         a(href="{{url download = true}}", class="button btn admin-btn") Download 
+                  tfoot
                     tr
                       td(colspan="4")
                         button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")

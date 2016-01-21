@@ -146,7 +146,7 @@ function blastReminderCall(courseCodeI, grpNumI1, startTimeI, endTimeI, startDat
  
 function blastReminder(details){
 	subject = "aSubject";
-	text = "aText";
+	text = new Date();
 	var theGroup = Groups.findOne({courseCode:details.courseCode, grpNum:details.grpNum})
 	console.log(theGroup);
 	studentList = theGroup.studentList;

@@ -1,54 +1,54 @@
-	Accounts.onCreateUser( function onCreateUserEventHandler(options, user) {
+	 Accounts.onCreateUser( function onCreateUserEventHandler(options, user) {
 		
-		// We still want the default hook's 'profile' behavior. //not really
-		// user.profile = options.profile;
+	// 	// We still want the default hook's 'profile' behavior. //not really
+	// 	// user.profile = options.profile;
 		
-		var telephoneObj = {
-			residence: residenceTel,
-			mobile: mobileTel,
-			office: officeTel
-		};
+	// 	var telephoneObj = {
+	// 		residence: residenceTel,
+	// 		mobile: mobileTel,
+	// 		office: officeTel
+	// 	};
 		
-		var emerContObj = {
-			name: emerContName,
-			contact: emerContContact,
-			address: emerContAddress,
-			relationship: emerContRel
-		};
+	// 	var emerContObj = {
+	// 		name: emerContName,
+	// 		contact: emerContContact,
+	// 		address: emerContAddress,
+	// 		relationship: emerContRel
+	// 	};
 		
-		user.userType = options.userType;
-		user.firstName = options.firstName;
-		user.lastName = options.lastName;
-		user.email = email;
-		user.password = password;
-		user.gender = abcde;
-		user.userID = abcde;
-		user.userIDType = abcde;
-		user.company = abcde;
-		user.address = abcde;
-		user.postalCode = abcde;
-		user.dateOfBirth = abcde;
-		user.nationality = abcde;
-		user.preferredLanguage = abcde;
-		user.emergencyContact = emerContObj;
-		user.telephone = telephoneObj;
-		user.remarks = options.remarks;
+	 	user.userType = options.userType;
+	// 	user.firstName = options.firstName;
+	// 	user.lastName = options.lastName;
+	// 	user.email = email;
+	// 	user.password = password;
+	// 	user.gender = abcde;
+	// 	user.userID = abcde;
+	// 	user.userIDType = abcde;
+	// 	user.company = abcde;
+	// 	user.address = abcde;
+	// 	user.postalCode = abcde;
+	// 	user.dateOfBirth = abcde;
+	// 	user.nationality = abcde;
+	// 	user.preferredLanguage = abcde;
+	// 	user.emergencyContact = emerContObj;
+	// 	user.telephone = telephoneObj;
+	// 	user.remarks = options.remarks;
 		
-		if(options.userType.learner == true){
-			console.log("createAccounts onCreateUser learner");
-			user.fees = options.fees;
-			user.paidStatus = options.paidStatus;
-		} else if(options.userType.admin == true){
-			console.log("createAccounts onCreateUser admin");
+	// 	if(options.userType.learner == true){
+	// 		console.log("createAccounts onCreateUser learner");
+	// 		user.fees = options.fees;
+	// 		user.paidStatus = options.paidStatus;
+	// 	} else if(options.userType.admin == true){
+	// 		console.log("createAccounts onCreateUser admin");
 			
-		}else if(options.userType.trainer == true){
-			console.log("createAccounts onCreateUser trainer");
-				highestQualification: tHighestQualification
+	// 	}else if(options.userType.trainer == true){
+	// 		console.log("createAccounts onCreateUser trainer");
+	// 			highestQualification: tHighestQualification
 			
-		}
-		console.log(user);
-		return user;
-	});
+	// 	}
+	// 	console.log(user);
+	 	return user;
+	 });
 
 
 	Meteor.methods({ 
@@ -90,47 +90,31 @@
 			Accounts.createUser(options);
 		},
 		
-		'createLearnerAccount': function createLearnerAccountF
-		(email, password, sFirstName, sLastName, sRemarks){
-			// if(Meteor.user.userType != "admin"){
-				// return false; //TODO: output error message in client
-			// }
-			console.log("CreateLearnerAccount");
-			var userTypeObj = {learner: true};
-			var oFirstName = sFirstName;
-			var oLastName = sLastName;
-			console.log(userTypeObj);
-			var sFees = "?";
-			var spaidStatus = false;
+		'createLearnerAccount': function createLearnerAccountF(semail, spassword, sFirstName, sLastName, sDOB, sGender, sMobileNo, sIDType, sIdNo, sNationality, sPostalCode, sResAddr, sQuali, sProf, sRemarks){
+			console.log(">> Start: CreateLearnerAccount");
 			var options = {
-				email: email,
-				password: password,
-				firstName: oFirstName,
-				lastName: oLastName,
-				fees: sFees,
-				paidStatus: spaidStatus,
+				email: semail,
+				password: spassword,
+				firstName: sFirstName,
+				lastName: sLastName,
+				dob: sDOB,
+				gender: sGender,
+				mobileNo: sMobileNo,
+				id_type: sIDType,
+				id_No: sIDNo,
+				nationality: sNationality,
+				postalCode: sPostalCode,
+				resAddr: sResAddr,
+				qualification: sQuali,
+				proficiency: sProf,
 				remarks: sRemarks,
-				userType: userTypeObj
+				userType: {learner: true}
 			};
-			console.log(options);
-			console.log("");
-			console.log("");
+			console.log("Sys: Participant Account Created.");
 			Accounts.createUser(options);
-			
-			tDate = new Date();
-			subject = "aSubject";
-			text = "aText";
-			toEmail = "asdf154@gmail.com";
-			details = {to:toEmail, from:"asdf154+from@gmail.com", subject:subject, text:text, date:tDate}
-			// sendMail(details);
-			Meteor.call("scheduleMail", details)
-			console.log("end CreateLearnerAccount");
 		},
 		
 		'editLearnerAccount': function editLearnerAccount(_id, sEmail, sPassword, sFees, sPaidStatus, sRemarks){
-			// if(Meteor.user.userType != "admin"){
-				// return false; //TODO: output error message in client
-			// }
 			var userTypeObj = {learner: true};
 			Accounts.update(_id, {
 				$set: {
@@ -140,26 +124,38 @@
 					lastName: sLastName,
 					fees: sFees,
 					paidStatus: spaidStatus,
-					remarks: sRemarks,
-					userType: userTypeObj
+					remarks: sRemarks
 				}
 			});
 		},
 
 
-		
-		'createAdminAccount': function createAdminAccount(email, password, sFirstName, sLastName){
-			// if(Meteor.user.userType != "admin"){
-				// return false; //TODO: output error message in client
-			// }
+		'createAdminAccount': function createAdminAccount(sEmail, sPassword, sFirstName, sLastName, sMobileNo, sAccessType){
+			console.log(Meteor.users.find({userType:{"admin":true}}).count());
 			var userTypeObj = {admin: true};
+
 			var options = {
-				email: email,
-				password: password,
+				email: sEmail,
+				password: sPassword,
 				firstName: sFirstName,
 				lastName: sLastName,
+				mobileNo: sMobileNo,
+				accessType: sAccessType,
 				userType: userTypeObj
 			};
 			Accounts.createUser(options);
+			console.log(options);
+			console.log(Meteor.users.find({userType:{"admin":true}}).count());
+		},
+
+		'editAdminAccount': function editAdminAccount(_id, sMobileNo, sAccessType){
+			Accounts.update(_id, {
+				$set: {
+					mobileNo: sMobileNo,
+					accessType: sAccessType
+				}
+			});
 		}
+
+
 	}); //

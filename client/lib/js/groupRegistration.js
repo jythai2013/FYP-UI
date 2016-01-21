@@ -1,3 +1,22 @@
+Template.groupRegistration.onRendered(function(){
+	//var XLSX;
+	if(typeof require !== 'undefined') XLSX = require('xlsx');
+	//XLSX = require('xlsx');
+	console.log(window.XLSX);
+	
+	//var fs = Npm.require('fs');
+	//console.log(fs);
+	//var path = Npm.require('path');
+	//console.log(path);
+	//var basepath = path.resolve('.').split('.meteor')[0];
+	//console.log(basepath);
+	
+	//register event listerners for file drop or add
+	DOMElement = $('#inputExcelElement')[0];
+	DOMElement.addEventListener('change', handleFile, false);
+	DOMElement.addEventListener('drop', handleDrop, false);
+});
+
 
 /* set up drag-and-drop event */
 function handleDrop(e) {
@@ -20,13 +39,6 @@ function handleDrop(e) {
     reader.readAsBinaryString(f);
   }
 }
-drop_dom_element.addEventListener('drop', handleDrop, false);
-
-
-
-
-
-
 
 
 
@@ -47,7 +59,6 @@ function handleFile(e) {
     reader.readAsBinaryString(f);
   }
 }
-input_dom_element.addEventListener('change', handleFile, false);
 
 
 
@@ -55,7 +66,7 @@ input_dom_element.addEventListener('change', handleFile, false);
 
 
 
-processExcelFile(workbook){
+function processExcelFile(workbook){
 	/* Get worksheet name */
 	var first_sheet_name = workbook.SheetNames[0];
 	
@@ -77,8 +88,8 @@ processExcelFile(workbook){
 	var cellOf_CompanyOfficeNo				= 'C14';
 	var cellOf_CompanyEmail					= 'C15';
 	
-	var startingLineNumber 	= 19;
-	var currentLineNumber		= 0;
+	var startingLineNumber	= 19;
+	var currentLineNumber		= startingLineNumber;
 	
 	var cellOf_SN											= 'A';
 	var cellOf_FirstName	        	  = 'B';
@@ -98,45 +109,79 @@ processExcelFile(workbook){
 	var cellOf_Relationship	        	= 'P';
 	var cellOf_NOKNo		              = 'Q';
 	var cellOf_NOKAddress	          	= 'R';
-	var cellOf_NOKPostal Code  	    	= 'S';
+	var cellOf_NOKPostalCode  	    	= 'S';
 	
-	while(cellIsFilled(workbook, cellOf_FirstName + startingLineNumber)){
-		SN										= worksheet[cellOf_SN + startingLineNumber].v;
-		FirstName	        	  = worksheet[cellOf_FirstName + startingLineNumber].v;
-		LastName	            = worksheet[cellOf_LastName + startingLineNumber].v;
-		DateOfBirth	      	  = worksheet[cellOf_DateOfBirth + startingLineNumber].v;
-		Gender	              = worksheet[cellOf_Gender + startingLineNumber].v;
-		IDType	              = worksheet[cellOf_IDType + startingLineNumber].v;
-		IDNumber	            = worksheet[cellOf_IDNumber + startingLineNumber].v;
-		Nationality	          = worksheet[cellOf_Nationality + startingLineNumber].v;
-		Email	                = worksheet[cellOf_Email + startingLineNumber].v;
-		ResidentialAddress	  = worksheet[cellOf_ResidentialAddress + startingLineNumber].v;
-		PostalCode	          = worksheet[cellOf_PostalCode + startingLineNumber].v;
-		MobileNo	            = worksheet[cellOf_MobileNo + startingLineNumber].v;
-		ProficiencyIn				  = worksheet[cellOf_ProficiencyIn + startingLineNumber].v;
-		HighestQualification  = worksheet[cellOf_HighestQualification + startingLineNumber].v;
-		NextOfKinName				  = worksheet[cellOf_NextOfKinName + startingLineNumber].v;
-		Relationship	        = worksheet[cellOf_Relationship + startingLineNumber].v;
-		NOKNo		              = worksheet[cellOf_NOKNo + startingLineNumber].v;
-		NOKAddress	          = worksheet[cellOf_NOKAddress + startingLineNumber].v;
-		NOKPostal Code  	    = worksheet[cellOf_NOKPostal Code + startingLineNumber].v;
+	while(cellIsFilled(workbook, cellOf_FirstName + currentLineNumber)){
+		SN										= worksheet[cellOf_SN + currentLineNumber].v;
+		FirstName	        	  = worksheet[cellOf_FirstName + currentLineNumber].v;
+		LastName	            = worksheet[cellOf_LastName + currentLineNumber].v;
+		DateOfBirth	      	  = worksheet[cellOf_DateOfBirth + currentLineNumber].v;
+		Gender	              = worksheet[cellOf_Gender + currentLineNumber].v;
+		IDType	              = worksheet[cellOf_IDType + currentLineNumber].v;
+		IDNumber	            = worksheet[cellOf_IDNumber + currentLineNumber].v;
+		Nationality	          = worksheet[cellOf_Nationality + currentLineNumber].v;
+		Email	                = worksheet[cellOf_Email + currentLineNumber].v;
+		ResidentialAddress	  = worksheet[cellOf_ResidentialAddress + currentLineNumber].v;
+		PostalCode	          = worksheet[cellOf_PostalCode + currentLineNumber].v;
+		MobileNo	            = worksheet[cellOf_MobileNo + currentLineNumber].v;
+		ProficiencyIn				  = worksheet[cellOf_ProficiencyIn + currentLineNumber].v;
+		HighestQualification  = worksheet[cellOf_HighestQualification + currentLineNumber].v;
+		NextOfKinName				  = worksheet[cellOf_NextOfKinName + currentLineNumber].v;
+		Relationship	        = worksheet[cellOf_Relationship + currentLineNumber].v;
+		NOKNo		              = worksheet[cellOf_NOKNo + currentLineNumber].v;
+		NOKAddress	          = worksheet[cellOf_NOKAddress + currentLineNumber].v;
+		NOKPostalCode  	    = worksheet[cellOf_NOKPostalCode + currentLineNumber].v;
 		
+		debugObj = new Object();
+		debugObj.SN									 	= SN									;
+		debugObj.FirstName	        	= FirstName	        	;
+		debugObj.LastName	           	= LastName	          ;
+		debugObj.DateOfBirth	      	= DateOfBirth	      	;
+		debugObj.Gender	            	= Gender	            ;
+		debugObj.IDType	            	= IDType	            ;
+		debugObj.IDNumber	          	= IDNumber	          ;
+		debugObj.Nationality	        = Nationality	        ;
+		debugObj.Email	              = Email	              ;
+		debugObj.ResidentialAddress	 	= ResidentialAddress	;
+		debugObj.PostalCode	         	= PostalCode	        ;
+		debugObj.MobileNo	           	= MobileNo	          ;
+		debugObj.ProficiencyIn				= ProficiencyIn				;
+		debugObj.HighestQualification = HighestQualification;
+		debugObj.NextOfKinName				= NextOfKinName				;
+		debugObj.Relationship	       	= Relationship	      ;
+		debugObj.NOKNo		            = NOKNo		            ;
+		debugObj.NOKAddress	        	= NOKAddress	        ;
+		debugObj.NOKPostalCode  	  	= NOKPostalCode  	 		;
+		console.log(debugObj);
 		
+		//TODO: validations
+		
+		//TODO: actually create the accounts (test)
+		// unused function parameters: password	inCompany	inLang	residenceTel	officeTel	fRemarks
+		// unused excel parameters:  SN	ProficiencyIn
+		Meteor.call("createTrainerAccount", Email, password, FirstName, LastName, Gender, IDNumber, IDType, inCompany, ResidentialAddress, PostalCode, DateOfBirth, Nationality, inLang, residenceTel, MobileNo, officeTel, NextOfKinName, NOKNo, NOKAddress, Relationship, fRemarks, HighestQualification);
+		
+		currentLineNumber += 1;
 	}
 }
 
 	function cellIsFilled(workbook, cellAddress){
 		/* Get worksheet name */
 		var first_sheet_name = workbook.SheetNames[0];
+		//console.log(first_sheet_name);
 		
 		/* Get worksheet */
 		var worksheet = workbook.Sheets[first_sheet_name];
+		//console.log(worksheet);
 		
+		//console.log(cellAddress);
 		/* Find desired cell */
 		var desired_cell = worksheet[cellAddress];
+		//console.log(desired_cell);
 
 		/* Get the value */
 		var desired_value = desired_cell.v;
+		//console.log(desired_value);
 		
 		if(desired_value.trim().length > 0) return true;
 		return false;
