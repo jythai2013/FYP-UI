@@ -1,22 +1,30 @@
+Template.classList.helpers({
+
+	"classes" : function listCourseEventHandler(e) {
+		console.log("here");
+
+		return Groups.find({});
+	}
+});
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 Template.course.helpers({
 
-	"groupsCourse" : function listGroupsEventHandler(e) {
-		console.log("here");
-		console.log(Groups.find().count() + " in class.js");
-		//var currentCourse = Session.get('currentCourseCode');
-		var str =  window.location.href;
-		var position = str.indexOf('=');
-		console.log(position + " = sign");
-		console.log(str + "stri");
-		
-		var currentCourse=str.substr(position+1);
-		console.log(currentCourse + "Code");
+    "groupsCourse" : function listGroupsEventHandler(e) {
+        //var currentCourse = Session.get('currentCourseCode');
+        
+        var currentCourse = getParameterByName("cCode");
+        if(currentCourse.length<=0)return Groups.find({});
 
-		var size = Groups.find({courseCode:currentCourse}).count();
-		console.log(size + "Code");
-		return Groups.find({courseCode:currentCourse});
-		
-	}
+        var size = Groups.find({courseCode:currentCourse}).count();
+        return Groups.find({courseCode:currentCourse});
+    }
 });
 
 Template.removeClass.helpers({
@@ -87,8 +95,7 @@ function descDate(a,b) {
 }
 
 Template.addClass.events({
-	"click #addGroupButton" : function createGroupEventHandler(e) {
-		e.preventDefault();
+	"click #addGroupButton" : function(e) {
 		//TODO: Validation of user
 		// if(Meteor.user.userType != "admin"){
 		// return false;
@@ -99,6 +106,22 @@ Template.addClass.events({
 		var gCourseCode = document.getElementById("gCourseCode").value;
 		var gStartTime = document.getElementById("gNewStartTime").value;
 		var gEndTime = document.getElementById("gNewEndTime").value;
+		var gVenue = document.getElementById("gVenue").value;
+		var gNoOfSessions = document.getElementById("gNoOfSessions").value;
+
+
+		var days = document.querySelectorAll('input[name="day:checked');
+		var days = document.getElementsByName("day");
+		var gdaysArr = [];
+		for(var x = 0, l = days.length; x < l;  x++){
+			console.log(days[x].value + " DAYS");
+			if (days[x].checked){
+			  gdaysArr.push(days[x].value);
+			}
+			
+    	}
+
+
 		var gStartDate = document.getElementById("gNewStartDate").value;
 		var gEndDate = document.getElementById("gNewEndDate").value;
 		var gDeadline = document.getElementById("gNewDeadline").value;
@@ -113,7 +136,7 @@ Template.addClass.events({
 		var grpNumI = "G"+grpNumI2;
       console.log(grpNumI + "group number");
 		console.log("here4");
-		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gStartDate, gEndDate, gDeadline, gStatus);
+		Meteor.call("createGroup", gCourseCode, grpNumI, gVenue, gNoOfSessions, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus);
 		//console.log(Groups.find({}).fetch();
 	}
 });
@@ -144,9 +167,51 @@ Template.registerHelper('formatDate', function(date){
 });
 
 
+Template.viewCourseForm.events({
+	"click #enterCoursePageButton" : function viewCoursePageEventHandler(e) {
+		e.preventDefault();
+		//TODO: Validation of user
+		// if(Meteor.user.userType != "admin"){
+		// return false;
+		// }
+		console.log(this.courseCode);
+
+		Session.set('currentCourseGroup', this.courseCode);
+		  //modal.find('.modal-title').text('New message to ' + recipient)
+		  //modal.find('.modal-body input').val(recipient)
+	}
+});
+
 
 Template.removeClass.events({
-	"click #removeGroupButton" : function deleteCourseEventHandler(e) {
+	"click #removeGroupButton" : function deleteGroupEventHandler(e) {
+		var removeCurrentGroups = document.getElementsByName("currentGroups");
+
+		var removeCurrentGroupsArr = new Array();
+		for(var x = 0, l = removeCurrentGroups.length; x < l;  x++){
+			if (removeCurrentGroups[x].checked){
+				var grpNumber = removeCurrentGroups[x].value;
+				//extract course
+				var url =  window.location.href;
+				var positionFirstEqual = url.indexOf('=');	
+				var currentCourse=url.substring(positionFirstEqual+1);
+				
+				var groupID = Groups.findOne({courseCode:currentCourse, grpNum:grpNumber})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
+				console.log(groupID);
+				removeCurrentGroupsArr.push(groupID);
+			}
+    	}
+    	console.log(removeCurrentGroupsArr.length+ " SIZE")
+
+    	removeCurrentGroupsArr.forEach(function(entry) {
+   			console.log(entry);
+		});
+		Meteor.call("deleteGroup", removeCurrentGroupsArr);
+	}
+});
+
+Template.deleteClass.events({
+	"click #deleteClassButton" : function deleteCourseEventHandler(e) {
 			console.log(this._id);
 			Meteor.call("deleteGroup", this._id);
 	}

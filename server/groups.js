@@ -60,11 +60,17 @@
       );
     },
     
-    'deleteGroup': function deleteGroup(_id){
+    'deleteGroup': function deleteGroup(removeCurrentGroupsIDArr){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
-      Groups.remove(_id);
+      console.log("in server delete group")
+      for (var id in removeCurrentGroupsIDArr){
+        console.log("in for loop delete group")
+
+         Groups.remove(_id);
+      }
+     
     },
 
     'deleteStudent': function deleteStudent(sFirstName, sLastName){
@@ -77,7 +83,7 @@
     
 
 
-    'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI, addClassDaysArr){
+    'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
@@ -90,11 +96,11 @@
           grpNum: grpNumI1,
           startTime: startTimeI,
           endTime:endTimeI,
+          //days: daysI,
           startDate: startDateI,
           endDate: endDateI,
           paymentDeadline: paymentDeadlineI,
-          status: statusI,
-          classDays: addClassDaysArr
+          status: statusI
       });
 
       //console.log(id);

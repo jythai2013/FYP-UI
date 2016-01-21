@@ -9,7 +9,7 @@ template(name="group")
       .col-lg-12
         .panel.panel-default
           .panel-body
-            h4 Course Details
+            h4 Class Details
               button.btn.btn.btn-sn.pull-right(data-toggle="modal", data-target="#editClass" style="margin-top: -1%; background: #333; color:#fff")
                     i.fa.fa-pencil-square-o  
                     | Edit
@@ -28,8 +28,11 @@ template(name="group")
                     th No. of Sessions(s)
                     td 30
                   tr
-                    th Schedule
-                    td Monday and Friday, 10am - 5pm
+                    th Timing
+                    td #{startTime} - #{endTime}
+                  tr
+                    th Days
+                    td #{days}
                   tr
                     th Start Date
                     td #{startDate}

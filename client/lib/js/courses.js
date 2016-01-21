@@ -114,24 +114,58 @@ Template.deleteCourse.events({
 
 Template.removeTrainer.events({
 	"click #removeTrainerButton" : function removeTrainerEventHandler(e) {
-			var removeCurrentTrainers = document.querySelectorAll('input[name="currentTrainers[]"]:checked');
-			var removeCurrentTrainersArr = [];
-			for(var x = 0, l = removeCurrentTrainers.length; x < l;  x++){
-				removeCurrentTrainersArr.push(removeCurrentTrainers[x].value);
-    		}
+		var removeCurrentTrainers = document.getElementsByName("currentTrainers");
 
-			Meteor.call("removeTrainer", removeCurrentTrainersArr);
+		var removeCurrentTrainersArr = [];
+		for(var x = 0, l = removeCurrentTrainers.length; x < l;  x++){
+			if (removeCurrentTrainers[x].checked){
+				var trainerName = removeCurrentTrainers[x].value;
+				console.log(trainerName);
+				
+				removeCurrentTrainersArr.push(trainerName);
+				//removeCurrentTrainersArr[removeCurrentTrainersArr.length] = groupID;
+				//Meteor.call("deleteGroup", groupID);
+			}
+    	}
+    	console.log(removeCurrentTrainersArr.length+ " SIZE")
+
+		//extract course
+		var url =  window.location.href;
+		var positionFirstEqual = url.indexOf('=');	
+		var currentCourse=url.substring(positionFirstEqual+1);
+		var groupID = Groups.findOne({courseCode:currentCourse, grpNum:grpNumber})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
+
+
+    	removeCurrentTrainersArr.forEach(function(entry) {
+   			console.log(entry);
+		});
+
+		Meteor.call("removeTrainer", courseID, removeCurrentTrainersArr);
 	}
 });
 
 Template.addTrainer.events({
-	"click #addTrainerButton" : function addTrainerEventHandler(e) {
-			var addTrainers = document.getElementById("newTrainers").value;
-			var addTrainersArr = [];
-			for(var x = 0, l = addCurrentTrainers.length; x < l;  x++){
-				addCurrentTrainersArr.push(addTrainers[x].value);
-    		}
+	"click #addTrainerButton" : function addTrainerEventHandler() {
+		var addTrainers = document.getElementById("newTrainersC").value;
+		var addTrainersArr = [];
+		for(var x = 0, l = addTrainers.length; x < l;  x++){
+			addTrainersArr.push(addTrainers[x].value);
+    	}
 
-			Meteor.call("addTrainer", _id, addTrainersArr);
+    	addTrainersArr.forEach(function(entry) {
+   			console.log(entry);
+		});
+
+    	console.log(addTrainers+ " SIZE");
+
+    	//extract course
+		var url =  window.location.href;
+		var positionFirstEqual = url.indexOf('=');	
+		var currentCourse=url.substring(positionFirstEqual+1);
+		var courseID = Groups.findOne({courseCode:currentCourse})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
+
+    	console.log(addTrainersArr.length+ " SIZE")
+		Meteor.call("addTrainer", courseID, addTrainersArr);
 	}
 });
+

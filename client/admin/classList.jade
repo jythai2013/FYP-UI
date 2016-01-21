@@ -18,7 +18,7 @@ template(name="classList")
       .col-lg-12
         .panel.panel-default
           .panel-body
-            h4 Search courses
+            h4 Search classes
               //+addCourseForm
           
             .table-responsive
@@ -27,7 +27,7 @@ template(name="classList")
                   tr
                     th Search  
                     td 
-                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
+                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101 or Workplace Safety and Health")
                       
                     th Type
                     td
@@ -41,7 +41,7 @@ template(name="classList")
       .col-lg-12
         .panel.panel-default
           .panel-body
-            h4 Course Details
+            h4 Class Details
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addCourse" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | Class
@@ -53,8 +53,8 @@ template(name="classList")
                   tr
                     th Code
                     th Class
-                    th Type
-                    th Fees
+                    th Start Date
+                    th End Date
                     th Details
                     th Remarks
                 tbody
@@ -62,48 +62,48 @@ template(name="classList")
                     tr
                       td #{courseCode}  
                       td #{grpNum}  
-                      td #{courseType}  
-                      td #{courseFees}  
+                      td #{startDate}  
+                      td #{endDate}  
                       td
-                        form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
-                          button#viewCourseDetailsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_courseCode}', data-target="#viewCourse")
+                        form(role="form", id="insert-addClassForm", action="classDetails", method="post")
+                          button#viewCourseDetailsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_courseCode}', data-target="#viewClass")
                             | More Details
                           +viewClassForm
                       td
-                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteCourse#{_id}")
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteClass#{_id}")
                           | Delete
-                        +deleteCourse 
+                        +deleteClass 
 
 
 template(name="viewClassForm")
-  #viewCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  #viewClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Course Detail
+          h4#myModalLabel.modal-title Class Detail
         .modal-body
-          form(role="form", id="viewDetails", action="facilityResult", method="post")
+          form(role="form", id="viewClassDetails",  method="post") //action="classDetails",
           .table-responsive
             table#dataTables-example.table(style="background:#333")
-              currentCourseCode
+              currentGroup
               tbody
                 tr
-                  th(colspan="2") #{currentCourseCode.courseName}   
+                  th(colspan="2") #{currentGroup.courseCode} #{currentCourseCode.courseName}   
                 tr
-                  td Min
-                  td #{currentCourseCode.courseCode} 
+                  td Group Number
+                  td #{currentGroup.grpNum} 
                 tr
                   td Max
-                  td #{currentCourseCode.courseMax} 
+                  td #{currentGroup.courseMax} 
                 tr
                   td Description
-                  td #{currentCourseCode.description} 
+                  td #{currentGroup.description} 
                 tr
                   td Fees
-                  td #{currentCourseCode.courseFees}
+                  td #{currentGroup.courseFees}
         .modal-footer
-          a(href="course?cCode=#{currentCourseCode.courseCode}", class="button btn admin-btn") Enter Course Page
+          a(href="course?cCode=#{currentGroup.courseCode}&cgrpNum=#{currentGroup.grpNum}", class="button btn admin-btn") Enter Class Page
       // /.modal-content
     // /.modal-dialog
   // /.modal    
@@ -179,12 +179,12 @@ template(name="addClassForm")
 
 
 template(name="deleteClass")
-  div.modal(id = "deleteCourse#{_id}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id = "deleteClass#{_id}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Delete Course
+          h4#myModalLabel.modal-title Delete Class
         .modal-body
           form(name="", role="form", action="facilityResult", method="post")
           .table-responsive
@@ -199,6 +199,9 @@ template(name="deleteClass")
                   tr
                     td Course Name
                     td #{courseName}
+                  tr
+                    td Class
+                    td #{grpNum}
         .modal-footer
-          button#deleteCourseButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
+          button#deleteClassButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
 

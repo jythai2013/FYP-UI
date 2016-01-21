@@ -65,8 +65,10 @@ template(name="course")
                         a(href="class/?cCode=#{courseCode}&cgrpNum=#{grpNum}") #{grpNum}
                         | ,
                     td(width="50px")
-                      input(type="button", value="Add Class", data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
-                    +addClass
+                      button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-plus
+                        | Class 
+                      +addClass
                     td(width="50px")
                       input(type="button", value="Remove Class(es)", data-toggle="modal", data-target="#removeClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                     +removeClass
@@ -127,44 +129,76 @@ template(name="addClass")
         .modal-body
           form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
           .table-responsive
-            table#dataTables-example.table
+            table#dataTables-example.table(style="background:#333")
               tbody
                 tr
                   th Course Code
                   td(colspan="3")
-                    .form-group
-                      input.form-control(type="text", id="gCourseCode", value="#{courseCode}")
+                    .form-group()
+                      select(name="type", id="cCode", style="color: black")
+                        option(value="WSQ") WSQ
+                        option(value="Non-WSQ") Non-WSQ
+                        option(value="Others") Others
                 tr
                   th Session Timing  
                   td 
                     .form-group
                       input.form-control(type="time", id="gNewStartTime")
                   td  TO 
-                  td 
+                  td
                     .form-group
                       input.form-control(type="time", id="gNewEndTime")
                 tr
+                  th Venue
+                  td 
+                    .form-group
+                      input.form-control(type="time", id="gVenue")
+                  th No. Of Session(s)
+                  td 
+                    .form-group
+                      input.form-control(type="time", id="gNoOfSessions")
+                tr  
                   th Days
                   td 
                     .form-group
                       label.checkbox-inline
                         input(type="checkbox", value="Monday", name="day")
                         | Monday
+                  td
+                    .form-group
                       label.checkbox-inline
                         input(type="checkbox", value="Tuesday", name="day")
                         | Tuesday
+                  td
+                    .form-group
                       label.checkbox-inline
                         input(type="checkbox", value="Wednesday", name="day")
                         | Wednesday
+                tr
+                  th  
+                  td
+                    .form-group
                       label.checkbox-inline
                         input(type="checkbox", value="Thursday", name="day")
                         | Thursday
+                  td
+                    .form-group
                       label.checkbox-inline
                         input(type="checkbox", value="Friday", name="day")
-                        | Friday
+                       | Friday
+                  td
+                    .form-group
                       label.checkbox-inline
                         input(type="checkbox", value="Saturday", name="day")
                         | Saturday
+                tr
+                  th Venue
+                  td 
+                    .form-group
+                      input.form-control(type="date", id="gNewStartDate")
+                  th No. of Sessions(s)
+                  td 
+                    to retrieve from course
                 tr
                   th Start Date
                   td 
@@ -202,20 +236,20 @@ template(name="addTrainer")
           h4#myModalLabel.modal-title Add New Trainer
         .modal-body
           form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
-            .form-group
-              tr
-                td(colspan="2")
-                  select( id="newTrainers", style="color: black; width: 300px")
+            tr
+              td(colspan="2")
+                .form-group()
+                  select(id="newTrainersC", style="color: black; width: 300px")
                     option(value="Twinnings") Twinnings
                     option(value="Lipton") Lipton
                     option(value="TWG") TWG
                     option(value="Dilmah") Dilmah     
                 td  
                   button#removeThisTrainer.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                        i.fa.fa-minus 
+                        i.fa.fa-plus 
                 td
                   button#addMoreTrainer.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                        i.fa.fa-plus         
+                        i.fa.fa-minus         
           // /.table-responsive
         .modal-footer
           button#addTrainerButton.btn.btn-save(type="button", data-dismiss="modal") Add 
@@ -245,13 +279,8 @@ template(name="removeClass")
               each groupsCourse2
                 .checkbox
                   label
-                    input(type="checkbox", value="#{grpNum}")
-                    | #{grpNum}              
-                //each groupsCourse
-                  //.checkbox
-                    //label
-                 // input(type="checkbox", value=#{grpNum})
-                   //| #{grpNum}
+                    input(type="checkbox", value="#{grpNum}", name="currentGroups")
+                    | #{grpNum}    
 
                     
           // /.table-responsive
