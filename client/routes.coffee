@@ -17,6 +17,9 @@ navRoutes = [
       template: 'facilityManagement'
     })
 
+  new NavRoute('FormsMgmt', 'fa-group ', {label: "LSP Forms Management"})
+  new NavRoute('formRespo', '', {parentName: 'FormsMgmt', label: "LSP Form Respository"})
+
   new NavRoute('CourseModule', 'fa-table', {label: "Course Management"})
   new NavRoute('courseList', '', {parentName: 'CourseModule', label: "Course List"})
   # new NavRoute('course', '', {parentName: 'CourseModule', label: "Course"})
