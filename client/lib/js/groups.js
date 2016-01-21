@@ -13,7 +13,7 @@ Template.course.helpers({
 		//var currentCourse = Session.get('currentCourseCode');
 		
 		var currentCourse = getParameterByName("cCode");
-		if(currentCourse.length<=0)return Groups.find({});));
+		if(currentCourse.length<=0)return Groups.find({});
 
 		var size = Groups.find({courseCode:currentCourse}).count();
 		return Groups.find({courseCode:currentCourse});

@@ -5,14 +5,15 @@ Template.courseList.onRendered(function(){
 
 Template.courseList.helpers({
 	"courseSearchCodeError":function(){
-		console.log(validator);
-		var courseCode = Session.get("courseSearchCode");
-		var valid = validator.isAlphanumeric(courseCode);
+		//console.log(validator);
+		//var courseCode = Session.get("courseSearchCode");
+		//var valid = validator.isAlphanumeric(courseCode);
 		
 		//TODO: actual validation and not junk code below
-		if(courseCode != undefined && courseCode.length == 0) valid = true;
-		console.log(valid);
-		return !valid;
+		//if(courseCode != undefined && courseCode.length == 0) valid = true;
+		//console.log(valid);
+		////return !valid;
+		return Session.get("courseSearchCodeError");
 	},
 	
 	"courseSearchAllOk":function(){
@@ -67,10 +68,20 @@ Template.courseList.helpers({
 Template.courseList.events({
 	"click #filter" : function doSearch(e){
 		console.log(e);
-		var cCode = document.getElementById("cNewCode").value;
+		var cCode = document.getElementById("cSearchCode").value;
 		var cType = document.getElementById("courseSearchType").value;
 		Session.set("courseSearchCode", cCode);
 		Session.set("courseSearchType", cType);
+		
+		console.log(validator);
+		var courseCode = Session.get("courseSearchCode");
+		var valid = validator.isAlphanumeric(courseCode);
+		
+		//TODO: actual validation and not junk code below
+		if(courseCode != undefined && courseCode.length == 0) valid = true;
+		console.log(valid);
+		//return !valid;
+		Session.set("courseSearchCodeError", !valid);
 	}
 });
 
