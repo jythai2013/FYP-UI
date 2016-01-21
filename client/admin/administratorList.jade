@@ -11,8 +11,8 @@ template(name="administratorList")
           .panel-body
             h4 Administrator List Management
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addAdminAcct" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
-                        i.fa.fa-plus
-                        | Administrator
+                i.fa.fa-plus
+                | Administrator
             +addAdminAcctForm
 
             .table-responsive
@@ -22,27 +22,27 @@ template(name="administratorList")
                     th Name
                     th Particulars
                     th AccessRights
-                    th Remarks
                 tbody
-                  each students
+                  each admins
                     tr
                       td #{firstName}  #{lastName} 
                       td  
-                        form(role="form", id="insert-addAdminForm", action="#", method="post")
-                          a(href="?profile=#{currentCourseCode.firstName}&#{currentCourseCode.lastName}", class="button btn admin-btn") Particulars
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#viewAdmin")
+                          | Particulars
+                        +viewAdminParticulars
                       td
                         form(role="form", id="insert-viewCredForm", action="#", method="post")
-                          button#viewStudAccessRightsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_email}', data-target="#viewAccessRights")
+                          button#viewStudAccessRightsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_id}', data-target="#viewAccessRights")
                             | Edit Access Rights
-                        +viewAccessRightsForm
+                        +viewAccessRights
                       td
-                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteAdmin")
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteAdmin")
                           | Delete
                         +deleteAdminForm 
 
 
 template(name="viewAccessRightsForm")
-  #viewAccessRights.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="viewAdmin#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -52,38 +52,20 @@ template(name="viewAccessRightsForm")
           form(role="form", id="viewDetails", action="#", method="post")
           .table-responsive
             table#dataTables-example.table(style="background:#333")
-              currentStud
               tbody
                 tr
-                  th Email
+                  th Name
                   td
-                    .form-group
-                      input.form-control(type="text", id="studAcctUserName", value="#{currentStud.email}")
+                    #{firstName} #{lastName}
                 tr
-                  th Password
+                  th email
                   td 
-                    .form-group
-                      input.form-control(type="hidden", id="studAcctPwd", value="#{currentStud.password}")
+                    #{email}
                 tr
                   td Access Rights
-                  td 
-                    .form-group
-                      label.checkbox-inline
-                        input(type="checkbox")
-                        | 1
-                      label.checkbox-inline
-                        input(type="checkbox")
-                        | 2
-                      label.checkbox-inline
-                        input(type="checkbox")
-                        | 3
-                tr
-                  td Remarks
-                  td 
-                    input.form-control(type='text', id='studRemarks')
-                    | password
+                  td Pending
         .modal-footer
-          button#editAdminAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteAdmin")
+          button#editAdminAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#EditAdminAcct")
              | Save Changes
       // /.modal-content
     // /.modal-dialog
@@ -105,42 +87,28 @@ template(name="addAdminAcctForm")
                   th First Name
                   td
                     .form-group
-                      input.form-control(type="text", id="studFirstName", placeholder="eg. IS101")
-                tr
+                      input.form-control(type="text", id="firstName")
                   th Last Name  
                   td 
                     .form-group
-                      input.form-control(type="text", id="studLastName") 
+                      input.form-control(type="text", id="lastName") 
                 tr
                   td Email
+                  td
+                    input.form-control(type='text', id='email')
+                  td MobileNo
                   td 
-                    input.form-control(type='text',value='studentEmailHere', id='adminEmail')
-                    | studentEmailHere
-                tr
-                  td Student Password
-                  td 
-                    input.form-control(type='password',value='password', id='adminPassword')
-                    | password
+                    input.form-control(type='text', id='mobileNo')
                 tr
                   td Access Rights
                   td 
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox")
+                        input(type="checkbox", value="1", id="accessRightId")
                         | 1
-                      label.checkbox-inline
-                        input(type="checkbox")
-                        | 2
-                      label.checkbox-inline
-                        input(type="checkbox")
-                        | 3
-                tr
-                  td Remarks
-                  td 
-                    textarea.form-control(type='text',value='',id='studRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
             // /.table-responsive
         .modal-footer
-          button#addAdminAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
+          button#addAdminAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add User
       // /.modal-content
     // /.modal-dialog
   // /.modal
@@ -149,7 +117,7 @@ template(name="addAdminAcctForm")
 
 
 template(name="deleteAdminForm")
-  #deleteAdmin.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="deleteAdmin#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -163,11 +131,10 @@ template(name="deleteAdminForm")
                 tr
                   td Are you sure you want to delete
                 tr
-                  td First Name
-                  td blah
+                  td #{firstName} #{lastName}
                 tr
-                  td Last Name
-                  td #{currentCourseCode.courseName}
+                  td Mobile No:
+                  td #{mobileNo}
           // /.table-responsive
         .modal-footer
           button#deleteAdminButton.btn.btn-save(type="button", data-dismiss="modal") Confirm

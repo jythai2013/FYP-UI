@@ -44,6 +44,7 @@ template(name="course")
                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#myModal")
                         | Edit Details
                       +editCourseForm
+
             p.breakH4
             h4 Class Management
             .table-responsive
@@ -65,7 +66,7 @@ template(name="course")
                         a(href="class/?cCode=#{courseCode}&cgrpNum=#{grpNum}") #{grpNum}
                         | ,
                     td(width="50px")
-                      input(type="button", value="Add Class", data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                      input(type="button", value="Add Class", data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; color:#fff")
                     +addClass
                     td(width="50px")
                       input(type="button", value="Remove Class(es)", data-toggle="modal", data-target="#removeClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
@@ -127,7 +128,7 @@ template(name="addClass")
         .modal-body
           form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
           .table-responsive
-            table#dataTables-example.table
+            table#dataTables-example.table(style="background:#333")
               tbody
                 tr
                   th Course Code
