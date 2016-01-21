@@ -90,41 +90,28 @@
 			Accounts.createUser(options);
 		},
 		
-		'createLearnerAccount': function createLearnerAccountF
-		(email, password, sFirstName, sLastName, sRemarks){
-			// if(Meteor.user.userType != "admin"){
-				// return false; //TODO: output error message in client
-			// }
-			console.log("CreateLearnerAccount");
-			var userTypeObj = {learner: true};
-			var oFirstName = sFirstName;
-			var oLastName = sLastName;
-			console.log(userTypeObj);
-			var sFees = "?";
-			var spaidStatus = false;
+		'createLearnerAccount': function createLearnerAccountF(semail, spassword, sFirstName, sLastName, sDOB, sGender, sMobileNo, sIDType, sIdNo, sNationality, sPostalCode, sResAddr, sQuali, sProf, sRemarks){
+			console.log(">> Start: CreateLearnerAccount");
 			var options = {
-				email: email,
-				password: password,
-				firstName: oFirstName,
-				lastName: oLastName,
-				fees: sFees,
-				paidStatus: spaidStatus,
+				email: semail,
+				password: spassword,
+				firstName: sFirstName,
+				lastName: sLastName,
+				dob: sDOB,
+				gender: sGender,
+				mobileNo: sMobileNo,
+				id_type: sIDType,
+				id_No: sIDNo,
+				nationality: sNationality,
+				postalCode: sPostalCode,
+				resAddr: sResAddr,
+				qualification: sQuali,
+				proficiency: sProf,
 				remarks: sRemarks,
-				userType: userTypeObj
+				userType: {learner: true}
 			};
-			console.log(options);
-			console.log("");
-			console.log("");
+			console.log("Sys: Participant Account Created.");
 			Accounts.createUser(options);
-			
-			// tDate = new Date();
-			// subject = "aSubject";
-			// text = "aText";
-			// toEmail = "asdf154@gmail.com";
-			// details = {to:toEmail, from:"asdf154+from@gmail.com", subject:subject, text:text, date:tDate}
-			// // sendMail(details);
-			Meteor.call("scheduleMail", details)
-			console.log("end CreateLearnerAccount");
 		},
 		
 		'editLearnerAccount': function editLearnerAccount(_id, sEmail, sPassword, sFees, sPaidStatus, sRemarks){
