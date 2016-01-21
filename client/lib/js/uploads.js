@@ -5,7 +5,7 @@
     counter: function () {
       return Session.get("counter");
     },
-    downloads:function(){
+    uploads:function(){
       console.log(Files.find({}));
       return Files.find({});
     }

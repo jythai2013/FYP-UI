@@ -88,13 +88,14 @@ template(name="course")
                     th(colspan="2") Course Materials
                     th Download File
                 tbody
-                  each uploads                   
+                  each uploads                 
                     tr 
                       td 01
                       td #{name}
                       td Files here
                       td(width="50px") 
                         a(href="{{url download = true}}", class="button btn admin-btn") Download 
+                  tfoot
                     tr
                       td(colspan="4")
                         button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
