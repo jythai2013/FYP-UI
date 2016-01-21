@@ -8,7 +8,9 @@ Template.courseList.helpers({
 		console.log(validator);
 		var courseCode = Session.get("courseSearchCode");
 		var valid = validator.isAlphanumeric(courseCode);
-		if(courseCode.length == 0) valid = true;
+		
+		//TODO: actual validation and not junk code below
+		if(courseCode != undefined && courseCode.length == 0) valid = true;
 		console.log(valid);
 		return !valid;
 	},

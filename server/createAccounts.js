@@ -1,4 +1,4 @@
-	// Accounts.onCreateUser( function onCreateUserEventHandler(options, user) {
+	 Accounts.onCreateUser( function onCreateUserEventHandler(options, user) {
 		
 	// 	// We still want the default hook's 'profile' behavior. //not really
 	// 	// user.profile = options.profile;
@@ -16,7 +16,7 @@
 	// 		relationship: emerContRel
 	// 	};
 		
-	// 	user.userType = options.userType;
+	 	user.userType = options.userType;
 	// 	user.firstName = options.firstName;
 	// 	user.lastName = options.lastName;
 	// 	user.email = email;
@@ -47,8 +47,8 @@
 			
 	// 	}
 	// 	console.log(user);
-	// 	return user;
-	// });
+	 	return user;
+	 });
 
 
 	Meteor.methods({ 

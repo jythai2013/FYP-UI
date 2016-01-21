@@ -52,26 +52,26 @@ Template.addStudentAcctForm.events({
 		console.log("Sys: Collect Student Information");
 
 		//TODO: Validation of input
-		var firstName = document.getElementById("firstName").value;
-		var lastName = document.getElementById("lastName").value;
-		var gender = document.getElementById("gender").value;
-		var dob = document.getElementById("dob").value;
-		var mobileNo = document.getElementById("mobileNo").value;
-		var email = document.getElementById("email").value;
-		var idType = document.getElementById("idType").value;
-		var iDNo = document.getElementById("idNo").value;
-		var nationality = document.getElementById("nationality").value;
-		var code = document.getElementById("code").value;
-		var resAddr= document.getElementById("resAddr").value;
+		var firstName = 		document.getElementById("firstName").value;
+		var lastName = 			document.getElementById("lastName").value;
+		var gender = 				document.getElementById("gender").value;
+		var dob = 					document.getElementById("dob").value;
+		var mobileNo = 			document.getElementById("mobileNo").value;
+		var email = 				document.getElementById("email").value;
+		var idType = 				document.getElementById("idType").value;
+		var iDNo = 					document.getElementById("idNo").value;
+		var nationality = 	document.getElementById("nationality").value;
+		var code = 					document.getElementById("code").value;
+		var resAddr= 				document.getElementById("resAddr").value;
 		var qualification = document.getElementById("qualification").value;
-		var profi = document.getElementById("proficiency").value;
-		var nokName = document.getElementById("nokName").value;		
-		var nokReln = document.getElementById("nokReln").value;		
-		var nokTel = document.getElementById("nokTel").value;		
-		var nokAddr = document.getElementById("nokAddr").value;		
+		var profi = 				document.getElementById("proficiency").value;
+		var nokName = 			document.getElementById("nokName").value;		
+		var nokReln = 			document.getElementById("nokReln").value;		
+		var nokTel = 				document.getElementById("nokTel").value;		
+		var nokAddr = 			document.getElementById("nokAddr").value;		
 		var nokPostalCode = document.getElementById("nokCode").value;		
-		var password = mobileNo;
-		var remarks = document.getElementById("remarks").value;
+		var password = 			mobileNo;
+		var remarks = 			document.getElementById("remarks").value;
 		
 		Meteor.call("createLearnerAccount", email, password, firstName, lastName, dob, gender, mobileNo, idType, idNo, nationality, code, resAddr, qualification, profi, remarks, nokName, nokReln, nokTel, nokAddr, nokPostalCode);
 		console.log("Sys: Student Information Saved");
@@ -154,46 +154,3 @@ Template.deletetrainerForm.events({
 		Meteor.call("deleteUsers", this._id);
 	}
 });
-
-
-// Template.registerCorporation.events({
-// 	"submit #registerCorporation-Form" : function registerCorporation(event) {
-// 		event.preventDefault();
-// 		// if(Meteor.user.userType != "admin"){
-// 		// alert("You are not an admin"); //TODO: make a nice message
-// 		// return false;
-// 		// }
-// 		var emailInput = document.getElementById("registerCorporation-Email");
-// 		var passwordInput = document.getElementById("registerCorporation-Password");
-
-// 		Meteor.call("createTrainerAccount", emailInput.value, passwordInput.value);
-// 	}
-// });
-
-// Template.registerTrainer.events({
-// 	"submit #registerTrainer-Form" : function registerTrainer(event) {
-// 		event.preventDefault();
-// 		// if(Meteor.user.userType != "admin"){
-// 		// alert("You are not an admin"); //TODO: make a nice message
-// 		// return false;
-// 		// }
-// 		var emailInput = document.getElementById("registerTrainer-Email");
-// 		var passwordInput = document.getElementById("registerTrainer-Password");
-
-// 		Meteor.call("createTrainerAccount", emailInput.value, passwordInput.value);
-// 	}
-// });
-
-// Template.registerLearner.events({
-// 	"submit #registerLearner-Form" : function registerLearner(event) {
-// 		event.preventDefault();
-// 		// if(Meteor.user.userType != "admin"){
-// 		// alert("You are not an admin"); //TODO: make a nice message
-// 		// return false;
-// 		// }
-// 		var emailInput = document.getElementById("registerLearner-Email");
-// 		var passwordInput = document.getElementById("registerLearner-Password");
-
-// 		Meteor.call("createLearnerAccount", emailInput.value, passwordInput.value);
-// 	}
-// });

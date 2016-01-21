@@ -1,21 +1,22 @@
+
+
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 Template.course.helpers({
 
 	"groupsCourse" : function listGroupsEventHandler(e) {
-		console.log("here");
-		console.log(Groups.find().count() + " in class.js");
 		//var currentCourse = Session.get('currentCourseCode');
-		var str =  window.location.href;
-		var position = str.indexOf('=');
-		console.log(position + " = sign");
-		console.log(str + "stri");
 		
-		var currentCourse=str.substr(position+1);
-		console.log(currentCourse + "Code");
+		var currentCourse = getParameterByName("cCode");
+		if(currentCourse.length<=0)return Groups.find({});));
 
 		var size = Groups.find({courseCode:currentCourse}).count();
-		console.log(size + "Code");
 		return Groups.find({courseCode:currentCourse});
-		
 	}
 });
 
@@ -138,9 +139,9 @@ Template.announcementForm.events({
 	}
 });
 
+
 Template.registerHelper('formatDate', function(date){
 	return moment(date).format("DD-MM-YYYY HH:mm:ss");
-
 });
 
 
