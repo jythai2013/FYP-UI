@@ -1,0 +1,7 @@
+*.ns
+.meteor/local/db/meteor.0
+*.0
+*.0
+.meteor/local/db/local.1
+*.ns
+*.1
