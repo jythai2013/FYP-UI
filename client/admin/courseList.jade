@@ -27,18 +27,11 @@ template(name="courseList")
                   tr
                     th Search  
                     td 
-<<<<<<< HEAD
                       input.form-control(type="text", id="cCode", placeholder="eg. IS101")
                       
-=======
-                      input.form-control(type="text", id="cSearchCode", placeholder="eg. IS101")
-                      if courseSearchCodeError
-                        h1 error, not alphanumeric
->>>>>>> origin/master
                     th Type
                     td
-                      select(id="courseSearchType")
-                        option(value="")= "Do not care"
+                      select(name="type", id="cNewType", style="color: black")
                         option(value="WSQ") WSQ
                         option(value="Non-WSQ") Non-WSQ
                         option(value="Others") Others
