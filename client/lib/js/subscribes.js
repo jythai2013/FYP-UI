@@ -7,4 +7,5 @@ Deps.autorun(function () {
 	Meteor.subscribe('facilitiesData');
   Meteor.subscribe('bookingsData');
   Meteor.subscribe('groupsData');
+  Meteor.subscribe('filesData');
 });

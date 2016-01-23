@@ -3,7 +3,7 @@ local/bundler-cache
 local/plugin-cache
 local/isopacks
 local/shell
-!local/db/
-!local/db/*
+local/db/
+local/db/*
 local/db/mongod*
 local
