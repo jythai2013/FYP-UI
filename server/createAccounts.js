@@ -96,6 +96,14 @@
 			console.log("Sys: Participant Account Created.");
 		},
 		
+		'createLearnerAccount2': function createLearnerAccountF(obj){
+			console.log(">> Start: CreateLearnerAccount");
+			var options = obj;
+			console.log("Sys: Participant Account Creating.");
+			Accounts.createUser(options);
+			console.log("Sys: Participant Account Created.");
+		},
+		
 		'editLearnerAccount': function editLearnerAccount(_id, sEmail, sPassword){
 			var userTypeObj = {learner: true};
 			Accounts.update(_id, {

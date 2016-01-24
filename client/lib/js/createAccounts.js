@@ -71,7 +71,6 @@ Template.addStudentAcctForm.events({
 		console.log("Sys: Collect Student Information");
 
 		//TODO: Validation of input
-		console.log("a");
 		// var firstName = 		document.getElementById("firstName").value;
 		// var lastName = 			document.getElementById("lastName").value;
 		// var gender = 				document.getElementById("gender").value;
@@ -115,13 +114,9 @@ Template.addStudentAcctForm.events({
 		obj.password = 			obj.mobileNo;
 		obj.remarks = 			document.getElementById("remarks").value;
 		
-		console.log(obj);
+		// console.log(obj);
 		
-		// var obj2 = new Object();
-		// obj2.test="test";
-		// Meteor.call("createLearnerAccount2", obj);
-		Meteor.call("createLearnerAccount", obj);
-		// Meteor.call("createLearnerAccount2", email, password, firstName, lastName, dob, gender, mobileNo, idType, idNo, nationality, code, resAddr, qualification, profi, remarks, nokName, nokReln, nokTel, nokAddr, nokPostalCode);
+		Meteor.call("createLearnerAccount2", obj);
 		console.log("Sys: Student Information Saved");
 	}
 });
