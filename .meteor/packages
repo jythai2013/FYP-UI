@@ -3,43 +3,35 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
+accounts-password
+alanning:roles
+blaze-html-templates
+cfs:filesystem
+cfs:standard-packages
+cfs:gridfs
+coffeescript
+fortawesome:fontawesome
+ian:accounts-ui-bootstrap-3
 
+iron:router
+jquery
+less
+mquandalle:jade
+mrt:accounts-admin-ui-bootstrap-3
 meteor-base
 meteor-platform
 mobile-experience
 mongo
-
-blaze-html-templates
-jquery
-less
-coffeescript
-twbs:bootstrap
-mquandalle:jade
-fortawesome:fontawesome
-ian:accounts-ui-bootstrap-3
-mrt:accounts-admin-ui-bootstrap-3
 natestrauser:select2
-
-iron:router
-accounts-password
-session
-
-cfs:filesystem
-cfs:standard-packages
-cfs:gridfs
-cfs:dropbox
-
 rzymek:fullcalendar
+session
 standard-minifiers
 tracker
+twbs:bootstrap
 
 percolate:synced-cron
 email
-
+cfs:dropbox
 easy:search
 
 momentjs:moment
-
-ongoworks:pdf
-
-alanning:roles
