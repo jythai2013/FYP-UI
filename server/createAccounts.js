@@ -46,8 +46,8 @@
 		return user;
 	});
 	// 	console.log(user);
-	 	return user;
-	 });
+	 	// return user;
+	 // });
 
 
 	Meteor.methods({ 
@@ -70,11 +70,6 @@
 			console.log(options);
 			console.log(Meteor.users.find({userType:{"trainer":true}}).count());
 		},
-
-		'deleteUsers': function deleteUsers(_id){
-			console.log("Delete User : " + _id);
-			Meteor.users.remove(_id);
-		},
 		
 		'createLearnerAccount': function createLearnerAccountF(semail, spassword, sFirstName, sLastName, sDOB, sGender, sMobileNo, sIDType, sIdNo, sNationality, sPostalCode, sResAddr, sQuali, sProf, sRemarks){
 			console.log(">> Start: CreateLearnerAccount");
@@ -96,8 +91,9 @@
 				remarks: sRemarks,
 				userType: {learner: true}
 			};
-			console.log("Sys: Participant Account Created.");
+			console.log("Sys: Participant Account Creating.");
 			Accounts.createUser(options);
+			console.log("Sys: Participant Account Created.");
 		},
 		
 		'editLearnerAccount': function editLearnerAccount(_id, sEmail, sPassword){

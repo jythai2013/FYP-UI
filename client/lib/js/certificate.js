@@ -16,7 +16,7 @@ Template.certificateTemplate.onRendered(function(){
 });
 
 Template.generateCert.events(
-	"#generateCerts click":function(){
+	"#generateCerts click":function(e){
 		var students = classlist.find({}).fetch();
 		students.forEach(function(myData){
 			Blaze.saveAsPDF(Template.certificateTemplate, {
