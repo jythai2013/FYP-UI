@@ -1,22 +1,41 @@
 // ADMIN ///////////////////////////////////////////////////////////////////////
 
 Template.administratorList.helpers({
-	"admins" : function adminList(e) {
+	"administrators" : function adminList(e) {
 		return Meteor.users.find({userType:{"admin":true}});
 	}
 });
 
-Template.addAdminAcctForm.events({
-	"click #addAdminAcctButton" : function createAdminEventHandler(e) {
-		console.log("Sys: Collect Admin Information");
+Template.administratorList.helpers({
+	"adminsCounter" : function adminList(e) {
+		return Meteor.users.find({userType:{"admin":true}}).count();
+	}
+});
 
+Template.viewAdminParticulars.events({
+	"click #editAdminAccountButton" : function editAdminAccount(e) {
+		var aid = document.getElementById("accessType").value;
+		var mobileNo = document.getElementById("mobileNo").value;
+		Meteor.call("editAdminAccount", mobileNo);
+	}
+});
+
+Template.addAdminAcctForm.events({
+	"click #addAdminAcctButton" : function createAdminEventHandler(event, template) {
+		console.log("Sys: Collect Admin Information");
 		//TODO: Validation of input
 		var firstName = document.getElementById("firstName").value;
 		var lastName = document.getElementById("lastName").value;
 		var mobileNo = document.getElementById("mobileNo").value;
 		var email = document.getElementById("email").value;
 		var password = mobileNo;
-		var adminAccessId = document.getElementById("accessRightId").value;
+
+		var selected = template.findAll("input[type=checkbox]:checked");
+		var array = _.map(selected, function(item) {
+		     return item.defaultValue;
+		});
+		console.log("Access Rights Assigned: " + array);
+		var adminAccessId = array;
 		
 		Meteor.call("createAdminAccount", email, password, firstName, lastName, mobileNo, adminAccessId);
 		console.log("Sys: Admin Information Saved ("+firstName+","+lastName+","+mobileNo+","+email+","+password+","+adminAccessId+")");
@@ -114,6 +133,7 @@ Template.viewParticularsForm.events({
 
 
 
+
 // Trainer ///////////////////////////////////////////////////////////////////////
 Template.trainerList.helpers({
 	"trainers" : function trainerList(e) {
@@ -128,27 +148,30 @@ Template.trainerList.helpers({
 });
 
 Template.addTrainerAcctForm.events({
-	"click #addTrainerAcctButton" : function createTrainerEventHandler(e) {
+	"click #addTrainerAcctButton" : function createTrainerEventHandler(event, template) {
 		console.log("Sys: Collect trainer Information");
-
-		//TODO: Validation of input
 		var firstName = document.getElementById("firstName").value;
 		var lastName = document.getElementById("lastName").value;
-		var gender = document.getElementById("gender").value;
+		var fullname = firstName + " " + lastName;
 		var mobileNo = document.getElementById("mobileNo").value;
 		var email = document.getElementById("email").value;
 		var idType = document.getElementById("idType").value;
 		var iDNo = document.getElementById("idNo").value;
 		var nationality = document.getElementById("nationality").value;
-		var credentials = document.getElementById("certs").value;
-		var password = document.getElementById("password").value;
-		
-		Meteor.call("createTrainerAccount", email, password, firstName, lastName, gender, mobileNo, idType, idNo, nationality, credentials);
+		var selected = template.findAll("input[type=checkbox]:checked");
+		var array = _.map(selected, function(item) {
+		     return item.defaultValue;
+		});
+		var spec = array;
+
+		console.log("Sending: " + email + ", " + fullname + ", " + mobileNo + ", " + idNo + ", " + nationality + ", " + spec);
+		// 		'createTrainerAccount': function createTrainerAccount(semail, sname, sMobileNo, sIdNo, sNationality, sSpec){
+		Meteor.call("createTrainerAccount", email, fullname, mobileNo, idNo, nationality, spec);
 		console.log("Sys: Trainer Information Saved");
 	}
 });
 
-Template.deletetrainerForm.events({
+Template.deleteTrainerForm.events({
 	"click #deleteTrainerButton" : function deleteTrainerEventHandler(e) {
 		console.log(this._id);
 		Meteor.call("deleteUsers", this._id);

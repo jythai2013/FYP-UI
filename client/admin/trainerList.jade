@@ -28,16 +28,13 @@ template(name="trainerList")
                     tr
                       td #{firstName}  #{lastName} 
                       td  
-                        form(role="form", id="insert-addTrainerForm", action="#", method="post")
-                          a(href="?profile=#{firstName}&#{lastName}", class="button btn admin-btn") Particulars
+                        a.btn.admin-btn.bt-sn(data-target="#viewTrainerDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
+                        +viewTrainerParticulars
                       td
-                        form(role="form", id="insert-viewCredForm", action="#", method="post")
-                          button#viewTrainerCredentialsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_email}', data-target="#viewCV")
-                            | Edit Credentials
-                        +viewCVForm
+                        a.btn.admin-btn.bt-sn(data-target="#viewTrainerCV#{_id}", data-toggle="modal", data-id="#{_id}") Edit Credentials
+                        +viewTrainerCVForm
                       td
-                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteTrainer")
-                          | Delete
+                        a.btn.admin-btn.bt-sn(data-target="#goDeleteTrainer#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                         +deleteTrainerForm 
 
 
@@ -52,37 +49,16 @@ template(name="viewCVForm")
           form(role="form", id="viewDetails", action="facilityResult", method="post")
           .table-responsive
             table#dataTables-example.table(style="background:#333")
-              currentTrainer
               tbody
                 tr
-                  th Email
+                  th Name
                   td
-                    .form-group
-                      input.form-control(type="text", id="trainerAcctUserName", value="#{currentStud.email}")
-                tr
-                  th Password
-                  td 
-                    .form-group
-                      input.form-control(type="hidden", id="trainerAcctPwd", value="#{currentStud.password}")
-                tr
-                  td Fees
-                  td 
-                    .form-group
-                      input.form-control(type='texr',value='#{currentStud.fees}', id='studFees')
-                tr
-                  td Paid
-                  td 
-                    label.radio
-                      input#gender_filter(type="radio", name="gender_filter", value="1", checked="")
-                      | Yes
-                    label.radio
-                      input#gender_filter(type="radio", name="gender_filter", value="0")
-                      | No
+                    #{firstName} #{lastName}
                 tr
                   td Remarks
                   td 
-                    input.form-control(type='text', id='studRemarks')
-                    | password
+                    input.form-control(type='text', id='remarks')
+                    | Remarks
         .modal-footer
           button#editTrainerAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteTrainer")
              | Save Changes
@@ -106,29 +82,49 @@ template(name="addTrainerAcctForm")
                   th First Name
                   td
                     .form-group
-                      input.form-control(type="text", id="studFirstName", placeholder="eg. IS101")
-                tr
+                      input.form-control(type="text", id="firstName")
                   th Last Name  
                   td 
                     .form-group
-                      input.form-control(type="text", id="studLastName") 
+                      input.form-control(type="text", id="lastName")
+                tr
+                  td Nationality
+                  td
+                    .form-group
+                      input.form-control(type="text", id="nationality")
+                tr
+                  td ID Type
+                  td
+                    select(id="idType", style="color:black")
+                      option(value="0") NRIC
+                      option(value="1") FIN
+                  td ID No.
+                  td  
+                    .form-group
+                      input.form-control(type="text", id="idNo")
                 tr
                   td Email
                   td 
-                    input.form-control(type='text',value='studentEmailHere', id='studEmail')
-                tr
-                  td Password
+                    input.form-control(type='text', id='email')
+                  td Mobile
                   td 
-                    input.form-control(type='hidden',value='password', id='studPassword')
-                    | password
+                    input.form-control(type='text', id='mobileNo')
                 tr
-                  td Attach CV
-                  td
-                    input#myFileInput(type="file", name="courseMaterials")
-                tr
-                  td Remarks
-                  td 
-                    textarea.form-control(type='text',value='',id='studRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
+                  td Speciality
+                  td(colspan="3")
+                    label.checkbox-inline
+                      input(type="checkbox", value="1", name="specialty")
+                      | Engineering
+                    label.checkbox-inline
+                      input(type="checkbox", value="2", name="specialty")
+                      | Leadership
+                    label.checkbox-inline
+                      input(type="checkbox", value="3", name="specialty")
+                      | Construction
+                    br
+                    label.checkbox-inline
+                      input(type="checkbox", value="4", name="specialty")
+                      | Plumming
             // /.table-responsive
         .modal-footer
           button#addTrainerAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Trainer
@@ -140,25 +136,25 @@ template(name="addTrainerAcctForm")
 
 
 template(name="deleteTrainerForm")
-  #deleteTrainer.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="goDeleteTrainer#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title Delete Trainer
         .modal-body
-          form(name="", role="form", action="facilityResult", method="post")
+          form(name="", role="form", action="deleteTrainer", method="post")
           .table-responsive
             table#dataTables-example.table(style="background:#333")
               tbody  
                 tr
                   td Are you sure you want to delete
                 tr
-                  td First Name
-                  td blah
+                  td Name
+                  td #{firstName} #{lastName}
                 tr
-                  td Last Name
-                  td #{currentCourseCode.courseName}
+                  td Mobile No.
+                  td #{mobileNo}
           // /.table-responsive
         .modal-footer
           button#deleteTrainerButton.btn.btn-save(type="button", data-dismiss="modal") Confirm

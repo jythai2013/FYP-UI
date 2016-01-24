@@ -22,57 +22,23 @@ template(name="administratorList")
                     th Name
                     th Particulars
                     th AccessRights
+                    th Delete User
                 tbody
-                  each admins
+                  each administrators
                     tr
                       td #{firstName}  #{lastName} 
                       td  
-                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#viewAdmin")
-                          | Particulars
+                        a.btn.admin-btn.bt-sn(data-target="#viewAdminDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars, Access Rights
                         +viewAdminParticulars
                       td
-                        form(role="form", id="insert-viewCredForm", action="#", method="post")
-                          button#viewStudAccessRightsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_id}', data-target="#viewAccessRights")
-                            | Edit Access Rights
-                        +viewAccessRights
+                        #{accessType}
                       td
-                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteAdmin")
-                          | Delete
+                        a.btn.admin-btn.bt-sn(data-target="#goDeleteAdmin#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                         +deleteAdminForm 
 
 
-template(name="viewAccessRightsForm")
-  div.modal(id="viewAdmin#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Administrator Detail
-        .modal-body
-          form(role="form", id="viewDetails", action="#", method="post")
-          .table-responsive
-            table#dataTables-example.table(style="background:#333")
-              tbody
-                tr
-                  th Name
-                  td
-                    #{firstName} #{lastName}
-                tr
-                  th email
-                  td 
-                    #{email}
-                tr
-                  td Access Rights
-                  td Pending
-        .modal-footer
-          button#editAdminAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#EditAdminAcct")
-             | Save Changes
-      // /.modal-content
-    // /.modal-dialog
-  // /.modal    
-
 template(name="addAdminAcctForm")
-  #addAdminAcct.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="addAdminAcct#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -81,7 +47,7 @@ template(name="addAdminAcctForm")
         .modal-body
           form(role="form", id="insert-addAdminForm", action="#", method="post")
           .table-responsive
-            table#dataTables-example.table(style="background:#333")
+            table.table(style="background:#333")
               tbody
                 tr
                   th First Name
@@ -102,10 +68,22 @@ template(name="addAdminAcctForm")
                 tr
                   td Access Rights
                   td 
-                    .form-group
-                      label.checkbox-inline
-                        input(type="checkbox", value="1", id="accessRightId")
-                        | 1
+                    label.checkbox-inline
+                      input(type="checkbox", value="1", name="accessRightId")
+                      | Maintain Accounts
+                    br 
+                    label.checkbox-inline
+                        input(type="checkbox", value="2", name="accessRightId")
+                        | Maintain Courses
+                    br 
+                    label.checkbox-inline
+                      input(type="checkbox", value="3", name="accessRightId")
+                      | Maintain Classes
+                    br 
+                    label.checkbox-inline
+                      input(type="checkbox", value="4", name="accessRightId")
+                      | Maintain Facilities
+
             // /.table-responsive
         .modal-footer
           button#addAdminAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add User
@@ -116,8 +94,32 @@ template(name="addAdminAcctForm")
 
 
 
+template(name="viewAdminParticulars")
+  div.modal(id="viewAdminDetails#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Update Administrator Details
+        .modal-body
+          form(name="", role="form", action="#", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody  
+                tr 
+                  td Name
+                  td #{firstName} #{lastName}
+                tr
+                  td Mobile No
+                  td 
+                    input.form-control(type="text", id="mobileNo", value="#{mobileNo}")
+                    input.form-control(type="hidden", id="accessType", value="#{accessType}")
+        .modal-footer
+          button#editAdminAccountButton.btn.btn-save(type="button", data-dismiss="modal") Update
+
+
 template(name="deleteAdminForm")
-  div.modal(id="deleteAdmin#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="goDeleteAdmin#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -129,9 +131,8 @@ template(name="deleteAdminForm")
             table#dataTables-example.table(style="background:#333")
               tbody  
                 tr
-                  td Are you sure you want to delete
-                tr
-                  td #{firstName} #{lastName}
+                  td(colspan="2") Are you sure you want to delete: 
+                  b #{firstName} #{lastName}
                 tr
                   td Mobile No:
                   td #{mobileNo}
