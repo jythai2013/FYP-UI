@@ -11,18 +11,31 @@ function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
             results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+						console.log(location);
+						console.log(regex);
+						console.log(results);
+						console.log(location.search);
+						realResults = results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+						console.log(realResults);
+    return realResults;
 }
+
+Template.course.onRendered(function(){
+	Session.set('currentCourseCode', currentCourse = getParameterByName("cCode"));
+});
 
 Template.course.helpers({
 
     "groupsCourse" : function listGroupsEventHandler(e) {
-        //var currentCourse = Session.get('currentCourseCode');
+        var currentCourse = Session.get('currentCourseCode');
         
-        var currentCourse = getParameterByName("cCode");
+        // currentCourse = getParameterByName("cCode");
+				// console.log(currentCourse);
+				// console.log(currentCourse.length);
         if(currentCourse.length<=0)return Groups.find({});
 
         var size = Groups.find({courseCode:currentCourse}).count();
+				console.log(size);
         return Groups.find({courseCode:currentCourse});
     }
 });

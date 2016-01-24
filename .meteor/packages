@@ -29,9 +29,14 @@ standard-minifiers
 tracker
 twbs:bootstrap
 
+
 percolate:synced-cron
 email
-cfs:dropbox
+
 easy:search
 
+cfs:dropbox
+
 momentjs:moment
+
+ongoworks:pdf
