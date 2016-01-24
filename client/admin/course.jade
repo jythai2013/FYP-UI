@@ -44,7 +44,6 @@ template(name="course")
                       button.btn.admin-btn.btn-sn(data-toggle="modal", data-target="#myModal")
                         | Edit Details
                       +editCourseForm
-
             p.breakH4
             h4 Class Management
             .table-responsive
@@ -66,15 +65,10 @@ template(name="course")
                         a(href="class/?cCode=#{courseCode}&cgrpNum=#{grpNum}") #{grpNum}
                         | ,
                     td(width="50px")
-
                       button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | Class 
                       +addClass
-
-                      input(type="button", value="Add Class", data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; color:#fff")
-                    +addClass
-
                     td(width="50px")
                       input(type="button", value="Remove Class(es)", data-toggle="modal", data-target="#removeClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                     +removeClass
@@ -95,18 +89,17 @@ template(name="course")
                     th(colspan="2") Course Materials
                     th Download File
                 tbody
-                  each uploads                 
+                  each uploads                   
                     tr 
                       td 01
                       td #{name}
                       td Files here
                       td(width="50px") 
                         a(href="{{url download = true}}", class="button btn admin-btn") Download 
-                tfoot
-                  tr
-                    td(colspan="4")
-                      button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
-                        | Upload Course Material(s)
+                    tr
+                      td(colspan="4")
+                        button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
+                          | Upload Course Material(s)
             // /.table-responsive
             // Button trigger modal
             // Modal
@@ -198,14 +191,7 @@ template(name="addClass")
                       label.checkbox-inline
                         input(type="checkbox", value="Saturday", name="day")
                         | Saturday
-                tr
-                  th Venue
-                  td 
-                    .form-group
-                      input.form-control(type="date", id="gNewStartDate")
-                  th No. of Sessions(s)
-                  td 
-                    to retrieve from course
+               
                 tr
                   th Start Date
                   td 
@@ -221,10 +207,19 @@ template(name="addClass")
                     .form-group
                       input.form-control(type="date", id="gNewDeadline")
                 tr
+                  th Venue
+                  td 
+                    .form-group
+                      each facilitiesList
+                        select(name="type", id="gTrainers", style="color: black")
+                          option(value="#{trainers}") "#{trainers}"
+                tr  
                   th Trainers
                   td
                     .form-group.input-group
-                      input.form-control(type="text", id="cCTrainers", value="#{trainers}")
+                      each facilitiesList
+                        select(name="type", id="gTrainers", style="color: black")
+                          option(value="#{trainers}") "#{trainers}"
                     
           // /.table-responsive
         .modal-footer
@@ -246,23 +241,35 @@ template(name="addTrainer")
             tr
               td(colspan="2")
                 .form-group()
-                  select(id="newTrainersC", style="color: black; width: 300px")
+                  select(id="newTrainersC", style="color: black; width: 50%")
                     option(value="Twinnings") Twinnings
                     option(value="Lipton") Lipton
                     option(value="TWG") TWG
                     option(value="Dilmah") Dilmah     
-                td  
-                  button#removeThisTrainer.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                        i.fa.fa-plus 
-                td
-                  button#addMoreTrainer.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                        i.fa.fa-minus         
+               
+                  button#addMoreTrainer.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-plus  
+
+          each times
+            tr 
+              td
+                select(id="newTrainersC", style="color: black; width: 300px")
+                  option(value="Twinnings") Twinnings
+                  option(value="Lipton") Lipton
+                  option(value="TWG") TWG
+                   option(value="Dilmah") Dilmah  
+                button#addNewTrainer.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                  i.fa.fa-plus 
+                
+                button#removeThisTrainer.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                  i.fa.fa-minus    
           // /.table-responsive
         .modal-footer
           button#addTrainerButton.btn.btn-save(type="button", data-dismiss="modal") Add 
       // /.modal-content
     // /.modal-dialog
   // /.modal
+
 
 
 template(name="removeClass")
