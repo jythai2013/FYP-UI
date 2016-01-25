@@ -17,7 +17,11 @@ Template.viewCourseForm.helpers({
 
 Template.addTrainer.helpers({
 	"noOfTimes": function() {
-    return Session.get('times');
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('times'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
 	}	
 });
 
