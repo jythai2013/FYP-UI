@@ -237,32 +237,22 @@ template(name="addTrainer")
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title Add New Trainer
         .modal-body
-          form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
+          form(name="addTrainerForm", role="form", id="insert-addTrainerForm", method="post")
             tr
               td(colspan="2")
                 .form-group()
-                  select(id="newTrainersC", style="color: black; width: 50%")
+                  select(id="newTrainersC", style="color: black; width: 80%")
                     option(value="Twinnings") Twinnings
                     option(value="Lipton") Lipton
                     option(value="TWG") TWG
                     option(value="Dilmah") Dilmah     
-               
-                  button#addMoreTrainer.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+              td 
+                button#addMoreTrainer.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
                     i.fa.fa-plus  
 
-          each times
-            tr 
-              td
-                select(id="newTrainersC", style="color: black; width: 300px")
-                  option(value="Twinnings") Twinnings
-                  option(value="Lipton") Lipton
-                  option(value="TWG") TWG
-                   option(value="Dilmah") Dilmah  
-                button#addNewTrainer.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                  i.fa.fa-plus 
-                
-                button#removeThisTrainer.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                  i.fa.fa-minus    
+            //each noOfTimes
+            //  +trainerAddDelete
+              
           // /.table-responsive
         .modal-footer
           button#addTrainerButton.btn.btn-save(type="button", data-dismiss="modal") Add 
@@ -270,7 +260,21 @@ template(name="addTrainer")
     // /.modal-dialog
   // /.modal
 
-
+//template(name="trainerAddDelete")
+//  tr 
+//    td(colspan="2")
+//      .form-group()
+//        select(id="newTrainersC", style="color: black; width: 300px")
+//          option(value="Twinnings") Twinnings
+//          option(value="Lipton") Lipton
+//          option(value="TWG") TWG
+//          option(value="Dilmah") Dilmah  
+//    td  
+//      button#addMoreTrainers.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+//        i.fa.fa-plus 
+//                
+//      button#removeThisTrainer.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+//        i.fa.fa-minus    
 
 template(name="removeClass")
   #removeClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark

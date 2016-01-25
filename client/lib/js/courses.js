@@ -20,12 +20,17 @@ Template.viewCourseForm.helpers({
 	}
 });
 
+//Session.setDefault('times', 1);
+// Template.addTrainer.onCreated(function(){
+// 	Session.set('times', 1);
+	
+// });
 
-Template.addTrainer.helpers({
-	"times" : function listCourseEventHandler(e) {
-		Session.set('times', 0);
-	}
-});
+// Template.addTrainer.helpers(
+// 	"noOfTimes": function() {
+//         return Session.get('times');
+//     }	
+// });
 
 Template.courseList.events({
 	"click #viewCourseDetailsButton" : function viewCourseDetailsEventHandler(e) {
@@ -158,11 +163,36 @@ Template.addTrainer.events({
 		Meteor.call("addTrainer", courseID, addTrainersArr);
 	},
 
+// 	"click #addMoreTrainer" : function() {
+// 		 //var name = template.$(event.target).data('modal-template');
+// 		 e.preventDefault();
 
-	"click #addNewTrainer" : function addMoreTrainerEventHandler() {
-		 //var name = template.$(event.target).data('modal-template');
-		 var times = Session.get('times');
-		 Session.set('times', times+1);
-	}
+// 		 var times = Session.get('times');
+// 		 var noOfTimes = times+1;
+// 		 Session.set('times', noOfTimes);
+// 	}
+ });
+
+// Template.trainerAddDelete.events({
+// 	"click #addMoreTrainers" : function() {
+// 		 //var name = template.$(event.target).data('modal-template');
+// 		 //e.preventDefault();
+
+// 		 var times = Session.get('times');
+// 		 var noOfTimes = times+1;
+// 		 Session.set('times', noOfTimes);
+// 	},
+
+// 	"click #removeThisTrainer" : function() {
+// 		//var salesId = Template.instance().$('.salesItem').attr('salesId');
+//         var times = Session.get('times');
+
+//         // noOfTimes = _.reject(salesInput, function(x) {
+//         //     return x.salesId == salesId;
+//         // });
+
+// 		 var noOfTimes = times-1;
+// 		 Session.set('times', noOfTimes);
+// 	}
+
 });
-
