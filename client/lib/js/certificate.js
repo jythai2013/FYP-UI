@@ -15,6 +15,7 @@ Template.certificateTemplate.onRendered(function(){
 	console.log("End");
 });
 
+/*
 Template.generateCert.events({
 	"#generateCerts click":function(e){
 		var students = classlist.find({}).fetch();
@@ -31,3 +32,4 @@ Template.generateCert.events({
 		});
 	}
 });
+*/

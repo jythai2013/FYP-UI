@@ -1,8 +1,6 @@
 Template.courseList.helpers({
 
 	"courses" : function listCourseEventHandler(e) {
-		console.log("here");
-
 		return Courses.find({});
 	}
 });
@@ -11,26 +9,17 @@ Template.viewCourseForm.helpers({
 
 	"currentCourseCode" : function listCourseEventHandler(e) {
 		var currentCode = Session.get('currentCourseCode');
-		//Session.set('currentCourseCode', null);
 		var currentCourse = Courses.find({courseCode:currentCode}).fetch();
-		console.log(currentCode + " current codes bitch");
-		//console.log(currentCourse);
-		console.log(currentCourse);
 		return currentCourse[0];
 	}
 });
 
-//Session.setDefault('times', 1);
-// Template.addTrainer.onCreated(function(){
-// 	Session.set('times', 1);
-	
-// });
 
-// Template.addTrainer.helpers(
-// 	"noOfTimes": function() {
-//         return Session.get('times');
-//     }	
-// });
+Template.addTrainer.helpers({
+	"noOfTimes": function() {
+    return Session.get('times');
+	}	
+});
 
 Template.courseList.events({
 	"click #viewCourseDetailsButton" : function viewCourseDetailsEventHandler(e) {
@@ -163,15 +152,18 @@ Template.addTrainer.events({
 		Meteor.call("addTrainer", courseID, addTrainersArr);
 	},
 
-// 	"click #addMoreTrainer" : function() {
-// 		 //var name = template.$(event.target).data('modal-template');
-// 		 e.preventDefault();
+	"click #addMoreTrainer" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
 
-// 		 var times = Session.get('times');
-// 		 var noOfTimes = times+1;
-// 		 Session.set('times', noOfTimes);
-// 	}
- });
+		 var times = Session.get('times');
+		 var noOfTimes = times+1;
+		 if(isNaN(times)) noOfTimes = 1;
+		 console.log("times " + times);
+		 console.log("noOfTimes " + noOfTimes);
+		 Session.set('times', noOfTimes);
+	}
+});
 
 // Template.trainerAddDelete.events({
 // 	"click #addMoreTrainers" : function() {
@@ -195,4 +187,4 @@ Template.addTrainer.events({
 // 		 Session.set('times', noOfTimes);
 // 	}
 
-});
+//});
