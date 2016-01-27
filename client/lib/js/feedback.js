@@ -26,6 +26,7 @@ Template.addFeedback.events({
 		
 		quantitative = new Object();
 		qualitatives = new Object();
+		questions = new Object();
 		
 		// console.log($(".qualitativeQuestion"));
 		
@@ -56,9 +57,18 @@ Template.addFeedback.events({
 		
 		$(".qualitativeQuestion").each(function(index, value){
 			qualitatives[this.name] = value.value;
-			console.log(qualitatives);
+			// console.log(qualitatives);
 		});
 		
+		$(".questionLabel").each(function(index, value){
+			console.log(this);
+			var n = this.getAttribute("name");
+			// var v = this.getAttribute("data-question-label"); //this also works. choose
+			questions[n] = this.innerHTML;
+			console.log(questions);
+		});
+		
+		options.questions = questions;
 		options.qualitatives = qualitatives;
 		options.quantitative = quantitative;
 		
@@ -80,7 +90,7 @@ Template.addFeedback.events({
 		
 		
 		// Session.set("option", options);
-		// console.log(options);
+		console.log(options);
 		Meteor.call("createFeedback", options);
 	}
 });
