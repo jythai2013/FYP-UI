@@ -60,16 +60,20 @@
       );
     },
     
-    'deleteGroup': function deleteGroup(removeCurrentGroupsIDArr){
+    'deleteGroup': function deleteGroup(removeCurrentGroupsArr){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
       console.log("in server delete group")
-      for (var id in removeCurrentGroupsIDArr){
-        console.log("in for loop delete group")
-
-         Groups.remove(_id);
-      }
+      // for (var _id in removeCurrentGroupsIDArr){
+      //   console.log("in for loop delete group")
+      //   console.log(_id+ " _id")
+      removeCurrentGroupsArr.forEach(function(_id) {
+        console.log(_id);
+        Groups.remove(_id);
+      });
+         
+      // }
      
     },
 
@@ -83,7 +87,7 @@
     
 
 
-    'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI){
+    'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, daysArrI, startDateI, endDateI, paymentDeadlineI, statusI, venueI){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
@@ -94,12 +98,13 @@
       Groups.insert({
           courseCode: courseCodeI,
           grpNum: grpNumI1,
+          venue:venueI,
           startTime: startTimeI,
           endTime:endTimeI,
-          //days: daysI,
+          days: daysArrI,
           startDate: startDateI,
           endDate: endDateI,
-          paymentDeadline: paymentDeadlineI,
+          paymentDeadline: paymentDeadlineI, //
           status: statusI
       });
 
@@ -146,7 +151,7 @@ function blastReminderCall(courseCodeI, grpNumI1, startTimeI, endTimeI, startDat
  
 function blastReminder(details){
 	subject = "aSubject";
-	text = new Date();
+	text = "aText";
 	var theGroup = Groups.findOne({courseCode:details.courseCode, grpNum:details.grpNum})
 	console.log(theGroup);
 	studentList = theGroup.studentList;

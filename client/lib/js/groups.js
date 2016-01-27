@@ -11,51 +11,73 @@ function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
             results = regex.exec(location.search);
-						console.log(location);
-						console.log(regex);
-						console.log(results);
-						console.log(location.search);
-						realResults = results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-						console.log(realResults);
-    return realResults;
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-Template.course.onRendered(function(){
-	Session.set('currentCourseCode', currentCourse = getParameterByName("cCode"));
+Template.group.helpers({
+
+    "noOfDays" : function(e) {
+        //var currentCourse = Session.get('currentCourseCode');
+
+		var courseGrp =  window.location.href;
+		
+		var positionFirstEqual = courseGrp.indexOf('=');
+		//problem starts here
+		//extracting course
+		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
+		var positionOfAND = courseGrp.indexOf('&');
+		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+
+		//extracting grpNum
+		var grpNumStr=courseGrp.substr(positionOfAND-1);
+		var positionSecondEqual = currentCourseGrp.indexOf('=');
+		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+		console.log(currentGrpNum + "grpNum");
+
+		var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
+		console.log(size + " to check if grp exists");
+		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).days;
+		console.log(a);
+
+        return Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).days;
+
+
+
+    }
 });
 
 Template.course.helpers({
 
     "groupsCourse" : function listGroupsEventHandler(e) {
-        var currentCourse = Session.get('currentCourseCode');
+        //var currentCourse = Session.get('currentCourseCode');
         
-        // currentCourse = getParameterByName("cCode");
-				// console.log(currentCourse);
-				// console.log(currentCourse.length);
+        var currentCourse = getParameterByName("cCode");
         if(currentCourse.length<=0)return Groups.find({});
 
         var size = Groups.find({courseCode:currentCourse}).count();
-				console.log(size);
         return Groups.find({courseCode:currentCourse});
+    }
+});
+
+Template.addClass.helpers({
+
+    "facilitiesList" : function listFacilitiesEventHandler(e) {
+        
+        return Facilities.find({});
     }
 });
 
 Template.removeClass.helpers({
 
 	"groupsCourse2" : function listGroups2EventHandler(e) {
-		console.log("here");
-		console.log(Groups.find().count() + " asdf adgfear fsdvgr fg in class.js");
 		//var currentCourse = Session.get('currentCourseCode');
 		var str =  window.location.href;
 		var position = str.indexOf('=');
-		console.log(position + " = sign");
-		console.log(str + "stri");
 		
 		var currentCourse=str.substr(position+1);
-		console.log(currentCourse + "Code");
 
 		var size = Groups.find({courseCode:currentCourse}).count();
-		console.log(size + "Code");
+		
 		return Groups.find({courseCode:currentCourse});
 		
 	}
@@ -71,24 +93,18 @@ Template.displayAnnouncements.helpers({
 		var courseGrp =  window.location.href;
 		
 		var positionFirstEqual = courseGrp.indexOf('=');
-		console.log(positionFirstEqual + " = sign");
-		console.log(courseGrp + "URL");
 		//problem starts here
 		//extracting course
 		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
 		var positionOfAND = courseGrp.indexOf('&');
-		console.log(positionOfAND + " position of &");
 		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-		console.log(currentCourse + "COURSE");
 
 		//extracting grpNum
 		var grpNumStr=courseGrp.substr(positionOfAND-1);
 		var positionSecondEqual = currentCourseGrp.indexOf('=');
 		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-		console.log(currentGrpNum + "grpNum");
 
 		var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
-		console.log(size + " to check if grp exists");
 		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).announcement;
 		console.log(a);
 		a = a.sort(descDate)
@@ -119,11 +135,11 @@ Template.addClass.events({
 		var gCourseCode = document.getElementById("gCourseCode").value;
 		var gStartTime = document.getElementById("gNewStartTime").value;
 		var gEndTime = document.getElementById("gNewEndTime").value;
-		var gVenue = document.getElementById("gVenue").value;
-		var gNoOfSessions = document.getElementById("gNoOfSessions").value;
+		//var gVenue = document.getElementById("gVenue").value;, gVenue
+		//var gNoOfSessions = document.getElementById("gNoOfSessions").value;, gNoOfSessions
 
 
-		var days = document.querySelectorAll('input[name="day:checked');
+		//var days = document.querySelectorAll('input[name="day:checked');
 		var days = document.getElementsByName("day");
 		var gdaysArr = [];
 		for(var x = 0, l = days.length; x < l;  x++){
@@ -138,6 +154,7 @@ Template.addClass.events({
 		var gStartDate = document.getElementById("gNewStartDate").value;
 		var gEndDate = document.getElementById("gNewEndDate").value;
 		var gDeadline = document.getElementById("gNewDeadline").value;
+		var gVenue = document.getElementById("gVenue").value;
 		var gStatus = "Scheduled";
 
 		var str =  window.location.href;
@@ -149,7 +166,7 @@ Template.addClass.events({
 		var grpNumI = "G"+grpNumI2;
       console.log(grpNumI + "group number");
 		console.log("here4");
-		Meteor.call("createGroup", gCourseCode, grpNumI, gVenue, gNoOfSessions, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus);
+		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus, gVenue);
 		//console.log(Groups.find({}).fetch();
 	}
 });
@@ -161,7 +178,6 @@ Template.announcementForm.events({
 		// if(Meteor.user.userType != "admin"){
 		// return false;
 		// }
-		console.log("here1");
 
 		//TODO: Validation of input
 		var aTitle = document.getElementById("annouTitle").value;

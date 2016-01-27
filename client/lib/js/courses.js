@@ -14,6 +14,47 @@ Template.viewCourseForm.helpers({
 	}
 });
 
+Template.course.helpers({
+
+	"trainerList" : function(e) {
+		var str =  window.location.href;
+		console.log(str + " = sign");
+		var position = str.indexOf('=');
+		console.log(position + " = sign");
+		console.log(str + "stri");
+		
+		var currentCourse=str.substr(position+1);
+		console.log(currentCourse + "Code");
+
+		var size = Courses.find({courseCode:currentCourse}).count();
+		console.log(size + " HERE size");
+		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
+		console.log(a + " a");
+		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
+		
+	}
+});
+
+Template.removeTrainer.helpers({
+
+	"trainer2" : function(e) {
+		console.log("here");
+		//var currentCourse = Session.get('currentCourseCode');
+		var str =  window.location.href;
+		console.log(str + " = sign");
+		var position = str.indexOf('=');
+		console.log(position + " = sign");
+		console.log(str + "stri");
+		
+		var currentCourse=str.substr(position+1);
+		console.log(currentCourse + "Code");
+
+		var size = Courses.find({courseCode:currentCourse}).count();
+		console.log(size + " size");
+		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
+	}
+});
+
 
 Template.addTrainer.helpers({
 	"noOfTimes": function() {
@@ -103,8 +144,9 @@ Template.deleteCourse.events({
 Template.removeTrainer.events({
 	"click #removeTrainerButton" : function removeTrainerEventHandler(e) {
 		var removeCurrentTrainers = document.getElementsByName("currentTrainers");
+    	console.log(removeCurrentTrainers.length+ " SIZE")
 
-		var removeCurrentTrainersArr = [];
+		var removeCurrentTrainersArr =  new Array();;
 		for(var x = 0, l = removeCurrentTrainers.length; x < l;  x++){
 			if (removeCurrentTrainers[x].checked){
 				var trainerName = removeCurrentTrainers[x].value;
@@ -115,7 +157,7 @@ Template.removeTrainer.events({
 				//Meteor.call("deleteGroup", groupID);
 			}
     	}
-    	console.log(removeCurrentTrainersArr.length+ " SIZE")
+    	console.log(removeCurrentTrainersArr.length+ " ARR SIZE")
 
 		//extract course
 		var url =  window.location.href;
@@ -134,8 +176,9 @@ Template.removeTrainer.events({
 
 Template.addTrainer.events({
 	"click #addTrainerButton" : function addTrainerEventHandler() {
-		var addTrainers = document.getElementById("newTrainersC").value;
-		var addTrainersArr = [];
+		//var addTrainers = document.getElementsById("newTrainersC").value;
+		var addTrainers = document.getElementsByName("newTrainersC");
+		var addTrainersArr = new Array();
 		for(var x = 0, l = addTrainers.length; x < l;  x++){
 			addTrainersArr.push(addTrainers[x].value);
     	}
@@ -150,8 +193,12 @@ Template.addTrainer.events({
 		var url =  window.location.href;
 		var positionFirstEqual = url.indexOf('=');	
 		var currentCourse=url.substring(positionFirstEqual+1);
-		var courseID = Groups.findOne({courseCode:currentCourse})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
-
+    	console.log(currentCourse+ " currnt course code");
+		var meep = Courses.findOne({courseCode:currentCourse}); //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
+    	console.log(meep+ " courseID")
+		var courseID = Courses.findOne({courseCode:currentCourse})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
+		
+    	console.log(courseID+ " courseID")
     	console.log(addTrainersArr.length+ " SIZE")
 		Meteor.call("addTrainer", courseID, addTrainersArr);
 	},
@@ -169,26 +216,29 @@ Template.addTrainer.events({
 	}
 });
 
-// Template.trainerAddDelete.events({
-// 	"click #addMoreTrainers" : function() {
-// 		 //var name = template.$(event.target).data('modal-template');
-// 		 //e.preventDefault();
+Template.trainerAddDelete.events({
+	"click #addMoreTrainers" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
 
-// 		 var times = Session.get('times');
-// 		 var noOfTimes = times+1;
-// 		 Session.set('times', noOfTimes);
-// 	},
+		 var times = Session.get('times');
+		 var noOfTimes = times+1;
+		 if(isNaN(times)) noOfTimes = 1;
+		 console.log("times " + times);
+		 console.log("noOfTimes " + noOfTimes);
+		 Session.set('times', noOfTimes);
+	},
 
-// 	"click #removeThisTrainer" : function() {
-// 		//var salesId = Template.instance().$('.salesItem').attr('salesId');
-//         var times = Session.get('times');
+	"click #removeThisTrainer" : function(e) {
+		e.preventDefault();
+        var times = Session.get('times');
 
-//         // noOfTimes = _.reject(salesInput, function(x) {
-//         //     return x.salesId == salesId;
-//         // });
+        // noOfTimes = _.reject(salesInput, function(x) {
+        //     return x.salesId == salesId;
+        // });
 
-// 		 var noOfTimes = times-1;
-// 		 Session.set('times', noOfTimes);
-// 	}
+		 var noOfTimes = times-1;
+		 Session.set('times', noOfTimes);
+	}
 
-//});
+});

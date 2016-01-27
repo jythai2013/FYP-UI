@@ -51,7 +51,9 @@ template(name="course")
                 tbody
                   tr
                     th Trainer
-                    td #{courseTrainers}
+                    td 
+                      each trainerList
+                        #{trainerName}
                     td 
                       input(type="button", value="Add Trainer(s)", data-toggle="modal", data-target="#addTrainer", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                       +addTrainer
@@ -134,11 +136,8 @@ template(name="addClass")
                 tr
                   th Course Code
                   td(colspan="3")
-                    .form-group()
-                      select(name="type", id="cCode", style="color: black")
-                        option(value="WSQ") WSQ
-                        option(value="Non-WSQ") Non-WSQ
-                        option(value="Others") Others
+                    .form-group
+                      input.form-control(type="text", id="gCourseCode", value="#{courseCode}")
                 tr
                   th Session Timing  
                   td 
@@ -148,15 +147,6 @@ template(name="addClass")
                   td
                     .form-group
                       input.form-control(type="time", id="gNewEndTime")
-                tr
-                  th Venue
-                  td 
-                    .form-group
-                      input.form-control(type="time", id="gVenue")
-                  th No. Of Session(s)
-                  td 
-                    .form-group
-                      input.form-control(type="time", id="gNoOfSessions")
                 tr  
                   th Days
                   td 
@@ -210,15 +200,15 @@ template(name="addClass")
                   th Venue
                   td 
                     .form-group
-                      each facilitiesList
-                        select(name="type", id="gTrainers", style="color: black")
-                          option(value="#{trainers}") "#{trainers}"
+                      select(name="type", id="gVenue", style="color: black")
+                        each facilitiesList
+                          option(value="#{fac}") "#{fac}"
                 tr  
                   th Trainers
                   td
                     .form-group.input-group
-                      each facilitiesList
-                        select(name="type", id="gTrainers", style="color: black")
+                      select(name="type", id="gTrainers", style="color: black")
+                        each facilitiesList
                           option(value="#{trainers}") "#{trainers}"
                     
           // /.table-responsive
@@ -241,7 +231,7 @@ template(name="addTrainer")
             tr
               td(colspan="2")
                 .form-group()
-                  select(id="newTrainersC", style="color: black; width: 80%")
+                  select(name="newTrainersC", style="color: black; width: 100%")
                     option(value="Twinnings") Twinnings
                     option(value="Lipton") Lipton
                     option(value="TWG") TWG
@@ -251,7 +241,21 @@ template(name="addTrainer")
                     i.fa.fa-plus  
 
             each noOfTimes
-              +trainerAddDelete
+              //+trainerAddDelete
+              tr 
+                td(colspan="2")
+                  .form-group()
+                    select(name="newTrainersC", style="color: black; width: 100%")
+                      option(value="Twinnings") Twinnings
+                      option(value="Lipton") Lipton
+                      option(value="TWG") TWG
+                      option(value="Dilmah") Dilmah  
+                td  
+                  button#addMoreTrainers.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-plus 
+                
+                  button#removeThisTrainer.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-minus    
               
           // /.table-responsive
         .modal-footer
@@ -327,11 +331,11 @@ template(name="removeTrainer")
                     //td
           .form-group
             label 
-              //each groupsCourse2
-              .checkbox
-                label
-                  input(type="checkbox", name="currentTrainers", value="#{courseTrainers} ")
-                  | #{courseTrainers}     
+              each trainer2
+               .checkbox
+                 label
+                   input(type="checkbox", name="currentTrainers", value="#{trainerName} ")
+                   | #{trainerName}     
 
                     
           // /.table-responsive

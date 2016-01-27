@@ -21,7 +21,7 @@
 					courseFees: cFees,
 					courseMin: cMin,
 					courseMax: cMax,
-					courseType: cType,
+					courseType: cType
 					//courseTrainers: cTrainer
 				}
       		});
@@ -41,26 +41,25 @@
 			// }
 			console.log(removeCurrentTrainersArr);
 
-			for(var trainer in removeCurrentTrainersArr){
-				//removeCurrentTrainersArr.push(removeCurrentTrainers[x].value);
-				Courses.remove({_id:id, courseTrainers: trainer});
-    		}
+			removeCurrentTrainersArr.forEach(function(trainer) {
+   				Courses.remove({_id:id, courseTrainers: trainer});
+			});
       		
 		},
 				
-		// 'addTrainer': function addTrainer(_id, addTrainersArr){
-		// 	// if(Meteor.user.userType != "admin"){
-		// 		// return false; //TODO: output error message in client
-		// 	// }
-		// 	for(var trainer in addTrainersArr){
-		// 		Courses.update(_id, {
-	 //        		$push: {
-	 //          			courseTrainers: 
-	 //          			{trainer}
-	 //        		}
-	 //      		});
-  //     		//}
-		// },
+		'addTrainer': function addTrainer(_id, addTrainersArr){
+			// if(Meteor.user.userType != "admin"){
+				// return false; //TODO: output error message in client
+			// }
+
+      		addTrainersArr.forEach(function(trainer) {
+   				Courses.update(_id, {
+	        		$push: {
+	          			courseTrainers: {trainerName: trainer}
+	        		}
+	        	});
+			});
+		},
 		
 		'createCourse': function createCourse(cName, cCode, cFee, cNoOfSessions, cDescription, cType, cMin, cMax){
 			// debugger;
