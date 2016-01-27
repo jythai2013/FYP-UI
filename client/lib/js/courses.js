@@ -1,4 +1,4 @@
-
++
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -25,26 +25,21 @@ Template.viewCourseForm.helpers({
 Template.course.helpers({
 
 	"groupsCourse" : function listGroupsEventHandler(e) {
-			//var currentCourse = Session.get('currentCourseCode');
-			
-
+			var currentCourse = Session.get('currentCourseCode');
 			var size = Groups.find({courseCode:currentCourse}).count();
 			return Groups.find({courseCode:currentCourse});
 	},
 
 	"trainerList" : function(e) {
-		var currentCourse = getParameterByName("cCode");
+		var currentCourse = Session.get('currentCourseCode');
 		console.log(currentCourse + " Code");
-		if(currentCourse.length<=0)return Courses.find({});
+		if(currentCourse == undefined || currentCourse.length<=0){
+			console.log(currentCourse);
+			return new Array();
+		}
 
-		var fuond = Courses.find({courseCode:currentCourse});
-		console.log(fuond);
-		var fuond2 = Courses.findOne({courseCode:currentCourse});
-		console.log(fuond2);
-		var size = Courses.find({courseCode:currentCourse}).count();
-		console.log(size + " HERE size");
-		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
-		console.log(a + " a");
+		console.log(Courses.findOne({courseCode:currentCourse}).courseTrainers);
+		
 		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
 	}
 });
@@ -52,19 +47,18 @@ Template.course.helpers({
 Template.removeTrainer.helpers({
 
 	"trainer2" : function(e) {
-		console.log("here");
-		//var currentCourse = Session.get('currentCourseCode');
+		/*console.log("here");
 		var str =  window.location.href;
-		console.log(str + " = sign");
+		// console.log(str + " = sign");
 		var position = str.indexOf('=');
-		console.log(position + " = sign");
+		// console.log(position + " = sign");
 		console.log(str + "stri");
-		
 		var currentCourse=str.substr(position+1);
-		console.log(currentCourse + "Code");
+		*/
+		
+		var currentCourse = Session.get('currentCourseCode');
+		//console.log(currentCourse + "Code");
 
-		var size = Courses.find({courseCode:currentCourse}).count();
-		console.log(size + " size");
 		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
 	}
 });

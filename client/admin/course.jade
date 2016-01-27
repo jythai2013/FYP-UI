@@ -53,7 +53,7 @@ template(name="course")
                     th Trainer
                     td 
                       each trainerList
-                        #{trainerName}
+                        | #{trainerName}<br>
                     td 
                       input(type="button", value="Add Trainer(s)", data-toggle="modal", data-target="#addTrainer", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                       +addTrainer
