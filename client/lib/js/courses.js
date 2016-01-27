@@ -1,3 +1,11 @@
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 Template.courseList.helpers({
 
 	"courses" : function listCourseEventHandler(e) {
@@ -16,22 +24,28 @@ Template.viewCourseForm.helpers({
 
 Template.course.helpers({
 
-	"trainerList" : function(e) {
-		var str =  window.location.href;
-		console.log(str + " = sign");
-		var position = str.indexOf('=');
-		console.log(position + " = sign");
-		console.log(str + "stri");
-		
-		var currentCourse=str.substr(position+1);
-		console.log(currentCourse + "Code");
+	"groupsCourse" : function listGroupsEventHandler(e) {
+			//var currentCourse = Session.get('currentCourseCode');
+			
 
+			var size = Groups.find({courseCode:currentCourse}).count();
+			return Groups.find({courseCode:currentCourse});
+	},
+
+	"trainerList" : function(e) {
+		var currentCourse = getParameterByName("cCode");
+		console.log(currentCourse + " Code");
+		if(currentCourse.length<=0)return Courses.find({});
+
+		var fuond = Courses.find({courseCode:currentCourse});
+		console.log(fuond);
+		var fuond2 = Courses.findOne({courseCode:currentCourse});
+		console.log(fuond2);
 		var size = Courses.find({courseCode:currentCourse}).count();
 		console.log(size + " HERE size");
 		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
 		console.log(a + " a");
 		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
-		
 	}
 });
 
