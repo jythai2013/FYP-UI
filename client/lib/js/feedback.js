@@ -15,6 +15,12 @@
 	// }
 // });
 
+Template.addFeedback.onRendered(function(){
+	// console.log($("input")[0]);
+	// console.log($("input"));
+	$("input")[0].focus();
+});
+
 Template.addFeedback.events({
 	"submit #feedbackForm" : function submitFeedbackFormHandler(e) {
 		e.preventDefault();
