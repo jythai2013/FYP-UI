@@ -8,4 +8,5 @@ Deps.autorun(function () {
   Meteor.subscribe('bookingsData');
   Meteor.subscribe('groupsData');
   Meteor.subscribe('filesData');
+  Meteor.subscribe('feedbackData');
 });

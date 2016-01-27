@@ -1,4 +1,9 @@
 
+Meteor.publish('feedbackData',function() {
+		// if(!this.userId) return null;
+		return Feedback.find({});
+});
+
 Meteor.publish('userData',function() {
 		// if(!this.userId) return null;
 		return Meteor.users.find({});

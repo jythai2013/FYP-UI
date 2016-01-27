@@ -51,11 +51,7 @@ Template.addFeedback.events({
 			} else{
 				quantitative[this.name] = this.value;
 			}
-			// quantitative[index] = value.value;
-			console.log(quantitative);
-			// console.log("");
-			// console.log("");
-			console.log("");
+			// console.log(quantitative);
 		});
 		
 		$(".qualitativeQuestion").each(function(index, value){
@@ -67,9 +63,6 @@ Template.addFeedback.events({
 		options.quantitative = quantitative;
 		
 		
-		
-		// options.quantitative.push($("#Q1Question").innerHTML);
-		// options.qualitatives.push($("#Q1Answer").value);
 		
 		
 		
@@ -84,10 +77,11 @@ Template.addFeedback.events({
         // values[this.name] = $(this).val();
     // });
 		
-		Session.set("option", options);
 		
-		console.log(options);
-		// Meteor.call("createFeedback", options);
+		
+		// Session.set("option", options);
+		// console.log(options);
+		Meteor.call("createFeedback", options);
 	}
 });
 

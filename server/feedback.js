@@ -1,7 +1,7 @@
 Meteor.methods({
 	"createFeedback":function createFeedback(options){
 		console.log(options);
-		Courses.insert(options);
+		Feedback.insert(options);
 	},
 	
 	"readFeedback":function readFeedback(options){
