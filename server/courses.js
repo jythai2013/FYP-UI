@@ -24,7 +24,7 @@
 					courseType: cType,
 					//courseTrainers: cTrainer
 				}
-      		});
+      });
 		},
 		
 		'deleteCourse': function deleteCourse(_id){

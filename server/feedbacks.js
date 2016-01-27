@@ -1,6 +1,6 @@
  Meteor.methods({ 
 
-  'editFeedback': function editFeedback(_id, courseI, sessionI, questionsI, answersI){
+  'editFeedbacks': function editFeedback(_id, courseI, sessionI, questionsI, answersI){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
@@ -16,14 +16,14 @@
       });
     },
     
-    'deleteFeedback': function deleteFeedback(_id){
+    'deleteFeedbacks': function deleteFeedback(_id){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
       Feedbacks.remove(_id);
     },
     
-    'createFeedback': function createFeedback(courseI, sessionI, questionsI, answersI){
+    'createFeedbacks': function createFeedback(courseI, sessionI, questionsI, answersI){
       // debugger;
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client

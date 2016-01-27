@@ -1,0 +1,16 @@
+
+<template name="feedbackCenter">
+	{{> addFeedback}}
+</template>
+
+<template name="addFeedback">
+	
+	<form id="feedbackForm">
+		<input type="hidden" id="surveyId" value="survey1">
+		<input type="text" class="qualitativeQuestion" name="Q1"><label>question 1</label>
+		<input type="checkbox" class="quantitativeQuestion" name="vehicle" value="1">Agree<br>
+		<input type="checkbox" class="quantitativeQuestion" name="vehicle" value="2">Disagree
+	</form>
+	
+</template>
+
