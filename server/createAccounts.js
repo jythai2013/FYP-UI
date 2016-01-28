@@ -24,7 +24,6 @@
 		user.highestQualification = options.highestQualification;
 		user.proficiency = options.proficiency;
 	 	user.speciality = options.speciality;		
-	 	user.accessType = options.accessType;		
 
 		user.nokName = options.nokName;
 		user.nokReln = options.nokReln;

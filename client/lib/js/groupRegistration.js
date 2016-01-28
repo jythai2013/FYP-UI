@@ -130,36 +130,49 @@ function processExcelFile(workbook){
 		Relationship	        = worksheet[cellOf_Relationship + currentLineNumber].v;
 		NOKNo		              = worksheet[cellOf_NOKNo + currentLineNumber].v;
 		NOKAddress	          = worksheet[cellOf_NOKAddress + currentLineNumber].v;
-		NOKPostalCode  	    = worksheet[cellOf_NOKPostalCode + currentLineNumber].v;
+		NOKPostalCode  	    	= worksheet[cellOf_NOKPostalCode + currentLineNumber].v;
 		
 		debugObj = new Object();
 		debugObj.SN									 	= SN									;
-		debugObj.FirstName	        	= FirstName	        	;
-		debugObj.LastName	           	= LastName	          ;
-		debugObj.DateOfBirth	      	= DateOfBirth	      	;
-		debugObj.Gender	            	= Gender	            ;
-		debugObj.IDType	            	= IDType	            ;
-		debugObj.IDNumber	          	= IDNumber	          ;
-		debugObj.Nationality	        = Nationality	        ;
-		debugObj.Email	              = Email	              ;
-		debugObj.ResidentialAddress	 	= ResidentialAddress	;
-		debugObj.PostalCode	         	= PostalCode	        ;
-		debugObj.MobileNo	           	= MobileNo	          ;
+		debugObj.firstName	        	= FirstName	        	;
+		debugObj.lastName	           	= LastName	          ;
+		debugObj.dateOfBirth	      	= DateOfBirth	      	;
+		debugObj.gender	            	= Gender	            ;
+		debugObj.userIDType	          = IDType	            ;
+		debugObj.userID	          		= IDNumber	          ;
+		debugObj.userType	          	= {learner:true}	    ;
+		debugObj.nationality	        = Nationality	        ;
+		debugObj.email	              = Email	              ;
+		debugObj.resAddr	 						= ResidentialAddress	;
+		debugObj.postalCode	         	= PostalCode	        ;
+		debugObj.mobileNo	           	= MobileNo	          ;
+		debugObj.password	           	= MobileNo	          ;
 		debugObj.ProficiencyIn				= ProficiencyIn				;
-		debugObj.HighestQualification = HighestQualification;
-		debugObj.NextOfKinName				= NextOfKinName				;
-		debugObj.Relationship	       	= Relationship	      ;
-		debugObj.NOKNo		            = NOKNo		            ;
+		debugObj.highestQualification = HighestQualification;
+		debugObj.nokName							= NextOfKinName				;
+		debugObj.nokReln	       			= Relationship	      ;
+		debugObj.nokTel		            = NOKNo		            ;
 		debugObj.NOKAddress	        	= NOKAddress	        ;
 		debugObj.NOKPostalCode  	  	= NOKPostalCode  	 		;
 		console.log(debugObj);
+		
+		/*
+	 	user.accessType = options.accessType;
+	 	user.company = options.compnyName;
+	 	user.officeNo = options.officeNo;
+		user.proficiency = options.proficiency;
+	 	user.speciality = options.speciality;		
+		user.remarks
+		*/
+		
 		
 		//TODO: validations
 		
 		//TODO: actually create the accounts (test)
 		// unused function parameters: password	inCompany	inLang	residenceTel	officeTel	fRemarks
 		// unused excel parameters:  SN	ProficiencyIn
-		Meteor.call("createTrainerAccount", Email, password, FirstName, LastName, Gender, IDNumber, IDType, inCompany, ResidentialAddress, PostalCode, DateOfBirth, Nationality, inLang, residenceTel, MobileNo, officeTel, NextOfKinName, NOKNo, NOKAddress, Relationship, fRemarks, HighestQualification);
+		// Meteor.call("createTrainerAccount", Email, password, FirstName, LastName, Gender, IDNumber, IDType, inCompany, ResidentialAddress, PostalCode, DateOfBirth, Nationality, inLang, residenceTel, MobileNo, officeTel, NextOfKinName, NOKNo, NOKAddress, Relationship, fRemarks, HighestQualification);
+		Meteor.call("createLearnerAccount2", debugObj);
 		
 		currentLineNumber += 1;
 	}
