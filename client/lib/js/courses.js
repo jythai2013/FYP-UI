@@ -1,9 +1,54 @@
+Template.facility.onRendered(function(){
+	Session.set("facilitySearchName", null);
+	Session.set("facilitySearchType", null);
+	Session.set("facilitySearchLess", null);
+	Session.set("facilitySearchEqua", null);
+	Session.set("facilitySearchMore", null);
+	Session.set("facilitySearchCaps", null);
+});
+
 Template.courseList.helpers({
 
-	"courses" : function listCourseEventHandler(e) {
-		console.log("here");
+  "courses" : function listFacilityEventHandler(e) {
+		var verbose = true;
+		var cCode = Session.get("courseSearchCode");
+		var cType = Session.get("courseSearchType");
+		var v = Courses.find({}).fetch();
+		if(cCode != null && cCode != undefined && cCode.length > 0){
+			v = v.filter(function(e){
+				if(verbose){
+					console.log(e);
+					console.log(e.courseCode.toLowerCase().indexOf(cCode.toLowerCase())>-1);
+				}
+				return (e.courseCode.toLowerCase().indexOf(cCode.toLowerCase())>-1);
+			});
+		}
+		if(verbose){
+			console.log(cType);
+		}
+		if(cType != null && cType != undefined && cType.length > 0){
+			v = v.filter(function(e){
+				if(verbose){
+					console.log(e);
+					console.log(e.courseType.toLowerCase().indexOf(cType.toLowerCase()));
+				}
+				return (e.courseType.toLowerCase().indexOf(cType.toLowerCase()));
+			});
+		}
+		if(verbose){
+			console.log(v);
+		}
+		return v;
+  }
+});
 
-		return Courses.find({});
+Template.courseList.events({
+	"click #filter" : function doSearch(e){
+		// console.log(e);
+		var cCode = document.getElementById("cSearchCode").value;
+		var cType = document.getElementById("courseSearchType").value;
+		Session.set("courseSearchCode", cCode);
+		Session.set("courseSearchType", cType);
 	}
 });
 
@@ -13,9 +58,8 @@ Template.viewCourseForm.helpers({
 		var currentCode = Session.get('currentCourseCode');
 		//Session.set('currentCourseCode', null);
 		var currentCourse = Courses.find({courseCode:currentCode}).fetch();
-		console.log(currentCode + " current codes bitch");
+		//console.log(currentCode + " current codes bitch");
 		//console.log(currentCourse);
-		console.log(currentCourse);
 		return currentCourse[0];
 	}
 });

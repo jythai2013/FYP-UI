@@ -10,7 +10,7 @@ Template.facility.onRendered(function(){
 Template.facility.helpers({
 
   "facilities" : function listFacilityEventHandler(e) {
-		var verbose = !true;
+		var verbose = true;
 		var facName = Session.get("facilitySearchName");
 		var facType = Session.get("facilitySearchType");
 		var facLess = Session.get("facilitySearchLess");
@@ -72,7 +72,7 @@ Template.facility.helpers({
 
 Template.facility.events({
 	"click #filter" : function doSearch(e){
-		console.log(e);
+		// console.log(e);
 		var facName = document.getElementById("facilityName").value;
 		var facType = document.getElementById("facilitySearchType").value;       
 		var facCaps = document.getElementById("fCapacity").value;  
