@@ -7,6 +7,9 @@ navRoutes = [
   new NavRoute('trainerList', '', {parentName: 'AccountsMgmt', label: "Trainer List"})
   new NavRoute('administratorList', '', {parentName: 'AccountsMgmt', label: "Adminitstrator List"})
 
+  # Certificate
+  new NavRoute('certificate', 'fa-institution', {label: "Certs Management"})
+  
   # Facility
   new NavRoute('FacilityModule', 'fa-institution', {label: "Facility Management"})
   new NavRoute('facility', 'fa-institution', {parentName: 'FacilityModule', label: "View Facilities"})
