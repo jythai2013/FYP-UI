@@ -30,11 +30,12 @@ template(name="administratorList")
                       td  
                         a.btn.admin-btn.bt-sn(data-target="#viewAdminDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars, Access Rights
                         +viewAdminParticulars
-                      td
-                        #{accessType}
+                      td #{accessType}
                       td
                         a.btn.admin-btn.bt-sn(data-target="#goDeleteAdmin#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                         +deleteAdminForm 
+            p Legend:
+            p AccessType 1 = Accounts, 2 = Courses, 3 = Classes, 4 = Facilities
 
 
 template(name="addAdminAcctForm")
@@ -114,6 +115,9 @@ template(name="viewAdminParticulars")
                   td 
                     input.form-control(type="text", id="mobileNo", value="#{mobileNo}")
                     input.form-control(type="hidden", id="accessType", value="#{accessType}")
+                tr
+                  td Access Rights
+                  td #{accessType}
         .modal-footer
           button#editAdminAccountButton.btn.btn-save(type="button", data-dismiss="modal") Update
 
