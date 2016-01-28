@@ -24,14 +24,14 @@ Template.facility.helpers({
 					console.log(e);
 					console.log(e.fac.toLowerCase().indexOf(facName.toLowerCase())>-1);
 				}
-				return (e.fac.toLowerCase().indexOf(facName.toLowerCase()));
+				return (e.fac.toLowerCase().indexOf(facName.toLowerCase())>-1);
 			});
 		}
 		if(facType != null && facType != undefined && facType.length > 0){
 			v = v.filter(function(e){
 				if(verbose){
 					console.log(e);
-					console.log(e.facType.toLowerCase().indexOf(facType.toLowerCase()));
+					console.log(e.facType.toLowerCase().indexOf(facType.toLowerCase())>-1);
 				}
 				return (e.facType.toLowerCase().indexOf(facType.toLowerCase())>-1);
 			});
