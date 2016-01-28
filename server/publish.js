@@ -42,3 +42,8 @@ Meteor.publish('groupsData',function() {
 		// if(!this.userId) return null; //TODO: test make sure that it returns only the sessions taught by the current logged in user
 		return Groups.find({});
 });
+
+Meteor.publish('materialsData',function() {
+		// if(!this.userId) return null; //TODO: test make sure that it returns only the sessions taught by the current logged in user
+		return Materials.find({});
+});

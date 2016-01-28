@@ -12,7 +12,7 @@ template(name="formRespo")
             h4 LSP Form
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
-                        | Trainer
+                        | LSP Form
             +addLSPFormForm
 
             .table-responsive
@@ -22,27 +22,21 @@ template(name="formRespo")
                     th Form Name
                     th Category
                     th Upload Date
+                    th Download
                     th Remarks
                 tbody
-                  each students
+                  each upload
                     tr
-                      td #{firstName}  #{lastName} 
-                      td  
-                        form(role="form", id="insert-addTrainerForm", action="#", method="post")
-                          a(href="?profile=#{currentCourseCode.firstName}&#{currentCourseCode.lastName}", class="button btn admin-btn") Particulars
-                      td
-                        form(role="form", id="insert-viewCredForm", action="#", method="post")
-                          button#viewTrainerCredentialsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_email}', data-target="#viewCV")
-                            | Edit Credentials
-                        +viewCVForm
-                      td
-                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteTrainer")
-                          | Delete
-                        +deleteTrainerForm 
+                      td #{name}
+                      td #{sessionNo}
+                      td Some Date
+                      td(width="50px") 
+                        a(href="{{url download = true}}", class="button btn admin-btn") Download
+                      td Stuff
 
 
 template(name="addLSPFormForm")
-  #addtrainerAcct.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  #addLSPForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -73,7 +67,7 @@ template(name="addLSPFormForm")
                     textarea.form-control(type='text',value='',id='formRemarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
             // /.table-responsive
         .modal-footer
-          button#addFormButton.btn.btn-save(type="button", data-dismiss="modal") Add Form
+          button.addFormButton.btn.btn-save(type="button", data-dismiss="modal") Add Form
       // /.modal-content
     // /.modal-dialog
   // /.modal
