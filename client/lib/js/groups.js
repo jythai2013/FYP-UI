@@ -39,7 +39,7 @@ Template.group.helpers({
 		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).days;
 		console.log(a);
 
-        return Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).days;
+        return Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).days;
 
 
 
@@ -135,19 +135,21 @@ Template.addClass.events({
 		var gCourseCode = document.getElementById("gCourseCode").value;
 		var gStartTime = document.getElementById("gNewStartTime").value;
 		var gEndTime = document.getElementById("gNewEndTime").value;
-		//var gVenue = document.getElementById("gVenue").value;, gVenue
-		//var gNoOfSessions = document.getElementById("gNoOfSessions").value;, gNoOfSessions
 
+		var str =  window.location.href;
+		var position = str.indexOf('=');		
+		var currentCourse=str.substr(position+1);
 
-		//var days = document.querySelectorAll('input[name="day:checked');
+		var gNoOfSessions =  Courses.findOne({courseCode:currentCourse}).courseNoOfSessions;
+		console.log(gNoOfSessions + " number of sessions");
+
 		var days = document.getElementsByName("day");
-		var gdaysArr = [];
+		var gdaysArr = new Array();
 		for(var x = 0, l = days.length; x < l;  x++){
 			console.log(days[x].value + " DAYS");
 			if (days[x].checked){
 			  gdaysArr.push(days[x].value);
 			}
-			
     	}
 
 
@@ -155,18 +157,21 @@ Template.addClass.events({
 		var gEndDate = document.getElementById("gNewEndDate").value;
 		var gDeadline = document.getElementById("gNewDeadline").value;
 		var gVenue = document.getElementById("gVenue").value;
-		var gStatus = "Scheduled";
+		var trainerID = document.getElementById("gTrainers").value;
+		var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
+		var trainerLastName = Meteor.users.findOne(trainerID).lastName;
+		var gTrainers = trainerFirstName + " " + trainerLastName;
 
-		var str =  window.location.href;
-		var position = str.indexOf('=');		
-		var currentCourse=str.substr(position+1);
+
+
+		var gStatus = "Scheduled";
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		var grpNumI2 = grpNumI1+1;
 		var grpNumI = "G"+grpNumI2;
       console.log(grpNumI + "group number");
 		console.log("here4");
-		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus, gVenue);
+		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus, gVenue, gNoOfSessions, gTrainers);
 		//console.log(Groups.find({}).fetch();
 	}
 });

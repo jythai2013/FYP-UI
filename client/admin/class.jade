@@ -26,15 +26,15 @@ template(name="group")
                     td #{venue}
                   tr
                     th No. of Sessions(s)
-                    td 30
+                    td #{noOfSessions}
                   tr
                     th Timing
                     td #{startTime} - #{endTime}
                   tr
                     th Days
                     td 
-                      //each noOfDays
-                        #{days}
+                      each noOfDays
+                        | #{.}
                   tr
                     th Start Date
                     td #{startDate}
@@ -43,7 +43,7 @@ template(name="group")
                     td #{endDate}
                   tr
                     th Trainer(s)
-                    td #{endDate}
+                    td #{trainers}
             // /.table-responsive
             
 
@@ -61,9 +61,6 @@ template(name="group")
             .table-responsive
               table#dataTables-example.table.table-bordered.table-hover
                 tbody
-                  tr
-                    th Trainer
-                    td(colspan="2") CHIA wei ting
                   tr 
                     th Student 1
                     td  

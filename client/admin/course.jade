@@ -203,14 +203,14 @@ template(name="addClass")
                     .form-group
                       select(name="type", id="gVenue", style="color: black")
                         each facilitiesList
-                          option(value="#{fac}") "#{fac}"
+                          option(value="#{fac}") #{fac}
                 tr  
                   th Trainers
                   td
                     .form-group.input-group
                       select(name="type", id="gTrainers", style="color: black")
-                        each facilitiesList
-                          option(value="#{trainers}") "#{trainers}"
+                        each trainers
+                          option(value="#{_id}") #{firstName} #{lastName}
                     
           // /.table-responsive
         .modal-footer
