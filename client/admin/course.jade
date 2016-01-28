@@ -103,11 +103,6 @@ template(name="course")
                       td(colspan="4")
                         button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
                           | Upload Course Material(s)
-                tfoot
-                  tr  
-                    td(colspan="4")
-                      button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
-                        | Upload Course Material(s)
             // /.table-responsive
             // Button trigger modal
             // Modal
@@ -123,10 +118,8 @@ template(name="course")
                       input.form-control(type="text", id="cUploadSession")
                       input(type ="hidden", value = "#{courseCode}", id ="cUploadCourseCode")                
                     input#myFileInput(type="file", name="courseMaterials")
-                      input#myFileInput(type="file", name="courseMaterials")
                   .modal-footer
                     button.myFileInputButton.btn.admin-btn(type="button") Upload
-                    button.myFileInputButton.btn.admin-btn(type="button", data-dismiss="modal") Upload
 
 
 template(name="addClass")
