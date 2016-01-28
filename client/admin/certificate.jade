@@ -1,0 +1,46 @@
+template(name="certificate")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Certificate Management
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Insert Certificate
+            
+            form(name="", role="form", action="#", method="post")
+            .table-responsive
+              table#dataTables-example.table
+                tbody  
+                  tr
+                    th Certificate Title
+                    td
+                      input.form-control(type="text", id="certTitle")
+                  tr
+                    th Course
+                    td
+                      input.form-control(type="text", id="courseId")
+                  tr
+                    th File
+                    td 
+                      input(type="file", id="fileName")
+            button#uploadCertButton.btn.btn-save(type="button", data-dismiss="modal") Upload Cert
+
+      .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Certificate Management
+
+            .table-responsive(style="width:100%")
+              table#dataTables-example.table.table-striped.table-bordered
+                thead
+                  th Title
+                  th Course Name
+                  th Date Uploaded
+                  th File
+                  th Delete
+                tbody

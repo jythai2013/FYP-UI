@@ -23,7 +23,7 @@ template(name="group")
                     td #{courseCode}
                   tr
                     th Venue
-                    td Classroom 2.1
+                    td #{venue}
                   tr
                     th No. of Sessions(s)
                     td 30
@@ -32,12 +32,17 @@ template(name="group")
                     td #{startTime} - #{endTime}
                   tr
                     th Days
-                    td #{days}
+                    td 
+                      //each noOfDays
+                        #{days}
                   tr
                     th Start Date
                     td #{startDate}
                   tr
                     th End Date
+                    td #{endDate}
+                  tr
+                    th Trainer(s)
                     td #{endDate}
             // /.table-responsive
             

@@ -31,15 +31,15 @@ template(name="trainerList")
                         a.btn.admin-btn.bt-sn(data-target="#viewTrainerDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                         +viewTrainerParticulars
                       td
-                        a.btn.admin-btn.bt-sn(data-target="#viewTrainerCV#{_id}", data-toggle="modal", data-id="#{_id}") Edit Credentials
-                        +viewTrainerCVForm
+                        a.btn.admin-btn.bt-sn(data-target="#viewCV#{_id}", data-toggle="modal", data-id="#{_id}") Edit Credentials
+                        +viewCVForm
                       td
                         a.btn.admin-btn.bt-sn(data-target="#goDeleteTrainer#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                         +deleteTrainerForm 
 
 
 template(name="viewCVForm")
-  #viewCV.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="viewCV#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -55,6 +55,9 @@ template(name="viewCVForm")
                   td
                     #{firstName} #{lastName}
                 tr
+                  td CV Upload
+                  td IDK HOW :)
+                tr
                   td Remarks
                   td 
                     input.form-control(type='text', id='remarks')
@@ -65,6 +68,50 @@ template(name="viewCVForm")
       // /.modal-content
     // /.modal-dialog
   // /.modal    
+
+template(name="viewTrainerParticulars")
+  div.modal(id="viewTrainerDetails#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title View/Update Trainer Details
+        .modal-body
+          form(role="form", id="insert-addTrainerForm", action="#", method="post")
+          .table-responsive
+            table#dataTables-example.table(style="background:#333")
+              tbody
+                tr
+                  th Name
+                  td
+                    #{firstName} #{lastName}, #{userID}
+                tr
+                  td Nationality
+                  td
+                    .form-group
+                      input.form-control(type="text", id="nationality", value="#{nationality}")
+                tr
+                  td Mobile
+                  td 
+                    input.form-control(type='text', id='mobileNo', value="#{mobileNo}")
+                tr
+                  td Speciality
+                  td(colspan="3")
+                    input.form-control(type='text', id='speciality', value="#{speciality}")
+                tr
+                  td Proficiency
+                  td 
+                    .form-group
+                      textarea.form-control(type='text',id='proficiency', value="#{proficiency}")
+                
+            // /.table-responsive
+        .modal-footer
+          button#addTrainerAcctButton.btn.btn-save(type="button", data-dismiss="modal") Update Detail
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+
 
 template(name="addTrainerAcctForm")
   #addtrainerAcct.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -113,18 +160,24 @@ template(name="addTrainerAcctForm")
                   td Speciality
                   td(colspan="3")
                     label.checkbox-inline
-                      input(type="checkbox", value="1", name="specialty")
+                      input(type="checkbox", value="1", name="speciality")
                       | Engineering
                     label.checkbox-inline
-                      input(type="checkbox", value="2", name="specialty")
+                      input(type="checkbox", value="2", name="speciality")
                       | Leadership
                     label.checkbox-inline
-                      input(type="checkbox", value="3", name="specialty")
+                      input(type="checkbox", value="3", name="speciality")
                       | Construction
                     br
                     label.checkbox-inline
-                      input(type="checkbox", value="4", name="specialty")
+                      input(type="checkbox", value="4", name="speciality")
                       | Plumming
+                tr
+                  td Proficiency
+                  td 
+                    .form-group
+                      textarea.form-control(type='text',id='proficiency')
+                
             // /.table-responsive
         .modal-footer
           button#addTrainerAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Trainer

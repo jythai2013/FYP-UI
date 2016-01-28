@@ -41,19 +41,20 @@ template(name="studentList")
                     th Particulars
                     th Enrollments
                     th Remarks
+                    th Delete
                 tbody
                   each students
                     tr
                       td #{firstName}  #{lastName}
                       td 
-                        form(role="form", id="insert-viewCredForm", action="#", method="post")
-                          button#viewStudCredentialsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}', data-target="#viewParticulars#{_id}")
-                            | Particulars
+                        a.btn.admin-btn.bt-sn(data-target="#viewParticulars#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                       +viewParticularsForm
                       td 
-                        form(role="form", id="viewStudClasses", action="#", method="post")
-                          button#viewStudClassesButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}', data-target="#viewStudClasses#{_id}")
-                            | Courses
+                        a.btn.admin-btn.bt-sn(data-target="#viewStudCourses#{_id}", data-toggle="modal", data-id="#{_id}") Courses
+                      td #{remarks}
+                      td
+                        a.btn.admin-btn.bt-sn(data-target="#deleteStud#{_id}", data-toggle="modal", data-id="#{_id}") Delete
+                      +deleteStudentForm
 
 template(name="addStudentAcctForm")
   #addstudAcct.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -88,7 +89,7 @@ template(name="addStudentAcctForm")
                   td Date of Birth
                   td 
                     .form-group
-                      input.form-control(type="text", id="dob")
+                      input.form-control(type="date", id="dob")
                 tr
                   td ID Type
                   td 
@@ -143,7 +144,13 @@ template(name="addStudentAcctForm")
                   td Relationship
                   td
                     .form-group
-                      input.form-control(type='text', id='nokReln')
+                      select(id='nokReln', style="color:black")
+                        option(value="Employer") Employer
+                        option(value="Spouse") Spouse
+                        option(value="Family") Family
+                        option(value="Others") Co-worker
+                        option(value="Relative") Relative
+                        option(value="Friend") Friend
                 tr
                   td NOK Contact
                   td
@@ -162,7 +169,7 @@ template(name="addStudentAcctForm")
                   td Remarks
                   td 
                     .form-group
-                      textarea.form-control(type='text',value='',id='remarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
+                      textarea.form-control(type='text', id='remarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
             // /.table-responsive
         .modal-footer
           button#addStudentAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Student
@@ -176,10 +183,81 @@ template(name="viewParticularsForm")
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title View/Update Student Details
         .modal-body
-          Testing
+          form(name="", role="form", action="#", method="post")
+            .table-responsive
+              table#dataTables-example.table(style="background:#333")
+                tbody  
+                  tr
+                  td Name
+                  td #{firstName} #{lastName}
+                  td ID Number
+                  td 
+                    #{userID}
+                tr
+                  td Gender
+                  td 
+                    #{gender}
+                  td Date of Birth
+                  td 
+                    #{dateOfBirth}
+                tr
+                  td Email
+                  td 
+                    .form-group
+                      input.form-control(type='text', value="#{email}", id='email')
+                  td Mobile Number
+                  td 
+                    input.form-control(type='text', value="#{mobileNo}", id='mobileNo')
+                tr
+                  td Nationality
+                  td 
+                    .form-group
+                      input.form-control(type='text', value="#{nationality}", id='nationality')
+                  td Postal Code
+                  td
+                    input.form-control(type='text', value="#{postalCode}", id='code')
+                tr
+                  td Residential Address
+                  td(colspan='3')
+                    .form-group
+                      textarea.form-control(type='text', id='resAddr', value="#{resAddr}", style="max-width: 500px;")
+                tr
+                  td Highest Qualification
+                  td 
+                    .form-group
+                      select(id='qualification', style="color:black")
+                        option(value="0") PSLE
+                        option(value="1") O/N'Level
+                        option(value="2") A'Level
+                        option(value="3") Diploma
+                        option(value="4") Degree
+                tr
+                  td Proficiency
+                  td 
+                    .form-group
+                      textarea.form-control(type='text',id='proficiency', value="#{proficiency}")
+                tr
+                  td NOK Name
+                  td 
+                    .form-group
+                      input.form-control(type='text',id='nokName', value="#{nokName}")
+                  td Relationship
+                  td
+                    .form-group
+                      input.form-control(type='text', id='nokReln', value="#{nokReln}")
+                tr
+                  td NOK Contact
+                  td
+                    .form-group
+                      input.form-control(type='text', id='nokTel', value="#{nokTel}")
+                tr
+                  td Remarks
+                  td 
+                    .form-group
+                      textarea.form-control(type='text', id='remarks', value="#{remarks}", style="max-width: 500px;")
 
 template(name="deleteStudentForm")
-  div.modal(id="deleteStudent#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="deleteStud#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -193,14 +271,11 @@ template(name="deleteStudentForm")
                 tr
                   td Are you sure you want to delete
                 tr
-                  td First Name
-                  td blah
-                tr
-                  td Last Name
-                  td #{currentCourseCode.courseName}
+                  td Name
+                  td #{firstName} #{lastName}
                 tr
                   td Mobile No
-                  td #{currentCourseCode.mobileNo}
+                  td #{mobileNo}
           // /.table-responsive
         .modal-footer
           button#deleteStudentButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
