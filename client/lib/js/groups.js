@@ -40,32 +40,9 @@ Template.group.helpers({
 		console.log(a);
 
         return Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).days;
-    },
 
-    "student" : function(e) {
-        //var currentCourse = Session.get('currentCourseCode');
 
-		var courseGrp =  window.location.href;
-		
-		var positionFirstEqual = courseGrp.indexOf('=');
-		//problem starts here
-		//extracting course
-		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-		var positionOfAND = courseGrp.indexOf('&');
-		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
 
-		//extracting grpNum
-		var grpNumStr=courseGrp.substr(positionOfAND-1);
-		var positionSecondEqual = currentCourseGrp.indexOf('=');
-		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-		console.log(currentGrpNum + "grpNum");
-
-		var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
-		console.log(size + " to check if grp exists");
-		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).studentList;
-		console.log(a);
-
-        return Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).studentList;
     }
 });
 
@@ -272,60 +249,4 @@ Template.deleteClass.events({
 			console.log(this._id);
 			Meteor.call("deleteClass", this._id);
 	}
-});
-
-Template.group.events({
-	"click #dropStudentButton" : function(e) {
-			console.log("here in class announcement");
-		//extracting from url
-
-		
-		var courseGrp =  window.location.href;
-		
-		var positionFirstEqual = courseGrp.indexOf('=');
-		//problem starts here
-		//extracting course
-		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-		var positionOfAND = courseGrp.indexOf('&');
-		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-
-		//extracting grpNum
-		var grpNumStr=courseGrp.substr(positionOfAND-1);
-		var positionSecondEqual = currentCourseGrp.indexOf('=');
-		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-
-		var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
-		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).announcement;
-		console.log(a);
-		a = a.sort(descDate)
-		return a;
-	}
-});
-
-Template.addStudentToGroupForm.events({
-	"click #addStudentToGroupButton" : function(e) {
-		var addStudents = document.getElementsByName("newStudentsC");
-		var addStudentsArr = new Array();
-		for(var x = 0, l = addStudents.length; x < l;  x++){
-			addStudentsArr.push(addStudents[x].value);
-    	}
-
-    	addStudentsArr.forEach(function(entry) {
-   			console.log(entry);
-		});
-
-    	console.log(addStudents+ " SIZE");
-
-    	//extract course
-		var url =  window.location.href;
-		var positionFirstEqual = url.indexOf('=');	
-		var currentCourse=url.substring(positionFirstEqual+1);
-    	console.log(currentCourse+ " currnt course code");
-		var meep = Courses.findOne({courseCode:currentCourse}); //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
-    	console.log(meep+ " courseID")
-		var courseID = Courses.findOne({courseCode:currentCourse})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
-		
-    	console.log(courseID+ " courseID")
-    	console.log(addStudentsArr.length+ " SIZE")
-		Meteor.call("addStudent", courseID, addStudentsArr);
 });
