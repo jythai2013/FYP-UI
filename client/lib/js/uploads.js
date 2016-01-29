@@ -7,7 +7,20 @@ Template.course.helpers({
   },
   uploads:function(){
     var a = Files.find({type: "course"});
-		console.log(a);
+    var fileList = Materials.find({type:"course"});
+    console.log(fileList);
+    var a = new Array();
+
+    fileList.forEach(function(item, index){
+      console.log(item.fileName);
+      a.push(Files.findOne(item.fileName));
+      console.log(item);
+    });
+    // for(i = 0; i < fileList.fetch().length; i++){
+    //   a += Files.findOne(fileList[i]);
+    //   console.log(a);
+    // }
+    console.log(a);
     return a;
   }
 });
@@ -25,15 +38,15 @@ Template.course.events({
     // var fileObj = new FS.File(files[0]);
     // Files.insert(fileZero);
 		
-		var fileObjId;
+		
 		console.log(Files);
-    Files.insert(files[0], function (err, fileObj) {
+    var fileObjId = Files.insert(files[0], function (err, fileObj) {
       if (err){
         // handle error
 				console.log(err);
       } else {
         var userId = Meteor.userId();
-				fileObjId = fileObj._id;
+				fileObjId = fileObja._id;
 				// console.log(fileObj);
 				// console.log(Files);
 				// console.log(fileObjId = fileObj._id);
@@ -41,7 +54,8 @@ Template.course.events({
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
     });
 		
-    Meteor.call("createMaterial",type, courseId, sessionId, fileObjId);
+    fileObjIdI = fileObjId._id;
+    Meteor.call("createMaterial",type, courseId, sessionId, fileObjIdI);
   }
 });
 
@@ -52,19 +66,18 @@ Template.formRespo.helpers({
   upload:function(){
     var fileList = Materials.find({type:"formLSP"});
     console.log(fileList);
-    var a;
+    var a = new Array();
 
-    fileList.each(function(index, item){
-      a+=Files.find(item);
-      console.log(a);
+    fileList.forEach(function(item, index){
+      console.log(item.fileName);
+      a.push(Files.findOne(item.fileName));
+      console.log(item);
     });
-
-
-
     // for(i = 0; i < fileList.fetch().length; i++){
     //   a += Files.findOne(fileList[i]);
     //   console.log(a);
     // }
+    console.log(a);
     return a;
   }
 });
