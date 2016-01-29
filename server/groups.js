@@ -52,12 +52,30 @@
         {courseCode: cCode},
         {
           studentList:{
+            studentID: _id,
             studFirstName: sFirstName, 
             studLastName: sLastName
           } 
         },
         {upsert:true}
       );
+
+
+
+
+      addTrainersArr.forEach(function(trainer) {
+        Courses.update(_id, {
+            $push: {
+              courseTrainers: {trainerName: trainer}
+            }
+        });
+      });
+
+
+
+
+
+
     },
     
     'deleteGroup': function deleteGroup(removeCurrentGroupsArr){
