@@ -62,7 +62,7 @@ template(name="course")
                       +removeTrainer
                   tr 
                     th Classes
-                    td
+                    td(style="word-break: break-word")
                       each groupsCourse
                         a(href="class/?cCode=#{courseCode}&cgrpNum=#{grpNum}") #{grpNum}
                         | ,
@@ -136,18 +136,15 @@ template(name="addClass")
               tbody
                 tr
                   th Course Code
-                  td(colspan="3")
+                  td(colspan="3") #{courseCode}
                     .form-group
-                      input.form-control(type="text", id="gCourseCode", value="#{courseCode}")
+                      input.form-control(type="hidden", id="gCourseCode", value="#{courseCode}")
                 tr
                   th Session Timing  
-                  td 
-                    .form-group
-                      input.form-control(type="time", id="gNewStartTime")
-                  td  TO 
-                  td
-                    .form-group
-                      input.form-control(type="time", id="gNewEndTime")
+                  td(colspan="3") 
+                    input(type="time", id="gNewStartTime", style="width:40%; color:black") 
+                    | TO 
+                    input(type="time", id="gNewEndTime", style="width:40%; color:black")
                 tr  
                   th Days
                   td 
@@ -184,14 +181,11 @@ template(name="addClass")
                         | Saturday
                
                 tr
-                  th Start Date
-                  td 
-                    .form-group
-                      input.form-control(type="date", id="gNewStartDate")
-                  th End Date
-                  td 
-                    .form-group
-                      input.form-control(type="date", id="gNewEndDate")
+                  th Duration (Date)
+                  td(colspan="3")
+                    input(type="date", id="gNewStartDate", style="color:black; width: 40%")
+                    | TO
+                    input(type="date", id="gNewEndDate", style="color:black; width: 40%")
                 tr 
                   th Payment Deadline
                   td(colspan="3")
@@ -214,7 +208,7 @@ template(name="addClass")
                     
           // /.table-responsive
         .modal-footer
-          button#addGroupButton.btn.btn-save(type="button", data-dismiss="modal") Add 
+          button#addGroupButton.btn.btn-save(type="button", data-dismiss="modal") Add Class
       // /.modal-content
     // /.modal-dialog
   // /.modal
