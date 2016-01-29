@@ -235,7 +235,8 @@ template(name="viewParticularsForm")
                   td Proficiency
                   td 
                     .form-group
-                      textarea.form-control(type='text',id='proficiency', value="#{proficiency}")
+                      textarea.form-control(type='text',id='proficiency')
+                        | #{proficiency}
                 tr
                   td NOK Name
                   td 
@@ -254,7 +255,10 @@ template(name="viewParticularsForm")
                   td Remarks
                   td 
                     .form-group
-                      textarea.form-control(type='text', id='remarks', value="#{remarks}", style="max-width: 500px;")
+                      textarea.form-control(type='text', id='remarks', style="max-width: 500px;")
+                        | #{remarks}
+        .modal-footer
+          button#editStudAcct.btn.btn-save(type="button", data-dismiss="modal") Confirm
 
 template(name="deleteStudentForm")
   div.modal(id="deleteStud#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
