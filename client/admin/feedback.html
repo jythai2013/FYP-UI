@@ -1,0 +1,54 @@
+<template name="feedbackQnMgmt">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="font-size: 20px;"> Feedback Questions</h1> 
+            </div>
+        </div>
+        <div class='fb-main'>
+            <div class="fb-response-fields ui-sortable">
+                <div class="fb-field-wrapper response-field-radio editing">
+                    <div class="subtemplate-wrapper">
+
+                        <div class="cover"> </div>
+
+                        <select name="qnType">
+                            <option value="vtext">Text</option>
+                            <option value="paraText">Paragraph Text</option>
+                            <option value="radioButtons">Multiple choice</option>
+                            <option value="checkboxes">Checkboxes</option>
+                            <option value="dropdown">Choose from a list</option>
+                        </select>
+                        
+                        <label> <span>Qn goes here <abbr title="required">*</abbr></span></label>
+                            
+                        <input type="text" name="firstname" value="Mickey">
+                                
+                        <span class="help-block"></span>
+                        <div class="actions-wrapper">
+                            <a class = "js-duplicate fb-button" title="Duplicate field">
+                                <i class = "fa fa-plus-circle"></i>
+                            </a>
+                            <a class = "js-clear fb-button" title="Remove field">
+                                <i class = "fa fa-minus-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="fb-field-wrapper response-field-file"> </div>
+                <div class="fb-field-wrapper response-field-text">
+                    <div class="subtemplate-wrapper">
+                        <div class="cover"> </div>
+                        <label> <span>Check <abbr title="required">*</abbr></span></label>
+                        <div>
+                            <label class="fb-option">
+                                <input type="text" name="firstname" value="Mickey">
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
