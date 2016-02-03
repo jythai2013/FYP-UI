@@ -30,13 +30,13 @@ template(name="course")
                     th Description
                     td #{courseDescription}
                   tr 
-                    th No. of Session(s)
+                    th No. of Hour(s)
                     td #{courseNoOfSessions}
                   tr 
-                    th Capacity
-                    td #{courseMin} (min), #{courseMax} (max)
+                    th Facilitator to Learner Ratio
+                    td #{courseMax} (max)
                   tr
-                    th Fees
+                    th Fees (before GST)
                     td #{courseFees}
                   tr
                     td
@@ -227,10 +227,9 @@ template(name="addTrainer")
               td(colspan="2")
                 .form-group()
                   select(name="newTrainersC", style="color: black; width: 100%")
-                    option(value="Twinnings") Twinnings
-                    option(value="Lipton") Lipton
-                    option(value="TWG") TWG
-                    option(value="Dilmah") Dilmah     
+                    each trainersList
+                      option(value="#{_id}") #{firstName} #{lastName}   
+              td 
               td 
                 button#addMoreTrainer.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
                     i.fa.fa-plus  
@@ -241,16 +240,15 @@ template(name="addTrainer")
                 td(colspan="2")
                   .form-group()
                     select(name="newTrainersC", style="color: black; width: 100%")
-                      option(value="Twinnings") Twinnings
-                      option(value="Lipton") Lipton
-                      option(value="TWG") TWG
-                      option(value="Dilmah") Dilmah  
+                      each trainersList
+                        option(value="#{_id}") #{firstName} #{lastName}
+                td  
                 td  
                   button#addMoreTrainers.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                    i.fa.fa-plus 
+                    i.fa.fa-minus 
                 
                   button#removeThisTrainer.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                    i.fa.fa-minus    
+                    i.fa.fa-plus    
               
           // /.table-responsive
         .modal-footer
@@ -369,33 +367,22 @@ template(name="editCourseForm")
                     .form-group
                       textarea.form-control(id="cCDesc", value="#{courseDescription}")
                 tr
-                  th No. of Session(s)
+                  th No. of Hours
                   td
                     .form-group
-                      select.form-control(name="cSession", id="cCSession",)
-                        option 1
-                        option 2
-                        option 3
-                        option 4
-                        option 5
-                        option 6
-                        option 7
+                      input.form-control(type="text", id="cCNoOfHours", value="#{courseNoOfHours}")
                 tr
-                  th Fees
+                  th Fees (Before GST)
                   td
                     .form-group.input-group
                       span.input-group-addon $
                       input.form-control(type="text", id="cCFees", value="#{courseFees}")
                 tr
-                  th Min
+                  th(style="word-wrap: binherit;width: 11em ") 
+                    Facilitator to Learner ratio
                   td
                     .form-group.input-group
-                      input.form-control(type="text", id="cCMin", value="#{courseMin}")
-                tr
-                  th Max
-                  td
-                    .form-group.input-group
-                      input.form-control(type="text", id="cCMax", value="#{courseMax}")
+                      input.form-control(type="text", id="cCFaciToLearn", value="#{courseFaciToLearn}")
                 tr
                   th Type
                   td

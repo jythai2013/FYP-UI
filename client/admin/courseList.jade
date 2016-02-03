@@ -101,7 +101,7 @@ template(name="viewCourseForm")
                   td #{currentCourseCode.courseMax} 
                 tr
                   td Description
-                  td #{currentCourseCode.courseDescription} 
+                  td(style="word-wrap: inherit") #{currentCourseCode.courseDescription} 
                 tr
                   td Fees
                   td #{currentCourseCode.courseFees}
@@ -139,30 +139,26 @@ template(name="addCourseForm")
                     .form-group()
                       select(name="type", id="cNewType", style="color: black")
                         option(value="WSQ") WSQ
-                        option(value="Non-WSQ") Non-WSQ
+                        option(value="LSP") LSP
                         option(value="Others") Others
                 tr
                   th Description
                   td 
                     .form-group
-                      input.form-control(type="comment", id="cNewDesc")
+                      textarea.form-control(id="cNewDesc")
                 tr
-                  th No. Of Sessions
+                  th Course Duration
                   td 
                     .form-group.input-group
-                      input.form-control(type="text", id="cNewNoOfSessions")
+                      input.form-control(type="text", id="cNewNoOfHours")
                 tr
-                  th Minimum
+                  th(style="word-wrap: inherit; width: 11em; height: 2em") 
+                    Facilitator to Learner Ratio
                   td 
                     .form-group.input-group
-                      input.form-control(type="text", id="cNewMin")
+                      input.form-control(type="text", id="cNewFaciToLearn")
                 tr
-                  th Maximum
-                  td 
-                    .form-group.input-group
-                      input.form-control(type="text", id="cNewMax")
-                tr
-                  th Fees
+                  th Fees (Before GST)
                   td 
                     .form-group.input-group
                       span.input-group-addon $

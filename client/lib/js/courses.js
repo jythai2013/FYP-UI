@@ -142,14 +142,13 @@ Template.addCourseForm.events({
 		var cCode = document.getElementById("cNewCode").value;
 		console.log( cCode +" cCode");
 		var cFee = document.getElementById("cNewFee").value;
-		var cNoOfSessions = document.getElementById("cNewNoOfSessions").value;
+		var cNoOfHours = document.getElementById("cNewNoOfHours").value;
 		var cDescription = document.getElementById("cNewDesc").value;
 		var cType = document.getElementById("cNewType").value;
-		var cMin = document.getElementById("cNewMin").value;
-		var cMax = document.getElementById("cNewMax").value;
+		var cFaciToLearn = document.getElementById("cNewFaciToLearn").value;
 
 		console.log("here8");
-		Meteor.call("createCourse", cName, cCode, cFee, cNoOfSessions, cDescription, cType,cMin,cMax);
+		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType, cFaciToLearn);
 	}
 
 

@@ -62,7 +62,7 @@
 			});
 		},
 		
-		'createCourse': function createCourse(cName, cCode, cFee, cNoOfSessions, cDescription, cType, cMin, cMax){
+		'createCourse': function createCourse(cName, cCode, cFee, cNoOfHours, cDescription, cType, cFaciToLearn){
 			// debugger;
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
@@ -72,12 +72,11 @@
 				courseName: cName,
 				courseCode: cCode,
 				courseFees: cFee,
-				courseNoOfSessions: cNoOfSessions,
+				courseNoOfHours: cNoOfHours,
 				courseDescription: cDescription,
 				//courseTrainers: cTrainers,
 				courseType: cType,
-				courseMin: cMin,
-				courseMax: cMax
+				courseFaciToLearn: cFaciToLearn
 			});
 			
 			//TODO: Recommendation 
