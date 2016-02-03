@@ -1,7 +1,7 @@
 //'insertAnnouncement': function insertAnnouncement(annouTitle, annouDetails, annouAuthor, classId, courseCode){
 
 // Inserting
-Template.notificationForm.events({
+/*Template.notificationForm.events({
 	
 	"click #submitButton" : function createAnnouncementEventHandler(e) {
 		e.preventDefault();
@@ -23,4 +23,4 @@ Template.displayAnnoucements.helpers({
 
 	return Courses.find({});
 	}
-});
+});*/

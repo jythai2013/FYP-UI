@@ -67,18 +67,18 @@ Template.course.helpers({
 
 	"trainerList" : function(e) {
 		var str =  window.location.href;
-		console.log(str + " = sign");
+		//console.log(str + " = sign");
 		var position = str.indexOf('=');
-		console.log(position + " = sign");
-		console.log(str + "stri");
+		//console.log(position + " = sign");
+		//console.log(str + "stri");
 		
 		var currentCourse=str.substr(position+1);
-		console.log(currentCourse + "Code");
+		//console.log(currentCourse + "Code");
 
 		var size = Courses.find({courseCode:currentCourse}).count();
-		console.log(size + " HERE size");
+		//console.log(size + " HERE size");
 		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
-		console.log(a + " a");
+		//console.log(a + " a");
 		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
 		
 	}
@@ -87,19 +87,19 @@ Template.course.helpers({
 Template.removeTrainer.helpers({
 
 	"trainer2" : function(e) {
-		console.log("here");
+		//console.log("here");
 		//var currentCourse = Session.get('currentCourseCode');
 		var str =  window.location.href;
-		console.log(str + " = sign");
+		//console.log(str + " = sign");
 		var position = str.indexOf('=');
-		console.log(position + " = sign");
-		console.log(str + "stri");
+		//console.log(position + " = sign");
+		//console.log(str + "stri");
 		
 		var currentCourse=str.substr(position+1);
-		console.log(currentCourse + "Code");
+		//console.log(currentCourse + "Code");
 
 		var size = Courses.find({courseCode:currentCourse}).count();
-		console.log(size + " size");
+		//console.log(size + " size");
 		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
 	}
 });

@@ -8,9 +8,15 @@ Template.classList.helpers({
 });
 
 function getParameterByName(name) {
+	//console.log(name);
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	//console.log(name);
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
             results = regex.exec(location.search);
+	//console.log(regex);
+	//console.log(results);
+	//console.log(decodeURIComponent(results[1].replace(/\+/g, " ")));
+	//console.log(results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")));
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
@@ -46,8 +52,9 @@ Template.group.helpers({
     }
 });
 
-Template.course.helpers({
+Template.course.onRendered(function(){
   var currentCourse = getParameterByName("cCode");
+	console.log(currentCourse);
   Session.set('currentCourseCode', currentCourse);
 });
 
