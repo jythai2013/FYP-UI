@@ -47,11 +47,16 @@ Template.group.helpers({
 });
 
 Template.course.helpers({
+  var currentCourse = getParameterByName("cCode");
+  Session.set('currentCourseCode', currentCourse);
+});
+
+Template.course.helpers({
 
     "groupsCourse" : function listGroupsEventHandler(e) {
-        //var currentCourse = Session.get('currentCourseCode');
+        var currentCourse = Session.get('currentCourseCode');
         
-        var currentCourse = getParameterByName("cCode");
+        //var currentCourse = getParameterByName("cCode");
         if(currentCourse.length<=0)return Groups.find({});
 
         var size = Groups.find({courseCode:currentCourse}).count();

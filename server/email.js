@@ -41,10 +41,10 @@ Meteor.methods({
 
 
 
-		var someDate = new Date();
+		//tDate = new Date();
 		var numberOfDaysToAdd = 3;
-		someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
-		var groupsToBlast = Groups.findOne({"groupNum":groupNum});
+		//tDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+		var groupToBlast = Groups.findOne({"groupNum":groupNum});
 
 
 

@@ -42,7 +42,7 @@ Template.studentList.events({
 
 Template.studentList.helpers({
 	"students" : function studentList(evt) {
-		var verbose = true;
+		var verbose = !true;
 		var studentName = Session.get("studentSearchName");
 		//var studentType = Session.get("studentSearchType");
 		//var studentLess = Session.get("studentSearchLess");
