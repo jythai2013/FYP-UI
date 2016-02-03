@@ -135,6 +135,10 @@
 			*/
 			// blastReminderCall(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI);
 			
+			//TODO: schedule payment reminder checking
+			var courseName = Courses.findOne({courseCode:courseCodeI}).courseName;
+			Meteor.call("schedulePaymentReminder", courseName, startTimeI);
+			
       console.log(Groups.find().count());
 		},
 		

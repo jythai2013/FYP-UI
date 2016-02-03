@@ -67,7 +67,7 @@
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-			console.log("here2");
+			console.log("createCourse");
 			Courses.insert({
 				courseName: cName,
 				courseCode: cCode,
@@ -79,5 +79,9 @@
 				courseMin: cMin,
 				courseMax: cMax
 			});
+			
+			//TODO: Recommendation 
 		}
 	});
+	
+	

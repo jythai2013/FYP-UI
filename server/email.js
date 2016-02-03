@@ -22,6 +22,39 @@ Meteor.methods({
 		
 	"addTask":function(id, details){
 		addTask(id, details);
+	},
+	
+	
+	"schedulePaymentReminder":function(courseName, dateToSend, groupNum){
+		var subject = "Course Payment Due";
+		var text = 	"Dear Sir/Mdm,\n"+
+								"\n"+
+								"Thank you for showing your interest in "+courseName+"\n"+
+								"The payment deadline for "+courseName+" is due in 3 days time. Please make your payment otherwise we not allow you to attend the course.\n"+
+								"\n"+
+								"Best regards,\n"+
+								"Sterling Training Hub\n"+
+								"\n"+
+								"Disclaimer: If you have already paid for the course, please ignore this email.";
+		tDate = dateToSend; //date to send mail
+		// tDate.setMinutes(tDate.getMinutes() + 1) // send email 1 minute from now
+
+
+
+		var someDate = new Date();
+		var numberOfDaysToAdd = 3;
+		someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+		var groupsToBlast = Groups.findOne({"groupNum":groupNum});
+
+
+
+		groupToBlast.forEach(function(group){
+			group.classlist.forEach(function(student){
+				toEmail = student.email[0];
+				details = {to:toEmail, from:"asdf154dev@gmail.com", subject:subject, text:text, date:tDate} //to, from, subject, text
+				Meteor.call("scheduleMail", details)
+			});
+		});
 	}
 });
 
@@ -70,3 +103,5 @@ function addTask(id, details) {
 
 // To schedule a once off (i.e not recurring) event, create a job with a schedule like this 
 // parser.recur().on(date).fullDate();
+
+
