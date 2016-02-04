@@ -7,10 +7,55 @@
         </div>
         <div class='fb-main'>
             <div class="fb-response-fields ui-sortable">
-                <div class="fb-field-wrapper response-field-radio editing">
+                <div class="fb-field-wrapper response-field-file"> </div>
+                <div class="fb-field-wrapper response-field-text">
                     <div class="subtemplate-wrapper">
+                        <div class="cover"> </div>
+                        <label> <span>Check <abbr title="required">*</abbr></span></label>
+                        <div>
+                            <label class="fb-option">
+                                <input type="text" name="firstname" value="Mickey">
+                            </label>
+                        </div>
+                        
+                        <div class="actions-wrapper">
+                            <a class = "js-duplicate fb-button" title="Add field" id="addField">
+                                <i class = "fa fa-plus-circle"></i>
+                            </a>
+                            <a class = "js-clear fb-button" title="Remove field" id="removeField">
+                                <i class = "fa fa-minus-circle"></i>
+                            </a>
+                        </div>
 
-                        <!--<div class="cover"> </div>-->
+                    </div>
+                </div>
+
+
+
+
+
+
+                {{#each noOfFields}}
+                    {{> createQn}}
+                {{/each}}
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="createQn">
+    <div id="page-wrapper" style="margin: 0 0 0 10px">
+        <!--<div class='fb-main'>-->
+            <div class="fb-response-fields ui-sortable">
+                <div class="fb-field-wrapper response-field-radio editing">
+                    <div class="subtemplate-wrapper quantitativeQuestion" >
+
 
                         <select name="qnType">
                             <option value="vtext">Text</option>
@@ -35,20 +80,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="fb-field-wrapper response-field-file"> </div>
-                <div class="fb-field-wrapper response-field-text">
-                    <div class="subtemplate-wrapper">
-                        <div class="cover"> </div>
-                        <label> <span>Check <abbr title="required">*</abbr></span></label>
-                        <div>
-                            <label class="fb-option">
-                                <input type="text" name="firstname" value="Mickey">
-                            </label>
-                        </div>
+            </div>
+        <!--</div>-->
+    </div>
+</template>
 
+
+<template name="checkBoxCreate">
+
+                <div class="fb-field-wrapper response-field-radio editing">
+                    <div class="subtemplate-wrapper">
+
+
+                        <select name="qnType">
+                            <option value="vtext">Text</option>
+                            <option value="paraText">Paragraph Text</option>
+                            <option value="radioButtons">Multiple choice</option>
+                            <option value="checkboxes">Checkboxes</option>
+                            <option value="dropdown">Choose from a list</option>
+                        </select>
+                        
+                        <label> <span>Qn goes here <abbr title="required">*</abbr></span></label>
+                            
+                        <input type="text" name="firstname" value="Mickey">
+                                
+                        <span class="help-block"></span>
+                        <div class="actions-wrapper">
+                            <a class = "js-duplicate fb-button" title="Duplicate field">
+                                <i class = "fa fa-plus-circle"></i>
+                            </a>
+                            <a class = "js-clear fb-button" title="Remove field">
+                                <i class = "fa fa-minus-circle"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 </template>

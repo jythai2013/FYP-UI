@@ -30,6 +30,9 @@ navRoutes = [
   new NavRoute('group', '', {parentName: 'CourseModule', label: "Class"})
   new NavRoute('classList', '', {parentName: 'CourseModule', label: "Class List"})
 
+  new NavRoute('FeedbackMgmt', 'fa-file-text ', {label: "Feedback Management"})
+  new NavRoute('feedbackQnMgmt', '', {parentName: 'FeedbackMgmt', label: "Feedback Questions"})
+
   #new NavRoute('forms', 'fa-edit')
   #new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})
   #new NavRoute('grid', '', {parentName: 'ui-elements'})

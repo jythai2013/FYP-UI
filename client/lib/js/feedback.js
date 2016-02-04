@@ -21,6 +21,60 @@ Template.addFeedback.onRendered(function(){
 	$("input")[0].focus();
 });
 
+
+
+
+// Template.feedbackQnMgmt.events({
+// 	"change #qnType" : function(e){
+// 		// console.log(e);
+// 		console.log ("here");
+// 	}
+// });
+
+
+
+Template.feedbackQnMgmt.events({
+	"click #addField" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var fields = Session.get('fields');
+		 var noOfFields = fields+1;
+		 if(isNaN(fields)) noOfFields = 1;
+		 console.log("fields " + fields);
+		 console.log("noOfFields " + noOfFields);
+		 Session.set('fields', noOfFields);
+	},
+
+	"click #removeField" : function(e) {
+		e.preventDefault();
+        var times = Session.get('times');
+
+        // noOfTimes = _.reject(salesInput, function(x) {
+        //     return x.salesId == salesId;
+        // });
+
+		 var noOfTimes = times-1;
+		 Session.set('times', noOfTimes);
+	}
+
+});
+
+Template.feedbackQnMgmt.helpers({
+	"noOfFields": function() {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('fields'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
+	}	
+});
+
+
+
+
+
+
 Template.addFeedback.events({
 	"submit #feedbackForm" : function submitFeedbackFormHandler(e) {
 		e.preventDefault();
