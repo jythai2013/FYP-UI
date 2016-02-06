@@ -1,28 +1,33 @@
 <template name="feedbackQnMgmt">
-    <div id="page-wrapper">
+    <div id="page-wrapper" style="min-height: 861px;">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header" style="font-size: 20px;"> Feedback Questions</h1> 
+                <h1 class="page-header"> Feedback Questions</h1> 
+                <h3> Title of survey 
+                    <a class = "js-duplicate fb-button  btn pull-right" id="saveSurvey">
+                        <i> Save</i>
+                    </a>
+                </h3>
             </div>
         </div>
         <div class='fb-main'>
             <div class="fb-response-fields ui-sortable">
                 <div class="fb-field-wrapper response-field-file"> </div>
+
                 <div class="fb-field-wrapper response-field-text">
                     <div class="subtemplate-wrapper">
                         <div class="cover"> </div>
                         <label> <span>Check <abbr title="required">*</abbr></span></label>
-                        <div>
-                            <label class="fb-option">
-                                <input type="text" name="firstname" value="Mickey">
-                            </label>
-                        </div>
+                        <p>Options goes here</p>
                         
                         <div class="actions-wrapper">
-                            <a class = "js-duplicate fb-button" title="Add field" id="addField">
+                            <a class = "js-edit fb-button" id="editFields">
+                                <i class = "fa fa-pencil"></i>
+                            </a>
+                            <a class = "js-duplicate fb-button" id="addFields">
                                 <i class = "fa fa-plus-circle"></i>
                             </a>
-                            <a class = "js-clear fb-button" title="Remove field" id="removeField">
+                            <a class = "js-clear fb-button" id="deleteQn">
                                 <i class = "fa fa-minus-circle"></i>
                             </a>
                         </div>
@@ -31,88 +36,143 @@
                 </div>
 
 
-
-
-
-
-                {{#each noOfFields}}
+                {{#each noOfFields}} 
                     {{> createQn}}
                 {{/each}}
 
 
-
-
-
-
+                <a class = "fb-button btn pull-right" id="launchSurvey" style="background:#800000; border: none;">
+                    <i> Launch</i>
+                </a>
             </div>
         </div>
     </div>
 </template>
 
 <template name="createQn">
-    <div id="page-wrapper" style="margin: 0 0 0 10px">
-        <!--<div class='fb-main'>-->
+    <!--<div id="page-wrapper" style="margin: 0 0 0 10px">
+        <div class='fb-main'>-->
             <div class="fb-response-fields ui-sortable">
                 <div class="fb-field-wrapper response-field-radio editing">
                     <div class="subtemplate-wrapper quantitativeQuestion" >
 
 
-                        <select name="qnType">
+                        <select id="qnType">
                             <option value="vtext">Text</option>
                             <option value="paraText">Paragraph Text</option>
                             <option value="radioButtons">Multiple choice</option>
+                            <option value="radioButtonsInline">Ratings</option>
                             <option value="checkboxes">Checkboxes</option>
                             <option value="dropdown">Choose from a list</option>
-                        </select>
+                        </select> <br>
                         
-                        <label> <span>Qn goes here <abbr title="required">*</abbr></span></label>
-                            
-                        <input type="text" name="firstname" value="Mickey">
+                        <input type="text" name="qn" value="Qn goes here">   <abbr title="required">*</abbr>
                                 
+                         
+                        {{#if equals qnType 'vtext'}}
+                            {{> textCreate}}
+                        {{/if}}   
+                        {{#if equals qnType 'paraText'}}
+                            {{> paratextCreate}}
+                        {{/if}}  
+                        {{#if equals qnType 'radioButtons'}}
+                            {{> radioCreate}}
+                        {{/if}}   
+                        {{#if equals qnType 'radioButtonsInline'}}
+                            {{> radioCreateInline}}
+                        {{/if}}  
+                        {{#if equals qnType 'checkboxes'}}
+                            {{> checkBoxesCreate}}
+                        {{/if}}  
+                        {{#if equals qnType 'dropdown'}}
+                            {{> dropdownCreate}}
+                        {{/if}}  
                         <span class="help-block"></span>
                         <div class="actions-wrapper">
-                            <a class = "js-duplicate fb-button" title="Duplicate field">
+                            <a class = "js-save fb-button" id="save">
+                                <i class = "fa fa-check-circle"></i>
+                            </a>
+                            <a class = "js-duplicate fb-button" id="addField">
                                 <i class = "fa fa-plus-circle"></i>
                             </a>
-                            <a class = "js-clear fb-button" title="Remove field">
+                            <a class = "js-clear fb-button" id="removeField">
                                 <i class = "fa fa-minus-circle"></i>
                             </a>
                         </div>
+                       <!-- <div class="actions-wrapper-bottom">
+                            <a class = "js-duplicate fb-button" id="save">
+                                <i>Save</i>
+                            </a>
+                        </div>-->
                     </div>
                 </div>
             </div>
-        <!--</div>-->
-    </div>
+        <!--</div>
+    </div>-->
 </template>
 
 
-<template name="checkBoxCreate">
+<template name="checkBoxesCreate">
+    <div>
+        <label class="fb-option">
+            <input type="checkbox"  value="Bike"> <input type="text" id="qnNo" value="Option 1"><br>
+            <input type="checkbox"  value="female"> <input type="text" id="qnNo" value="Option 2"><br>
+            <input type="checkbox"  value="female"> <input type="text" id="qnNo" value="Option 3"><br>
+            <a id="addCheckboxes">Add item</a>
+        </label>
+    </div>       
+</template>
 
-                <div class="fb-field-wrapper response-field-radio editing">
-                    <div class="subtemplate-wrapper">
+<template name="radioCreate">
+    <div>
+        <label class="fb-option">
+            <input type="radio" id="gender" value="male" checked> <input type="text" id="qnNo" value="Option 1"> <br>
+            <input type="radio" id="gender" value="female"> <input type="text" id="qnNo" value="Option 2"><br>
+            <input type="radio" id="gender" value="other"> <input type="text" id="qnNo" value="Option 3"><br>
+            <a id="addRadio">Add item</a>
+        </label>
+    </div>
+</template>
 
+<template name="dropdownCreate">
+    <div>
+        <label class="fb-option">
+            1. <input type="text" id="qnNo" value="Option 1"><br>
+            <a id="addDropdown">Add item</a>
+        </label>
+    </div>
+</template>
 
-                        <select name="qnType">
-                            <option value="vtext">Text</option>
-                            <option value="paraText">Paragraph Text</option>
-                            <option value="radioButtons">Multiple choice</option>
-                            <option value="checkboxes">Checkboxes</option>
-                            <option value="dropdown">Choose from a list</option>
-                        </select>
-                        
-                        <label> <span>Qn goes here <abbr title="required">*</abbr></span></label>
-                            
-                        <input type="text" name="firstname" value="Mickey">
-                                
-                        <span class="help-block"></span>
-                        <div class="actions-wrapper">
-                            <a class = "js-duplicate fb-button" title="Duplicate field">
-                                <i class = "fa fa-plus-circle"></i>
-                            </a>
-                            <a class = "js-clear fb-button" title="Remove field">
-                                <i class = "fa fa-minus-circle"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+<template name="radioCreateInline">
+    <div>
+        <label class="fb-option">
+
+            <label class="radio-inline">
+              <input type="radio" id="optradio" value="male"><input type="text" id="qnNo" value="Option 1">
+            </label>
+            <label class="radio-inline">
+              <input type="radio" id="optradio" value="male"><input type="text" id="qnNo" value="Option 2">
+            </label>
+            <label class="radio-inline">
+              <input type="radio" id="optradio" value="male"><input type="text" id="qnNo" value="Option 3">
+            </label><br>
+            <a id="addRadioInline">Add item</a>
+        </label>
+    </div>
+</template>
+
+<template name="textCreate">
+    <div>
+        <label>
+            <input type="text" id="qn" value="Your answer">   <abbr title="required">*</abbr>
+        </label>
+    </div>
+</template>
+
+<template name="paratextCreate">
+    <div>
+        <label>
+            <textarea type="text" id="qn" value="Your answer"> </textarea>
+        </label>
+    </div>
 </template>

@@ -21,20 +21,16 @@ Template.addFeedback.onRendered(function(){
 	$("input")[0].focus();
 });
 
-
-
-
-// Template.feedbackQnMgmt.events({
-// 	"change #qnType" : function(e){
-// 		// console.log(e);
-// 		console.log ("here");
-// 	}
-// });
+Template.createQn.onRendered(function(){
+	// console.log($("input")[0]);
+	// console.log($("input"));
+	Session.set('qnType', 'vtext');
+});
 
 
 
 Template.feedbackQnMgmt.events({
-	"click #addField" : function(e) {
+	"click #addFields" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
@@ -45,17 +41,59 @@ Template.feedbackQnMgmt.events({
 		 console.log("noOfFields " + noOfFields);
 		 Session.set('fields', noOfFields);
 	},
+	"click #deleteQn" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var fields = Session.get('fields');
+		 var noOfFields = fields+1;
+		 if(isNaN(fields)) noOfFields = 1;
+		 console.log("fields " + fields);
+		 console.log("noOfFields " + noOfFields);
+		 Session.set('fields', noOfFields);
+	}
+
+});
+
+Template.createQn.events({
+	"click #addField" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+		 //call save method
+
+
+
+
+		 
+		 var fields = Session.get('fields');
+		 var noOfFields = fields+1;
+		 if(isNaN(fields)) noOfFields = 1;
+		 console.log("fields " + fields);
+		 console.log("noOfFields " + noOfFields);
+		 Session.set('fields', noOfFields);
+	},
+
+	"change #qnType" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+		 console.log(" qn type");
+		var qnType = document.getElementById("qnType").value;
+		 console.log(qnType + " qn type");
+		 Session.set('qnType', qnType);
+		 //set some session variable???
+
+	},
 
 	"click #removeField" : function(e) {
 		e.preventDefault();
-        var times = Session.get('times');
+        var fields = Session.get('fields');
 
         // noOfTimes = _.reject(salesInput, function(x) {
         //     return x.salesId == salesId;
         // });
 
-		 var noOfTimes = times-1;
-		 Session.set('times', noOfTimes);
+		 var noOfFields = fields-1;
+		 Session.set('fields', noOfFields);
 	}
 
 });
@@ -70,7 +108,16 @@ Template.feedbackQnMgmt.helpers({
 	}	
 });
 
+Template.createQn.helpers({
+	"qnType": function() {
+		
+		return Session.get('qnType');
+	}	
+});
 
+Template.registerHelper('equals', function (a, b) {
+      return a == b;
+    });
 
 
 
