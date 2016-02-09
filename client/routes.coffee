@@ -31,6 +31,7 @@ navRoutes = [
   new NavRoute('classList', '', {parentName: 'CourseModule', label: "Class List"})
 
   new NavRoute('FeedbackMgmt', 'fa-file-text ', {label: "Feedback Management"})
+  new NavRoute('feedbackList', '', {parentName: 'FeedbackMgmt', label: "Feedback List"})
   new NavRoute('feedbackQnMgmt', '', {parentName: 'FeedbackMgmt', label: "Feedback Questions"})
 
   #new NavRoute('forms', 'fa-edit')

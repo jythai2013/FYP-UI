@@ -10,7 +10,7 @@ template(name="classList")
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header course list
+        h1.page-header class list
       // /.col-lg-12
     // /.row
 
@@ -19,7 +19,6 @@ template(name="classList")
         .panel.panel-default
           .panel-body
             h4 Search classes
-              //+addCourseForm
           
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -63,10 +62,9 @@ template(name="classList")
                       td #{startDate}  
                       td #{endDate}  
                       td
-                        form(role="form", id="insert-addClassForm", action="classDetails", method="post")
-                          button#viewCourseDetailsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_courseCode}', data-target="#viewClass")
-                            | More Details
-                          +viewClassForm
+                        a(href="course?cCode=#{courseCode}&cgrpNum=#{grpNum}", class="button btn admin-btn") 
+                            | Enter Class Page
+                          //+viewClassForm
                       td
                         button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteClass#{_id}")
                           | Delete

@@ -33,9 +33,9 @@ template(name="courseList")
                     th Type
                     td
                       select(id="courseSearchType")
-                        option(value="")= "Do not care"
+                        option(value="") Select Option
                         option(value="WSQ") WSQ
-                        option(value="Non-WSQ") Non-WSQ
+                        option(value="LSP") Non-WSQ
                         option(value="Others") Others
             
             button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter          
@@ -68,10 +68,11 @@ template(name="courseList")
                       td #{courseType}  
                       td #{courseFees}  
                       td
-                        form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
-                          button#viewCourseDetailsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_courseCode}', data-target="#viewCourse")
-                            | More Details
-                          +viewCourseForm
+                        //form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+                          //button#viewCourseDetailsButton.btn.admin-btn.btn-sn(data-toggle="modal", data-id= '#{_courseCode}', data-target="#viewCourse")
+                            //| More Details
+                          //+viewCourseForm
+                        a(href="course?cCode=#{courseCode}", class="button btn admin-btn") Enter Course Page
                       td
                         button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteCourse#{_id}")
                           | Delete
@@ -139,7 +140,7 @@ template(name="addCourseForm")
                     .form-group()
                       select(name="type", id="cNewType", style="color: black")
                         option(value="WSQ") WSQ
-                        option(value="Non-WSQ") Non-WSQ
+                        option(value="LSP") LSP
                         option(value="Others") Others
                 tr
                   th Description
@@ -147,22 +148,17 @@ template(name="addCourseForm")
                     .form-group
                       input.form-control(type="comment", id="cNewDesc")
                 tr
-                  th No. Of Sessions
+                  th No. Of Hours
                   td 
                     .form-group.input-group
-                      input.form-control(type="text", id="cNewNoOfSessions")
+                      input.form-control(type="text", id="cNewNoOfHours")
                 tr
-                  th Minimum
-                  td 
-                    .form-group.input-group
-                      input.form-control(type="text", id="cNewMin")
-                tr
-                  th Maximum
+                  th(style="word-break: break-word") Facilitator to Learner Ratio
                   td 
                     .form-group.input-group
                       input.form-control(type="text", id="cNewMax")
                 tr
-                  th Fees
+                  th Fees (excluding GST)
                   td 
                     .form-group.input-group
                       span.input-group-addon $

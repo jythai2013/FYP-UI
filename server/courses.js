@@ -8,7 +8,7 @@
 			});
 		},
 		
-		'editCourse': function editCourse(cCode, cName, cDescription, cNoOfSession, cFees, cMin, cMax, cType){
+		'editCourse': function editCourse(cCode, cName, cDescription, cNoOfHours, cFees, cMin, cMax, cType){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
@@ -17,9 +17,8 @@
 					courseCode: cCode,
 					courseName: cName,
 					courseDescription: cDescription,
-					courseNoOfSessions: cNoOfSession,
+					courseNoOfHours: cNoOfHours,
 					courseFees: cFees,
-					courseMin: cMin,
 					courseMax: cMax,
 					courseType: cType
 					//courseTrainers: cTrainer

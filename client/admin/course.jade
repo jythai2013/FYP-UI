@@ -227,24 +227,19 @@ template(name="addTrainer")
               td(colspan="2")
                 .form-group()
                   select(name="newTrainersC", style="color: black; width: 100%")
-                    option(value="Twinnings") Twinnings
-                    option(value="Lipton") Lipton
-                    option(value="TWG") TWG
-                    option(value="Dilmah") Dilmah     
+                    each trainers
+                      option(value="#{_id}") #{firstName} #{lastName}     
               td 
-                button#addMoreTrainer.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                button#addMoreTrainers.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
                     i.fa.fa-plus  
 
             each noOfTimes
-              //+trainerAddDelete
               tr 
                 td(colspan="2")
                   .form-group()
                     select(name="newTrainersC", style="color: black; width: 100%")
-                      option(value="Twinnings") Twinnings
-                      option(value="Lipton") Lipton
-                      option(value="TWG") TWG
-                      option(value="Dilmah") Dilmah  
+                      each trainers
+                        option(value="#{_id}") #{firstName} #{lastName}  
                 td  
                   button#addMoreTrainers.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
                     i.fa.fa-plus 
@@ -258,22 +253,6 @@ template(name="addTrainer")
       // /.modal-content
     // /.modal-dialog
   // /.modal
-
-template(name="trainerAddDelete")
-  tr 
-    td(colspan="2")
-      .form-group()
-        select(id="newTrainersC", style="color: black; width: 300px")
-          option(value="Twinnings") Twinnings
-          option(value="Lipton") Lipton
-          option(value="TWG") TWG
-          option(value="Dilmah") Dilmah  
-    td  
-      button#addMoreTrainers.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-        i.fa.fa-plus 
-                
-      button#removeThisTrainer.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-        i.fa.fa-minus    
 
 template(name="removeClass")
   #removeClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark

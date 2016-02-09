@@ -108,7 +108,7 @@ Template.removeTrainer.helpers({
 Template.addTrainer.helpers({
 	"noOfTimes": function() {
 		var fakeArray = new Array();
-		for(i = 0; i < Session.get('times'); i++){
+		for(i = 0; i < Session.get('trainerTimes'); i++){
 			fakeArray.push("a")
 		}
     return fakeArray;
@@ -142,14 +142,14 @@ Template.addCourseForm.events({
 		var cCode = document.getElementById("cNewCode").value;
 		console.log( cCode +" cCode");
 		var cFee = document.getElementById("cNewFee").value;
-		var cNoOfSessions = document.getElementById("cNewNoOfSessions").value;
+		var cNoOfHours = document.getElementById("cNewNoOfHours").value;
 		var cDescription = document.getElementById("cNewDesc").value;
 		var cType = document.getElementById("cNewType").value;
 		var cMin = document.getElementById("cNewMin").value;
 		var cMax = document.getElementById("cNewMax").value;
 
 		console.log("here8");
-		Meteor.call("createCourse", cName, cCode, cFee, cNoOfSessions, cDescription, cType,cMin,cMax);
+		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType,cMin,cMax);
 	}
 
 
@@ -257,42 +257,29 @@ Template.addTrainer.events({
 		Meteor.call("addTrainer", courseID, addTrainersArr);
 	},
 
-	"click #addMoreTrainer" : function(e) {
-		 //var name = template.$(event.target).data('modal-template');
-		 e.preventDefault();
-
-		 var times = Session.get('times');
-		 var noOfTimes = times+1;
-		 if(isNaN(times)) noOfTimes = 1;
-		 console.log("times " + times);
-		 console.log("noOfTimes " + noOfTimes);
-		 Session.set('times', noOfTimes);
-	}
-});
-
-Template.trainerAddDelete.events({
 	"click #addMoreTrainers" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var times = Session.get('times');
-		 var noOfTimes = times+1;
-		 if(isNaN(times)) noOfTimes = 1;
-		 console.log("times " + times);
+		 var trainerTimes = Session.get('trainerTimes');
+		 var noOfTimes = trainerTimes+1;
+		 if(isNaN(trainerTimes)) noOfTimes = 1;
+		 console.log("trainerTimes " + trainerTimes);
 		 console.log("noOfTimes " + noOfTimes);
-		 Session.set('times', noOfTimes);
+		 Session.set('trainerTimes', noOfTimes);
 	},
 
 	"click #removeThisTrainer" : function(e) {
 		e.preventDefault();
-        var times = Session.get('times');
+        var trainerTimes = Session.get('trainerTimes');
 
         // noOfTimes = _.reject(salesInput, function(x) {
         //     return x.salesId == salesId;
         // });
 
-		 var noOfTimes = times-1;
-		 Session.set('times', noOfTimes);
+		 
+		 if(isNaN(trainerTimes)) noOfTimes = 1;
+		 var noOfTimes = trainerTimes-1;
+		 Session.set('trainerTimes', noOfTimes);
 	}
-
 });
