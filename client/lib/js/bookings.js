@@ -1,63 +1,95 @@
 
 
-	$(document).ready(function() {
+// 	$(document).ready(function() {
 
-    // page is now ready, initialize the calendar...
-		// jQuery.noConflict();
-		makeQTip();
+//     // page is now ready, initialize the calendar...
+// 		// jQuery.noConflict();
+// 		makeQTip();
 
-});
+// });
 
 // Setup QTip
-	function makeQTip() {
-		var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
+	// function makeQTip() {
+	// 	var date = new Date();
+	// 	var d = date.getDate();
+	// 	var m = date.getMonth();
+	// 	var y = date.getFullYear();
 
-		tooltip = $('<div/>').qtip({
-			id: 'fullcalendar',
-			prerender: true,
-			content: {
-				text: ' ',
-				title: {
-					button: true
-				}
-			},
-			position: {
-				my: 'bottom center',
-				at: 'top center',
-				target: 'mouse',
-				viewport: $('#fullCalendarDiv'),
-				adjust: {
-					mouse: false,
-					scroll: false
-				}
-			},
-			show: false,
-			hide: false,
-			style: 'qtip-light'
-		}).qtip('api');
-	}
+	// 	tooltip = $('<div/>').qtip({
+	// 		id: 'fullcalendar',
+	// 		prerender: true,
+	// 		content: {
+	// 			text: ' ',
+	// 			title: {
+	// 				button: true
+	// 			}
+	// 		},
+	// 		position: {
+	// 			my: 'bottom center',
+	// 			at: 'top center',
+	// 			target: 'mouse',
+	// 			viewport: $('#fullCalendarDiv'),
+	// 			adjust: {
+	// 				mouse: false,
+	// 				scroll: false
+	// 			}
+	// 		},
+	// 		show: false,
+	// 		hide: false,
+	// 		style: 'qtip-light'
+	// 	}).qtip('api');
+	// }
 
+Template.facilityManagement.rendered = function(){
+	Tracker.autorun(function(){
+		// Bookings.find();
 
+		// var array = $.map(Bookings.find().collection._docs._map, function(value, index) {
+		// 		return [value];
+		// });
+		var array = Bookings.find();
+		
 
+		$('#fmCalendar').fullCalendar({
+				header: {
+	        left: 'prev,next today',
+	        center: 'title',
+	        right: 'month,agendaWeek,agendaDay'
+        },
+        dayClick :function(date, allDay,jsEvent, view){
+            $('#fmModal').modal('show');
+            Session.set("currentDate",date);
+        },
+        events: function(start, end, callback){
+        	events = [];
+        	array.fetch().forEach(function(booking){
+						oneCourse = Courses.findOne({courseCode:booking.course});
+						if(oneCourse != undefined)
+							courseName = oneCourse.courseName;
+						else
+							courseName = booking.course
+						booking.title = courseName + "-" + booking.sessionNo;
 
+						events.push({
+							id: booking._id,
+							start: booking.start,
+							end: booking.end,
+							title: booking.title, 
+							allDay: false,
+							editable: true
+						});
+					});
 
+					callback(events);
 
+        }
+		})
 
-
-
-
-
-
-
-
-Template.facilityManagement.events({
+	})
+}
+Template.bookingFacilityForm.events({
 	"change #facMgmtFormy" : function facilityManagementFormForMeteorOnChangeHandler(e){
 		e.preventDefault();
-		console.log("EEEEEEEEEEEEEEEEEE");
-		console.log(e);
 		
 		IfacType = document.getElementById("facType").value;
 		Icapacity = document.getElementById("input_capacity_min").value;
@@ -66,16 +98,9 @@ Template.facilityManagement.events({
 		var endinDateTimeI = document.getElementById("input_time_end").value;
 		// repeatOption = document.getElementById("facRepeatOptionSearch").value;
 		
-		startDateTime = new Date(startDateTimeI);
-		endinDateTime = new Date(endinDateTimeI);
-		
-		// IDays = new Object();
-		// IDays.mon = document.getElementById("facSearchMon").checked;
-		// IDays.tue = document.getElementById("facSearchTue").checked;
-		// IDays.wed = document.getElementById("facSearchWed").checked;
-		// IDays.thu = document.getElementById("facSearchThu").checked;
-		// IDays.fri = document.getElementById("facSearchFri").checked;
-		// IDays.sat = document.getElementById("facSearchSat").checked;
+		startDateTime = new Date(moment(startDateTimeI,"DD/MM/YYYY hh:mm a").format());
+		console.log(startDateTime);
+		endinDateTime = new Date(moment(endinDateTimeI,"DD/MM/YYYY hh:mm a").format());
 		
 		// Session.set("facDaysSearch", IDays);
 		Session.set("facTypeSearch", IfacType);
@@ -84,19 +109,23 @@ Template.facilityManagement.events({
 		// Session.set("facReapeatOptionSearch", repeatOption);
 		Session.set("facStartDateTimeSearch", startDateTime);
 		Session.set("facEndinDateTimeSearch", endinDateTime);
-	}
-});
+	},
 
-Template.facilityManagement.events({
-	
-	"submit #facMgmtFormy" : function(e){
+	"click #submitFmBooking" : function(e){
 		e.preventDefault();
 		// createBooking': function createBooking(bookingDateI, courseI, sessionNoI, startTimeI, endTimeI, facIdI){
 		dates = getDatesFromRepeat();
 		courseI = document.getElementById("courseId").value;
 		sessionI = document.getElementById("groupId").value;
 		dates.forEach(function(details){
-			Meteor.call("createBooking2", details.start, details.end, document.getElementById("fac").value, courseI, sessionI);
+			//comment on what this function do for later reference!!!
+			Meteor.call("createBooking2", details.start, details.end, document.getElementById("fac").value, courseI, sessionI, function(err,value){
+				if (!err){
+					$('#fmModal').modal('hide');
+				} else {
+					alert(err);
+				}
+			});
 		});
 	},
 
@@ -104,7 +133,12 @@ Template.facilityManagement.events({
 		console.log(this._id);
 		Meteor.call("deleteBooking", this._id);
 	}
+
 });
+
+// Template.facilityManagement.events({
+	
+// });
 
 
 Template.facilityManagement.helpers({
@@ -130,20 +164,6 @@ Template.facilityManagement.helpers({
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
-			// events: [
-								// {
-									// title  : 'Workplace Health and Safety',
-									// start  : '2015-10-21T13:00:00',
-									// end    : '2015-10-21T17:00:00',
-									// allDay : false 
-								// },
-								// {
-									// title  : 'Workplace Health and Safety',
-									// start  : '2015-10-21T13:00:00',
-									// end    : '2015-10-21T17:00:00',
-									// allDay : false 
-								// }
-							// ]
 			events: array,
 			eventMouseover: function(data, event, view) {
 				var content = '<h3>'+data.title+'</h3>' + 
@@ -164,26 +184,30 @@ Template.facilityManagement.helpers({
 	}
 });
 	
+Template.bookingFacilityForm.onRendered(function() {
+	Tracker.autorun(function(){
+    	this.$('.datetimepicker').datetimepicker({
+    		format: 'DD/MM/YYYY hh:mm a'
+    	});
+    	var currentDate = moment(Session.get('currentDate')).format('DD/MM/YYYY hh:mm a');
+    	// alert(currentDate);
+    	$('#input_time_beginning').val(currentDate);
+    	$('#input_time_end').val(currentDate);
+    	// Date selectedDate = Session.get("currentDate");
+
+	});
+});
+
 Template.bookingFacilityForm.helpers({
 	facilitySearchResult:function(){
-		console.log("facilitySearchResult Start");
 		
 		details = new Object();
 		if (Session.get("facCapacitySearch") 									!= undefined) {details.capacity 		= Session.get("facCapacitySearch"); }
 		else{Session.set("facCapacitySearch", 0);}		
-		// if (Session.get("facTypeSearch") 									!= undefined) {details.facType 			= Session.get("facTypeSearch").value;}
-		// if (Session.get("facRepeatOptionSearch") 					!= undefined) {details.repeatOption = Session.get("facRepeatOptionSearch").value;}
-		// if (Session.get("facNumSessionSearch") 						!= undefined) {details.numSessions 	= Session.get("facNumSessionSearch").value;}
 		if (Session.get("facStartDateTimeSearch") 			!= undefined) {details.start 		= Session.get("facStartDateTimeSearch").value;}
 		else{console.log("pls set date");}
-		// if (Session.get("facInput_date_endSearch") 				!= undefined) {details.endDate 			= Session.get("facInput_date_endSearch").value;}
 		if (Session.get("facEndDateTimeSearch") 			!= undefined) {details.end 		= Session.get("facEndDateTimeSearch").value;}
 		else{console.log("pls set start time");}
-		// if (Session.get("facDurationSearch") 						!= undefined) {details.duration 			= Session.get("facDurationSearch").value;}
-		// else{console.log("pls set end time");console.log(Session.get("facStartDateTimeSearch"));}
-		// if (Session.get("facDaysSearch") 									!= undefined) {details.endTime 			= Session.get("facDaysSearch").value;}
-		
-		
 		if( Session.get("facTypeSearch") != undefined && Session.get("facTypeSearch").length > 0){
 			ascapacity = parseInt(Session.get("facCapacitySearch"));
 			typea = Session.get("facTypeSearch");
@@ -200,16 +224,7 @@ Template.bookingFacilityForm.helpers({
 			if(isNaN(ascapacity)){matchingFacilities = Facilities.find({}).fetch();}
 			console.log(matchingFacilities);
 		}
-		// console.log("facilitySearchResult matchingFacilities");
-		// console.log(matchingFacilities.collection._docs._map);
-		// console.log("R1");
-		// console.log(details.facType);
-		// console.log(details.capacity);
-		
-		// //converts the matchingFacilities.collection._docs._map into an array
-		// var array = $.map(matchingFacilities.collection._docs._map, function(value, index) {
-				// return [value];
-		// });
+
 		
 		resultsF = new Array();
 		console.log(resultsF);
@@ -223,12 +238,6 @@ Template.bookingFacilityForm.helpers({
 				resultsF.push(facility);
 			} 
 		});
-		
-		console.log("facilitySearchResult resultsF");
-		// console.log(resultsF);
-		
-		console.log("facilitySearchResult End");
-		
 		return resultsF;
 	}
 });
@@ -342,6 +351,10 @@ function getDatesFromRepeat(){
 	// console.log(startDateTime);
 	
 	//for use in repeat calculations
+	console.log("startDateTime is printing:");
+	console.log(startDateTime);
+	console.log("endDateTime is printing:");
+	console.log(endinDateTime);
 	var temp1 = new Date();
 			temp1.setHours(startDateTime.getHours());
 			temp1.setMinutes(startDateTime.getMinutes());
@@ -442,34 +455,3 @@ function getDatesFromRepeat(){
 	}
 }
 
-
-
-
-
-
-
-
-// TODO: 
-// date repeater
-// change from date and time to datetime
-//
-// email blast functionality, what is the courselist name in db, and the structure?
-
-
-
-// 1) match the values
-// 2) facility form add course and session
-// 3) blast email button id, i cant find the template. maybe wrong git branch
-// 4) groups collection, the start date name. eg. "start" or "startDate"
-// 5) groups collection classlist name and structure. eg "classlist" and an array of userID. or "students" and an array of names. prefer userID or meteor's _id for easier linking. if names, may not be unique
-
-
-// 'click button.myFileInputButton':function(event, template){
-      // var files = document.getElementById("myFileInput").files;
-      // files.forEach(function(file) {
-        // var fileObj = new FS.File(file);
-        // Files.insert(fileObj,function(err)){
-          // console.log(err);
-        // }
-      // });
-    // }

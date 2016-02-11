@@ -23,7 +23,6 @@ meteor-platform
 mobile-experience
 mongo
 natestrauser:select2
-rzymek:fullcalendar
 session
 standard-minifiers
 tracker
@@ -35,3 +34,5 @@ cfs:dropbox
 easy:search
 
 momentjs:moment
+mrt:fullcalendar
+tsega:bootstrap3-datetimepicker

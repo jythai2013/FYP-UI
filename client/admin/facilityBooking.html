@@ -22,11 +22,11 @@ what if the users puts start and end and number of sessions, but they contradict
             <li><a data-toggle="tab" href="#faciBook" style="color:#095464">Facility Booking</a></li>
           </ul>
           <div class="tab-content">
-            {{> bookingFacilityForm}}
             <div id="overview" class="tab-pane active">
               <div class="row">
                 <div id="home" class="col-xs-12 col-sm-12">
-                  {{> fullcalendar calOptions}}
+                  <div id = "fmCalendar">
+                  </div>
                 </div>
               </div>
             </div>
@@ -35,6 +35,10 @@ what if the users puts start and end and number of sessions, but they contradict
       </div> <!--// /.col-lg-12-->
     </div> <!--// /.row-->
   </div> <!--// /.Page Wrapper-->
+  <!--   bookingFacilityForm is now transformed into modal instead of separate tab -->
+  {{> bookingFacilityForm}}
+
+
 </template>
 
 
@@ -43,141 +47,99 @@ what if the users puts start and end and number of sessions, but they contradict
 </template>
 
 <template name="bookingFacilityForm">
-  <div id="faciBook" class="tab-pane fade in fade">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12">
-        <h3 class="page-header">Facility Booking System</h3>
-      </div>
-    </div>        
-    <form id="facMgmtFormy" class="form-vertical" role="form" action = "facilityResult">
-      <div class="row">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Course</label>
-          <div class="col-sm-4">
-            <input type="string" id="courseId" class="form-control">
+<div class="modal fade" id="fmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Facility Booking System</h4>
+        </div>
+        <div class="modal-body">
+          <div id="faciBook" class="tab-pane fade in fade">  
+            <form id="facMgmtFormy" class="form-vertical" role="form" action = "facilityResult">
+              <div class="row">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Course</label>
+                  <div class="col-sm-4">
+                    <input type="string" id="courseId" class="form-control">
+                  </div>
+                  <label class="col-sm-2 control-label">Group</label>
+                  <div class="col-sm-4">
+                    <input type="string" id="groupId" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">No. of Session</label>
+                  <div class="col-sm-4">
+                    <input type="string" id="facNumSessionSearch" class="form-control">
+                  </div>
+                  <!-- Capacity -->
+                  <label class="col-sm-2 control-label">Capacity</label>
+                  <div class="col-sm-4">
+                    <input type="string" id="input_capacity_min" class="form-control" >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <!-- Time of Booking -->
+                <!-- Put a date time picker -->
+                <!-- Format  -->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Start Time</label>
+                  <div class="col-sm-4">
+                    <!-- <input type="datetime-local" id="input_time_beginning" class="form-control" placeholder="time.start"> -->
+                    <div class="input-group datetimepicker">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                      <input class="set-due-date form-control" id="input_time_beginning" type="text"/>
+                    </div>
+                  </div>
+                  <label class="col-sm-2 control-label">End Time</label>
+                  <div class="col-sm-4">
+                    <!-- <input type="datetime-local" id="input_time_end" class="form-control" placeholder="time.end"> -->
+                    <div class="input-group datetimepicker">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                      <input class="set-due-date form-control" id="input_time_end" type="text"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <!-- Facility Type -->
+                <!-- Get Facility List from DB and drop down List -->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Facility Type</label>
+                  <div class="col-sm-4">
+                    <select class="form-control" name="facilityType" id="facType">
+                      <option value="">-- Select a Facility --</option>
+                      <option value="Class Room">Class Room</option>
+                      <option value="Training Room">Training Room</option>
+                      <option value="Meeting Room">Meeting Room</option>
+                    </select>
+                  </div>
+                  <label class="col-sm-2 control-label">Facility</label>
+                  <div class="col-sm-4">
+                    <select class="form-control" name="facility" id="fac">
+                      <option value="default">-- Select a Facility --</option>
+                      {{#each facilitySearchResult}}
+                      {{> facDetails}}
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <!-- To make the white background cover all fields -->
+              <div class="clearfix"></div> 
+            </form>
           </div>
-          <label class="col-sm-2 control-label">Group</label>
-          <div class="col-sm-4">
-            <input type="string" id="groupId" class="form-control">
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" id = "submitFmBooking">Add Booking</button>
         </div>
       </div>
-      <div class="row">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">No. of Session</label>
-          <div class="col-sm-4">
-            <input type="string" id="facNumSessionSearch" class="form-control">
-          </div>
-        <!-- Capacity -->
-          <label class="col-sm-2 control-label">Capacity</label>
-          <div class="col-sm-4">
-            <input type="string" id="input_capacity_min" class="form-control" >
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <!-- Time of Booking -->
-        <!-- Put a date time picker -->
-        <!-- Format  -->
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Start Time</label>
-          <div class="col-sm-4">
-            <input type="datetime-local" id="input_time_beginning" class="form-control" placeholder="time.start">
-          </div>
-          <label class="col-sm-2 control-label">End Time</label>
-          <div class="col-sm-4">
-            <input type="datetime-local" id="input_time_end" class="form-control" placeholder="time.end">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <!-- Facility Type -->
-        <!-- Get Facility List from DB and drop down List -->
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Facility Type</label>
-          <div class="col-sm-4">
-            <select class="form-control" name="facilityType" id="facType">
-              <option value="">-- Select a Facility --</option>
-              <option value="Class Room">Class Room</option>
-              <option value="Training Room">Training Room</option>
-              <option value="Meeting Room">Meeting Room</option>
-            </select>
-          </div>
-          <label class="col-sm-2 control-label">Facility</label>
-          <div class="col-sm-4">
-            <select class="form-control" name="facility" id="fac">
-              <option value="default">-- Select a Facility --</option>
-                {{#each facilitySearchResult}}
-                  A{{> facDetails}}
-                {{/each}}
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group">     
-          <div class="col-sm-12" style="margin-bottom: 10px">
-            <button type="submit" class="btn pull-right admin-btn">Search</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Put a date time picker -->
-      <!-- <div class="form-group">
-        <label class="col-sm-2 control-label">Repeat</label>
-        <div class="col-sm-4">
-          <select class="form-control" name="repeat" id="facRepeatOptionSearch">
-            <option value="everyday">Everyday</option>
-            <option value="weekday">Weekdays</option>
-            <option value="weekends">Weekends</option>
-            <option value="weekly">Weekly</option>
-            <option value="mothly">Monthly</option>
-          </select>
-        </div>
-      </div> -->
-
-      <!-- Select date -->
-      <!-- <div class="form-group">
-        <label class="col-sm-2 control-label">Days</label>
-        <div class="col-sm-10">
-          <div class="checkbox-inline">
-            <label>
-              <input type="checkbox" checked id="facSearchMon" value="1"> Mon
-            </label>
-          </div>
-          <div class="checkbox-inline">
-            <label>
-              <input type="checkbox" id="facSearchTue" value="2"> Tues
-            </label>
-          </div>
-          <div class="checkbox-inline">
-            <label>
-              <input type="checkbox" id="facSearchWed" value="3"> Wed
-            </label>
-          </div>
-          <div class="checkbox-inline">
-            <label>
-              <input type="checkbox" id="facSearchThu" value="4"> Thurs
-            </label>
-          </div>
-          <div class="checkbox-inline">
-            <label>
-              <input type="checkbox" id="facSearchFri" value="5"> Fri
-            </label>
-          </div>
-          <div class="checkbox-inline">
-            <label>
-              <input type="checkbox" id="facSearchSat" value="6"> Sat
-            </label>
-          </div>
-        </div>
-      </div> -->
-      <!--<h4>Search Result display</h4>-->
-      <!--javascript to capture time, similar to oasis?-->
-      
-          <!-- To make the white background cover all fields -->
-      <div class="clearfix"></div> 
-    </form>
+    </div>
   </div>
 </template>
 
