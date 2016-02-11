@@ -296,7 +296,7 @@ Template.createQn.events({
 
 
 Template.addFeedback.events({
-	"submit #feedbackForm" : function submitFeedbackFormHandler(e) {
+	"submit #feedbackFormadt" : function submitFeedbackFormadtHandler(e) {
 		e.preventDefault();
 		// console.log(e);
 		var options = new Object();
@@ -372,6 +372,40 @@ Template.addFeedback.events({
 		// Session.set("option", options);
 		console.log(options);
 		Meteor.call("createFeedback", options);
+	}, 
+	"submit #feedbackForm" : function submitFeedbackFormHandler(e, t) {
+		e.preventDefault();
+		options = {};
+		options.qnID = 
+		options.courseID = 
+		options.trainerID = 
+		options.facilityID = 
+		options.Response.studentID = 
+		options.Response.response = 
+		Meteor.call("upsertFeedback", options);
+/*
+
+feedbackQn{
+	qnID: (Mongo self generate also can)
+	feedbackType: (either trainer/facility/course)
+	inputType: (eg radiobutton);
+	question: (qn goes here)
+	Options: (list of options they can choose from or nothing here is input type is text)
+	LSPQnID: [If got link to LSP qn]
+}
+
+feedbackAnswer{
+	qnID: (link to the qnID)
+	courseID: 
+	trainerID: [If evaluating trainer]
+	facilityID: [If evaluating facility]
+	Response: [
+		studentID:
+		response:
+	]
+}
+
+*/
 	}
 });
 
@@ -380,3 +414,5 @@ Template.addFeedback.events({
 		// Session.set('times', 0);
 	// }
 // });
+
+
