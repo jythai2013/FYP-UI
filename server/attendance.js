@@ -6,15 +6,16 @@ Meteor.methods({
 		console.log(attendanceTrueOrFalse)
 		var theGroup = Groups.findOne(group_id);
 		console.log(theGroup)
-		var date = new Date(dateI)
+		var dateD = new Date(dateI)
 		console.log(date)
 		if(theGroup.attendance == undefined || theGroup.attendance == null){ theGroup.attendance = {}; }
-		if(theGroup.attendance.date == undefined || theGroup.attendance.date == null){ theGroup.attendance.date = {}; }
-		theGroup.attendance.date.studentId = attendanceTrueOrFalse
+		//if(theGroup.attendance.date == undefined || theGroup.attendance.date == null){ theGroup.attendance.date = {}; }
+		//theGroup.attendance.date[dateD].studentId = attendanceTrueOrFalse;
+		theGroup.attendance[dateD].studentId = attendanceTrueOrFalse;
 		console.log(theGroup)
 		console.log(theGroup.attendance)
-		console.log(theGroup.attendance.date)
-		console.log(theGroup.attendance.date.studentId)
+		//console.log(theGroup.attendance.date)
+		console.log(theGroup.attendance[dateD].studentId)
 		// Attendance.
 		
 		// theGroup.attendance is an object, with each date as attributes
