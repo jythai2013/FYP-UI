@@ -152,8 +152,10 @@ Template.addClass.events({
 		var position = str.indexOf('=');		
 		var currentCourse=str.substr(position+1);
 
-		var gNoOfSessions =  Courses.findOne({courseCode:currentCourse}).courseNoOfSessions;
-		console.log(gNoOfSessions + " number of sessions");
+		var gNoOfHours2 =  Courses.findOne({courseCode:currentCourse});
+		console.log("HERE >>> " + gNoOfHours2);
+		var gNoOfHours =  Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
+		console.log(gNoOfHours + " number of Hours");
 
 		var days = document.getElementsByName("day");
 		var gdaysArr = new Array();
@@ -183,7 +185,7 @@ Template.addClass.events({
 		var grpNumI = "G"+grpNumI2;
       console.log(grpNumI + "group number");
 		console.log("here4");
-		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus, gVenue, gNoOfSessions, gTrainers);
+		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus, gVenue, gNoOfHours, gTrainers);
 		//console.log(Groups.find({}).fetch();
 	}
 });

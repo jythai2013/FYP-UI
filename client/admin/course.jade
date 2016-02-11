@@ -30,11 +30,11 @@ template(name="course")
                     th Description
                     td #{courseDescription}
                   tr 
-                    th No. of Session(s)
-                    td #{courseNoOfSessions}
+                    th No. of Hour(s)
+                    td #{courseNoOfHours}
                   tr 
-                    th Capacity
-                    td #{courseMin} (min), #{courseMax} (max)
+                    th Facilitator to Learner Ratio
+                    td #{courseFLR} 
                   tr
                     th Fees
                     td #{courseFees}
@@ -310,7 +310,6 @@ template(name="removeTrainer")
                  label
                    input(type="checkbox", name="currentTrainers", value="#{trainerName} ")
                    | #{trainerName}     
-
                     
           // /.table-responsive
         .modal-footer
@@ -348,10 +347,10 @@ template(name="editCourseForm")
                     .form-group
                       textarea.form-control(id="cCDesc", value="#{courseDescription}")
                 tr
-                  th No. of Session(s)
+                  th No. of Hour(s)
                   td
                     .form-group
-                      select.form-control(name="cSession", id="cCSession",)
+                      select.form-control(name="cHour", id="cCHour",)
                         option 1
                         option 2
                         option 3
@@ -366,10 +365,10 @@ template(name="editCourseForm")
                       span.input-group-addon $
                       input.form-control(type="text", id="cCFees", value="#{courseFees}")
                 tr
-                  th Max
+                  th Facilitator to Learner Ratio
                   td
                     .form-group.input-group
-                      input.form-control(type="text", id="cCMax", value="#{courseMax}")
+                      input.form-control(type="text", id="cCFLR", value="#{courseFLR}")
                 tr
                   th Type
                   td

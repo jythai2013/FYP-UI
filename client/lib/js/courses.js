@@ -145,11 +145,10 @@ Template.addCourseForm.events({
 		var cNoOfHours = document.getElementById("cNewNoOfHours").value;
 		var cDescription = document.getElementById("cNewDesc").value;
 		var cType = document.getElementById("cNewType").value;
-		var cMin = document.getElementById("cNewMin").value;
-		var cMax = document.getElementById("cNewMax").value;
+		var cFLR = document.getElementById("cNewFLR").value;
 
 		console.log("here8");
-		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType,cMin,cMax);
+		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType,cFLR);
 	}
 
 

@@ -25,9 +25,6 @@ navRoutes = [
 
   new NavRoute('CourseModule', 'fa-table', {label: "Course Management"})
   new NavRoute('courseList', '', {parentName: 'CourseModule', label: "Course List"})
-  # new NavRoute('course', '', {parentName: 'CourseModule', label: "Course"})
-  new NavRoute('classHomepage', '', {parentName: 'CourseModule', label: "Class Homepage"})
-  new NavRoute('group', '', {parentName: 'CourseModule', label: "Class"})
   new NavRoute('classList', '', {parentName: 'CourseModule', label: "Class List"})
 
   new NavRoute('FeedbackMgmt', 'fa-file-text ', {label: "Feedback Management"})
