@@ -1,0 +1,218 @@
+<template name="trainerUploads">
+  <div id='wrapper-trainer'>
+    <!-- Sidebar -->
+    <section id='sidebar'>
+      <i class='icon-align-justify icon-large' id='toggle'></i>
+      <ul id='dock'>
+        <li class='launcher'>
+          <i class='icon-dashboard'></i>
+          <a href="trainer">Dashboard</a>
+        </li>
+        <li class='launcher'>
+          <i class='icon-file-text-alt'></i>
+          <a href="#">Announcements</a>
+        </li>
+        <li class='launcher'>
+          <i class='icon-table'></i>
+          <a href="trainerClasslist">Classlist</a>
+        </li>
+        <li class='active launcher'>
+          <i class='icon-file-text-alt'></i>
+          <a href="trainerUploads">Uploads</a>
+        </li>
+        <li class='launcher dropdown hover'>
+          <i class='icon-flag'></i>
+          <a href='#'>Reports</a>
+          <ul class='dropdown-menu'>
+            <li class='dropdown-header'>Launcher description</li>
+            <li>
+              <a href='#'>Action</a>
+            </li>
+            <li>
+              <a href='#'>Another action</a>
+            </li>
+            <li>
+              <a href='#'>Something else here</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <!-- Tools -->
+    <section id='tools'>
+      <ul class='breadcrumb' id='breadcrumb'>
+        <li class='title'>Sterling</li>
+        <li><a href="#">Dashboard</a></li>
+        <li class='active'><a href="#">Document Uploads</a></li>
+      </ul>
+    </section>
+
+
+
+    <!-- Content -->
+    <div id='content'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <i class='icon-beer icon-large'></i>
+          Document Management
+        </div>
+        <div class='panel-body'>
+          <div class='page-header'>
+            <h4>Select Course and Class</h4>
+          </div>
+          <table>
+            <tr>
+              <th style="width:20%">Course</th>
+              <th>
+                <select style="width:30%" name="classId" id="classId">
+                  {{#each trainerOngoingCourses}}
+                    option(value="{{> courseCode}}") {{> courseName}}
+                  {{/each}}
+                </select>
+              </th>
+              <th style="width:20%">Class</th>
+              <th>
+                <select style="width:30%" name="classId" id="classId">
+                  {{#each trainerClasses}}
+                    option(value="{{> grpNum}}") {{> courseName}} {{> grpNum}}
+                  {{/each}}
+                </select>
+              </th>
+            </tr>
+          </table>
+
+
+
+
+          <div class='page-header'>
+            <h4>Attendence Upload</h4>
+          </div>
+          <form name="attendenceForm" action="#" method="post">
+            <div class='panel panel-default grid'>
+              <div class='panel-heading'>
+                <i class='icon-table icon-large'></i>
+                Attendence Management
+              </div>
+              <div class='panel-body'>
+                <table class='table table-bordered'>
+                  <tbody>
+                    <tr>
+                      <th style="width:30%">File Name</th>
+                      <td><input name="attendFileName" id="attFileName"/></td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Attendence Date
+                      </th>
+                      <td>
+                        DK what to extract for this
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>File (Attendence)</td>
+                      <td><input type="file" id="attfileName"/></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <button>Upload  Attendence</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+
+
+
+
+          <div class='page-header'>
+            <h4>Course Material Upload</h4>
+          </div>
+          <form name="attendenceForm" action="#" method="post">
+            <div class='panel panel-default grid'>
+              <div class='panel-heading'>
+                <i class='icon-table icon-large'></i>
+                Course Material
+              </div>
+              <div class='panel-body'>
+                <table class='table'>
+                  <tbody>
+                    <tr>
+                      <th style="width:30%">File Name</th>
+                      <td><input name="cMaterialName" id="cMaterialName" type="text"/></td>
+                    </tr>
+                    <tr>
+                      <th>
+                        For Date
+                      </th>
+                      <td>
+                        Is via date? Dropdown?
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>File (Materials)</td>
+                      <td><input type="file" id="attfileName"/></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <button>Upload Material</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+
+
+
+
+          <div class='page-header'>
+            <h4>Student Grades Upload</h4>
+          </div>
+          <form name="attendenceForm" action="#" method="post">
+            <div class='panel panel-default grid'>
+              <div class='panel-heading'>
+                <i class='icon-table icon-large'></i>
+                Upload Classlist with Grades
+              </div>
+              <div class='panel-body'>
+                Note: Download student classlist at "classlist" on the left
+                <table class='table'>
+                  <tbody>
+                    <tr>
+                      <th style="width:30%">Assignment Name</th>
+                      <td><input name="assignmentGradeName" id="assignmentGradeName" type="text"/></td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Assignment Percentage <br> *optional
+                      </th>
+                      <td>
+                        <input name="assignmentPer" id="assignmentPer" type="text"/>%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>File (Materials)</td>
+                      <td><input type="file" id="gradesfileName"/></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <button>Upload Grades</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

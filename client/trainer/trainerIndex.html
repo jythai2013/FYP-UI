@@ -1,0 +1,57 @@
+<template name="trainerIndex">
+  <div class='main page'>
+    <!-- Navbar -->
+    <div class='navbar-trainer navbar-default' id='navbar-trainer'>
+      <a class='navbar-brand' href='#'>
+        STERLING Training Hub
+      </a>
+      <ul class='nav navbar-nav pull-right'>
+        <li class='dropdown'>
+          <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+            <i class='icon-envelope'></i>
+            Messages
+            <span class='badge'>5</span>
+            <b class='caret'></b>
+          </a>
+          <ul class='dropdown-menu'>
+            <li>
+              <a href='#'>New message</a>
+            </li>
+            <li>
+              <a href='#'>Inbox</a>
+            </li>
+            <li>
+              <a href='#'>Out box</a>
+            </li>
+            <li>
+              <a href='#'>Trash</a>
+            </li>
+          </ul>
+        </li>
+        <li class='dropdown user'>
+          <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+            <i class='icon-user'></i>
+            <strong>Stella WONG</strong>
+            <img class="img-rounded" src="#" />
+            <b class='caret'></b>
+          </a>
+          <ul class='dropdown-menu'>
+            <li>
+              <a href='#'>Edit Profile</a>
+            </li>
+            <li class='divider'></li>
+            <li>
+              <a href="/">Sign out</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    {{> yield}}   
+  </div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" type="text/javascript"></script>
+  <script src="js/modernizr.min.js" type="text/javascript"></script>
+  <script src="js/application-985b892b.js" type="text/javascript"></script>
+
+</template>
