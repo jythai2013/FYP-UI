@@ -6,7 +6,7 @@
 	 	user.userID = options.userId;
 	 	user.userIDType = options.userIdType;
 
-	 	user.fullname = options.fullname;
+	 	user.fullName = options.fullName;
 	 	user.gender = options.gender;
 	 	user.mobileNo = options.mobileNo;
 	 	user.accessType = options.accessType;
