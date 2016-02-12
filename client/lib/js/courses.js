@@ -75,11 +75,25 @@ Template.course.helpers({
 		var currentCourse=str.substr(position+1);
 		//console.log(currentCourse + "Code");
 
-		var size = Courses.find({courseCode:currentCourse}).count();
-		//console.log(size + " HERE size");
+		//var size = Courses.find({courseCode:currentCourse}).count();
+		var size = Courses.findOne({courseCode:currentCourse});
+		console.log(size);
 		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
-		//console.log(a + " a");
-		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
+
+		var trainersArr = new Array();
+		for(var x = 0, l = a.length; x < l;  x++){
+			var entry = a[x].trainerID;
+			var trainer = Meteor.users.findOne({_id:entry});
+    		var fullName = trainer.firstName + " " + trainer.lastName;
+			trainersArr.push(fullName);
+    	}
+
+    	trainersArr.forEach(function(entry) {
+   			console.log(entry + " full name");
+
+		});
+
+		return trainersArr;
 		
 	}
 });
@@ -233,14 +247,16 @@ Template.addTrainer.events({
 		var addTrainers = document.getElementsByName("newTrainersC");
 		var addTrainersArr = new Array();
 		for(var x = 0, l = addTrainers.length; x < l;  x++){
+   			console.log(addTrainers[x] + "addTrainers line 236");
+			
 			addTrainersArr.push(addTrainers[x].value);
     	}
 
     	addTrainersArr.forEach(function(entry) {
-   			console.log(entry);
+   			console.log(entry + "addTrainers");
 		});
 
-    	console.log(addTrainers+ " SIZE");
+    	console.log(addTrainers.length+ " SIZE");
 
     	//extract course
 		var url =  window.location.href;

@@ -55,8 +55,12 @@
       		addTrainersArr.forEach(function(trainer) {
    				Courses.update(_id, {
 	        		$push: {
-	          			courseTrainers: {trainerName: trainer}
+	          			courseTrainers: {
+
+	          				trainerID: trainer
+	          				}
 	        		}
+	        		
 	        	});
 			});
 		},
