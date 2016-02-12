@@ -2207,12 +2207,6 @@ th {
     border-bottom-width: 2px
 }
 
-.table-hover>tbody>tr:hover>td,
-.table>tbody>tr:hover>td,
-.table-hover>tbody>tr:hover>th,
-.table>tbody>tr:hover>th {
-    background-color: whitesmoke
-}
 table col[class*="col-"] {
     position: static;
     float: none;
