@@ -23,7 +23,7 @@ Meteor.methods({
 			rObj.userId = options.userId;
 			rObj.response = options.response;
 			responses.push(rObj);
-			Feedback.update({qnID:options.qnID},{$set{response:responses}})
+			Feedback.update({qnID:options.qnID},{$set:{response:responses}});
 		}
 		
 	},
