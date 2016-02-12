@@ -26,7 +26,7 @@ template(name="administratorList")
                 tbody
                   each administrators
                     tr
-                      td #{firstName}  #{lastName} 
+                      td #{fullName} 
                       td  
                         a.btn.admin-btn.bt-sn(data-target="#viewAdminDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars, Access Rights
                         +viewAdminParticulars
@@ -51,14 +51,10 @@ template(name="addAdminAcctForm")
             table.table(style="background:#333")
               tbody
                 tr
-                  th First Name
-                  td
+                  th Enter Full Name
+                  td(colspan="3")
                     .form-group
-                      input.form-control(type="text", id="firstName")
-                  th Last Name  
-                  td 
-                    .form-group
-                      input.form-control(type="text", id="lastName") 
+                      input.form-control(type="text", id="sName")
                 tr
                   td Email
                   td
@@ -118,7 +114,7 @@ template(name="viewAdminParticulars")
               tbody  
                 tr 
                   td Name
-                  td #{firstName} #{lastName}
+                  td #{fullName}
                 tr
                   td Mobile No
                   td 
@@ -145,7 +141,7 @@ template(name="deleteAdminForm")
               tbody  
                 tr
                   td(colspan="2") Are you sure you want to delete: 
-                  b #{firstName} #{lastName}
+                  b #{fullName}
                 tr
                   td Mobile No:
                   td #{mobileNo}

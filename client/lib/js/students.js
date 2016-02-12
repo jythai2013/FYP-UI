@@ -53,7 +53,7 @@ Template.studentList.helpers({
 			return Meteor.users.find({userType:{"learner":true}});
 		}
 		var regName = new RegExp(".*"+studentName+".*","i");
-		var v2 = Meteor.users.find({$or:[{"firstName":regName},{"lastName":regName}], userType:{"learner":true}});
+		var v2 = Meteor.users.find({$or:[{"fullName":regName}], userType:{"learner":true}});
 		if(verbose){
 			console.log(regName);
 			console.log(v2);
@@ -76,8 +76,7 @@ Template.addStudentAcctForm.events({
 
 		//TODO: Validation of input		
 		var obj = new Object();
-		obj.firstName = 		document.getElementById("firstName").value;
-		obj.lastName = 			document.getElementById("lastName").value;
+		obj.fullName = 		document.getElementById("sName").value;
 		obj.gender = 				document.getElementById("gender").value;
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
@@ -108,8 +107,7 @@ Template.registerForCourse.events({
 
 		//TODO: Validation of input		
 		var obj = new Object();
-		obj.firstName = 		document.getElementById("firstName").value;
-		obj.lastName = 			document.getElementById("lastName").value;
+		obj.fullName = 		document.getElementById("sName").value;
 		obj.gender = 			template.find('input:radio[name=gender]:checked');
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;

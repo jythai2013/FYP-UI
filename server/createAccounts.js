@@ -6,8 +6,7 @@
 	 	user.userID = options.userId;
 	 	user.userIDType = options.userIdType;
 
-	 	user.firstName = options.firstName;
-	 	user.lastName = options.lastName;
+	 	user.fullname = options.fullname;
 	 	user.gender = options.gender;
 	 	user.mobileNo = options.mobileNo;
 	 	user.accessType = options.accessType;
@@ -85,15 +84,14 @@
 		},
 
 
-		'createAdminAccount': function createAdminAccount(sEmail, sPassword, sFirstName, sLastName, sMobileNo, sAccessType){
+		'createAdminAccount': function createAdminAccount(sEmail, sPassword, sName, sMobileNo, sAccessType){
 			console.log(">> Start: CreateAdminAccount")
 			var userTypeObj = {admin: true};
 
 			var options = {
 				email: sEmail,
 				password: sPassword,
-				firstName: sFirstName,
-				lastName: sLastName,
+				fullname: sName,
 				mobileNo: sMobileNo,
 				accessType: sAccessType,
 				userType: userTypeObj

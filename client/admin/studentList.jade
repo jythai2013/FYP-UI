@@ -45,7 +45,7 @@ template(name="studentList")
                 tbody
                   each students
                     tr
-                      td #{firstName}  #{lastName}
+                      td #{fullName}
                       td 
                         a.btn.admin-btn.bt-sn(data-target="#viewParticulars#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                       +viewParticularsForm
@@ -69,16 +69,12 @@ template(name="addStudentAcctForm")
               table#dataTables-example.table(style="background:#333")
                 tbody  
                   tr
-                  td First Name
-                  td(style="width: 50%")
+                  td Full Name
+                  td(colspan="3") 
                     .form-group
-                      input.form-control(type="text", id="firstName")
-                  td Last Name
-                  td(style="width: 50%") 
-                    .form-group
-                      input.form-control(type="text", id="lastName") 
+                      input.form-control(type="text", id="sName") 
                 tr
-                  td Gender
+                  td(style="width: 50%")  Gender
                   td 
                     label.radio
                       input#gender(type="radio", name="gender", value="Male", checked="")
@@ -189,7 +185,7 @@ template(name="viewParticularsForm")
                 tbody  
                   tr
                   td Name
-                  td #{firstName} #{lastName}
+                  td #{fullName}
                   td ID Number
                   td 
                     #{userID}
@@ -276,7 +272,7 @@ template(name="deleteStudentForm")
                   td Are you sure you want to delete
                 tr
                   td Name
-                  td #{firstName} #{lastName}
+                  td #{fullName}
                 tr
                   td Mobile No
                   td #{mobileNo}

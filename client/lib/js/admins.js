@@ -24,8 +24,7 @@ Template.addAdminAcctForm.events({
 	"click #addAdminAcctButton" : function createAdminEventHandler(event, template) {
 		console.log("Sys: Collect Admin Information");
 		//TODO: Validation of input
-		var firstName = document.getElementById("firstName").value;
-		var lastName = document.getElementById("lastName").value;
+		var fullName = document.getElementById("sName").value;
 		var mobileNo = document.getElementById("mobileNo").value;
 		var email = document.getElementById("email").value;
 		var password = mobileNo;
@@ -37,8 +36,8 @@ Template.addAdminAcctForm.events({
 		console.log("Access Rights Assigned: " + array);
 		var adminAccessId = array;
 		
-		Meteor.call("createAdminAccount", email, password, firstName, lastName, mobileNo, adminAccessId);
-		console.log("Sys: Admin Information Saved ("+firstName+","+lastName+","+mobileNo+","+email+","+password+","+adminAccessId+")");
+		Meteor.call("createAdminAccount", email, password, fullName, mobileNo, adminAccessId);
+		console.log("Sys: Admin Information Saved ("+fullName+","+mobileNo+","+email+","+password+","+adminAccessId+")");
 	}
 });
 

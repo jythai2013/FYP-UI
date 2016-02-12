@@ -26,7 +26,7 @@ template(name="trainerList")
                 tbody
                   each trainers
                     tr
-                      td #{firstName}  #{lastName} 
+                      td #{fullName} 
                       td  
                         a.btn.admin-btn.bt-sn(data-target="#viewTrainerDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                         +viewTrainerParticulars
@@ -53,7 +53,7 @@ template(name="viewCVForm")
                 tr
                   th Name
                   td
-                    #{firstName} #{lastName}
+                    #{fullName}
                 tr
                   td CV Upload
                   td IDK HOW :)
@@ -84,7 +84,7 @@ template(name="viewTrainerParticulars")
                 tr
                   th Name
                   td
-                    #{firstName} #{lastName}, #{userID}
+                    #{fullName}, #{userID}
                 tr
                   td Nationality
                   td
@@ -126,15 +126,10 @@ template(name="addTrainerAcctForm")
             table#dataTables-example.table(style="background:#333")
               tbody
                 tr
-                  th First Name
-                  td
+                  th Full Name
+                  td(colspan="3")
                     .form-group
-                      input.form-control(type="text", id="firstName")
-                  th Last Name  
-                  td 
-                    .form-group
-                      input.form-control(type="text", id="lastName")
-                tr
+                      input.form-control(type="text", id="sName")
                   td Nationality
                   td
                     .form-group
@@ -204,7 +199,7 @@ template(name="deleteTrainerForm")
                   td Are you sure you want to delete
                 tr
                   td Name
-                  td #{firstName} #{lastName}
+                  td #{fullName}
                 tr
                   td Mobile No.
                   td #{mobileNo}
