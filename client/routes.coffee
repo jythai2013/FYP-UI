@@ -8,6 +8,7 @@ navRoutes = [
   new NavRoute('administratorList', '', {parentName: 'AccountsMgmt', label: "Adminitstrator List"})
 
   # Certificate
+  new NavRoute('groupExcelUpload', 'fa-institution', {label: "Group Signup"})
   new NavRoute('certificate', 'fa-institution', {label: "Certs Management"})
   
   # Facility

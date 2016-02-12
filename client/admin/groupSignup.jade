@@ -1,0 +1,31 @@
+template(name="groupExcelUpload")
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Group Signup
+      // /.col-lg-12
+    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Upload Student Details
+            
+            form(name="", role="form", action="#", method="post")
+            .table-responsive
+              table#dataTables-example.table
+                tbody  
+                  tr
+                    th Contact Person Name
+                    td
+                      input.form-control(type="text", id="contactName")
+                  tr
+                    th Contact Person Contact Number
+                    td
+                      input.form-control(type="text", id="contactNo")
+                  tr
+                    th File
+                    td 
+                      input(type="file", id="fileName")
+            button#downloadGroupForm.btn.btn-save(type="button", data-dismiss="modal") Download Sample Excel File
+            button#uploadGroupButton.btn.btn-save(type="button", data-dismiss="modal") Upload Excel File
