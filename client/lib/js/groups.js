@@ -172,20 +172,16 @@ Template.addClass.events({
 		var gDeadline = document.getElementById("gNewDeadline").value;
 		var gVenue = document.getElementById("gVenue").value;
 		var trainerID = document.getElementById("gTrainers").value;
-		var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
-		var trainerLastName = Meteor.users.findOne(trainerID).lastName;
-		var gTrainers = trainerFirstName + " " + trainerLastName;
-
-
-
-		var gStatus = "Scheduled";
+		// var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
+		// var trainerLastName = Meteor.users.findOne(trainerID).lastName;
+		// var gTrainers = trainerFirstName + " " + trainerLastName;
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		var grpNumI2 = grpNumI1+1;
 		var grpNumI = "G"+grpNumI2;
       console.log(grpNumI + "group number");
 		console.log("here4");
-		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus, gVenue, gNoOfHours, gTrainers);
+		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gVenue, gNoOfHours, trainerID);
 		//console.log(Groups.find({}).fetch();
 	}
 });

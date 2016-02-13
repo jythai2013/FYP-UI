@@ -203,8 +203,8 @@ template(name="addClass")
                   td
                     .form-group.input-group
                       select(name="type", id="gTrainers", style="color: black")
-                        each trainers
-                          option(value="#{_id}") #{firstName} #{lastName}
+                        each courseTrainers
+                          option(value="#{_id}") {{.}}
                     
           // /.table-responsive
         .modal-footer
@@ -228,7 +228,7 @@ template(name="addTrainer")
                 .form-group()
                   select(name="newTrainersC", style="color: black; width: 100%")
                     each trainers
-                      option(value="#{_id}") #{firstName} #{lastName}     
+                      option(value="#{_id}") #{fullName}    
               td 
                 button#addMoreTrainers.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
                     i.fa.fa-plus  
