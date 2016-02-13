@@ -9,7 +9,7 @@ navRoutes = [
 
   # Certificate
   new NavRoute('groupExcelUpload', 'fa-institution', {label: "Group Signup"})
-  new NavRoute('certificate', 'fa-institution', {label: "Certs Management"})
+  new NavRoute('certificateManagement', 'fa-institution', {label: "Certs Management"})
   
   # Facility
   new NavRoute('FacilityModule', 'fa-institution', {label: "Facility Management"})
