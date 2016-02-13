@@ -1,4 +1,4 @@
-template(name="certificate")
+template(name="certificateManagement")
   #page-wrapper
     .row
       .col-lg-12
@@ -40,7 +40,18 @@ template(name="certificate")
                 thead
                   th Title
                   th Course Name
-                  th Date Uploaded
-                  th File
-                  th Delete
+                  th startDate
+                  th endDate
+                  th click
                 tbody
+                
+                  each finishedGroup
+                    #{grpNum    }
+                    #{courseCode}
+                    #{startDate }
+                    #{endDate   }
+                    #{button    }
+                    
+                    
+                
+                

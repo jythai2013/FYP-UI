@@ -15,6 +15,14 @@ Template.certificateTemplate.onRendered(function(){
 	// console.log("End");
 });
 
+Template.certificateManagement.helpers({
+	"finishedGroup":function finishedGroups(){
+		console.log(Groups.find({endDate:{$lte:new Date()}}).fetch()); //TODO: ensure the correct groups are returned
+		return Groups.find({endDate:{$gte:new Date()}});
+	}
+	
+});
+
 // Template.generateCert.events({
 // 	"#generateCerts click":function(event, templateT){
 // 		console.log(this);

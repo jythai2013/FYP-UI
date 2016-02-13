@@ -1,12 +1,12 @@
 Meteor.methods({
-	"createFeedback":function createFeedback(options){
-		console.log(options);
-		Feedback.insert(options);
-	},
+	//"createFeedback":function createFeedback(options){
+	//	console.log(options);
+	//	Feedback.insert(options);
+	//},
 	
-	"readFeedback":function readFeedback(options){
-		
-	},
+	//"readFeedback":function readFeedback(options){
+	//	
+	//},
 	
 	"upsertFeedback":function upsertFeedback(options){
 		// reads db if qnID alr exists. if yes, update the response array with the latest response (ie push it in). else insert the whole thing
@@ -28,16 +28,24 @@ Meteor.methods({
 		
 	},
 	
-	"updateFeedback":function updateFeedback(cCode, options){
-		console.log(cCode);
-		console.log(options);
-		Courses.update({courseCode: cCode}, {
-			$set: options
-		});
+	"createNewQuestion":function(){
+		
 	},
 	
-	"deleteFeedback":function deleteFeedback(_id){
-		console.log(_id);
-		Feedback.remove(_id);
+	"deleteOldQuestion":function(){
+		
 	}
+	
+	//"updateFeedback":function updateFeedback(cCode, options){
+	//	console.log(cCode);
+	//	console.log(options);
+	//	Courses.update({courseCode: cCode}, {
+	//		$set: options
+	//	});
+	//},
+	
+	//"deleteFeedback":function deleteFeedback(_id){
+	//	console.log(_id);
+	//	Feedback.remove(_id);
+	//}
 });
