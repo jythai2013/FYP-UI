@@ -1,5 +1,5 @@
 
-Template.testyAttendance.events({
+Template.trainerUploadAttendance.events({
 	"click #updateAttendance":function updateAttendanceHandler(e, template){
 		group_id = 
 		studentId = 
@@ -9,20 +9,24 @@ Template.testyAttendance.events({
 	},
 	
 	"click #generateExcel":function attendanceExcelGeneration(e, template){
-		//console.log("generateExcel");
-		//console.log(e);
-		//console.log(template);
+		e.preventDefault();
+		// console.log("generateExcel");
+		// console.log(e);
+		// console.log(template);
+		// console.log(Template.currentData());
+		var groupId = $("#").value
 		var inData = "";
-		//var inData = []; //TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
-		var inWs_name = "";
-		var inExcelName = "";
+		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
+		//var inData = []; 
+		var inWs_name = "sheet 1";
+		var inExcelName = "test";
 		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
 		//console.log("generateExcel");
 	}
 	
 });
 
-Template.testyAttendance.onRendered(function(){
+Template.trainerUploadAttendance.onRendered(function(){
 	//var XLSX;
 	if(typeof require !== 'undefined') XLSX = require('xlsx');
 	//XLSX = require('xlsx');
@@ -36,7 +40,7 @@ Template.testyAttendance.onRendered(function(){
 	//console.log(basepath);
 	
 	//register event listerners for file drop or add
-	DOMElement = $('#inputExcelElement')[0];
+	DOMElement = $('#inputExcelElementAttendance')[0];
 	DOMElement.addEventListener('change', handleFile, false);
 	DOMElement.addEventListener('drop', handleDrop, false);
 });
@@ -103,100 +107,67 @@ function processExcelFile(workbook){
 	// /* Get the value */
 	// var desired_value = desired_cell.v;
 	
-	var cellOf_CourseCode 						= 'C6';
-	var cellOf_CourseStartDate 			= 'C7';
-	var cellOf_ClassNumber 					= 'C8';
-	var cellOf_ContactPersonName			= 'C11';
-	var cellOf_ContactPersonNo				= 'C12';	
-	var cellOf_CompanyAddress				= 'C13';
-	var cellOf_CompanyOfficeNo				= 'C14';
-	var cellOf_CompanyEmail					= 'C15';
+	var cellOf_CourseID	= 'C4';
+	var cellOf_GroupID 	= 'C5';
+	var CourseID	= worksheet[cellOf_CourseID].v;
+	var GroupID 	= worksheet[cellOf_GroupID].v;
+	//console.log(GroupID);
 	
-	var startingLineNumber	= 19;
+	var startingLineNumber	= 9;
 	var currentLineNumber		= startingLineNumber;
 	
-	var cellOf_SN											= 'A';
-	var cellOf_FirstName	        	  = 'B';
-	var cellOf_LastName	            	= 'C';
-	var cellOf_DateOfBirth	      	  = 'D';
-	var cellOf_Gender	             		= 'E';
-	var cellOf_IDType	             		= 'F';
-	var cellOf_IDNumber	           		= 'G';
-	var cellOf_Nationality	          = 'H';
-	var cellOf_Email	                = 'I';
-	var cellOf_ResidentialAddress	 		= 'J';
-	var cellOf_PostalCode	         		= 'K';
-	var cellOf_MobileNo	           		= 'L';
-	var cellOf_ProficiencyIn					= 'M';
-	var cellOf_HighestQualification		= 'N';
-	var cellOf_NextOfKinName					= 'O';
-	var cellOf_Relationship	        	= 'P';
-	var cellOf_NOKNo		              = 'Q';
-	var cellOf_NOKAddress	          	= 'R';
-	var cellOf_NOKPostalCode  	    	= 'S';
+	var dates = new Array();
+	var startOfTheRest = "D"
+	var currentOfTheRest = startOfTheRest;
+	var datesNamesLineNumber = startingLineNumber - 1;
+	while(cellIsFilled(workbook, currentOfTheRest + datesNamesLineNumber)){
+		//console.log(new Date(worksheet[currentOfTheRest + datesNamesLineNumber].v));
+		//console.log(new Date((worksheet[currentOfTheRest + datesNamesLineNumber].v - (25567 + 1))*86400*1000));
+		dates.push(new Date((worksheet[currentOfTheRest + datesNamesLineNumber].v - (25567 + 1))*86400*1000));
+		currentCharCode = currentOfTheRest.charCodeAt(0);
+		currentOfTheRest = String.fromCharCode(currentCharCode+1)
+	}
+	// console.log(dates);
 	
-	while(cellIsFilled(workbook, cellOf_FirstName + currentLineNumber)){
-		SN										= worksheet[cellOf_SN + currentLineNumber].v;
-		FirstName	        	  = worksheet[cellOf_FirstName + currentLineNumber].v;
-		LastName	            = worksheet[cellOf_LastName + currentLineNumber].v;
-		DateOfBirth	      	  = worksheet[cellOf_DateOfBirth + currentLineNumber].v;
-		Gender	              = worksheet[cellOf_Gender + currentLineNumber].v;
-		IDType	              = worksheet[cellOf_IDType + currentLineNumber].v;
-		IDNumber	            = worksheet[cellOf_IDNumber + currentLineNumber].v;
-		Nationality	          = worksheet[cellOf_Nationality + currentLineNumber].v;
-		Email	                = worksheet[cellOf_Email + currentLineNumber].v;
-		ResidentialAddress	  = worksheet[cellOf_ResidentialAddress + currentLineNumber].v;
-		PostalCode	          = worksheet[cellOf_PostalCode + currentLineNumber].v;
-		MobileNo	            = worksheet[cellOf_MobileNo + currentLineNumber].v;
-		ProficiencyIn				  = worksheet[cellOf_ProficiencyIn + currentLineNumber].v;
-		HighestQualification  = worksheet[cellOf_HighestQualification + currentLineNumber].v;
-		NextOfKinName				  = worksheet[cellOf_NextOfKinName + currentLineNumber].v;
-		Relationship	        = worksheet[cellOf_Relationship + currentLineNumber].v;
-		NOKNo		              = worksheet[cellOf_NOKNo + currentLineNumber].v;
-		NOKAddress	          = worksheet[cellOf_NOKAddress + currentLineNumber].v;
-		NOKPostalCode  	    	= worksheet[cellOf_NOKPostalCode + currentLineNumber].v;
+	var cellOf_StudentName	= 'B';
+	var cellOf_StudentID  	= 'C';
+	
+	while(cellIsFilled(workbook, cellOf_StudentID + currentLineNumber)){
+		var currentOfTheRest = startOfTheRest;
+		var StudentName = worksheet[cellOf_StudentName + currentLineNumber].v;
+		var StudentID	  = worksheet[cellOf_StudentID + currentLineNumber].v;
+		var attendances 		  = new Object();
+		while(cellIsFilled(workbook, currentOfTheRest + currentLineNumber)){
+			// console.log(currentOfTheRest);
+			// console.log(currentLineNumber);
+			// console.log(worksheet[currentOfTheRest + currentLineNumber].v);
+			// console.log(currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0));
+			// console.log(dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]);
+			// console.log(attendances[dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]]);
+			attendances[new Date(dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)])] = worksheet[currentOfTheRest + currentLineNumber].v
+			// console.log(attendances);
+			// console.log(currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0));
+			// console.log(dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]);
+			// console.log(attendances[dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]]);
+			// console.log("");
+			// console.log("");
+			// console.log("");
+			currentCharCode = currentOfTheRest.charCodeAt(0);
+			currentOfTheRest = String.fromCharCode(currentCharCode+1)
+		}
 		
 		debugObj = new Object();
-		debugObj.SN									 	= SN									;
-		debugObj.firstName	        	= FirstName	        	;
-		debugObj.lastName	           	= LastName	          ;
-		debugObj.dateOfBirth	      	= DateOfBirth	      	;
-		debugObj.gender	            	= Gender	            ;
-		debugObj.userIDType	          = IDType	            ;
-		debugObj.userID	          		= IDNumber	          ;
-		debugObj.userType	          	= {learner:true}	    ;
-		debugObj.nationality	        = Nationality	        ;
-		debugObj.email	              = Email	              ;
-		debugObj.resAddr	 						= ResidentialAddress	;
-		debugObj.postalCode	         	= PostalCode	        ;
-		debugObj.mobileNo	           	= MobileNo	          ;
-		debugObj.password	           	= MobileNo	          ;
-		debugObj.ProficiencyIn				= ProficiencyIn				;
-		debugObj.highestQualification = HighestQualification;
-		debugObj.nokName							= NextOfKinName				;
-		debugObj.nokReln	       			= Relationship	      ;
-		debugObj.nokTel		            = NOKNo		            ;
-		debugObj.NOKAddress	        	= NOKAddress	        ;
-		debugObj.NOKPostalCode  	  	= NOKPostalCode  	 		;
+		debugObj.StudentId		= StudentID	  ;
+		debugObj.attendance	  = attendances	;
+		debugObj.dates	  		= dates				;
+		debugObj.groupId      = GroupID	    ;
 		console.log(debugObj);
-		
-		/*
-	 	user.accessType = options.accessType;
-	 	user.company = options.compnyName;
-	 	user.officeNo = options.officeNo;
-		user.proficiency = options.proficiency;
-	 	user.speciality = options.speciality;		
-		user.remarks
-		*/
 		
 		
 		//TODO: validations
 		
-		//TODO: actually create the accounts (test)
-		// unused function parameters: password	inCompany	inLang	residenceTel	officeTel	fRemarks
-		// unused excel parameters:  SN	ProficiencyIn
-		// Meteor.call("createTrainerAccount", Email, password, FirstName, LastName, Gender, IDNumber, IDType, inCompany, ResidentialAddress, PostalCode, DateOfBirth, Nationality, inLang, residenceTel, MobileNo, officeTel, NextOfKinName, NOKNo, NOKAddress, Relationship, fRemarks, HighestQualification);
-		Meteor.call("createLearnerAccount2", debugObj);
+		//actually update the accounts with the attendances
+		Meteor.call("editAttendances", debugObj);
 		
 		currentLineNumber += 1;
 	}
@@ -220,7 +191,7 @@ function processExcelFile(workbook){
 
 		/* Get the value */
 		var desired_value = desired_cell.v;
-		//console.log(desired_value);
+		// console.log(desired_value);
 		
 		if(desired_value.toString().trim().length > 0) return true;
 		return false;

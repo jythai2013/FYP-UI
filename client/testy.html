@@ -24,30 +24,30 @@
 
 
 <template name="groupRegistration">
-	{{>inputExcelElement}}
+	{{>testyInputExcelElement}}
 </template>
 
 <template name="testyAttendance">
-	{{>generateExcel}}
-	{{>inputExcelElement}}
+	{{>testyGenerateExcel}}
+	{{>testyInputExcelElement}}
 </template>
 
 <template name="testyGrades">
-	{{>generateExcel}}
-	{{>inputExcelElement}}
+	{{>testyGenerateExcel}}
+	{{>testyInputExcelElement}}
 </template>
 
 
 
 
-<template name="generateExcel">
+<template name="testyGenerateExcel">
 	<script type="text/javascript" src="http://oss.sheetjs.com/js-xlsx/xlsx.core.min.js"></script>
 	<script type="text/javascript" src="http://sheetjs.com/demos/Blob.js"></script>
 	<script type="text/javascript" src="http://sheetjs.com/demos/FileSaver.js"></script>
 	<button id="generateExcel"> Generate Excel!! </button>
 </template>
 
-<template name="inputExcelElement">
+<template name="testyInputExcelElement">
 	<script src="http://oss.sheetjs.com/js-xlsx/shim.js"></script>
 	<script src="http://oss.sheetjs.com/js-xlsx/jszip.js"></script>
 	<script src="http://oss.sheetjs.com/js-xlsx/xlsx.js"></script>

@@ -96,7 +96,7 @@
               <div class='panel-body'>
                 <table class='table table-bordered'>
                   <tbody>
-                    <tr>
+                    <!--<tr>
                       <th style="width:30%">File Name</th>
                       <td><input name="attendFileName" id="attFileName"/></td>
                     </tr>
@@ -111,10 +111,11 @@
                     <tr>
                       <td>File (Attendence)</td>
                       <td><input type="file" id="attfileName"/></td>
-                    </tr>
+                    </tr>-->
                     <tr>
                       <td colspan="2">
-                        <button>Upload  Attendence</button>
+                        {{>trainerUploadAttendance}}
+												<input type="file" id="inputExcelElementAttendance">
                       </td>
                     </tr>
                   </tbody>
@@ -181,7 +182,7 @@
                 Note: Download student classlist at "classlist" on the left
                 <table class='table'>
                   <tbody>
-                    <tr>
+                    <!--<tr>
                       <th style="width:30%">Assignment Name</th>
                       <td><input name="assignmentGradeName" id="assignmentGradeName" type="text"/></td>
                     </tr>
@@ -196,10 +197,11 @@
                     <tr>
                       <td>File (Materials)</td>
                       <td><input type="file" id="gradesfileName"/></td>
-                    </tr>
+                    </tr>-->
                     <tr>
                       <td colspan="2">
-                        <button>Upload Grades</button>
+                        {{>trainerUploadGrades}}
+												<input type="file" id="inputExcelElementGrades">
                       </td>
                     </tr>
                   </tbody>
@@ -215,4 +217,28 @@
       </div>
     </div>
   </div>
+</template>
+
+
+<template name="generateExcel">
+	<script type="text/javascript" src="http://oss.sheetjs.com/js-xlsx/xlsx.core.min.js"></script>
+	<script type="text/javascript" src="http://sheetjs.com/demos/Blob.js"></script>
+	<script type="text/javascript" src="http://sheetjs.com/demos/FileSaver.js"></script>
+	<button id="generateExcel"> Generate Excel!! </button>
+</template>
+
+<template name="inputExcelElement">
+	<script src="http://oss.sheetjs.com/js-xlsx/shim.js"></script>
+	<script src="http://oss.sheetjs.com/js-xlsx/jszip.js"></script>
+	<script src="http://oss.sheetjs.com/js-xlsx/xlsx.js"></script>
+</template>
+
+<template name="trainerUploadAttendance">
+	{{>generateExcel}}
+	{{>inputExcelElement}}
+</template>
+
+<template name="trainerUploadGrades">
+	{{>generateExcel}}
+	{{>inputExcelElement}}
 </template>

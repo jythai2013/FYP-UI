@@ -1,28 +1,30 @@
 
-Template.testyGrades.events({
-	"click #updateAttendance":function updateGradesHandler(e, template){
-		group_id = 
-		studentId = 
-		dateI = 
-		attendanceTrueOrFalse = 
-		Meteor.call("editGrades", group_id, studentId, dateI, attendanceTrueOrFalse)
-	},
+Template.trainerUploadGrades.events({
+	// "click #updateGrades":function updateGradesHandler(e, template){
+		// group_id = 
+		// studentId = 
+		// dateI = 
+		// attendanceTrueOrFalse = 
+		// Meteor.call("editGrades", group_id, studentId, dateI, attendanceTrueOrFalse)
+	// },
 	
 	"click #generateExcel":function gradesExcelGeneration(e, template){
-		//console.log("generateExcel");
-		// console.log(e);
-		// console.log(template);
+		e.preventDefault();
+		// console.log("generateExcel");
+		console.log(e);
+		console.log(template);
 		var inData = "";
-		//var inData = []; //TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
-		var inWs_name = "";
-		var inExcelName = "";
+		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
+		//var inData = []; 
+		var inWs_name = "sheet 1";
+		var inExcelName = "test";
 		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
 		//console.log("generateExcel");
 	}
 	
 });
 
-Template.testyGrades.onRendered(function(){
+Template.trainerUploadGrades.onRendered(function(){
 	//var XLSX;
 	if(typeof require !== 'undefined') XLSX = require('xlsx');
 	//XLSX = require('xlsx');
@@ -36,7 +38,7 @@ Template.testyGrades.onRendered(function(){
 	//console.log(basepath);
 	
 	//register event listerners for file drop or add
-	DOMElement = $('#inputExcelElement')[0];
+	DOMElement = $('#inputExcelElementGrades')[0];
 	DOMElement.addEventListener('change', handleFile, false);
 	DOMElement.addEventListener('drop', handleDrop, false);
 	// alert();
@@ -92,6 +94,7 @@ function handleFile(e) {
 
 
 function processExcelFile(workbook){
+	console.log("processExcelFile")
 	/* Get worksheet name */
 	var first_sheet_name = workbook.SheetNames[0];
 	
@@ -121,7 +124,7 @@ function processExcelFile(workbook){
 		currentCharCode = currentOfTheRest.charCodeAt(0);
 		currentOfTheRest = String.fromCharCode(currentCharCode+1)
 	}
-	console.log(categories);
+	// console.log(categories);
 	
 	var cellOf_StudentName	= 'B';
 	var cellOf_StudentID  	= 'C';
@@ -165,6 +168,7 @@ function processExcelFile(workbook){
 		
 		currentLineNumber += 1;
 	}
+	console.log("processExcelFile end")
 }
 
 	function cellIsFilled(workbook, cellAddress){

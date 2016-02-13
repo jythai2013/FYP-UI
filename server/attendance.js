@@ -7,16 +7,81 @@ Meteor.methods({
 		var theGroup = Groups.findOne(group_id);
 		console.log(theGroup)
 		var dateD = new Date(dateI)
-		console.log(date)
-		if(theGroup.attendance == undefined || theGroup.attendance == null){ theGroup.attendance = {}; }
+		console.log(dateD)
+		var attendance = {};
+		if(theGroup.attendance == undefined || theGroup.attendance == null){ attendance = {}; } else{ attendance = theGroup.attendance; }
 		//if(theGroup.attendance.date == undefined || theGroup.attendance.date == null){ theGroup.attendance.date = {}; }
 		//theGroup.attendance.date[dateD].studentId = attendanceTrueOrFalse;
-		theGroup.attendance[dateD].studentId = attendanceTrueOrFalse;
+		if(attendance[dateD] == undefined || attendance[dateD] == null) attendance[dateD] = {};
+		attendance[dateD][studentId] = attendanceTrueOrFalse;
 		console.log(theGroup)
-		console.log(theGroup.attendance)
-		//console.log(theGroup.attendance.date)
-		console.log(theGroup.attendance[dateD].studentId)
-		// Attendance.
+		
+		Group.update({_id:group_id},{$set:{attendance:theGroup.attendance}})
+		
+		// theGroup.attendance is an object, with each date as attributes
+		// each date attribute of the attendance object is another object with studentIds as the attributes
+		// each studentId attribute is a boolean of his/her attendance
+	},
+	
+	"editAttendances":function editAttendances(inObj){
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		var groupId = inObj.groupId;
+		var attendances = inObj.attendance;
+		var studentId = inObj.StudentId;
+		var dates = inObj.dates;
+		var theGroup = Groups.findOne(groupId);
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		//console.log(inObj);
+		//console.log(groupId);
+		//console.log(theGroup);
+		//console.log(attendances);
+		
+		var attendance = {};
+		if(theGroup.attendance == undefined || theGroup.attendance == null){ attendance = {}; } else{ attendance = theGroup.attendance; }
+		//if(theGroup.attendance.date == undefined || theGroup.attendance.date == null){ theGroup.attendance.date = {}; }
+		//theGroup.attendance.date[dateD].studentId = attendanceTrueOrFalse;
+		for (var date in attendances) {
+			//console.log(date);
+			//if(attendance[dates[i]] == undefined || attendance[dates[i]] == null) attendance[dates[i]] = {};
+			//
+			//attendance[dates[i]][studentId] = attendances[dates[i]];
+			//console.log(attendance);
+			//i++;
+			
+			if(attendance[date]==undefined) attendance[date]={};
+			attendance[date][studentId]=attendances[date];
+			//console.log(attendance);
+		}
+		//attendances.forEach(function(currentValue, index, thisArray){
+		//	if(attendance[currentValue] == undefined || attendance[currentValue] == null) attendance[dates[index]] = {};
+		//	
+		//	attendance[dates[i]][studentId] = attendances[i];
+		//	console.log(attendance);
+		//});
+		//for(i = 0; i < attendances.length; i++){
+		//	if(attendance[attendances[i]] == undefined || attendance[attendances[i]] == null) attendance[dates[i]] = {};
+		//	
+		//	attendance[dates[i]][studentId] = attendances[i];
+		//	console.log(attendance);
+		//}
+		//console.log("");
+		//console.log("");
+		//console.log("");
+		//console.log(attendance);
+		//theGroup.attendance = attendance;
+		//console.log(theGroup);
+		
+		Groups.update({_id:groupId},{$set:{attendance:attendance}})
 		
 		// theGroup.attendance is an object, with each date as attributes
 		// each date attribute of the attendance object is another object with studentIds as the attributes
