@@ -12,27 +12,7 @@ template(name="feedbackList")
       .col-lg-12
         h1.page-header Feedback list
       // /.col-lg-12
-    // /.row
-
-    .row
-      .col-lg-12
-        .panel.panel-default
-          .panel-body
-            h4 Search Feedbacks
-              
-            .table-responsive
-              table#dataTables-example.table.table-striped.table-bordered
-                tbody
-                  tr
-                    th Search  
-                    td 
-                      input.form-control(type="text", id="courseCode", placeholder="eg. IS101 or Workplace Safety and Health")
-                      
-                    th Group
-                    td
-                      input.form-control(type="text", id="grpNo", placeholder="eg. G1")
-            
-            button#filter.btn.btn-save( style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff") filter          
+    // /.row        
 
     .row
       .col-lg-12
@@ -50,29 +30,28 @@ template(name="feedbackList")
                   tr
                     th Title
                     th Type
-                    th Date Created
-                    th Expiry Date
                     th Details
+                    th Results
                     th Remarks
                 tbody
-                  each classes
+                  each survey
                     tr
-                      td #{courseCode}  
-                      td #{grpNum}  
-                      td #{startDate}  
-                      td #{endDate}  
+                      td #{feedbackTitle}  
+                      td #{feedbackType}   
                       td
+                        a(href="feedbackQnMgmt?fbid=#{_id}", class="button btn admin-btn") 
+                            | Edit Feedback
+                      td 
                         a(href="course?cCode=#{courseCode}&cgrpNum=#{grpNum}", class="button btn admin-btn") 
-                            | Enter Class Page
-                          //+viewClassForm
-                      td
-                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteClass#{_id}")
+                            | View Results
+                      td 
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteFeedback#{_id}")
                           | Delete
-                        +deleteClass 
+                        +deleteFeedback 
    
 
 template(name="addFeedbackForm")
-  #addFeedback.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  #addFeedbackForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -86,20 +65,15 @@ template(name="addFeedbackForm")
                   th Title
                   td
                     .form-group
-                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
-                tr
-                  th Type  
-                  td 
-                    .form-group
-                      input.form-control(type="text", id="cNewName") 
+                      input.form-control(type="text", id="feedbackTitle")
                 tr
                   th Feedback Type  
                   td 
                     .form-group
-                      select(id="feedbackType")
-                        option(value="course") Course
-                        option(value="facility") Facility
-                        option(value="trainer") Trainer
+                      select(name="type", id="feedbackType", style="color: black")
+                        option(value="Course") Course
+                        option(value="Facility") Facility
+                        option(value="Trainer") Trainer
             // /.table-responsive
         .modal-footer
           button#addFeedbackButton.btn.btn-save(type="button", data-dismiss="modal") Add Feedback
@@ -127,13 +101,10 @@ template(name="deleteFeedback")
                     td Are you sure you want to delete
                   tr
                     td Title
-                    td #{courseCode} 
+                    td #{feedbackTitle} 
                   tr
-                    td Course Name
-                    td #{courseName}
-                  tr
-                    td Class
-                    td #{grpNum}
+                    td Type
+                    td #{feedbackType}
         .modal-footer
           button#deleteFeedbackButton.btn.btn-save(type="button", data-dismiss="modal") Confirm
 

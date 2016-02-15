@@ -40,7 +40,16 @@ Template.feedbackQnMgmt.helpers({
 			fakeArray.push("a")
 		}
     return fakeArray;
-	}	
+	},
+	"feedbackTitle": function() {
+		var url =  window.location.href;
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+
+		var feedbackTitle = Feedback.findOne({_id:fbId}).feedbackTitle;
+    		console.log(feedbackTitle+ " feedbackTitle")
+    	return feedbackTitle;
+	}
 });
 
 Template.radioCreate.helpers({
@@ -89,6 +98,63 @@ Template.createQn.helpers({
 	}	
 });
 
+Template.viewQn.helpers({
+	"feedbackQn": function() {
+
+		var url =  window.location.href;
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+
+		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
+    		//console.log(feedbackQnOptions+ " feedbackQnOptions")
+
+
+
+
+		// var qnOptions = new Array();
+		// for(var x = 0, l = feedbackQnOptions.length; x < l;  x++){
+		// 	var entry = feedbackQnOptions[x];
+		// // 	var trainer = Meteor.users.findOne({_id:entry});
+  // //   		var fullName = trainer.fullName;
+		// 	qnOptions.push(entry);
+  //   	}
+
+  //   	qnOptions.forEach(function(entry) {
+  //  			console.log(entry + " GET outtttttttt");
+		// });
+    	//console.log(qnOptions.length + " length GET outtttttttt");
+
+		 return qnOptions;
+	},
+	"options": function() {
+		var url =  window.location.href;
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+
+		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
+    		console.log(feedbackQnOptions+ " feedbackQnOptions")
+
+		var qnOptions = new Array();
+		for(var x = 0, l = feedbackQnOptions.length; x < l;  x++){
+			var entry = feedbackQnOptions[x].options;
+		// 	var trainer = Meteor.users.findOne({_id:entry});
+  //   		var fullName = trainer.fullName;
+			qnOptions.push(entry);
+    	}
+
+    	qnOptions.forEach(function(entry) {
+   			console.log(entry + " GET outtttttttt");
+		});
+    	return qnOptions;
+	}
+});
+
+Template.feedbackList.helpers({
+	"survey": function() {
+		return Feedback.find({});
+	}	
+});
+
 Template.feedbackQnMgmt.helpers({
 	"statusTitle": function() {
 		return Session.get('statusTitle');
@@ -123,6 +189,9 @@ Template.feedbackQnMgmt.events({
 		 console.log("noOfFields " + noOfFields);
 		 Session.set('fields', noOfFields);
 	},
+	"click #saveFeedback" : function(e) {
+		//
+	},
 	"click #editTitle" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
@@ -132,11 +201,79 @@ Template.feedbackQnMgmt.events({
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
+		var url =  window.location.href;
+    		console.log(url+ " url")
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
 		var newTitle = document.getElementById("editTitleFeedback").value;
+		var newType = document.getElementById("editFeedbackType").value;
 		//all the backend and blah
+		Meteor.call("editFeedbackDetails", fbId, newTitle, newType);
+
 		 Session.set('statusTitle', "notEditting");
 	}
 
+});
+
+Template.createQn.events({
+	"click #saveQn" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		var url =  window.location.href;
+    		console.log(url+ " url")
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+   //  		console.log(currentCourse+ " currnt course code");
+			// var meep = Feedback.findOne({_id:fbId});
+
+		var question = document.getElementById("qnQn").value;
+		var LSPQnID = "not yet";
+		 var qnType = Session.get('qnType');
+		 var optionsForQn =  new Array();
+
+		 if(qnType==="vtext" || qnType==="paraText"){
+	    		console.log( " do nth")
+		} else {
+			var qnOptions = document.getElementsByName("qnOptions");
+    		console.log(qnOptions.length+ " qn options length");
+			for(var x = 0, l = qnOptions.length; x < l;  x++){
+				var qnOption = qnOptions[x].value;				
+				optionsForQn.push(qnOption);
+				
+    		}
+	    	console.log(optionsForQn.length+ " ARR SIZE")
+		}
+		Meteor.call("createNewQuestion", fbId, question, qnType, LSPQnID, optionsForQn);
+	}
+
+});
+
+Template.addFeedbackForm.events({
+	"click #addFeedbackButton" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		var feedbackTitle = document.getElementById("feedbackTitle").value;
+		var feedbackType = document.getElementById("feedbackType").value;
+		Meteor.call("createNewFeedback", feedbackTitle, feedbackType);
+		
+	}
+
+});
+
+Template.deleteFeedback.events({
+	"click #deleteFeedbackButton" : function(e) {
+		 e.preventDefault();
+		Meteor.call("deleteFeedback", this._id);
+	}
+});
+
+Template.feedbackList.events({
+	"click #viewFeedback" : function(e) {
+		 e.preventDefault();
+		Session.set('currentFeedback', this._id);
+	}
 });
 
 Template.radioCreate.events({
@@ -172,7 +309,7 @@ Template.checkBoxesCreate.events({
 
 		 var checkboxFields = Session.get('checkboxFields');
 		 var noOfCheckboxFields = checkboxFields+1;
-		 if(isNaN(checkboxFields)) noOfCheckboxFields = 3;
+		 if(isNaN(checkboxFields)) noOfCheckboxFields = 1;
 		 console.log("checkboxFields " + checkboxFields);
 		 console.log("noOfCheckboxFields " + noOfCheckboxFields);
 		 Session.set('checkboxFields', noOfCheckboxFields);
@@ -198,7 +335,7 @@ Template.dropdownCreate.events({
 
 		 var dropdownFields = Session.get('dropdownFields');
 		 var noOfDropdownFields = dropdownFields+1;
-		 if(isNaN(dropdownFields)) noOfDropdownFields = 3;
+		 if(isNaN(dropdownFields)) noOfDropdownFields = 1;
 		 console.log("dropdownFields " + dropdownFields);
 		 console.log("noOfDropdownFields " + noOfDropdownFields);
 		 Session.set('dropdownFields', noOfDropdownFields);
