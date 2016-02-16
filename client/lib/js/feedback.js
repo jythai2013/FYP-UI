@@ -373,6 +373,7 @@ Template.addFeedback.events({
 		console.log(options);
 		Meteor.call("createFeedback", options);
 	}, 
+	
 	"submit #feedbackForm" : function submitFeedbackFormHandler(e, t) {
 		e.preventDefault();
 		options = {};
@@ -380,13 +381,19 @@ Template.addFeedback.events({
 		options.courseID = 
 		options.trainerID = 
 		options.facilityID = 
-		options.Response.studentID = 
-		options.Response.response = 
+		options.response.studentID = 
+		options.response.response = 
 		Meteor.call("upsertFeedback", options);
 /*
 
+editTitleFeedback	//Title of survey
+saveSurvey //button to save survey to db
+launchSurvey //button to save survey to db and launch it (set status to active)
+ class="feedbackQuestion"
+
 feedbackQn{
 	qnID: (Mongo self generate also can)
+	surveyID: 
 	feedbackType: (either trainer/facility/course)
 	inputType: (eg radiobutton);
 	question: (qn goes here)

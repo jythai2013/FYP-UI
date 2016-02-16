@@ -1,5 +1,14 @@
  Meteor.methods({ 
 
+    /*
+    'deleteCertificate': function deleteCertificate(_id){
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+      Certificates.remove(_id);
+    },
+		
+		
   'editCertificate': function editCertificate(_id, courseI, sessionI, questionsI, answersI){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
@@ -16,13 +25,6 @@
       });
     },
     
-    'deleteCertificate': function deleteCertificate(_id){
-      // if(Meteor.user.userType != "admin"){
-        // return false; //TODO: output error message in client
-      // }
-      Certificates.remove(_id);
-    },
-    
     'createCertificate': function createCertificate(courseI, sessionI, questionsI, answersI){
       // debugger;
       // if(Meteor.user.userType != "admin"){
@@ -34,5 +36,5 @@
         question: questionI,
         answer: answerI
       });
-    }
+    }*/
 });

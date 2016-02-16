@@ -1,4 +1,16 @@
-template(name="certificateManagement")
+template(name="certificateStudentList")
+  tbody
+    thead
+      th student name
+      th button#generateCerts Generate Certs
+    each students
+      tr
+        td
+          #{fullName}
+        td
+          button#generateCert Generate Cert
+
+template(name="certificate")
   #page-wrapper
     .row
       .col-lg-12
@@ -16,18 +28,18 @@ template(name="certificateManagement")
               table#dataTables-example.table
                 tbody  
                   tr
-                    th Certificate Title
+                    th Student Name
                     td
-                      input.form-control(type="text", id="certTitle")
+                      input.form-control(type="text", id="studentName")
                   tr
                     th Course
                     td
-                      input.form-control(type="text", id="courseId")
+                      input.form-control(type="text", id="courseCode")
                   tr
-                    th File
-                    td 
-                      input(type="file", id="fileName")
-            button#uploadCertButton.btn.btn-save(type="button", data-dismiss="modal") Upload Cert
+                    th Group
+                    td
+                      input.form-control(type="text", id="groupNum")
+            button#filter.btn.btn-save(type="button", data-dismiss="modal") Search
 
       .row
       .col-lg-12
@@ -44,13 +56,14 @@ template(name="certificateManagement")
                   th endDate
                   th click
                 tbody
-                
                   each finishedGroup
-                    #{grpNum    }
-                    #{courseCode}
-                    #{startDate }
-                    #{endDate   }
-                    #{button    }
+                    tr
+                      td #{grpNum}
+                      td #{courseCode}
+                      td #{startDate}
+                      td #{endDate}
+                      td 
+                        button#go(type="button") Go
                     
                     
                 

@@ -33,10 +33,12 @@ Template.studentList.events({
 		Session.set("studentSearchName", studentName);
 	},
 	
-	"keydown #usersSearchNameInput" : function s5(e){
-		console.log(e);
-		var studentName = document.getElementById("usersSearchNameInput").value;
-		Session.set("studentSearchName", studentName);
+	"keypress #usersSearchNameInput" : function s5(e){
+		setTimeout(function(){
+			console.log(e);
+			var studentName = document.getElementById("usersSearchNameInput").value;
+			Session.set("studentSearchName", studentName);
+		}, 2);
 	}
 });
 

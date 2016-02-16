@@ -9,5 +9,6 @@ Deps.autorun(function () {
   Meteor.subscribe('groupsData');
   Meteor.subscribe('filesData');
   Meteor.subscribe('feedbackData');
+  Meteor.subscribe('questionData');
   Meteor.subscribe('materialsData');
 });

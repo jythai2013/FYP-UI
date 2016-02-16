@@ -164,7 +164,7 @@ Template.addClass.events({
 			if (days[x].checked){
 			  gdaysArr.push(days[x].value);
 			}
-    	}
+		}
 
 
 		var gStartDate = document.getElementById("gNewStartDate").value;
@@ -186,6 +186,8 @@ Template.addClass.events({
       console.log(grpNumI + "group number");
 		console.log("here4");
 		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus, gVenue, gNoOfHours, gTrainers);
+		//TODO: schedule payment reminder checking
+		
 		//console.log(Groups.find({}).fetch();
 	}
 });

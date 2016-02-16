@@ -1,22 +1,22 @@
 Meteor.methods({
-	//"createFeedback":function createFeedback(options){
-	//	console.log(options);
-	//	Feedback.insert(options);
-	//},
-	
-	//"readFeedback":function readFeedback(options){
-	//	
-	//},
 	
 	"upsertFeedback":function upsertFeedback(options){
 		// reads db if qnID alr exists. if yes, update the response array with the latest response (ie push it in). else insert the whole thing
 		console.log(options);
-		var fObj = Feedback.findOne(options.qnID);
+		var fObj = Feedback.findOne({_id:options.qnID});
 		console.log(fObj);
 		
 		
 		if(fObj == null || fObj == undefined){ //a feedback for this qnID does not yet exist. so just add the whole thing in
-			Feedback.insert(options);
+			newObj.qnID 			= options.qnID
+			newObj.courseID 	= options.courseID
+			newObj.trainerID 	= options.trainerID
+			newObj.facilityID = options.facilityID
+			newObj.responses 	= new Array();
+			newObj.responses.push(options.response);
+			var newObj = {};
+			Feedback.insert(newObj);
+			
 		} else{ //a feedback for this qnID alr exists. so update it 
 			var responses = fObj.response;
 			var rObj = {};
@@ -29,20 +29,13 @@ Meteor.methods({
 	},
 	
 	"createNewQuestion":function(){
-		
+		FeedbackQuestions.insert()
 	},
 	
-	"deleteOldQuestion":function(){
-		
+	"deleteOldQuestion":function(_id){
+		FeedbackQuestions.remove(_id);
+		console.log("Question with _id: " + _id + " has been removed");
 	}
-	
-	//"updateFeedback":function updateFeedback(cCode, options){
-	//	console.log(cCode);
-	//	console.log(options);
-	//	Courses.update({courseCode: cCode}, {
-	//		$set: options
-	//	});
-	//},
 	
 	//"deleteFeedback":function deleteFeedback(_id){
 	//	console.log(_id);
