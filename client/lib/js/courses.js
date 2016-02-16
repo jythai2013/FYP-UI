@@ -84,7 +84,7 @@ Template.course.helpers({
 		for(var x = 0, l = a.length; x < l;  x++){
 			var entry = a[x].trainerID;
 			var trainer = Meteor.users.findOne({_id:entry});
-    		var fullName = trainer.firstName + " " + trainer.lastName;
+    		var fullName = trainer.fullName;
 			trainersArr.push(fullName);
     	}
 
@@ -95,6 +95,40 @@ Template.course.helpers({
 
 		return trainersArr;
 		
+	}
+});
+
+Template.addClass.helpers({
+	"courseTrainers" : function trainerList(e) {
+		
+		var str =  window.location.href;
+		//console.log(str + " = sign");
+		var position = str.indexOf('=');
+		//console.log(position + " = sign");
+		//console.log(str + "stri");
+		
+		var currentCourse=str.substr(position+1);
+		//console.log(currentCourse + "Code");
+
+		//var size = Courses.find({courseCode:currentCourse}).count();
+		var size = Courses.findOne({courseCode:currentCourse});
+		console.log(size);
+		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
+
+		var trainersArr = new Array();
+		for(var x = 0, l = a.length; x < l;  x++){
+			var entry = a[x].trainerID;
+			var trainer = Meteor.users.findOne({_id:entry});
+    		var fullName = trainer.fullName;
+			trainersArr.push(fullName);
+    	}
+
+    	trainersArr.forEach(function(entry) {
+   			console.log(entry + " full name");
+
+		});
+
+		return trainersArr;
 	}
 });
 

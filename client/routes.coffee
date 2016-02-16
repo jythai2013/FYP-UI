@@ -9,7 +9,7 @@ navRoutes = [
 
   # Certificate
   new NavRoute('groupExcelUpload', 'fa-institution', {label: "Group Signup"})
-  new NavRoute('certificate', 'fa-institution', {label: "Certs Management"})
+  new NavRoute('certificateManagement', 'fa-institution', {label: "Certs Management"})
   
   # Facility
   new NavRoute('FacilityModule', 'fa-institution', {label: "Facility Management"})
@@ -30,7 +30,7 @@ navRoutes = [
 
   new NavRoute('FeedbackMgmt', 'fa-file-text ', {label: "Feedback Management"})
   new NavRoute('feedbackList', '', {parentName: 'FeedbackMgmt', label: "Feedback List"})
-  new NavRoute('feedbackQnMgmt', '', {parentName: 'FeedbackMgmt', label: "Feedback Questions"})
+  #new NavRoute('feedbackQnMgmt', '', {parentName: 'FeedbackMgmt', label: "Feedback Questions"})
 
   #new NavRoute('forms', 'fa-edit')
   #new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})

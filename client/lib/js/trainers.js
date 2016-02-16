@@ -5,12 +5,6 @@ Template.trainerList.helpers({
 	}
 });
 
-Template.addClass.helpers({
-	"trainers" : function trainerList(e) {
-		return Meteor.users.find({userType:{"trainer":true}});
-	}
-});
-
 Template.addTrainer.helpers({
 	"trainers" : function trainerList(e) {
 		return Meteor.users.find({userType:{"trainer":true}});

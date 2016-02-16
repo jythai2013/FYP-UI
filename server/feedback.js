@@ -28,12 +28,54 @@ Meteor.methods({
 		
 	},
 	
-	"createNewQuestion":function(){
-		FeedbackQuestions.insert()
+	"deleteFeedback":function(_id){
+		console.log(_id);
+      	Feedback.remove(_id);
 	},
+
+	
+	"createNewFeedback":function(title, type){
+
+			Feedback.insert({
+				feedbackTitle: title,
+				feedbackType: type
+			});
+		
+	},
+
+	"createNewQuestion":function(feedbackID, question, questionType, lspId, optionsForQn){
+
+   		Feedback.update(feedbackID, {
+	        $push: {
+	        	qnOptions:{
+					feedbackQn: question,
+					qnType: questionType,
+					lspQnId: lspId,
+					options: optionsForQn
+	          	}
+	        }
+	        		
+	    });
+		
+	},		
+
+	'editFeedbackDetails': function editFeedbackDetails(fbId, newTitle, newType){
+			// if(Meteor.user.userType != "admin"){
+				// return false; //TODO: output error message in client
+			// }
+			Feedback.update({_id: fbId}, {
+		        $set: {
+					feedbackTitle: newTitle,
+					feedbackType: newType
+				}
+      		});
+		},
+		
 	
 	"deleteOldQuestion":function(_id){
-		FeedbackQuestions.remove(_id);
+		
+			console.log(_id);
+      		Feedback.remove(_id);
 		console.log("Question with _id: " + _id + " has been removed");
 	}
 	

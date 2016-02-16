@@ -103,7 +103,7 @@
     
 
 
-    'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, daysArrI, startDateI, endDateI, paymentDeadlineI, statusI, venueI, noOfHoursI, trainersI){
+    'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, daysArrI, startDateI, endDateI, paymentDeadlineI, venueI, noOfHoursI, trainersI){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
@@ -120,10 +120,11 @@
           days: daysArrI,
           startDate: startDateI,
           endDate: endDateI,
-          paymentDeadline: paymentDeadlineI, //
-          status: statusI,
+          paymentDeadline: paymentDeadlineI, 
           noOfHours: noOfHoursI,
-          trainers: trainersI
+          courseTrainers: {
+            trainerID: trainersI
+          }
       });
 
       //console.log(id);
