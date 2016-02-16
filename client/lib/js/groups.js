@@ -79,6 +79,21 @@ Template.addClass.helpers({
     }
 });
 
+Template.addStudent.helpers({
+
+    "students" : function(e) {
+		return Meteor.users.find({userType:{"learner":true}});
+    }, 
+
+	"noOfTimesStudent": function() {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('studentTimes'); i++){
+			fakeArray.push("a")
+		}
+    	return fakeArray;
+    }
+});
+
 Template.removeClass.helpers({
 
 	"groupsCourse2" : function listGroups2EventHandler(e) {
@@ -259,5 +274,41 @@ Template.deleteClass.events({
 	"click #deleteClassButton" : function deleteCourseEventHandler(e) {
 			console.log(this._id);
 			Meteor.call("deleteClass", this._id);
+	}
+});
+
+Template.addStudent.events({
+	
+	"click #addStudentButton" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		//to do. Add student to class list
+	},
+
+	"click #addMoreStudents" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var studentTimes = Session.get('studentTimes');
+		 var noOfTimes = studentTimes+1;
+		 if(isNaN(studentTimes)) noOfTimes = 1;
+		 console.log("studentTimes " + studentTimes);
+		 console.log("noOfTimes " + noOfTimes);
+		 Session.set('studentTimes', noOfTimes);
+	},
+
+	"click #removeThisStudent" : function(e) {
+		e.preventDefault();
+        var studentTimes = Session.get('studentTimes');
+
+        // noOfTimes = _.reject(salesInput, function(x) {
+        //     return x.salesId == salesId;
+        // });
+
+		 
+		 if(isNaN(studentTimes)) noOfTimes = 1;
+		 var noOfTimes = studentTimes-1;
+		 Session.set('studentTimes', noOfTimes);
 	}
 });

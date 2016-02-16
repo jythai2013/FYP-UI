@@ -106,46 +106,8 @@ Template.viewQn.helpers({
 		var fbId=url.substring(positionEqual+1);
 
 		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
-    		//console.log(feedbackQnOptions+ " feedbackQnOptions")
-
-
-
-
-		// var qnOptions = new Array();
-		// for(var x = 0, l = feedbackQnOptions.length; x < l;  x++){
-		// 	var entry = feedbackQnOptions[x];
-		// // 	var trainer = Meteor.users.findOne({_id:entry});
-  // //   		var fullName = trainer.fullName;
-		// 	qnOptions.push(entry);
-  //   	}
-
-  //   	qnOptions.forEach(function(entry) {
-  //  			console.log(entry + " GET outtttttttt");
-		// });
-    	//console.log(qnOptions.length + " length GET outtttttttt");
 
 		 return feedbackQnOptions;
-	},
-	"options": function() {
-		var url =  window.location.href;
-		var positionEqual = url.indexOf('=');	
-		var fbId=url.substring(positionEqual+1);
-
-		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
-    		console.log(feedbackQnOptions+ " feedbackQnOptions")
-
-		var qnOptions = new Array();
-		for(var x = 0, l = feedbackQnOptions.length; x < l;  x++){
-			var entry = feedbackQnOptions[x].options;
-		// 	var trainer = Meteor.users.findOne({_id:entry});
-  //   		var fullName = trainer.fullName;
-			qnOptions.push(entry);
-    	}
-
-    	qnOptions.forEach(function(entry) {
-   			console.log(entry + " GET outtttttttt");
-		});
-    	return qnOptions;
 	}
 });
 
@@ -266,6 +228,13 @@ Template.deleteFeedback.events({
 	"click #deleteFeedbackButton" : function(e) {
 		 e.preventDefault();
 		Meteor.call("deleteFeedback", this._id);
+	}
+});
+
+Template.viewQn.events({
+	"click #editFields" : function(e) {
+		 e.preventDefault();
+		 console.log(this);
 	}
 });
 

@@ -58,6 +58,10 @@ template(name="group")
 
             p.breakH4
             h4 Class Management
+              button.btn.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addStudent" style="margin-top: -1%;  background: #333; color:#fff")
+                i.fa.fa-plus  
+                | Student 
+              +addStudent
             .table-responsive
               table#dataTables-example.table.table-bordered.table-hover
                 tbody
@@ -147,3 +151,42 @@ template(name="editClassDetails")
            // /.table-responsive
         .modal-footer
           input.btn.admin-btn#submitButton(type='submit',value='Edit',data-transition='fade', data-theme='c', data-dismiss="modal")
+
+template(name="addStudent")
+  #addStudent.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Student
+        .modal-body
+            tr
+              td(colspan="2")
+                .form-group()
+                  select(name="newStudentsC", style="color: black; width: 100%")
+                    each students
+                      option(value="#{_id}") #{fullName}    
+              td 
+                button#addMoreStudents.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-plus  
+
+            each noOfTimesStudent
+              tr 
+                td(colspan="2")
+                  .form-group()
+                    select(name="newTrainersC", style="color: black; width: 100%")
+                      each students
+                        option(value="#{_id}") #{fullName} 
+                td  
+                  button#addMoreStudents.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-plus 
+                
+                  button#removeThisStudent.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-minus    
+              
+          // /.table-responsive
+        .modal-footer
+          button#addStudentButton.btn.btn-save(type="button", data-dismiss="modal") Add 
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
