@@ -99,7 +99,7 @@ Template.createQn.helpers({
 });
 
 Template.viewQn.helpers({
-	"feedbackQn": function() {
+	"feedbackQns": function() {
 
 		var url =  window.location.href;
 		var positionEqual = url.indexOf('=');	
@@ -124,7 +124,7 @@ Template.viewQn.helpers({
 		// });
     	//console.log(qnOptions.length + " length GET outtttttttt");
 
-		 return qnOptions;
+		 return feedbackQnOptions;
 	},
 	"options": function() {
 		var url =  window.location.href;
