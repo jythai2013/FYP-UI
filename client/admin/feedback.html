@@ -63,15 +63,19 @@
             <p>Options go here</p> -->
 
              
-            <label> <span>{{feedbackQn.feedbackQn}} <abbr title="required">*</abbr></span></label>
+            <label> <span>{{feedbackQn.feedbackQn}} </span></label>
             <!--<p>Options go here</p>-->
 
             
                 {{#if equals feedbackQn.qnType 'vtext'}}
-                    {{> textCreate}}
+                    <label>
+                        <input disabled type="text" id="textQn" value="Their answer">   <abbr title="required">*</abbr>
+                    </label>
                 {{/if}}   
                 {{#if equals feedbackQn.qnType 'paraText'}}
-                    {{> paratextCreate}}
+                    <label>
+                        <textarea disabled type="text" id="paratextQn" value="Their answer"> </textarea>
+                    </label>
                 {{/if}}  
                 {{#if equals feedbackQn.qnType 'radioButtons'}}
                     <label class="fb-option">
@@ -81,21 +85,28 @@
                     </label>
                 {{/if}}   
                 {{#if equals feedbackQn.qnType 'radioButtonsInline'}}
-                    {{> radioCreateInline}}
+                    <label class="fb-option">
+                        {{#each options}}  
+                            <label class="radio-inline">
+                              <input type="radio" id="optradio">
+                            </label>
+                        {{/each}}      
+                    </label>
                 {{/if}}  
                 {{#if equals feedbackQn.qnType 'checkboxes'}}
                     <label class="fb-option">
                         {{#each options}} 
-                            <input type="checkbox" name="cbOptions" value="{{this}}"> 
+                            <input type="checkbox" id="cbOptions" value="{{this}}"> 
                         {{/each}}      
                     </label>
                 {{/if}}  
                 {{#if equals feedbackQn.qnType 'dropdown'}}
                     <label class="fb-option">
+                        <select id="cars">
                         {{#each options}} 
-                            <input type="checkbox" name="cbOptions" value="{{this}}"> 
+                            <option value="{{this}}">{{this}}</option>
                         {{/each}}      
-                        <a id="addCheckboxes">Add item</a>
+                        </select>
                     </label>
                 {{/if}}     
 
