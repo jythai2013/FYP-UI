@@ -56,14 +56,17 @@
 </template>
 
 <template name="viewQn">
-{{#each feedbackQn}}
+{{#each feedbackQns}}
     <div class="fb-field-wrapper response-field-text">
         <div class="subtemplate-wrapper">
         <!--<label> <span>qn <abbr title="required">*</abbr></span></label>
             <p>Options go here</p> -->
 
              
-            <label> <span>{{feedbackQn.feedbackQn}} </span></label>
+            <label> <span class="a">{{feedbackQn}} </span></label>
+            <label> <span class="b">{{lspQnId}}</span></label>
+            <label> <span class="b">{{options}}</span></label>
+            <label> <span class="b">{{qnType}}</span></label>
             <!--<p>Options go here</p>-->
 
             

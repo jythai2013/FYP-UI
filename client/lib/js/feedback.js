@@ -99,7 +99,7 @@ Template.createQn.helpers({
 });
 
 Template.viewQn.helpers({
-	"feedbackQn": function() {
+	"feedbackQns": function() {
 
 		var url =  window.location.href;
 		var positionEqual = url.indexOf('=');	
