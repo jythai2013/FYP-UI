@@ -124,7 +124,7 @@ Template.viewQn.helpers({
 		// });
     	//console.log(qnOptions.length + " length GET outtttttttt");
 
-		 return qnOptions;
+		 return feedbackQnOptions;
 	},
 	"options": function() {
 		var url =  window.location.href;
