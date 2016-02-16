@@ -62,47 +62,14 @@ template(name="classList")
                       td #{startDate}  
                       td #{endDate}  
                       td
-                        a(href="course?cCode=#{courseCode}&cgrpNum=#{grpNum}", class="button btn admin-btn") 
+                        a(href="class?cCode=#{courseCode}&cgrpNum=#{grpNum}", class="button btn admin-btn") 
                             | Enter Class Page
                           //+viewClassForm
                       td
                         button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteClass#{_id}")
                           | Delete
                         +deleteClass 
-
-
-template(name="viewClassForm")
-  #viewClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Class Detail
-        .modal-body
-          form(role="form", id="viewClassDetails",  method="post") //action="classDetails",
-          .table-responsive
-            table#dataTables-example.table(style="background:#333")
-              currentGroup
-              tbody
-                tr
-                  th(colspan="2") #{currentGroup.courseCode} #{currentCourseCode.courseName}   
-                tr
-                  td Group Number
-                  td #{currentGroup.grpNum} 
-                tr
-                  td Max
-                  td #{currentGroup.courseMax} 
-                tr
-                  td Description
-                  td #{currentGroup.description} 
-                tr
-                  td Fees
-                  td #{currentGroup.courseFees}
-        .modal-footer
-          a(href="course?cCode=#{currentGroup.courseCode}&cgrpNum=#{currentGroup.grpNum}", class="button btn admin-btn") Enter Class Page
-      // /.modal-content
-    // /.modal-dialog
-  // /.modal    
+   
 
 template(name="addClassForm")
   #addCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark

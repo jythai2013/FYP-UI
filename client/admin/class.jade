@@ -68,15 +68,19 @@ template(name="group")
                   tr 
                     th Student 1
                     td  
+                      input(type="button", value="Paid")
+                    td  
                       input(type="button", value="Assessment")
                     td 
                       input(type="button", value="Remove Student")
                    tr 
                     th Student 2
                     td  
+                      input(type="button", value="Paid")
+                    td  
                       input(type="button", value="Assessment")
                     td 
-                      input(type="button", value="Drop Student")
+                      input(type="button", value="Remove Student")
             // /.table-responsive
             // /.row
           // /.panel-body
@@ -174,7 +178,7 @@ template(name="addStudent")
               tr 
                 td(colspan="2")
                   .form-group()
-                    select(name="newTrainersC", style="color: black; width: 100%")
+                    select(name="newStudentsC", style="color: black; width: 100%")
                       each students
                         option(value="#{_id}") #{fullName} 
                 td  
