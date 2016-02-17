@@ -15,6 +15,13 @@
 	// }
 // });
 
+
+Template.feedbackQnMgmt.onRendered(function(){
+  var currentfb = getParameterByName("fbid");
+	console.log(currentCourse);
+  Session.set('currentfb', currentfb);
+});
+
 Template.addFeedback.onRendered(function(){
 	// console.log($("input")[0]);
 	// console.log($("input"));
@@ -49,6 +56,13 @@ Template.feedbackQnMgmt.helpers({
 		var feedbackTitle = Feedback.findOne({_id:fbId}).feedbackTitle;
     		console.log(feedbackTitle+ " feedbackTitle")
     	return feedbackTitle;
+	},
+	"feedbackQns": function() {
+
+        var fbId = Session.get('currentfb');
+		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
+
+		 return feedbackQnOptions;
 	}
 });
 
@@ -99,16 +113,16 @@ Template.createQn.helpers({
 });
 
 Template.viewQn.helpers({
-	"feedbackQns": function() {
+	// "feedbackQns": function() {
 
-		var url =  window.location.href;
-		var positionEqual = url.indexOf('=');	
-		var fbId=url.substring(positionEqual+1);
+	// 	var url =  window.location.href;
+	// 	var positionEqual = url.indexOf('=');	
+	// 	var fbId=url.substring(positionEqual+1);
 
-		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
+	// 	var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
 
-		 return feedbackQnOptions;
-	}
+	// 	 return feedbackQnOptions;
+	// }
 });
 
 Template.feedbackList.helpers({
@@ -189,6 +203,12 @@ Template.createQn.events({
    //  		console.log(currentCourse+ " currnt course code");
 			// var meep = Feedback.findOne({_id:fbId});
 
+		var qnSize =  Feedback.findOne({_id:fbId}).qnSize;
+		console.log(qnSize);
+		if(isNaN(qnSize)) qnSize = 0;
+		var qnNum =  qnSize+1;
+		var qnSize = qnNum;
+		console.log (qnNum + " question number");
 		var question = document.getElementById("qnQn").value;
 		var LSPQnID = "not yet";
 		 var qnType = Session.get('qnType');
@@ -200,13 +220,14 @@ Template.createQn.events({
 			var qnOptions = document.getElementsByName("qnOptions");
     		console.log(qnOptions.length+ " qn options length");
 			for(var x = 0, l = qnOptions.length; x < l;  x++){
+
 				var qnOption = qnOptions[x].value;				
 				optionsForQn.push(qnOption);
 				
     		}
 	    	console.log(optionsForQn.length+ " ARR SIZE")
 		}
-		Meteor.call("createNewQuestion", fbId, question, qnType, LSPQnID, optionsForQn);
+		Meteor.call("createNewQuestion", fbId, qnSize, qnNum, question, qnType, LSPQnID, optionsForQn);
 	}
 
 });
@@ -218,7 +239,8 @@ Template.addFeedbackForm.events({
 
 		var feedbackTitle = document.getElementById("feedbackTitle").value;
 		var feedbackType = document.getElementById("feedbackType").value;
-		Meteor.call("createNewFeedback", feedbackTitle, feedbackType);
+		var feedbackQnSize = 0;
+		Meteor.call("createNewFeedback", feedbackTitle, feedbackType, feedbackQnSize);
 		
 	}
 
@@ -235,7 +257,31 @@ Template.viewQn.events({
 	"click #editFields" : function(e) {
 		 e.preventDefault();
 		 console.log(this);
+		 
+		 //Session.set("questionID_BeingEdited",this); 
+
+
+
+
+
+
+	},
+	"click #deleteQn" : function(e) {
+		 e.preventDefault();
+		 console.log(this);
+		 console.log(this.qnID);
+		 
+		 //.call("deleteOldQuestion",this.qnID); 
+
+
+		 //qnID
+
+
+
+
 	}
+
+
 });
 
 Template.feedbackList.events({
@@ -527,5 +573,3 @@ feedbackAnswer{
 		// Session.set('times', 0);
 	// }
 // });
-
-

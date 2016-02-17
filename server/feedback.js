@@ -34,20 +34,27 @@ Meteor.methods({
 	},
 
 	
-	"createNewFeedback":function(title, type){
+	"createNewFeedback":function(title, type, size){
 
 			Feedback.insert({
 				feedbackTitle: title,
-				feedbackType: type
+				feedbackType: type,
+				qnSize: size
 			});
 		
 	},
 
-	"createNewQuestion":function(feedbackID, question, questionType, lspId, optionsForQn){
+	"createNewQuestion":function(feedbackID, size, qnNum, question, questionType, lspId, optionsForQn){
 
    		Feedback.update(feedbackID, {
+   			$set: {
+				qnSize: size
+			},
+
+
 	        $push: {
 	        	qnOptions:{
+	        		qnID: qnNum,
 					feedbackQn: question,
 					qnType: questionType,
 					lspQnId: lspId,
