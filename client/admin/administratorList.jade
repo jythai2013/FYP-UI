@@ -63,13 +63,14 @@ template(name="addAdminAcctForm")
                   td 
                     input.form-control(type='text', id='mobileNo')
                 tr
-                  td Assign Trainer Rights?
+                  td Has Trainer Rights
                   td 
                     label.radio
-                      input#trainer(type="radio", name="trainer", value="No", checked="")
+                      input#isTrainer(type="radio", name="isTrainer", value="No", checked="")
                       | No
+                    br
                     label.radio
-                      input#trainer(type="radio", name="trainer", value="Yes")
+                      input#isTrainer(type="radio", name="isTrainer", value="Yes")
                       | Yes, Create Trainer Account
                 tr
                   td Access Rights
