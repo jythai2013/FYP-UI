@@ -254,6 +254,7 @@ Template.certificateStudentList.helpers({
 			});
 		}
 		
+		console.log(typeof students);
 		students = students.getUnique();
 		
 		if(verbose){
@@ -289,15 +290,16 @@ Template.certificateStudentList.events({
 			myData.courseStart = aData.courseStart;
 			myData.courseEnd   = aData.courseEnd  ;
 			myData.fullName = Meteor.users.findOne({_id:studentId}).fullName;
-			Blaze.saveAsPDF(Template.certificateTemplate, {
-				filename: "report.pdf", // optional, default is "document.pdf"
-				data: myData, // optional, render the template with this data context
-				// x: 0, // optional, left starting position on resulting PDF, default is 4 units
-				// y: 0, // optional, top starting position on resulting PDF, default is 4 units
-				orientation: "portrait", // optional, "landscape" or "portrait" (default)
-				unit: "mm", // optional, unit for coordinates, one of "pt", "mm" (default), "cm", or "in"
-				format: "a4" // optional, see Page Formats, default is "a4"
-			});
+			genP(myData)
+			// Blaze.saveAsPDF(Template.certificateTemplate, {
+				// filename: "report.pdf", // optional, default is "document.pdf"
+				// data: myData, // optional, render the template with this data context
+				// // x: 0, // optional, left starting position on resulting PDF, default is 4 units
+				// // y: 0, // optional, top starting position on resulting PDF, default is 4 units
+				// orientation: "portrait", // optional, "landscape" or "portrait" (default)
+				// unit: "mm", // optional, unit for coordinates, one of "pt", "mm" (default), "cm", or "in"
+				// format: "a4" // optional, see Page Formats, default is "a4"
+			// });
 		});
 		console.log("End");
 	},
@@ -322,15 +324,16 @@ Template.certificateStudentList.events({
 		myData.courseCode = thisCourse.courseCode;
 		myData.courseStart = thisGroup.startDate;
 		myData.courseEnd   = thisGroup.endDate  ;
-		Blaze.saveAsPDF(Template.certificateTemplate, {
-			filename: "report.pdf", // optional, default is "document.pdf"
-			data: myData, // optional, render the template with this data context
-			// x: 0, // optional, left starting position on resulting PDF, default is 4 units
-			// y: 0, // optional, top starting position on resulting PDF, default is 4 units
-			orientation: "portrait", // optional, "landscape" or "portrait" (default)
-			unit: "mm", // optional, unit for coordinates, one of "pt", "mm" (default), "cm", or "in"
-			format: "a4" // optional, see Page Formats, default is "a4"
-		});
+		genP(myData);
+		// Blaze.saveAsPDF(Template.certificateTemplate, {
+			// filename: "report.pdf", // optional, default is "document.pdf"
+			// data: myData, // optional, render the template with this data context
+			// // x: 0, // optional, left starting position on resulting PDF, default is 4 units
+			// // y: 0, // optional, top starting position on resulting PDF, default is 4 units
+			// orientation: "portrait", // optional, "landscape" or "portrait" (default)
+			// unit: "mm", // optional, unit for coordinates, one of "pt", "mm" (default), "cm", or "in"
+			// format: "a4" // optional, see Page Formats, default is "a4"
+		// });
 		console.log("End");
 	}
 });
@@ -345,4 +348,99 @@ Array.prototype.getUnique = function(){
       u[this[i]] = 1;
    }
    return a;
+}
+
+object.prototype.getUnique = function(){
+   var u = {}, a = [];
+   for(var i = 0, l = this.length; i < l; ++i){
+      if(u.hasOwnProperty(this[i])) {
+         continue;
+      }
+      a.push(this[i]);
+      u[this[i]] = 1;
+   }
+   return a;
+}
+
+(function(API){
+	alert(API);
+		API.myText = function(txt, options, x, y) {
+				options = options ||{};
+				/* Use the options align property to specify desired text alignment
+				 * Param x will be ignored if desired text alignment is 'center'.
+				 * Usage of options can easily extend the function to apply different text 
+				 * styles and sizes 
+				*/
+				if( options.align == "center" ){
+						// Get current font size
+						var fontSize = this.internal.getFontSize();
+
+						// Get page width
+						var pageWidth = this.internal.pageSize.width;
+
+						// Get the actual text's width
+						/* You multiply the unit width of your string by your font size and divide
+						 * by the internal scale factor. The division is necessary
+						 * for the case where you use units other than 'pt' in the constructor
+						 * of jsPDF.
+						*/
+						txtWidth = this.getStringUnitWidth(txt)*fontSize/this.internal.scaleFactor;
+
+						// Calculate text's x coordinate
+						x = ( pageWidth - txtWidth ) / 2;
+				}
+
+				// Draw text at x,y
+				this.text(txt,x,y);
+		}
+})(jsPDF.API);
+
+
+function genP(options){
+	var doc = new jsPDF();
+	console.log(doc);
+	
+	doc.setTextColor(100);
+	doc.setFontSize(22);
+	doc.text(20, 40, 'CERTIFICATE OF SUCCESSFUL COMPLETION');
+
+	doc.setTextColor(150);
+    doc.setFontSize(10);
+	doc.text(100, 55, 'is awarded to ');
+
+	// doc.setFontStyle('italic');
+	doc.text(105, 70, "options.fullName");
+	//doc.myText("Centered text",{align: "center"},0,1);
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 500, "options.userID");
+
+	doc.setTextColor(0, 255, 0);
+	doc.text(20, 600, 'for succesful completeion of the');
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 700, "options.courseName");
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 800, 'Sterling Engineering Training Hub');
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 900, 'Sterling address');
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 1000, 'ISO');
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 1100, 'Blah');
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 1200, 'from');
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 1300, "options.courseStart" + ' to ' + "options.courseEnd");
+
+	doc.setTextColor(255, 0, 0);
+	doc.text(20, 1400, 'Validity: 5 Years');
+	
+	doc.save('test.pdf');
 }
