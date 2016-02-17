@@ -1,7 +1,9 @@
  Meteor.methods({ 
 
   'updateGroupClasslist': function editGroup(courseCode, grpNum, classlist){
-		Groups.update({courseCode:courseCode, grpNum:grpNum},{$set:{classlist:classlist}})
+		// console.log(courseCode + " " + grpNum);
+		Groups.update({courseCode:courseCode, grpNum:grpNum},{$set:{classlist:classlist}});
+		// console.log(classlist);
 	},
 
   'editGroup': function editGroup(_id, courseCodeI, grpNumI, dateTimeSessionI, startDateI,endDateI, studentListI, trainersI, gradesI, paymentDeadlineI, minI, maxI, attendanceI, statusI){

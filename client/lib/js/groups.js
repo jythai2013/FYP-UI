@@ -282,8 +282,8 @@ Template.addStudent.events({
 	"click #addStudentButton" : function(e, templ) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
-		 console.log(e);
-		 console.log(templ);
+		 // console.log(e);
+		 // console.log(templ);
 		 
 		var addStudents = document.getElementsByName("newStudentsC");
     var addStudentsArr = new Array();
@@ -293,7 +293,7 @@ Template.addStudent.events({
 		}
 
     addStudentsArr.forEach(function(entry) {
-      console.log(entry + "addStudents");
+      // console.log(entry + "");
     });
 
 
@@ -309,10 +309,11 @@ Template.addStudent.events({
 		console.log(classlist);
 		
     addStudentsArr.forEach(function(entry) {
-      console.log(entry);
+      // console.log(entry);
 			classlist.push(entry); 
     });
 		
+		console.log(classlist);
 		Meteor.call("updateGroupClasslist", courseCode, grpNum, classlist);
 	},
 
