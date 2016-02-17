@@ -91,7 +91,7 @@ Template.addStudent.helpers({
 			fakeArray.push("a")
 		}
     	return fakeArray;
-    }
+	}
 });
 
 Template.removeClass.helpers({
@@ -279,11 +279,41 @@ Template.deleteClass.events({
 
 Template.addStudent.events({
 	
-	"click #addStudentButton" : function(e) {
+	"click #addStudentButton" : function(e, templ) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
+		 console.log(e);
+		 console.log(templ);
+		 
+		var addStudents = document.getElementsByName("newStudentsC");
+    var addStudentsArr = new Array();
+    for(var x = 0, l = addStudents.length; x < l;  x++){
+      console.log(addStudents[x]);
+      addStudentsArr.push(addStudents[x].value);
+		}
 
-		//to do. Add student to class list
+    addStudentsArr.forEach(function(entry) {
+      console.log(entry + "addStudents");
+    });
+
+
+		//TODO: Add student to class list
+		var courseCode = templ.data.courseCode;
+		var grpNum = templ.data.grpNum;
+		
+		var group = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
+		console.log(group);
+		var classlist = [];
+		if(group.classlist != undefined) classlist = group.classlist;
+		
+		console.log(classlist);
+		
+    addStudentsArr.forEach(function(entry) {
+      console.log(entry);
+			classlist.push(entry); 
+    });
+		
+		Meteor.call("updateGroupClasslist", courseCode, grpNum, classlist);
 	},
 
 	"click #addMoreStudents" : function(e) {

@@ -271,11 +271,13 @@ Template.certificateStudentList.events({
 		aData.courseStart = thisGroup.startDate;
 		aData.courseEnd   = thisGroup.endDate  ;
 		var students = Session.get("certificateStudentListStudents");
-		students.forEach(function(myData){
+		students.forEach(function(studentId){
+			var myData={};
 			myData.courseName  = aData.courseName ;
 			myData.courseCode  = aData.courseCode ;
 			myData.courseStart = aData.courseStart;
 			myData.courseEnd   = aData.courseEnd  ;
+			myData.fullName = Meteor.users.findOne({_id:studentId}).fullName;
 			Blaze.saveAsPDF(Template.certificateTemplate, {
 				filename: "report.pdf", // optional, default is "document.pdf"
 				data: myData, // optional, render the template with this data context
