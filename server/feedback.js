@@ -44,6 +44,24 @@ Meteor.methods({
 		
 	},
 
+	"editQuestion":function(fbId, qnId, question, questionType, LSPQnID, optionsForQn){
+
+   		Feedback.update( {_id: fbId, "qnOptions.qnID":qnId},{
+	        $set: {
+	        	// qnOptions:{
+	        	// 	qnID: qnId,
+					"qnOptions.$.feedbackQn": question,
+					"qnOptions.$.qnType": questionType,
+					"qnOptions.$.lspQnId": LSPQnID,
+					"qnOptions.$.options": optionsForQn
+	          	//}
+	        }
+	        		
+	    });
+		
+	},		
+
+
 	"createNewQuestion":function(feedbackID, size, qnNum, question, questionType, lspId, optionsForQn){
 
    		Feedback.update(feedbackID, {
@@ -79,11 +97,16 @@ Meteor.methods({
 		},
 		
 	
-	"deleteOldQuestion":function(_id){
+	"deleteOldQuestion":function(fbId,qnId){
 		
-			console.log(_id);
-      		Feedback.remove(_id);
-		console.log("Question with _id: " + _id + " has been removed");
+			console.log(fbId);
+      		Feedback.update({_id: fbId, "qnOptions.qnID":qnId},
+
+      			{ $pull: { qnOptions: {qnID:qnId} } }
+
+
+      		);
+		console.log("Question with _id: " + fbId + " has been removed");
 	}
 	
 	//"deleteFeedback":function deleteFeedback(_id){

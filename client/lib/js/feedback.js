@@ -48,6 +48,7 @@ Template.feedbackQnMgmt.helpers({
 		}
     return fakeArray;
 	},
+
 	"feedbackTitle": function() {
 		var url =  window.location.href;
 		var positionEqual = url.indexOf('=');	
@@ -57,13 +58,54 @@ Template.feedbackQnMgmt.helpers({
     		console.log(feedbackTitle+ " feedbackTitle")
     	return feedbackTitle;
 	},
+
 	"feedbackQns": function() {
-
-        var fbId = Session.get('currentfb');
+		//Session.set('currentfb', currentfb);
+        var url =  window.location.href;
+  console.log(url);
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+		//var fbId=Session.set('currentfb', currentfb);
 		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
-
+		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
+		console.log(feedbackQnOptions);
 		 return feedbackQnOptions;
 	}
+});
+
+Template.viewQn.helpers({
+	"editAddDropdownFields": function() {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('dropdownFieldsEd'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
+	},	
+
+	"editAddRadioInlineFields": function() {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('radioInlineFieldsEd'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
+	},	
+
+	"editAddCheckboxFields": function() {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('checkboxFieldsEd'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
+	},	
+
+	"editAddRadioFields": function() {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('radioFieldsEd'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
+	}
+
 });
 
 Template.radioCreate.helpers({
@@ -113,17 +155,11 @@ Template.createQn.helpers({
 });
 
 Template.viewQn.helpers({
-	// "feedbackQns": function() {
-
-	// 	var url =  window.location.href;
-	// 	var positionEqual = url.indexOf('=');	
-	// 	var fbId=url.substring(positionEqual+1);
-
-	// 	var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
-
-	// 	 return feedbackQnOptions;
-	// }
+	"sessionQnID": function() {
+		return Session.get('sessionQnID');
+	}	
 });
+
 
 Template.feedbackList.helpers({
 	"survey": function() {
@@ -154,25 +190,17 @@ Template.feedbackQnMgmt.events({
 		 console.log("noOfFields " + noOfFields);
 		 Session.set('fields', noOfFields);
 	},
-	"click #deleteQn" : function(e) {
-		 //var name = template.$(event.target).data('modal-template');
-		 e.preventDefault();
 
-		 var fields = Session.get('fields');
-		 var noOfFields = fields+1;
-		 if(isNaN(fields)) noOfFields = 1;
-		 console.log("fields " + fields);
-		 console.log("noOfFields " + noOfFields);
-		 Session.set('fields', noOfFields);
-	},
 	"click #saveFeedback" : function(e) {
 		//
 	},
+
 	"click #editTitle" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 		 Session.set('statusTitle', "editting");
 	},
+
 	"click #saveTitle" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
@@ -253,42 +281,170 @@ Template.deleteFeedback.events({
 	}
 });
 
-Template.viewQn.events({
-	"click #editFields" : function(e) {
-		 e.preventDefault();
-		 console.log(this);
-		 
-		 //Session.set("questionID_BeingEdited",this); 
-
-
-
-
-
-
-	},
-	"click #deleteQn" : function(e) {
-		 e.preventDefault();
-		 console.log(this);
-		 console.log(this.qnID);
-		 
-		 //.call("deleteOldQuestion",this.qnID); 
-
-
-		 //qnID
-
-
-
-
-	}
-
-
-});
-
 Template.feedbackList.events({
 	"click #viewFeedback" : function(e) {
 		 e.preventDefault();
 		Session.set('currentFeedback', this._id);
 	}
+});
+
+Template.viewQn.events({
+	"click #saveFieldsEd" : function(e) {		 
+		 e.preventDefault();
+
+		var url =  window.location.href;
+    		console.log(url+ " url")
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+   //  		console.log(currentCourse+ " currnt course code");
+			// var meep = Feedback.findOne({_id:fbId});
+
+		// var qnSize =  Feedback.findOne({_id:fbId}).qnSize;
+		// console.log(qnSize);
+		// if(isNaN(qnSize)) qnSize = 0;
+		// var qnNum =  qnSize+1;
+
+		var qnID =  this.feedbackDetails.qnID;
+		var question = document.getElementById("qnQn").value;
+		var LSPQnID = "not yet";
+		 var qnType = this.feedbackDetails.qnType;
+		 var optionsForQn =  new Array();
+
+		 if(qnType==="vtext" || qnType==="paraText"){
+	    		console.log( " do nth")
+		} else {
+			var qnOptions = document.getElementsByName("qnOptionsEd");
+    		console.log(qnOptions.length+ " qn options length");
+			for(var x = 0, l = qnOptions.length; x < l;  x++){
+
+				var qnOption = qnOptions[x].value;				
+				optionsForQn.push(qnOption);
+				
+    		}
+	    	console.log(optionsForQn.length+ " ARR SIZE") 
+		}
+		//var hello=Feedback.find ({ _id:fbId}, {qnOptions:{qnID: qnId}});
+		//console.log(hello);
+		Session.set('sessionQnID', null);
+		Meteor.call("editQuestion", fbId, qnID, question, qnType, LSPQnID, optionsForQn);
+	},
+
+	"click #editFields" : function(e) {
+		 e.preventDefault();
+		 console.log(this);
+		 console.log(this.feedbackDetails);
+		 console.log(this.feedbackDetails.qnID);
+		 Session.set("sessionQnID", this.feedbackDetails.qnID);
+	},
+
+	"click #deleteQnEd" : function(e) {
+		 e.preventDefault();
+		 console.log(this);
+		 console.log(this.feedbackDetails.qnID);
+		 
+		 
+
+
+		 
+		var url =  window.location.href;
+    		console.log(url+ " url")
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+
+		Meteor.call("deleteOldQuestion",fbId, this.feedbackDetails.qnID); 
+
+
+	},
+
+	"click #addRadioEd" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var radioFieldsEd = Session.get('radioFieldsEd');
+		 var noOfRadioFields = radioFieldsEd+1;
+		 if(isNaN(radioFieldsEd)) noOfRadioFields = 1;
+		 console.log("radioFieldsEd " + radioFieldsEd);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('radioFieldsEd', noOfRadioFields);
+	},
+	"click #removeRadioFieldEd" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var radioFieldsEd = Session.get('radioFieldsEd');
+		 if(isNaN(radioFieldsEd)) noOfRadioFields = 1;
+		 var noOfRadioFields = radioFieldsEd-1;
+		 console.log("radioFieldsEd " + radioFieldsEd);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('radioFieldsEd', noOfRadioFields);
+	},
+	"click #addRadioInlineEd" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var radioInlineFieldsEd = Session.get('radioInlineFieldsEd');
+		 var noOfRadioFields = radioInlineFieldsEd+1;
+		 if(isNaN(radioInlineFieldsEd)) noOfRadioFields = 1;
+		 console.log("radioInlineFieldsEd " + radioInlineFieldsEd);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('radioInlineFieldsEd', noOfRadioFields);
+	},
+	"click #removeRadioInlineFieldEd" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var radioInlineFieldsEd = Session.get('radioInlineFieldsEd');
+		 if(isNaN(radioInlineFieldsEd)) noOfRadioFields = 1;
+		 var noOfRadioFields = radioInlineFieldsEd-1;
+		 console.log("radioInlineFieldsEd " + radioInlineFieldsEd);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('radioInlineFieldsEd', noOfRadioFields);
+	},
+	"click #addCheckboxesEd" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var checkboxFieldsEd = Session.get('checkboxFieldsEd');
+		 var noOfRadioFields = checkboxFieldsEd+1;
+		 if(isNaN(checkboxFieldsEd)) noOfRadioFields = 1;
+		 console.log("checkboxFieldsEd " + checkboxFieldsEd);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('checkboxFieldsEd', noOfRadioFields);
+	},
+	"click #removeCheckboxFieldEd" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var checkboxFieldsEd = Session.get('checkboxFieldsEd');
+		 if(isNaN(checkboxFieldsEd)) noOfRadioFields = 1;
+		 var noOfRadioFields = checkboxFieldsEd-1;
+		 console.log("checkboxFieldsEd " + checkboxFieldsEd);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('checkboxFieldsEd', noOfRadioFields);
+	},
+	"click #addDropdownEd" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var dropdownFieldsEd = Session.get('dropdownFieldsEd');
+		 var noOfRadioFields = dropdownFieldsEd+1;
+		 if(isNaN(dropdownFieldsEd)) noOfRadioFields = 1;
+		 console.log("dropdownFieldsEd " + dropdownFieldsEd);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('dropdownFieldsEd', noOfRadioFields);
+	},
+	"click #removeDropdownFieldEd" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var dropdownFieldsEd = Session.get('dropdownFieldsEd');
+		 if(isNaN(dropdownFieldsEd)) noOfRadioFields = 1;
+		 var noOfRadioFields = dropdownFieldsEd-1;
+		 console.log("dropdownFieldsEd " + dropdownFieldsEd);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('dropdownFieldsEd', noOfRadioFields);
+	}
+
 });
 
 Template.radioCreate.events({
@@ -541,17 +697,7 @@ Template.addFeedback.events({
 editTitleFeedback	//Title of survey
 saveSurvey //button to save survey to db
 launchSurvey //button to save survey to db and launch it (set status to active)
- class="feedbackQuestion"
 
-feedbackQn{
-	qnID: (Mongo self generate also can)
-	surveyID: 
-	feedbackType: (either trainer/facility/course)
-	inputType: (eg radiobutton);
-	question: (qn goes here)
-	Options: (list of options they can choose from or nothing here is input type is text)
-	LSPQnID: [If got link to LSP qn]
-}
 
 feedbackAnswer{
 	qnID: (link to the qnID)
