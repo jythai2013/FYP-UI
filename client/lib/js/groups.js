@@ -79,6 +79,21 @@ Template.addClass.helpers({
     }
 });
 
+Template.addStudent.helpers({
+
+    "students" : function(e) {
+		return Meteor.users.find({userType:{"learner":true}});
+    }, 
+
+	"noOfTimesStudent": function() {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('studentTimes'); i++){
+			fakeArray.push("a")
+		}
+    	return fakeArray;
+	}
+});
+
 Template.removeClass.helpers({
 
 	"groupsCourse2" : function listGroups2EventHandler(e) {
@@ -259,5 +274,72 @@ Template.deleteClass.events({
 	"click #deleteClassButton" : function deleteCourseEventHandler(e) {
 			console.log(this._id);
 			Meteor.call("deleteClass", this._id);
+	}
+});
+
+Template.addStudent.events({
+	
+	"click #addStudentButton" : function(e, templ) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+		 // console.log(e);
+		 // console.log(templ);
+		 
+		var addStudents = document.getElementsByName("newStudentsC");
+    var addStudentsArr = new Array();
+    for(var x = 0, l = addStudents.length; x < l;  x++){
+      console.log(addStudents[x]);
+      addStudentsArr.push(addStudents[x].value);
+		}
+
+    addStudentsArr.forEach(function(entry) {
+      // console.log(entry + "");
+    });
+
+
+		//TODO: Add student to class list
+		var courseCode = templ.data.courseCode;
+		var grpNum = templ.data.grpNum;
+		
+		var group = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
+		console.log(group);
+		var classlist = [];
+		if(group.classlist != undefined) classlist = group.classlist;
+		
+		console.log(classlist);
+		
+    addStudentsArr.forEach(function(entry) {
+      // console.log(entry);
+			classlist.push(entry); 
+    });
+		
+		console.log(classlist);
+		Meteor.call("updateGroupClasslist", courseCode, grpNum, classlist);
+	},
+
+	"click #addMoreStudents" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var studentTimes = Session.get('studentTimes');
+		 var noOfTimes = studentTimes+1;
+		 if(isNaN(studentTimes)) noOfTimes = 1;
+		 console.log("studentTimes " + studentTimes);
+		 console.log("noOfTimes " + noOfTimes);
+		 Session.set('studentTimes', noOfTimes);
+	},
+
+	"click #removeThisStudent" : function(e) {
+		e.preventDefault();
+        var studentTimes = Session.get('studentTimes');
+
+        // noOfTimes = _.reject(salesInput, function(x) {
+        //     return x.salesId == salesId;
+        // });
+
+		 
+		 if(isNaN(studentTimes)) noOfTimes = 1;
+		 var noOfTimes = studentTimes-1;
+		 Session.set('studentTimes', noOfTimes);
 	}
 });

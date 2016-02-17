@@ -1,8 +1,10 @@
 template(name="certificateStudentList")
   tbody
     thead
-      th student name
-      th button#generateCerts Generate Certs
+      th 
+        student name
+      th 
+        button#generateCerts Generate Certificates
     each students
       tr
         td
@@ -10,7 +12,7 @@ template(name="certificateStudentList")
         td
           button#generateCert Generate Cert
 
-template(name="certificate")
+template(name="certificateManagement")
   #page-wrapper
     .row
       .col-lg-12

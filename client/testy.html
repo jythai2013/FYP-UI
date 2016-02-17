@@ -40,6 +40,34 @@
 
 
 
+
+
+
+
+
+
+<template name="testyWord">
+	<!--<script type="text/javascript" src="docxtemplater-latest.js"></script>-->
+	<script type="text/javascript" src="app/client/lib/js/docxtemplater-latest.js"></script>
+	<script type="text/javascript" src="http://sheetjs.com/demos/FileSaver.js"></script>
+	<script type="text/javascript" src="http://javascript-ninja.fr/docxtemplater/v1/vendor/jszip-utils.js"></script>
+  <!--
+  Mandatory in IE 6, 7, 8 and 9.
+  -->
+  <!--[if IE]>
+  <script type="text/javascript" src="http://javascript-ninja.fr/docxtemplater/v1/vendor/jszip-utils-ie.js"></script>
+  <![endif]-->
+	
+	<input type="file" id="inputExcelElement">
+</template>
+
+
+
+
+
+
+
+
 <template name="testyGenerateExcel">
 	<script type="text/javascript" src="http://oss.sheetjs.com/js-xlsx/xlsx.core.min.js"></script>
 	<script type="text/javascript" src="http://sheetjs.com/demos/Blob.js"></script>
@@ -58,8 +86,8 @@
 
 <template name="certificateTemplate">
 	<font color="red">
-		Congratulations {{fullName}}! <br />
-		You have passed {{courseName}} - {{courseCode}} <br />
-		Held from {{courseStart}} to the {{courseEnd}} <br />
+		Congratulations {{fullName}}! <br>
+		You have passed {{courseName}} - {{courseCode}} <br>
+		Held from {{courseStart}} to the {{courseEnd}} <br>
 	</font>
 </template>

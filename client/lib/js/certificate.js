@@ -16,13 +16,13 @@ Template.certificateTemplate.onRendered(function(){
 });
 
 //Search ////////////////////////
-Template.certificate.onRendered(function(){
+Template.certificateManagement.onRendered(function(){
 	Session.set("certSearchStudent", null);
 	Session.set("certSearchCourseCode", null);
 	Session.set("certSearchGroupNum", null);
 });
 
-Template.certificate.events({
+Template.certificateManagement.events({
 	"click #filter" : function doSearch(e){
 		// console.log(e);
 		var studentName = document.getElementById("studentName").value;
@@ -56,7 +56,7 @@ Template.certificate.events({
 	}
 });
 
-Template.certificate.helpers({
+Template.certificateManagement.helpers({
 	"finishedGroup" : function certificate(evt) {
 		var verbose = true;
 		var studentName = Session.get("certSearchStudent");
@@ -106,7 +106,7 @@ Template.certificate.helpers({
 });
 // End Search ////////////////////////
 
-Template.certificate.events({
+Template.certificateManagement.events({
 	"click #go" : function doSearch(e, t){
 		console.log(this);
 		console.log(e);
@@ -195,7 +195,7 @@ Template.certificateStudentList.events({
 
 Template.certificateStudentList.helpers({
 	"students" : function certificate(evt) {
-		var verbose = !true;
+		var verbose = true;
 		var studentName = Session.get("certSearchStudent");
 		var courseCode 	= Session.get("certSearchCourseCode");
 		var groupNum 		= Session.get("certSearchGroupNum");
@@ -232,8 +232,16 @@ Template.certificateStudentList.helpers({
 		//converts a set of groups into students
 		var students = new Array();
 		v.forEach(function(currentValue, index, array){
-			students.push(currentValue.classtList);
+			if(currentValue.classlist != null && currentValue.classlist != undefined) {
+				currentValue.classlist.forEach(function(currentValue2, index2, array2){
+					students.push(currentValue2);
+				});
+			}
 		});
+		
+		if(verbose){
+			console.log(students);
+		}
 		
 		//Filter the students
 		if(studentName != null && studentName != undefined && studentName.length > 0){ 
@@ -245,6 +253,9 @@ Template.certificateStudentList.helpers({
 				return (thisStudent.name.toLowerCase().indexOf(studentName.toLowerCase())>-1);
 			});
 		}
+		
+		students = students.getUnique();
+		
 		if(verbose){
 			console.log(students);
 		}
@@ -271,16 +282,18 @@ Template.certificateStudentList.events({
 		aData.courseStart = thisGroup.startDate;
 		aData.courseEnd   = thisGroup.endDate  ;
 		var students = Session.get("certificateStudentListStudents");
-		students.forEach(function(myData){
+		students.forEach(function(studentId){
+			var myData={};
 			myData.courseName  = aData.courseName ;
 			myData.courseCode  = aData.courseCode ;
 			myData.courseStart = aData.courseStart;
 			myData.courseEnd   = aData.courseEnd  ;
+			myData.fullName = Meteor.users.findOne({_id:studentId}).fullName;
 			Blaze.saveAsPDF(Template.certificateTemplate, {
 				filename: "report.pdf", // optional, default is "document.pdf"
 				data: myData, // optional, render the template with this data context
-				x: 0, // optional, left starting position on resulting PDF, default is 4 units
-				y: 0, // optional, top starting position on resulting PDF, default is 4 units
+				// x: 0, // optional, left starting position on resulting PDF, default is 4 units
+				// y: 0, // optional, top starting position on resulting PDF, default is 4 units
 				orientation: "portrait", // optional, "landscape" or "portrait" (default)
 				unit: "mm", // optional, unit for coordinates, one of "pt", "mm" (default), "cm", or "in"
 				format: "a4" // optional, see Page Formats, default is "a4"
@@ -296,9 +309,15 @@ Template.certificateStudentList.events({
 		var myData = new Object();    
 		var courseCode  = Session.get("certSearchCourseCode");
 		var groupNum 	  = Session.get("certSearchGroupNum"); 
+		console.log(courseCode);
+		console.log(groupNum);
 		var thisCourse  = Courses.findOne({courseCode:courseCode});
 		var thisGroup   = Groups.findOne({courseCode:courseCode, grpNum:groupNum});
-		myData.fullName = this.fullName;
+		console.log(thisCourse);
+		console.log(thisGroup);
+		console.log(this.toString());
+		console.log(Meteor.users.findOne({_id:this.toString()}));
+		myData.fullName = Meteor.users.findOne({_id:this.toString()}).fullName;
 		myData.courseName = thisCourse.courseName;
 		myData.courseCode = thisCourse.courseCode;
 		myData.courseStart = thisGroup.startDate;
@@ -306,8 +325,8 @@ Template.certificateStudentList.events({
 		Blaze.saveAsPDF(Template.certificateTemplate, {
 			filename: "report.pdf", // optional, default is "document.pdf"
 			data: myData, // optional, render the template with this data context
-			x: 0, // optional, left starting position on resulting PDF, default is 4 units
-			y: 0, // optional, top starting position on resulting PDF, default is 4 units
+			// x: 0, // optional, left starting position on resulting PDF, default is 4 units
+			// y: 0, // optional, top starting position on resulting PDF, default is 4 units
 			orientation: "portrait", // optional, "landscape" or "portrait" (default)
 			unit: "mm", // optional, unit for coordinates, one of "pt", "mm" (default), "cm", or "in"
 			format: "a4" // optional, see Page Formats, default is "a4"
@@ -315,3 +334,15 @@ Template.certificateStudentList.events({
 		console.log("End");
 	}
 });
+
+Array.prototype.getUnique = function(){
+   var u = {}, a = [];
+   for(var i = 0, l = this.length; i < l; ++i){
+      if(u.hasOwnProperty(this[i])) {
+         continue;
+      }
+      a.push(this[i]);
+      u[this[i]] = 1;
+   }
+   return a;
+}
