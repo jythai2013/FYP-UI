@@ -25,5 +25,14 @@ Meteor.methods({
 			},
 			{ upset:true} //Append
 		)
+	},
+
+	'isLauncherActive': function checkForWindowURL(){
+
+		if(window.location == 'myfixedurl')
+		{
+		    return true;
+		}
+		return false;
 	}
 });

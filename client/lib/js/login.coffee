@@ -35,9 +35,15 @@ Template.loginModal.helpers(
   isLoggedIn: () ->
     if Meteor.user()
       Meteor.setTimeout(() ->
-            Session.set('signUpSuccessMessage', false)
-            Router.go('/dashboard')
-          , 600)
+        Session.set('signUpSuccessMessage', false)
+        if Meteor.user().userType.admin
+          Router.go('/dashboard')
+        else if Meteor.user().userType.trainer
+          Router.go('/trainer')
+        else
+          Router.go('/student')
+      , 600)
+      console.log(">>> Ended login");
       return true
     else
       return false

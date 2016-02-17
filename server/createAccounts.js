@@ -86,14 +86,18 @@
 		},
 
 
-		'createAdminAccount': function createAdminAccount(sEmail, sPassword, sName, sMobileNo, sAccessType){
+		'createAdminAccount': function createAdminAccount(sEmail, sName, sMobileNo, sAccessType, isTrainer){
 			console.log(">> Start: CreateAdminAccount")
-			var userTypeObj = {admin: true};
+			console.log(">>" + isTrainer);
+			// if isTrainer
+			// 	var userTypeObj = {admin: true, trainer: true};
+			// else
+				var userTypeObj = {admin: true};
 
 			var options = {
 				email: sEmail,
-				password: sPassword,
-				fullname: sName,
+				password: sMobileNo,
+				fullName: sName,
 				mobileNo: sMobileNo,
 				accessType: sAccessType,
 				userType: userTypeObj

@@ -1,4 +1,9 @@
 // ADMIN ///////////////////////////////////////////////////////////////////////
+Template.topbar.helpers({
+	'displayUserName': function retrieveAdminName(e) {
+		return Meteor.user().fullName;
+	}
+});
 
 Template.administratorList.helpers({
 	"administrators" : function adminList(e) {
@@ -27,17 +32,22 @@ Template.addAdminAcctForm.events({
 		var fullName = document.getElementById("sName").value;
 		var mobileNo = document.getElementById("mobileNo").value;
 		var email = document.getElementById("email").value;
-		var password = mobileNo;
 
 		var selected = template.findAll("input[type=checkbox]:checked");
 		var array = _.map(selected, function(item) {
 		     return item.defaultValue;
 		});
+		var isTrainer = document.getElementById("isTrainer").value;
+		var createTrainer = false;
+
+		// if isTrainer == "Yes"
+		// 	createTrainer = true;
+
 		console.log("Access Rights Assigned: " + array);
 		var adminAccessId = array;
 		
-		Meteor.call("createAdminAccount", email, password, fullName, mobileNo, adminAccessId);
-		console.log("Sys: Admin Information Saved ("+fullName+","+mobileNo+","+email+","+password+","+adminAccessId+")");
+		Meteor.call("createAdminAccount", email, fullName, mobileNo, adminAccessId, createTrainer);
+		console.log("Sys: Admin Information Saved ("+fullName+","+mobileNo+","+email+","+password+","+adminAccessId+"isTrainer:)"+isTrainer);
 	}
 });
 

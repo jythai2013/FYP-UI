@@ -1,0 +1,98 @@
+<template name="trainerAnnouncment">
+  <style>
+    table.spaceBelow {
+      th,td {
+        padding-bottom: 10px;
+        border: 1px;
+      }
+    }
+  </style>
+  <div id='wrapper-trainer'>
+    <!-- Sidebar -->
+    {{> trainerSidebar}}
+    <!-- Tools -->
+    <section id='tools'>
+      <ul class='breadcrumb' id='breadcrumb'>
+        <li class='title'>Sterling</li>
+        <li><a href="#">Dashboard</a></li>
+      </ul>
+    </section>
+    <!-- Content -->
+    <div id='content'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <i class='icon-beer icon-large'></i>
+          Post Announcement to Students
+        </div>
+        <div class='panel-body'>
+          <div class='page-header'>
+            <h4>Post Announcement</h4>
+          </div>
+          {{>addAnnouncement}}
+
+          <div class='page-header'>
+            <h4>Annoucement Management</h4>
+          </div>
+          <table class="table table-striped table-bordered" id="dataTables-example">
+            <thead>
+              <tr>
+                <th>Posted Date</th>
+                <th>Title</th>
+                <th>View Details</th>
+                <th>Type</th>
+                <th>Posted To</th>
+                <th>Due Date</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="postAnnounModel">
+  if isAnnouncementPosted
+    .alert.alert-success
+      | Your Announcement has been posted
+  else
+    // do nothing
+</template>
+
+<template name="addAnnouncement">
+  <form action="" method="post">
+    <table style="width:100%" class="spaceBelow">
+      <tr>
+        <th style="width:25%">Announcement Title</th>
+        <td><input type="text" name="announTitle" id="announTitle" style="width:100%"/></td>
+      </tr>
+      <tr>
+        <th>Announcement Type</th>
+        <td>
+          <select name="announType" id="announType">
+            <option value="assignment">Assignment Related</option>
+            <option value="discussion">Discussion Related</option>
+            <option value="general">General</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+          <th>Post To:</th>
+          <td>Class and Group</td>
+      </tr>
+      <tr>
+        <th>Details:</th>
+        <td><textarea id="announDetails" style="width:100%"></textarea></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>            
+          <button class="button btn admin-btn" id="trainerPostAnnouncement">Post Announcement</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</template>

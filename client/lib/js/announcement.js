@@ -1,19 +1,18 @@
-//'insertAnnouncement': function insertAnnouncement(annouTitle, annouDetails, annouAuthor, classId, courseCode){
-
 // Inserting
-/*Template.notificationForm.events({
+Template.addAnnouncement.events({
 	
-	"click #submitButton" : function createAnnouncementEventHandler(e) {
-		e.preventDefault();
-		console.log("here1");
-
-		var title = document.getElementById("annouTitle").value;
-		var content = document.getElementById("annouDetails").value;
-		var author = Meteor.user().emails[0].address;
-
-		Meteor.call("insertAnnouncement", title, content, author, "G1", "is101");
+	"click #trainerPostAnnouncement" : function createAnnouncementEventHandler(e) {
+		var title = document.getElementById("announTitle").value;
+		var content = document.getElementById("announDetails").value;
+		var createdBy = Meteor.user()._id;
+		var announType = document.getElementById("announType").value;
+		//var module = 
+		//var dueDate = document.getElementById("announType").value;
+		Meteor.call("insertAnnouncement", title, content, createdBy, "G1");
 	}
 });
+
+/*
 
 //Displaying
 Template.displayAnnoucements.helpers({
@@ -24,3 +23,11 @@ Template.displayAnnoucements.helpers({
 	return Courses.find({});
 	}
 });*/
+
+Template.postAnnounModel.helpers({
+  // isAnnouncementPosted: (err) ->
+  //   if Meteor.user()
+  //     return true
+  //   else
+  //     return false
+});

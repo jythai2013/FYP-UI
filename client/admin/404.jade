@@ -4,15 +4,41 @@ template(name="404")
       .col-lg-12
         h1.page-header 404
 
-template(name="blank")
-  #page-wrapper
-    .row
-      .col-lg-12
-        h1.page-header Blank
 
-template(name="loading")
-  #page-wrapper
-    .row
-      .col-lg-12
-        #loading
-          img(src="img/loading.gif", alt="loading")
+template(name="404Layout")
+  style.
+    h1 {
+      text-align: center;
+      color: #ddd;
+      text-shadow: 0px 2px 3px #666;
+    }
+    .panel-default {
+      background-color: #333333;
+    }
+    .panel-body {
+      border-color: #42DCA3;
+    }
+    body {
+      background-color: #333333;
+    }
+    i {
+      color: #42dca3;
+    }
+    span {
+      border-color: #42dca3;
+    }
+    .alignMiddle {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%)
+    }
+    a{
+      text-align: middle;
+    }
+
+  .container.alignMiddle
+    h1 Sterling Training Hub
+    +yield

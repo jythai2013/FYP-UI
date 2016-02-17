@@ -1,10 +1,10 @@
 template(name="mainLayout")
-  +checkUserLogin
   div.adminBody
     +topbar
     +container
 
 template(name="topbar")
+  +checkUserLogin
   #wrapper
     // Navigation
     nav.navbar.navbar-default.navbar-static-top(role="navigation", style="margin-bottom: 0")
@@ -19,7 +19,7 @@ template(name="topbar")
       ul.nav.navbar-top-links.navbar-right
         li.dropdown
           a.dropdown-toggle(data-toggle="dropdown", href="#", style="color: #42dca3")
-            | Welcome, Marc Sim
+            | Welcome, {{displayUserName}}
             i.fa.fa-caret-down
           ul.dropdown-menu.dropdown-user
             li

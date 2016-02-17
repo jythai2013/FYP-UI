@@ -1,4 +1,10 @@
 // Trainer ///////////////////////////////////////////////////////////////////////
+Template.trainerIndex.helpers({
+	"displayTrainerName" : function displayTrainerName(e) {
+		return Meteor.user().fullName;
+	}
+});
+
 Template.trainerList.helpers({
 	"trainers" : function trainerList(e) {
 		return Meteor.users.find({userType:{"trainer":true}});
