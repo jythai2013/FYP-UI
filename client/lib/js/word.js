@@ -95,7 +95,9 @@ function processWordFile(e){
 			}
 		) //set the templateVariables
 		doc.render() //apply them (replace all occurences of {first_name} by Hipp, ...)
+		console.log(doc);
 		out=doc.getZip().generate({type:"blob"}) //Output the document using Data-URI
+		console.log(out);
 		saveAs(out,"output.docx") 
 	}
 	reader.readAsArrayBuffer(f);
@@ -103,26 +105,12 @@ function processWordFile(e){
 	console.log("processWordFile end")
 }
 
-	function cellIsFilled(workbook, cellAddress){
-		// console.log(cellAddress);
-		/* Get worksheet name */
-		var first_sheet_name = workbook.SheetNames[0];
-		//console.log(first_sheet_name);
-		
-		/* Get worksheet */
-		var worksheet = workbook.Sheets[first_sheet_name];
-		//console.log(worksheet);
-		
-		//console.log(cellAddress);
-		/* Find desired cell */
-		var desired_cell = worksheet[cellAddress];
-		if(desired_cell == undefined) return false;
-		// console.log(desired_cell);
 
-		/* Get the value */
-		var desired_value = desired_cell.v;
-		// console.log(desired_value);
-		
-		if(desired_value.toString().trim().length > 0) return true;
-		return false;
-	}
+
+
+
+
+
+
+
+
