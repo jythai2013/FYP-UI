@@ -15,6 +15,25 @@ Template.groupRegistration.onRendered(function(){
 	DOMElement = $('#inputExcelElement')[0];
 	DOMElement.addEventListener('change', handleFile, false);
 	DOMElement.addEventListener('drop', handleDrop, false);
+});;
+
+Template.groupExcelUpload.onRendered(function(){
+	//var XLSX;
+	if(typeof require !== 'undefined') XLSX = require('xlsx');
+	//XLSX = require('xlsx');
+	console.log(window.XLSX);
+	
+	//var fs = Npm.require('fs');
+	//console.log(fs);
+	//var path = Npm.require('path');
+	//console.log(path);
+	//var basepath = path.resolve('.').split('.meteor')[0];
+	//console.log(basepath);
+	
+	//register event listerners for file drop or add
+	DOMElement = $('#fileName')[0];
+	DOMElement.addEventListener('change', handleFile, false);
+	DOMElement.addEventListener('drop', handleDrop, false);
 });
 
 
@@ -67,6 +86,7 @@ function handleFile(e) {
 
 
 function processExcelFile(workbook){
+	// console.log("Processing file");
 	/* Get worksheet name */
 	var first_sheet_name = workbook.SheetNames[0];
 	
@@ -172,10 +192,17 @@ function processExcelFile(workbook){
 		// unused function parameters: password	inCompany	inLang	residenceTel	officeTel	fRemarks
 		// unused excel parameters:  SN	ProficiencyIn
 		// Meteor.call("createTrainerAccount", Email, password, FirstName, LastName, Gender, IDNumber, IDType, inCompany, ResidentialAddress, PostalCode, DateOfBirth, Nationality, inLang, residenceTel, MobileNo, officeTel, NextOfKinName, NOKNo, NOKAddress, Relationship, fRemarks, HighestQualification);
-		Meteor.call("createLearnerAccount2", debugObj);
+		console.log("creating an account");
+		var success = Meteor.call("createLearnerAccount2", debugObj);
+		console.log("successful = " + success);
 		
 		currentLineNumber += 1;
+		console.log(currentLineNumber);
 	}
+	alert("done");
+	var rootUrl = window.location.href.substring(0, window.location.href.indexOf('/', 10));
+	console.log(rootUrl);
+	window.location.href=rootUrl+"/AccountsMgmt/studentList"
 }
 
 	function cellIsFilled(workbook, cellAddress){
@@ -193,6 +220,7 @@ function processExcelFile(workbook){
 		//console.log(desired_cell);
 
 		/* Get the value */
+		if(desired_cell==undefined) return false;
 		var desired_value = desired_cell.v;
 		//console.log(desired_value);
 		

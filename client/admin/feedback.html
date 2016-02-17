@@ -56,46 +56,62 @@
 </template>
 
 <template name="viewQn">
-{{#each feedbackQn}}
+{{#each feedbackQns}}
     <div class="fb-field-wrapper response-field-text">
         <div class="subtemplate-wrapper">
         <!--<label> <span>qn <abbr title="required">*</abbr></span></label>
             <p>Options go here</p> -->
 
              
-            <label> <span>{{feedbackQn[1]}} <abbr title="required">*</abbr></span></label>
-            <p>Options go here</p>
+            <label> <span class="a">{{feedbackQn}} </span></label>
+            <label> <span class="b">{{lspQnId}}</span></label>
+            <label> <span class="b">{{qnType}}</span></label>
+            <!--<p>Options go here</p>-->
 
             
-                {{#if equals feedbackQn.qnType 'vtext'}}
-                    {{> textCreate}}
+                {{#if equals qnType 'vtext'}}
+                    <label>
+                        <input disabled type="text" id="textQn" value="Their answer">   <abbr title="required">*</abbr>
+                    </label>
                 {{/if}}   
-                {{#if equals feedbackQn.qnType 'paraText'}}
-                    {{> paratextCreate}}
+                {{#if equals qnType 'paraText'}}
+                    <label>
+                        <textarea disabled type="text" id="paratextQn" value="Their answer"> </textarea>
+                    </label>
                 {{/if}}  
-                {{#if equals feedbackQn.qnType 'radioButtons'}}
+                {{#if equals qnType 'radioButtons'}}
+                Came to radio
                     <label class="fb-option">
                         {{#each options}} 
-                            <input type="radio" id="radioButQn" value="{{this}}">
+                            <input type="radio" id="radioButQn" value="{{this}}"> {{this}} <br>
                         {{/each}}      
                     </label>
                 {{/if}}   
-                {{#if equals feedbackQn.qnType 'radioButtonsInline'}}
-                    {{> radioCreateInline}}
-                {{/if}}  
-                {{#if equals feedbackQn.qnType 'checkboxes'}}
+                {{#if equals qnType 'radioButtonsInline'}}
+                
                     <label class="fb-option">
-                        {{#each options}} 
-                            <input type="checkbox" name="cbOptions" value="{{this}}"> 
+                        {{#each options}}  
+                            <label class="radio-inline">
+                              <input type="radio" id="optradio">
+                            </label>
                         {{/each}}      
                     </label>
                 {{/if}}  
-                {{#if equals feedbackQn.qnType 'dropdown'}}
+                {{#if equals qnType 'checkboxes'}}
+                checkboxes
                     <label class="fb-option">
                         {{#each options}} 
-                            <input type="checkbox" name="cbOptions" value="{{this}}"> 
+                            <input type="checkbox" id="cbOptions" value="{{this}}"> {{this}} <br>
                         {{/each}}      
-                        <a id="addCheckboxes">Add item</a>
+                    </label>
+                {{/if}}  
+                {{#if equals qnType 'dropdown'}}
+                    <label class="fb-option">
+                        <select id="cars">
+                        {{#each options}} 
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}      
+                        </select>
                     </label>
                 {{/if}}     
 
