@@ -1,0 +1,42 @@
+<template name="feedbackResults">
+    <div id="page-wrapper" style="min-height: 861px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"> Feedback Results</h1>
+                
+                <div class="subtemplate-wrapper"> 
+                    <h3>  
+                        Feedback Title
+
+                    </h3>
+
+                    Feedback Type: {{feedbackType}}
+
+
+                </div>
+            </div>
+        </div>
+        <div class='fb-main'>
+            <div class="fb-response-fields ui-sortable">
+                <div class="fb-field-wrapper response-field-file"> </div>
+                Display result shere
+                
+
+                
+                    {{> viewResults}}
+            </div>
+        </div>
+        <div class="row">
+            <a class = "fb-button btn pull-right" id="launchSurvey" style="background:#800000; border: none;">
+                <i> Launch</i>
+            </a>
+        </div>
+    </div>
+</template>
+
+<template name="viewResults">
+
+  <div id="chart2">
+    <svg style="height:400px;width:700px"/>
+  </div>
+</template>

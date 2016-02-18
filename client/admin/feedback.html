@@ -39,12 +39,16 @@
         <div class='fb-main'>
             <div class="fb-response-fields ui-sortable">
                 <div class="fb-field-wrapper response-field-file"> </div>
-                {{>viewQn}}
-                
+                    {{#each feedbackQns}}
 
-                {{#each noOfFields}} 
+                        {{> viewQn feedbackDetails = this}}
+                    {{/each}}
+
                     {{> createQn}}
-                {{/each}}
+
+                    {{#each noOfFields}} 
+                        {{> createQn}}
+                    {{/each}}
             </div>
         </div>
         <div class="row">
@@ -56,82 +60,156 @@
 </template>
 
 <template name="viewQn">
-{{#each feedbackQns}}
+<!--{{#each feedbackQns feedbackDetails = "y"}}-->
     <div class="fb-field-wrapper response-field-text">
         <div class="subtemplate-wrapper">
-        <!--<label> <span>qn <abbr title="required">*</abbr></span></label>
-            <p>Options go here</p> -->
-
-             
-            <label> <span class="a">{{feedbackQn}} </span></label>
-            <label> <span class="b">{{lspQnId}}</span></label>
-            <label> <span class="b">{{qnType}}</span></label>
-            <!--<p>Options go here</p>-->
-
-            
-                {{#if equals qnType 'vtext'}}
+            {{#if equals feedbackDetails.qnID sessionQnID}}
+                <label> 
+                    <input  type="text" id="textQn" value="{{feedbackDetails.feedbackQn}}">
+                </label>
+                {{#if equals feedbackDetails.qnType 'vtext'}}
                     <label>
                         <input disabled type="text" id="textQn" value="Their answer">   <abbr title="required">*</abbr>
                     </label>
                 {{/if}}   
-                {{#if equals qnType 'paraText'}}
+                {{#if equals feedbackDetails.qnType 'paraText'}}
                     <label>
                         <textarea disabled type="text" id="paratextQn" value="Their answer"> </textarea>
                     </label>
                 {{/if}}  
-                {{#if equals qnType 'radioButtons'}}
-                Came to radio
+                {{#if equals feedbackDetails.qnType 'radioButtons'}}
+
+                    {{#each feedbackDetails.options}} 
+                        <input type="radio" id="radioButQn"> <input type="text" name="qnOptionsEd" value="{{this}}">
+                        <a class = "fa fa-times-circle" id="removeRadioFieldEd"></a> <br>
+                    {{/each}}             
+
+                    {{#each editAddRadioFields}} 
+                        <input type="radio"> <input type="text" name="qnOptionsEd">
+                        <a class = "fa fa-times-circle" id="removeRadioFieldEd"></a> <br>
+                    {{/each}}         
+                
+                    <a id="addRadioEd">Add item</a>
+
+
+                {{/if}}   
+                {{#if equals feedbackDetails.qnType 'radioButtonsInline'}}
+                
+                    {{#each feedbackDetails.options}}  
+                        <label class="radio-inline">
+                          <input type="radio" id="optradio"><input type="text" name="qnOptionsEd" value="{{this}} ">
+                        </label>
+                        <a class = "fa fa-times-circle" id="removeRadioInlineFieldEd"></a> 
+                    {{/each}}  
+
+                    {{#each editAddRadioInlineFields}} 
+                        <label class="radio-inline">
+                          <input type="radio" id="optradio"><input type="text" name="qnOptionsEd">
+                        </label>
+                        <a class = "fa fa-times-circle" id="removeRadioInlineFieldEd"></a> 
+                    {{/each}} 
+                {{/if}}  
+                {{#if equals feedbackDetails.qnType 'checkboxes'}}
+
+                    {{#each feedbackDetails.options}} 
+                        <input type="checkbox"> <input type="text" name="qnOptionsEd" value="{{this}}">
+                        <a class = "fa fa-times-circle" id="removeCheckboxField"></a> <br>
+                    {{/each}}      
+                    
+                    {{#each editAddCheckboxFields}} 
+                        <input type="checkbox"> <input type="text" name="qnOptionsEd">
+                        <a class = "fa fa-times-circle" id="removeCheckboxField"></a> <br>
+                    {{/each}}         
+
+                    <a id="addCheckboxes">Add item</a>
+
+                {{/if}}  
+                {{#if equals feedbackDetails.qnType 'dropdown'}}
+                    {{#each feedbackDetails.options}} 
+                        <input type="text" name="qnOptionsEd" value="Type here">
+                        <a class = "fa fa-times-circle" id="removeDropdownField"></a> <br>
+                    {{/each}}     
+
+                    {{#each editAddDropdownFields}} 
+                        {{this}} <input type="text" name="qnOptionsEd" value="Type here">
+                        <a class = "fa fa-times-circle" id="removeDropdownField"></a> <br>
+                    {{/each}} 
+
+                {{/if}}      
+                <div class="actions-wrapper">
+                    <a class = "js-save fb-button" id="saveFieldsEd">
+                        <i class = "fa fa-check-circle"></i>
+                    </a>
+                    <a class = "js-duplicate fb-button" id="addFields">
+                        <i class = "fa fa-plus-circle"></i>
+                    </a>
+                    <a class = "js-clear fb-button" id="deleteQnEd">
+                        <i class = "fa fa-minus-circle"></i>
+                    </a>
+                </div> 
+            {{else}}
+                <label> <span class="a">{{feedbackDetails.feedbackQn}} </span></label>
+                {{#if equals feedbackDetails.qnType 'vtext'}}
+                    <label>
+                        <input disabled type="text" id="textQn" value="Their answer">   <abbr title="required">*</abbr>
+                    </label>
+                {{/if}}   
+                {{#if equals feedbackDetails.qnType 'paraText'}}
+                    <label>
+                        <textarea disabled type="text" id="paratextQn" value="Their answer"> </textarea>
+                    </label>
+                {{/if}}  
+                {{#if equals feedbackDetails.qnType 'radioButtons'}}
                     <label class="fb-option">
-                        {{#each options}} 
+                        {{#each feedbackDetails.options}} 
                             <input type="radio" id="radioButQn" value="{{this}}"> {{this}} <br>
                         {{/each}}      
                     </label>
                 {{/if}}   
-                {{#if equals qnType 'radioButtonsInline'}}
+                {{#if equals feedbackDetails.qnType 'radioButtonsInline'}}
                 
                     <label class="fb-option">
-                        {{#each options}}  
+                        {{#each feedbackDetails.options}}  
                             <label class="radio-inline">
-                              <input type="radio" id="optradio">
+                              <input type="radio" id="optradio" value="{{this}}"> {{this}} 
                             </label>
                         {{/each}}      
                     </label>
                 {{/if}}  
-                {{#if equals qnType 'checkboxes'}}
-                checkboxes
+                {{#if equals feedbackDetails.qnType 'checkboxes'}}
                     <label class="fb-option">
-                        {{#each options}} 
+                        {{#each feedbackDetails.options}} 
                             <input type="checkbox" id="cbOptions" value="{{this}}"> {{this}} <br>
                         {{/each}}      
                     </label>
                 {{/if}}  
-                {{#if equals qnType 'dropdown'}}
+                {{#if equals feedbackDetails.qnType 'dropdown'}}
                     <label class="fb-option">
                         <select id="cars">
-                        {{#each options}} 
+                        {{#each feedbackDetails.options}} 
                             <option value="{{this}}">{{this}}</option>
                         {{/each}}      
                         </select>
                     </label>
                 {{/if}}     
+                <div class="actions-wrapper">
+                    <a class = "js-edit fb-button" id="editFields" value={{feedbackDetails.qnID}}>
+                        <i class = "fa fa-pencil"></i>
+                    </a>
+                    <a class = "js-duplicate fb-button" id="addFields">
+                        <i class = "fa fa-plus-circle"></i>
+                    </a>
+                    <a class = "js-clear fb-button" id="deleteQnEd">
+                        <i class = "fa fa-minus-circle"></i>
+                    </a>
+                </div>
 
+            {{/if}}
                         
-            <div class="actions-wrapper">
-                <a class = "js-edit fb-button" id="editFields">
-                    <i class = "fa fa-pencil"></i>
-                </a>
-                <a class = "js-duplicate fb-button" id="addFields">
-                    <i class = "fa fa-plus-circle"></i>
-                </a>
-                <a class = "js-clear fb-button" id="deleteQn">
-                    <i class = "fa fa-minus-circle"></i>
-                </a>
-            </div>
 
-             
         </div>
     </div>
-    {{/each}}
+    <!--{{/each}}-->
 </template>
 
 <template name="createQn">
@@ -215,10 +293,10 @@
 <template name="radioCreate">
     <div>
         <label class="fb-option">
-            <input type="radio" id="radioButQn" value="male" checked> <input type="text" id="qnOptions"> 
+            <input type="radio" id="radioButQn"> <input type="text" name="qnOptions"> 
             <a class = "fa fa-times-circle" id="removeRadioField"></a> <br>
             {{#each addRadioFields}} 
-                <input type="radio" id="radioButQn" value="other"> <input type="text" id="qnOptions">
+                <input type="radio" id="radioButQn"> <input type="text" name="qnOptions">
                 <a class = "fa fa-times-circle" id="removeRadioField"></a> <br>
             {{/each}}                
             <a id="addRadio">Add item</a>
@@ -230,10 +308,10 @@
 <template name="dropdownCreate">
     <div>
         <label class="fb-option">
-            <input type="text" id="qnOptions" value="Type here">
+            <input type="text" name="qnOptions" value="Type here">
             <a class = "fa fa-times-circle" id="removeDropdownField"></a> <br>
             {{#each addDropdownFields}} 
-                {{addDropdownFields}} <input type="text" id="qnOptions" value="Type here">
+                {{this}} <input type="text" name="qnOptions" value="Type here">
                 <a class = "fa fa-times-circle" id="removeDropdownField"></a> <br>
             {{/each}}    
 
@@ -247,13 +325,13 @@
         <label class="fb-option">
 
             <label class="radio-inline">
-              <input type="radio" id="optradio"><input type="text" id="qnOptions" value="Option 1">
+              <input type="radio" id="optradio"><input type="text" dropdown="qnOptions" value="Option 1">
             </label>
             <a class = "fa fa-times-circle" id="removeRadioInlineField"></a> 
 
             {{#each addRadioInlineFields}} 
                 <label class="radio-inline">
-                  <input type="radio" id="optradio"><input type="text" id="qnOptions" value="Option 3">
+                  <input type="radio" id="optradio"><input type="text" dropdown="qnOptions" value="Option 3">
                 </label>
                 <a class = "fa fa-times-circle" id="removeRadioInlineField"></a> 
             {{/each}}    
@@ -266,7 +344,7 @@
 <template name="textCreate">
     <div>
         <label>
-            <input type="text" id="textQn" value="Their answer">   <abbr title="required">*</abbr>
+            <input type="text" id="textQn" value="Their answer" disabled>   <abbr title="required">*</abbr>
         </label>
     </div>
 </template>
@@ -274,7 +352,7 @@
 <template name="paratextCreate">
     <div>
         <label>
-            <textarea type="text" id="paratextQn" value="Their answer"> </textarea>
+            <textarea type="text" id="paratextQn" value="Their answer" disabled> </textarea>
         </label>
     </div>
 </template>
