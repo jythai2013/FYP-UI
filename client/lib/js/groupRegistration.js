@@ -54,6 +54,8 @@ function handleDrop(e) {
 
       /* DO SOMETHING WITH workbook HERE */
 			processExcelFile(workbook);
+			DOMElement = $('#fileName')[0].value = "";
+			// console.log(e.target.value);
     };
     reader.readAsBinaryString(f);
   }
@@ -74,6 +76,8 @@ function handleFile(e) {
 
       /* DO SOMETHING WITH workbook HERE */
 			processExcelFile(workbook);
+			DOMElement = $('#fileName')[0].value = "";
+			// console.log(e.target);
     };
     reader.readAsBinaryString(f);
   }
@@ -103,10 +107,16 @@ function processExcelFile(workbook){
 	var cellOf_CourseStartDate 			= 'C7';
 	var cellOf_ClassNumber 					= 'C8';
 	
-	courCode								= worksheet[cellOf_CourseCode].v;
+	courseCode							= worksheet[cellOf_CourseCode].v;
 	grpNum									= worksheet[cellOf_ClassNumber].v;
 	
-	var startingLineNumber	= 11;
+	var theGroup = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
+	if(theGroup == null){
+		alert("The course or group does not exist, not doing anything");
+		return false;
+	}
+	
+	var startingLineNumber	= 12;
 	var currentLineNumber		= startingLineNumber;
 	
 	var cellOf_SN											= 'A';
@@ -135,6 +145,8 @@ function processExcelFile(workbook){
 		Gender	              = worksheet[cellOf_Gender + currentLineNumber].v;
 		IDType	              = worksheet[cellOf_IDType + currentLineNumber].v;
 		IDNumber	            = worksheet[cellOf_IDNumber + currentLineNumber].v;
+		console.log(worksheet[cellOf_IDNumber + currentLineNumber]);
+		console.log(IDNumber);
 		Nationality	          = worksheet[cellOf_Nationality + currentLineNumber].v;
 		Email	                = worksheet[cellOf_Email + currentLineNumber].v;
 		ResidentialAddress	  = worksheet[cellOf_ResidentialAddress + currentLineNumber].v;
@@ -146,15 +158,17 @@ function processExcelFile(workbook){
 		Relationship	        = worksheet[cellOf_Relationship + currentLineNumber].v;
 		NOKNo		              = worksheet[cellOf_NOKNo + currentLineNumber].v;
 		
+		userType = new Object();
+		userType.learner = true;
 		debugObj = new Object();
 		debugObj.SN									 	= SN									;
 		debugObj.firstName	        	= FirstName	        	;
 		debugObj.lastName	           	= LastName	          ;
 		debugObj.dateOfBirth	      	= DateOfBirth	      	;
 		debugObj.gender	            	= Gender	            ;
-		debugObj.userIDType	          = IDType	            ;
-		debugObj.userID	          		= IDNumber	          ;
-		debugObj.userType	          	= {learner:true}	    ;
+		debugObj.userIdType	          = IDType	            ;
+		debugObj.userId	          		= IDNumber	          ;
+		debugObj.userType	          	= userType	    ;
 		debugObj.nationality	        = Nationality	        ;
 		debugObj.email	              = Email	              ;
 		debugObj.resAddr	 						= ResidentialAddress	;
@@ -168,6 +182,10 @@ function processExcelFile(workbook){
 		debugObj.nokTel		            = NOKNo		            ;
 		
 		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
+		// console.log(courseCode)
+		// console.log(grpNum)
+		// console.log(theGroup)
+		// console.log(debugObj);
 		debugObj.enrollments					= new Array()		        ;
 		debugObj.enrollments.push(theGroup._id);
 		// debugObj.courseCode						= courseCode		        ;
@@ -192,8 +210,17 @@ function processExcelFile(workbook){
 		// unused excel parameters:  SN	ProficiencyIn
 		// Meteor.call("createTrainerAccount", Email, password, FirstName, LastName, Gender, IDNumber, IDType, inCompany, ResidentialAddress, PostalCode, DateOfBirth, Nationality, inLang, residenceTel, MobileNo, officeTel, NextOfKinName, NOKNo, NOKAddress, Relationship, fRemarks, HighestQualification);
 		console.log("creating an account");
-		var success = Meteor.call("createLearnerAccount2", debugObj);
-		console.log("successful = " + success);
+		Meteor.call("createLearnerAccount2", debugObj, function(error, result){
+			if(error){
+				alert(error);
+				console.error(error);
+			}
+			else{
+				console.log(theGroup._id);
+				console.log(result);
+				Meteor.call("pushStudentIdToGroupClasslist", theGroup._id, result);
+			}
+		});
 		
 		currentLineNumber += 1;
 		console.log(currentLineNumber);
@@ -201,7 +228,7 @@ function processExcelFile(workbook){
 	alert("done");
 	var rootUrl = window.location.href.substring(0, window.location.href.indexOf('/', 10));
 	console.log(rootUrl);
-	window.location.href=rootUrl+"/AccountsMgmt/studentList"
+	// window.location.href=rootUrl+"/AccountsMgmt/studentList"
 }
 
 	function cellIsFilled(workbook, cellAddress){

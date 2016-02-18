@@ -37,6 +37,14 @@
 		'deleteUsers2': function deleteUsers(_id){
 	        console.log("Method: deleteUsers2 (users.js)");
 	        Meteor.users.remove(_id);
+					var allGroups = Groups.find({}).fetch();
+					allGroups.forEach(function(currentValue, index, origArray){
+						var indexOfId = currentValue.classlist.indexOf(_id);
+						if(indexOfId > -1){
+							currentValue.classlist.splice(indexOfId, 1);
+							Groups.update({_id:currentValue._id},{$set:{classlist:currentValue.classlist}})
+						}
+					});
 	    },
 		
 		'createTrainerAccount': function createTrainerAccount(obj){
@@ -59,13 +67,15 @@
 		
 		'createLearnerAccount2': function createLearnerAccountF(obj){
 			console.log(">> Start: CreateLearnerAccount");
-			console.log(obj);
+			// console.log(obj);
 			obj.fullName = obj.firstName + " " + obj.lastName;
 			var options = obj;
 			console.log("Sys: Participant Account Creating.");
 			// var userId = Accounts.createUser(options);
-			Accounts.createUser(options);
+			var user_id = Accounts.createUser(options);
+			console.log("user._id: " + user_id);
 			console.log("Sys: Participant Account Created.");
+			return user_id;
 		},
 		
 		'editLearnerAccount': function editLearnerAccount(_id, sNationality, sCode, sResAddr, sMobileNo, sProficiency, qualification, snokName, snokTel, snokReln){

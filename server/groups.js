@@ -1,5 +1,11 @@
  Meteor.methods({ 
 
+  'pushStudentIdToGroupClasslist': function editGroup(theGroup_id, user_id){
+		// console.log(courseCode + " " + grpNum);
+		Groups.update({_id:theGroup_id},{$push:{classlist:user_id}});
+		// console.log(classlist);
+	},
+	
   'updateGroupClasslist': function editGroup(courseCode, grpNum, classlist){
 		// console.log(courseCode + " " + grpNum);
 		Groups.update({courseCode:courseCode, grpNum:grpNum},{$set:{classlist:classlist}});
