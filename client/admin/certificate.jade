@@ -1,18 +1,3 @@
-template(name="certificateStudentList")
-  #page-wrapper
-    tbody
-      thead
-        th 
-          student name
-        th 
-          button#generateCerts Generate Certificates
-      each students
-        tr
-          td
-            #{fullName}
-          td
-            button#generateCert Generate Cert
-
 template(name="certificateManagement")
   #page-wrapper
     .row

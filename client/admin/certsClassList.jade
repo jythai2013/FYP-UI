@@ -1,0 +1,53 @@
+template(name="certificateStudentList")
+  style.
+    .panel-body{
+      padding: 3%;
+    }
+    .col-lg-12{
+      padding-left: 2%;
+      padding-right: 2%;
+    }
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header certificate class list
+      // /.col-lg-12
+    // /.row
+
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Search Student
+          
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                tbody
+                  tr
+                    th Search Student
+                    td 
+                      input.form-control(type="text", id="courseCode", placeholder="eg. John Doe")
+            
+                  button#filter.btn.btn-save( style="position: absolute; margin-top: 1%; right: 6%; background: #333; color:#fff") filter          
+
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Class Certificate Details
+              button.btn.btn.btn-sm(data-toggle="modal", id="dlAllCerts", style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        i.fa.fa-download
+                        |  All
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                thead
+                  tr
+                    th Student
+                    th Certificate
+                tbody
+                  each students
+                    tr
+                      td
+                        #{fullName}
+                      td
+                        button#generateCert Generate Cert
