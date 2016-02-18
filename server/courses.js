@@ -51,6 +51,12 @@
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
+			
+			var theCourse = Courses.findOne({_id:_id});
+			if(!Array.isArray(theCourse.courseTrainers)){
+				var emptyArray = new Array();
+				Courses.update({_id:_id},{$set:{courseTrainers:emptyArray}})
+			}
 
       		addTrainersArr.forEach(function(trainer) {
    				Courses.update(_id, {
