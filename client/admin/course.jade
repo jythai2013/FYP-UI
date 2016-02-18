@@ -204,7 +204,7 @@ template(name="addClass")
                     .form-group.input-group
                       select(name="type", id="gTrainers", style="color: black")
                         each courseTrainers
-                          option(value="#{_id}") {{.}}
+                          option(value="#{_id}") #{fullName}
                     
           // /.table-responsive
         .modal-footer

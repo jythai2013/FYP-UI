@@ -1,16 +1,14 @@
 Template.trainerUploads.helpers({
 	"trainerOngoingCourses" : function findTrainerOngoingCourses(e) {
-		var coursesTaught = Courses.find().fetch();
-		// console.log(coursesTaught);
+		console.log("trainerPortal.js - trainerOngoingCourses >>>");
+		var trainerId = Meteor.user()._id;
+		var coursesTaught = Groups.find({courseTrainers: trainerId});
+		console.log(coursesTaught);
+		// var classes = new Array();
+		// classList.forEach(function(curr,ind,arr){
+		// 	classes.push(Meteor.users.findOne({_id:curr}));
+		// });
 		return coursesTaught;
-	},
-	
-	"trainerOngoingClasses" : function findTrainerOngoingCourses(e) {
-		var courseCode = Session.get("trainerOngoingCourseSelected");
-		// console.log(courseCode);
-		var groupsTaught = Groups.find({courseCode:courseCode}).fetch();
-		// console.log(groupsTaught);
-		return groupsTaught;
 	}
 });
 

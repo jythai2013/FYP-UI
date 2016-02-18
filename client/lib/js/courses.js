@@ -116,8 +116,7 @@ Template.addClass.helpers({
 		for(var x = 0, l = a.length; x < l;  x++){
 			var entry = a[x].trainerID;
 			var trainer = Meteor.users.findOne({_id:entry});
-    		var fullName = trainer.fullName;
-			trainersArr.push(fullName);
+			trainersArr.push(trainer);
     	}
 
     	trainersArr.forEach(function(entry) {

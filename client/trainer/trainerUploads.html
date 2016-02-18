@@ -50,7 +50,7 @@
               <th>
                 <select  name="courseCode" id="courseCode">
                   {{#each trainerOngoingCourses}}
-                    <option value="{{courseCode}}">{{courseName}}</option>
+                    <option value="{{_id}}">{{courseName}} {{grpNum}}</option>
                   {{/each}}
                 </select>
               </th>
