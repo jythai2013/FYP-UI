@@ -58,7 +58,7 @@ Template.certificateManagement.events({
 
 Template.certificateManagement.helpers({
 	"finishedGroup" : function certificate(evt) {
-		var verbose = !true;
+		var verbose = true;
 		// var studentName = Session.get("certSearchStudent");
 		var courseCode = Session.get("certSearchCourseCode");
 		var groupNum = Session.get("certSearchGroupNum");

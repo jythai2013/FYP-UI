@@ -71,7 +71,6 @@
 		'createLearnerAccount2': function createLearnerAccountF(obj){
 			console.log(">> Start: CreateLearnerAccount");
 			console.log(obj);
-			obj.fullName = obj.firstName + " " + obj.lastName;
 			var options = obj;
 			console.log("Sys: Participant Account Creating.");
 			// var userId = Accounts.createUser(options);

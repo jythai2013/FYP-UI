@@ -46,19 +46,11 @@
           </div>
           <table>
             <tr>
-              <th>Course</th>
+              <th>Upload To</th>
               <th>
                 <select  name="courseCode" id="courseCode">
                   {{#each trainerOngoingCourses}}
                     <option value="{{courseCode}}">{{courseName}}</option>
-                  {{/each}}
-                </select>
-              </th>
-              <th>Class</th>
-              <th>
-                <select name="classId" id="classId">
-                  {{#each trainerOngoingClasses}}
-                    <option value="{{grpNum}}">{{grpNum}}</option>
                   {{/each}}
                 </select>
               </th>
