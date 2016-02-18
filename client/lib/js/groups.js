@@ -194,9 +194,9 @@ Template.addClass.events({
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		var grpNumI2 = grpNumI1+1;
 		var grpNumI = "G"+grpNumI2;
-      console.log(grpNumI + "group number");
+      	console.log(grpNumI + "group number");
 		console.log("here4");
-		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gStatus, gVenue, gNoOfHours, gTrainers);
+		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gVenue, gNoOfHours, gTrainers);
 		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();
 	}

@@ -107,8 +107,6 @@
       Groups.remove({ studFirstName: sFirstName, studLastName: sLastName });
     },
     
-
-
     'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, daysArrI, startDateI, endDateI, paymentDeadlineI, venueI, noOfHoursI, trainersI){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
