@@ -97,6 +97,8 @@ Template.bookingFacilityForm.events({
 		var startDateTimeI = document.getElementById("input_time_beginning").value;
 		var endinDateTimeI = document.getElementById("input_time_end").value;
 		// repeatOption = document.getElementById("facRepeatOptionSearch").value;
+		var e = document.getElementById("courseId");
+		var courseI = e.options[e.selectedIndex].value;
 		
 		startDateTime = new Date(moment(startDateTimeI,"DD/MM/YYYY hh:mm a").format());
 		console.log(startDateTime);
@@ -109,6 +111,7 @@ Template.bookingFacilityForm.events({
 		// Session.set("facReapeatOptionSearch", repeatOption);
 		Session.set("facStartDateTimeSearch", startDateTime);
 		Session.set("facEndinDateTimeSearch", endinDateTime);
+		Session.set("courseSearch", courseI);
 	},
 
 	"click #submitFmBooking" : function(e){
@@ -455,3 +458,15 @@ function getDatesFromRepeat(){
 	}
 }
 
+Template.bookingFacilityForm.helpers({
+	courseSearchResult:function(){
+		return course = Courses.find({}).fetch();
+	}
+});
+
+Template.bookingFacilityForm.helpers({
+	groupSearchResult:function(){
+		var search = Session.get("courseSearch");
+		return groups = Groups.find({courseCode: search}).fetch();
+	}
+});
