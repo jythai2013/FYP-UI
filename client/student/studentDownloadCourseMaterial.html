@@ -1,0 +1,54 @@
+<template name="studentCourseMaterial">
+  <div id='wrapper-trainer'>
+    <!-- Sidebar -->
+    <section id='sidebar'>
+      <i class='icon-align-justify icon-large' id='toggle'></i>
+      <ul id='dock'>
+        <li class='active launcher'>
+          <i class='icon-dashboard'></i>
+          <a href="/student">Dashboard</a>
+        </li>
+        <li class='launcher'>
+          <i class='icon-table'></i>
+          <a href="/student/viewYourClass">Classes</a>
+        </li>
+        <li class='launcher'>
+          <i class='icon-file-text-alt'></i>
+          <a href="/student/assignmentDropbox">Uploads</a>
+        </li>
+      </ul>
+    </section>
+    <!-- Tools -->
+    <section id='tools'>
+      <ul class='breadcrumb' id='breadcrumb'>
+        <li class='title'>Sterling</li>
+        <li><a href="/student">Student Portal</a></li>
+        <li><a href="/student/viewYourClass">Your Class</a></li>
+        <li><a href="#">Materials</a></li>
+      </ul>
+    </section>
+    <!-- Content -->
+    <div id='content'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <i class='icon-beer icon-large'></i>
+          In a glance
+        </div>
+        <div class='panel-body'>
+          <div class='page-header'>
+            <h4>Course Materials</h4>
+          </div>
+          <table>
+            <tr>
+              <th>Title</th>
+              <th>Uploaded by</th>
+              <th>From Module</th>
+              <th>Date of Upload</th>
+              <th>Download File</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

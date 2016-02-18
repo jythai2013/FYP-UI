@@ -1,0 +1,76 @@
+<template name="studentUpload">
+  <div id='wrapper-trainer'>
+    <!-- Sidebar -->
+    <section id='sidebar'>
+      <i class='icon-align-justify icon-large' id='toggle'></i>
+      <ul id='dock'>
+        <li class='launcher'>
+          <i class='icon-dashboard'></i>
+          <a href={{pathFor route="Student Portal"}}>Dashboard</a>
+        </li>
+        <li class='launcher'>
+          <i class='icon-table'></i>
+          <a href="/student/viewYourClass">Classes</a>
+        </li>
+        <li class='active launcher'>
+          <i class='icon-file-text-alt'></i>
+          <a href="/student/assignmentDropbox">Uploads</a>
+        </li>
+      </ul>
+    </section>
+    <!-- Tools -->
+    <section id='tools'>
+      <ul class='breadcrumb' id='breadcrumb'>
+        <li class='title'>Sterling</li>
+        <li><a href="/student">Student Portal</a></li>
+        <li class='active'><a href="#">Assignment Uploads</a></li>
+      </ul>
+    </section>
+
+    <!-- Content -->
+    <div id='content'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <i class='icon-beer icon-large'></i>
+          Assignments Dropbox
+        </div>
+        <div class='panel-body'>
+          <div class='page-header'>
+            <h4>Pending Assignments</h4>
+          </div>
+          <form name="attendenceForm" action="#" method="post">
+            <div class='panel panel-default grid'>
+              <div class='panel-heading'>
+                <i class='icon-table icon-large'></i>
+                Upload your Assignments
+              </div>
+              <div class='panel-body'>
+                <table class='table table-bordered'>
+                  <tbody>
+                    <tr>
+                      <td>Assignment</td>
+                      <td>
+                        <select id="sendToGroup">
+                          <option name="">Group dropdown</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>File</td>
+                      <td><input type="file" id="attfileName"/></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <button class="button btn admin-btn" id="submitAssignment">Submit Assignment</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
