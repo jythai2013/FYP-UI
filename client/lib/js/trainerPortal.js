@@ -1,7 +1,12 @@
+
+Template.trainerUploads.onRendered(function(){
+	Session.set("loggedInUser", Meteor.user());
+});
+
 Template.trainerUploads.helpers({
 	"trainerOngoingCourses" : function findTrainerOngoingCourses(e) {
 		console.log("trainerPortal.js - trainerOngoingCourses >>>");
-		var tId = Meteor.user()._id;
+		var tId = Session.get("loggedInUser")._id;
 		var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
 		console.log(coursesTaught);
 		// var classes = new Array();

@@ -11,16 +11,23 @@ Template.trainerUploadAttendance.events({
 	"click #generateExcel":function attendanceExcelGeneration(e, template){
 		e.preventDefault();
 		// console.log("generateExcel");
+		// console.log(e);
 		// console.log(template);
 		// console.log(Template.currentData());
-		var courseCode = $("#courseCode")[0].value
-		var groupNum = $("#classId")[0].value
-		if(courseCode == undefined || groupNum == undefined || Groups.findOne({courseCode:courseCode, grpNum:groupNum}) == undefined){
+		var groupId = $("#courseCode")[0].value
+		// var courseCode = $("#courseCode")[0].value
+		// var groupNum = $("#classId")[0].value
+		var theGroup = Groups.findOne({_id:groupId});
+		// var courseCode = $("#courseCode")[0].value
+		// var groupNum = $("#classId")[0].value
+		if(courseCode == undefined || groupNum == undefined || theGroup == undefined){
 			console.log(courseCode);
 			console.log(groupNum);
 			alert("Invalid course and/or group selected!");
 			return false;
 		}
+		var groupNum = theGroup.grpNum;
+		var courseCode = theGroup.courseCode;
 		// var inData = "";
 		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
 		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:groupNum});

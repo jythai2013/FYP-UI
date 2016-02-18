@@ -117,8 +117,8 @@ Template.addClass.helpers({
 		//console.log(currentCourse + "Code");
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
-		var size = Courses.findOne({courseCode:currentCourse});
-		console.log(size);
+		var theCourse = Courses.findOne({courseCode:currentCourse});
+		console.log(theCourse);
 		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
 
 		var trainersArr = new Array();
@@ -212,6 +212,9 @@ Template.addCourseForm.events({
 
 		console.log("here8");
 		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType,cFLR);
+		var temp = Session.get("courseSearchCode");
+		Session.set("courseSearchCode", "123");
+		Session.set("courseSearchCode", temp);
 	}
 
 
