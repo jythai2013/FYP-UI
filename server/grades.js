@@ -4,7 +4,7 @@ Meteor.methods({
 		studentID = inObj.StudentID;
 		grades = inObj.grades;
 		
-		var theUser = Meteor.users.findOne(inObj.StudentID);
+		var theUser = Meteor.users.findOne({_id:inObj.StudentID});
 		// console.log(theUser)
 		
 		if(theUser.grades == undefined || theUser.grades == null){ theUser.grades = {}; }
@@ -12,6 +12,7 @@ Meteor.methods({
 		//theUser.grades.date[dateD].studentId = gradesTrueOrFalse;
 		theUser.grades = grades;
 		// console.log(theUser)
+		// console.log(inObj.StudentID)
 		// console.log(theUser.grades)
 		
 		Meteor.users.update({_id:inObj.StudentID}, {$set: {grades: grades}});

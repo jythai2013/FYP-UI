@@ -16,7 +16,7 @@ Meteor.methods({
 		attendance[dateD][studentId] = attendanceTrueOrFalse;
 		console.log(theGroup)
 		
-		Group.update({_id:group_id},{$set:{attendance:theGroup.attendance}})
+		Groups.update({_id:group_id},{$set:{attendance:theGroup.attendance}})
 		
 		// theGroup.attendance is an object, with each date as attributes
 		// each date attribute of the attendance object is another object with studentIds as the attributes
@@ -79,7 +79,7 @@ Meteor.methods({
 		//console.log("");
 		//console.log(attendance);
 		//theGroup.attendance = attendance;
-		//console.log(theGroup);
+		console.log(theGroup);
 		
 		Groups.update({_id:groupId},{$set:{attendance:attendance}})
 		

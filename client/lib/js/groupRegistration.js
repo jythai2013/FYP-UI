@@ -99,16 +99,14 @@ function processExcelFile(workbook){
 	// /* Get the value */
 	// var desired_value = desired_cell.v;
 	
-	var cellOf_CourseCode 						= 'C6';
+	var cellOf_CourseCode 					= 'C6';
 	var cellOf_CourseStartDate 			= 'C7';
 	var cellOf_ClassNumber 					= 'C8';
-	var cellOf_ContactPersonName			= 'C11';
-	var cellOf_ContactPersonNo				= 'C12';	
-	var cellOf_CompanyAddress				= 'C13';
-	var cellOf_CompanyOfficeNo				= 'C14';
-	var cellOf_CompanyEmail					= 'C15';
 	
-	var startingLineNumber	= 19;
+	courCode								= worksheet[cellOf_CourseCode].v;
+	grpNum									= worksheet[cellOf_ClassNumber].v;
+	
+	var startingLineNumber	= 11;
 	var currentLineNumber		= startingLineNumber;
 	
 	var cellOf_SN											= 'A';
@@ -128,8 +126,6 @@ function processExcelFile(workbook){
 	var cellOf_NextOfKinName					= 'O';
 	var cellOf_Relationship	        	= 'P';
 	var cellOf_NOKNo		              = 'Q';
-	var cellOf_NOKAddress	          	= 'R';
-	var cellOf_NOKPostalCode  	    	= 'S';
 	
 	while(cellIsFilled(workbook, cellOf_FirstName + currentLineNumber)){
 		SN										= worksheet[cellOf_SN + currentLineNumber].v;
@@ -149,8 +145,6 @@ function processExcelFile(workbook){
 		NextOfKinName				  = worksheet[cellOf_NextOfKinName + currentLineNumber].v;
 		Relationship	        = worksheet[cellOf_Relationship + currentLineNumber].v;
 		NOKNo		              = worksheet[cellOf_NOKNo + currentLineNumber].v;
-		NOKAddress	          = worksheet[cellOf_NOKAddress + currentLineNumber].v;
-		NOKPostalCode  	    	= worksheet[cellOf_NOKPostalCode + currentLineNumber].v;
 		
 		debugObj = new Object();
 		debugObj.SN									 	= SN									;
@@ -172,8 +166,13 @@ function processExcelFile(workbook){
 		debugObj.nokName							= NextOfKinName				;
 		debugObj.nokReln	       			= Relationship	      ;
 		debugObj.nokTel		            = NOKNo		            ;
-		debugObj.NOKAddress	        	= NOKAddress	        ;
-		debugObj.NOKPostalCode  	  	= NOKPostalCode  	 		;
+		
+		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
+		debugObj.enrollments					= new Array()		        ;
+		debugObj.enrollments.push(theGroup._id);
+		// debugObj.courseCode						= courseCode		        ;
+		// debugObj.grpNum								= grpNum		          ;
+		
 		console.log(debugObj);
 		
 		/*

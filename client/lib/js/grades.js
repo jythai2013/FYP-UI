@@ -158,7 +158,7 @@ function processExcelFile(workbook){
 		debugObj.StudentID		= StudentID	  ;
 		debugObj.grades	      = grades	    ;
 		debugObj.groupId      = GroupID	    ;
-		// console.log(debugObj);
+		console.log(debugObj);
 		
 		
 		//TODO: validations
