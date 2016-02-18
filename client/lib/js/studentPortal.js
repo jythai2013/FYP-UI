@@ -1,14 +1,14 @@
-//trainer/trainerAnnouncment.html
-Template.trainerAnnouncment.helpers({
+//student/studentClass.html
+Template.studentClass.helpers({
 	"studentOngoingCourses" : function findTrainerOngoingCourses(e) {
-		console.log("trainerPortal.js - trainerOngoingCourses >>>");
-		var tId = Meteor.user()._id;
-		var coursesTook = Groups.find({classlist: {trainerId: tId}});
-		// var studentArray = new Array();
-		// classList.forEach(function(curr,ind,arr){
-		// 	studentArray.push(Meteor.users.findOne({_id:curr}));
-		// });
-		console.log(coursesTook);
-		return coursesTook;
+		console.log("studentPortal.js - studentOngoingCourses >>>");
+		var tId = Session.get("loggedInUser")._id;
+		var belongInClasses = new Array();
+		var groups = Groups.find({});
+		groups.forEach(function(classD){
+			var classDetails = classD.classlist;
+		 	console.log($.inArray(tId, classDetails));
+		});
+
 	}
 });

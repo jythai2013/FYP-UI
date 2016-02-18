@@ -356,3 +356,12 @@ Template.addTrainer.events({
 		 Session.set('trainerTimes', noOfTimes);
 	}
 });
+
+
+// WEBSITE
+Template.courses.helpers({
+	"retrieveAllCourse" : function retrieveAllCourse() {
+		console.log(">> Courses Helper");
+		return Courses.find({});
+	}
+});

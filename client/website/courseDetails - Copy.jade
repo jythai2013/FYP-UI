@@ -1,4 +1,4 @@
-template(name="websiteCourseDetails1")
+template(name="websiteCourseDetails")
 	style.
 		p.templateLineBreak {
 			padding-bottom: 10px;
@@ -17,7 +17,7 @@ template(name="websiteCourseDetails1")
 		.row
 			.col-lg-10.col-lg-offset-1
 				h1.page-header Course Information
-		+websiteCourseDetailsForm1
+		+websiteCourseDetailsForm
 		.row
 			.col-lg-10.col-lg-offset-1
 				.form-group
@@ -43,7 +43,7 @@ template(name="websiteCourseDetails1")
 				a.btn.pull-right.admin-btn(href="/website/courseSignup/CGM01v3", type="button", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Sign Up Now
 				a.btn.pull-right.admin-btn(onclick="window.history.back()") Back
 
-template(name="websiteCourseDetailsForm1")
+template(name="websiteCourseDetailsForm")
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group

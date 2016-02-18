@@ -57,9 +57,6 @@ template(name="course")
                     td 
                       input(type="button", value="Add Trainer(s)", data-toggle="modal", data-target="#addTrainer", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                       +addTrainer
-                    td 
-                      input(type="button", value="Remove Trainer(s)", data-toggle="modal", data-target="#removeTrainer", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
-                      +removeTrainer
                   tr 
                     th Classes
                     td(style="word-break: break-word")
@@ -71,9 +68,6 @@ template(name="course")
                         i.fa.fa-plus
                         | Class 
                       +addClass
-                    td(width="50px")
-                      input(type="button", value="Remove Class(es)", data-toggle="modal", data-target="#removeClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
-                    +removeClass
                     
               //button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                         //i.fa.fa-plus
@@ -238,9 +232,6 @@ template(name="addTrainer")
                 td  
                   button#addMoreTrainers.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
                     i.fa.fa-plus 
-                
-                  button#removeThisTrainer.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                    i.fa.fa-minus    
               
           // /.table-responsive
         .modal-footer

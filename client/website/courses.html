@@ -6,6 +6,17 @@
 		img {
 			margin-bottom: 15px;
 		}
+		#courseBG {
+		    height: 300px;
+		    width: 400px;
+		    background: #181818 ; /* For browsers that do not support gradients */    
+		    background: -webkit-linear-gradient(left, white, grey); /* For Safari 5.1 to 6.0 */
+		    background: -o-linear-gradient(right, #81818 , black); /* For Opera 11.1 to 12.0 */
+		    background: -moz-linear-gradient(right, #181818 , black); /* For Firefox 3.6 to 15 */
+		    background: linear-gradient(to right, #181818 , #003300); /* Standard syntax (must be last) */
+		    padding:10px;
+		    margin:10px;
+		}
 	</style>
 <!-- Courses Section -->
     <section class="content-section text-center" id="courses">
@@ -21,62 +32,38 @@
 
 	        <!-- Portfolio Section -->
 			<div class="row">
-	            <div class="col-lg-12">
+<!-- 	            <div class="col-lg-12">
 	                <h2 class="page-header">WDA Courses</h2>
-	            </div>
+	            </div> -->
+
 	            <div class="col-md-4 col-sm-6">
-	                <a href="/website/courseDetails/CGM01v3">
+	            	<a href="/website/courseDetails/CGM01v3">
 	                    <img class="img-responsive img-portfolio img-hover" src="http://i.imgur.com/a8b7WaW.jpg" height="700px" width="450px" alt="CGM01v3">
 	                </a>
 	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="/website/courseDetails/WSH01v2">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://imgur.com/scX6rd1.jpg" height="700px" width="450px" alt="WSH01v2">
-	                </a>
-	            </div>
-	        </div>
-	        <div class="row">
-	        	<p class="pull-right"><a href="/website#page-top">Back to top</a></p>
-	        </div>
-	        <!--End Portfolio-->
-	        <!-- Portfolio Section -->
-			<div class="row">
-	            <div class="col-lg-12">
-	                <h2 class="page-header">Non-WDA Courses</h2>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="/website/courseDetails/CSCPM01">
-	                    <img class="img-responsive img-portfolio img-hover" src="img/courses/CSCPM01.jpg" alt="" height="700px" width="450px">
-	                </a>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="#">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://imgur.com/D3OpCdt.jpg" alt="WAH01" height="700px" width="450px">
-	                </a>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="#">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://imgur.com/zovc17E.jpg" alt="MWAH01" height="700px" width="450px">
-	                </a>
-	            </div>
-	        </div>
-	        <div class="row">
-	        	<p class="pull-right"><a href="/website#page-top">Back to top</a></p>
-	        </div>
-	        <div class="row">
-	            <div class="col-lg-12">
-	                <h2 class="page-header">Other Courses</h2>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="#">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://imgur.com/UMMyQFS.jpg" alt="SSF01" height="700px" width="450px">
-	                </a>
-	            </div>
-	        </div>
-	        <div class="row">
-	        	<p class="pull-right"><a href="/website#page-top">Back to top</a></p>
+	            {{#each retrieveAllCourse}}
+		            <div class="col-md-4 col-sm-6" id="courseBG">
+		                <table style="height:100%; width:100%; color:gray">
+		                	<tr>
+		                		<td>{{courseCode}} - {{courseName}}</td>
+		                	</tr>
+		                	<tr>
+		                		<td>{{courseType}}</td>
+		                	</tr>
+		                	<tr>
+		                		<td>
+		                			<a class="btn admin-btn" href="/website/courseDetail?cCode={{_id}}">View More Details</a>
+		                		</td>
+		                	</tr>
+		                </table>
+		            </div>
+     	        {{/each}}
 	        </div>
 	        <!-- END: Portfolio Section -->
 	    </div>
     </section>
 </template>
+
+<!-- <a href="/website/courseDetails/CGM01v3">
+	                    <img class="img-responsive img-portfolio img-hover" src="http://i.imgur.com/a8b7WaW.jpg" height="700px" width="450px" alt="CGM01v3">
+	                </a> -->
