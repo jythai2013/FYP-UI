@@ -66,13 +66,11 @@ Template.viewCourseForm.helpers({
 Template.course.helpers({
 
 	"trainerList" : function(e) {
-		var str =  window.location.href;
-		//console.log(str + " = sign");
-		var position = str.indexOf('=');
-		//console.log(position + " = sign");
-		//console.log(str + "stri");
-		
-		var currentCourse=str.substr(position+1);
+		var url =  window.location.href;
+		var positionFirstEqual = url.indexOf('=');	
+		var currentCourseEsc=url.substring(positionFirstEqual+1);
+    	console.log(currentCourseEsc+ " currnt course code escaped");
+		var currentCourse=unescape(currentCourseEsc);
 		//console.log(currentCourse + "Code");
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
@@ -101,13 +99,12 @@ Template.course.helpers({
 Template.addClass.helpers({
 	"courseTrainers" : function trainerList(e) {
 		
-		var str =  window.location.href;
-		//console.log(str + " = sign");
-		var position = str.indexOf('=');
-		//console.log(position + " = sign");
-		//console.log(str + "stri");
 		
-		var currentCourse=str.substr(position+1);
+		var url =  window.location.href;
+		var positionFirstEqual = url.indexOf('=');	
+		var currentCourseEsc=url.substring(positionFirstEqual+1);
+    	console.log(currentCourseEsc+ " currnt course code escaped");
+		var currentCourse=unescape(currentCourseEsc);
 		//console.log(currentCourse + "Code");
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
@@ -137,18 +134,28 @@ Template.removeTrainer.helpers({
 	"trainer2" : function(e) {
 		//console.log("here");
 		//var currentCourse = Session.get('currentCourseCode');
-		var str =  window.location.href;
-		//console.log(str + " = sign");
-		var position = str.indexOf('=');
-		//console.log(position + " = sign");
-		//console.log(str + "stri");
 		
-		var currentCourse=str.substr(position+1);
+		var url =  window.location.href;
+		var positionFirstEqual = url.indexOf('=');	
+		var currentCourseEsc=url.substring(positionFirstEqual+1);
+    	console.log(currentCourseEsc+ " currnt course code escaped");
+		var currentCourse=unescape(currentCourseEsc);
 		//console.log(currentCourse + "Code");
 
 		var size = Courses.find({courseCode:currentCourse}).count();
 		//console.log(size + " size");
-		return Courses.findOne({courseCode:currentCourse}).courseTrainers;
+		var courseTrainersID =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
+		var fakeArray = new Array();
+		for (i = 0; i < courseTrainersID.length; i++){
+			//var trainerName = Meteor.users.find({userType:{"trainer":true}}).count();
+			//console.log(courseTrainersID[i]);
+			//fakeArray.push(trainerName);
+
+			fakeArray.push(Meteor.users.findOne({_id:courseTrainersID[i].trainerID}) );
+		}
+		//console.log(courseTrainersID);
+		console.log(fakeArray);
+		return fakeArray;
 	}
 });
 
@@ -261,9 +268,12 @@ Template.removeTrainer.events({
     	console.log(removeCurrentTrainersArr.length+ " ARR SIZE")
 
 		//extract course
+		
 		var url =  window.location.href;
 		var positionFirstEqual = url.indexOf('=');	
-		var currentCourse=url.substring(positionFirstEqual+1);
+		var currentCourseEsc=url.substring(positionFirstEqual+1);
+    	console.log(currentCourseEsc+ " currnt course code escaped");
+		var currentCourse=unescape(currentCourseEsc);
 		var groupID = Groups.findOne({courseCode:currentCourse, grpNum:grpNumber})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
 
 
@@ -279,6 +289,7 @@ Template.addTrainer.events({
 	"click #addTrainerButton" : function addTrainerEventHandler() {
 		//var addTrainers = document.getElementsById("newTrainersC").value;
 		var addTrainers = document.getElementsByName("newTrainersC");
+		console.log(addTrainers +" adding trainers");
 		var addTrainersArr = new Array();
 		for(var x = 0, l = addTrainers.length; x < l;  x++){
    			console.log(addTrainers[x] + "addTrainers line 236");
@@ -295,8 +306,10 @@ Template.addTrainer.events({
     	//extract course
 		var url =  window.location.href;
 		var positionFirstEqual = url.indexOf('=');	
-		var currentCourse=url.substring(positionFirstEqual+1);
-    	console.log(currentCourse+ " currnt course code");
+		var currentCourseEsc=url.substring(positionFirstEqual+1);
+    	console.log(currentCourseEsc+ " currnt course code escaped");
+		var currentCourse=unescape(currentCourseEsc);
+
 		var meep = Courses.findOne({courseCode:currentCourse}); //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
     	console.log(meep+ " courseID")
 		var courseID = Courses.findOne({courseCode:currentCourse})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne

@@ -39,7 +39,7 @@ template(name="classList")
         .panel.panel-default
           .panel-body
             h4 Class Details
-              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addCourse" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addClassForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | Class
               +addClassForm
@@ -72,68 +72,92 @@ template(name="classList")
    
 
 template(name="addClassForm")
-  #addCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  #addClassForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Add New Course
+          h4#myModalLabel.modal-title Add New Class
         .modal-body
-          form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
+          form(name="addClassForm", role="form", id="insert-addClassForm", action="facilityResult", method="post")
           .table-responsive
             table#dataTables-example.table(style="background:#333")
               tbody
                 tr
                   th Course Code
+                  td(colspan="3") #{courseCode}
+                    .form-group
+                      input.form-control(type="hidden", id="gCourseCode", value="#{courseCode}")
+                tr
+                  th Session Timing  
+                  td(colspan="3") 
+                    input(type="time", id="gNewStartTime", style="width:40%; color:black") 
+                    | TO 
+                    input(type="time", id="gNewEndTime", style="width:40%; color:black")
+                tr  
+                  th Days
+                  td 
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Monday", name="day")
+                        | Monday
                   td
                     .form-group
-                      input.form-control(type="text", id="cNewCode", placeholder="eg. IS101")
+                      label.checkbox-inline
+                        input(type="checkbox", value="Tuesday", name="day")
+                        | Tuesday
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Wednesday", name="day")
+                        | Wednesday
                 tr
-                  th Course Name  
+                  th  
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Thursday", name="day")
+                        | Thursday
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Friday", name="day")
+                       | Friday
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Saturday", name="day")
+                        | Saturday
+               
+                tr
+                  th Duration (Date)
+                  td(colspan="3")
+                    input(type="date", id="gNewStartDate", style="color:black; width: 40%")
+                    | TO
+                    input(type="date", id="gNewEndDate", style="color:black; width: 40%")
+                tr 
+                  th Payment Deadline
+                  td(colspan="3")
+                    .form-group
+                      input.form-control(type="date", id="gNewDeadline")
+                tr
+                  th Venue
                   td 
                     .form-group
-                      input.form-control(type="text", id="cNewName") 
-                tr
-                  th Course Type  
-                  td 
-                    .form-group
-                      select(id="type")
-                        option(value="wda") = "WDA"
-                        option(value="nonwda") = "Non-WDA"
-                tr
-                  th Description
-                  td 
-                    .form-group
-                      input.form-control(type="comment", id="cNewDesc")
-                tr
-                  th No. Of Sessions
-                  td 
-                    .form-group.input-group
-                      input.form-control(type="text", id="cNewNoOfSessions")
-                tr
-                  th Minimum
-                  td 
-                    .form-group.input-group
-                      input.form-control(type="text", id="cNewMin")
-                tr
-                  th Maximum
-                  td 
-                    .form-group.input-group
-                      input.form-control(type="text", id="cNewMax")
-                tr
-                  th Fees
-                  td 
-                    .form-group.input-group
-                      span.input-group-addon $
-                      input(type="text", id="cNewFee")
-                tr
+                      select(name="type", id="gVenue", style="color: black")
+                        each facilitiesList
+                          option(value="#{fac}") #{fac}
+                tr  
                   th Trainers
-                  td 
-                    .form-group
-                      input(type="text", id="cNewTrainers")
-            // /.table-responsive
+                  td
+                    .form-group.input-group
+                      select(name="type", id="gTrainers", style="color: black")
+                        each courseTrainers
+                          option(value="#{_id}") {{.}}
+                    
+          // /.table-responsive
         .modal-footer
-          button#addCourseButton.btn.btn-save(type="button", data-dismiss="modal") Add Course
+          button#addGroupButton.btn.btn-save(type="button", data-dismiss="modal") Add Class
       // /.modal-content
     // /.modal-dialog
   // /.modal

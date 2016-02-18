@@ -15,10 +15,22 @@
 	// }
 // });
 
+function getParameterByName(name) {
+	//console.log(name);
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	//console.log(name);
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+	//console.log(regex);
+	//console.log(results);
+	//console.log(decodeURIComponent(results[1].replace(/\+/g, " ")));
+	//console.log(results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")));
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 
 Template.feedbackQnMgmt.onRendered(function(){
   var currentfb = getParameterByName("fbid");
-	console.log(currentCourse);
   Session.set('currentfb', currentfb);
 });
 
@@ -50,9 +62,7 @@ Template.feedbackQnMgmt.helpers({
 	},
 
 	"feedbackTitle": function() {
-		var url =  window.location.href;
-		var positionEqual = url.indexOf('=');	
-		var fbId=url.substring(positionEqual+1);
+		var fbId=Session.get("currentfb");
 
 		var feedbackTitle = Feedback.findOne({_id:fbId}).feedbackTitle;
     		console.log(feedbackTitle+ " feedbackTitle")
@@ -60,11 +70,9 @@ Template.feedbackQnMgmt.helpers({
 	},
 
 	"feedbackQns": function() {
-		//Session.set('currentfb', currentfb);
-        var url =  window.location.href;
-  console.log(url);
-		var positionEqual = url.indexOf('=');	
-		var fbId=url.substring(positionEqual+1);
+		//Session.set('currentfb', currentfb);	
+		var fbId = Session.get("currentfb");
+		//console.log(fbId);
 		//var fbId=Session.set('currentfb', currentfb);
 		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
 		// var feedbackQnOptions = Feedback.findOne({_id:fbId});

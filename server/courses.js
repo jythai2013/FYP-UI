@@ -56,9 +56,8 @@
    				Courses.update(_id, {
 	        		$push: {
 	          			courseTrainers: {
-
 	          				trainerID: trainer
-	          				}
+	          			}
 	        		}
 	        		
 	        	});
