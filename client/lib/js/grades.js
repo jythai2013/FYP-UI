@@ -14,15 +14,33 @@ Template.trainerUploadGrades.events({
 		// console.log(e);
 		// console.log(template);
 		// console.log(Template.currentData());
-		var courseCode = $("#courseCode").value
-		var groupNum = $("#classId").value
-		if(courseCode.length <= 0 || groupNum <= 0){
+		var courseCode = $("#courseCode")[0].value
+		var groupNum = $("#classId")[0].value
+		if(courseCode == undefined || groupNum == undefined || Groups.findOne({courseCode:courseCode, grpNum:groupNum}) == undefined){
+			console.log(courseCode);
+			console.log(groupNum);
 			alert("Invalid course and/or group selected!");
 			return false;
 		}
-		var inData = "";
+		// var inData = "";
 		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
-		//var inData = []; 
+		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:groupNum});
+		var inData = []; 
+		inData.push([null,"Sterling Training Hub", null, null])
+		inData.push([null, null, null, null])
+		inData.push([null, null, null, null])
+		inData.push([null, "Course Code", courseCode, null])
+		inData.push([null, "GroupID", theGroup._id, null])
+		inData.push([null, null, null, null])
+		inData.push([null, null, null, null])
+		inData.push([null, "Student Name", "Student ID", "Assignment 1"])
+		var studentIds = theGroup.classlist
+		var students = new Array();
+		studentIds.forEach(function(studentId, index, arr){
+			var student = Meteor.users.findOne({_id:studentId});
+			students.push(student);
+			inData.push([null, student.FullName, student._id, "marks"]);
+		});
 		var inWs_name = "sheet 1";
 		var inExcelName = "test";
 		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
