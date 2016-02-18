@@ -1,8 +1,8 @@
 Template.trainerUploads.helpers({
 	"trainerOngoingCourses" : function findTrainerOngoingCourses(e) {
 		console.log("trainerPortal.js - trainerOngoingCourses >>>");
-		var trainerId = Meteor.user()._id;
-		var coursesTaught = Groups.find({courseTrainers: trainerId});
+		var tId = Meteor.user()._id;
+		var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
 		console.log(coursesTaught);
 		// var classes = new Array();
 		// classList.forEach(function(curr,ind,arr){
