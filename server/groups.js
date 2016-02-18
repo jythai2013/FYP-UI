@@ -118,9 +118,8 @@
         // return false; //TODO: output error message in client
       // }
 
-      obj.classlist = new Array();
       console.log("create group >> Server");
-      // console.log(obj);
+      console.log(obj);
       //var id = 
       Groups.insert(obj);
 

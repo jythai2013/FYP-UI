@@ -61,11 +61,24 @@ what if the users puts start and end and number of sessions, but they contradict
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Course</label>
                   <div class="col-sm-4">
-                    <input type="string" id="courseId" class="form-control">
+                    <select class="form-control" id="courseId">
+                      <option value="default">-- Select a Course --</option>
+                      {{#each courseSearchResult}}
+                      {{> courseDetails}}
+                      {{/each}}
+                    </select>
                   </div>
+<!--                   <div class="col-sm-4">
+                    <input type="string" id="courseId" class="form-control">
+                  </div> -->
                   <label class="col-sm-2 control-label">Group</label>
                   <div class="col-sm-4">
-                    <input type="string" id="groupId" class="form-control">
+                      <select class="form-control" id="groupId">
+                      <option value="default">-- Select a Session --</option>
+                      {{#each groupSearchResult}}
+                      {{> sessionDetails}}
+                      {{/each}}
+                    </select>
                   </div>
                 </div>
               </div>
@@ -143,4 +156,11 @@ what if the users puts start and end and number of sessions, but they contradict
   </div>
 </template>
 
+<template name="courseDetails">
+  <option value="{{courseCode}}">{{courseCode}}</option>
+</template>
+
+<template name="sessionDetails">
+  <option value="{{grpNum}}">{{grpNum}}</option>
+</template>
 

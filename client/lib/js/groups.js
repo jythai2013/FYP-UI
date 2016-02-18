@@ -2,7 +2,6 @@ Template.classList.helpers({
 
 	"classes" : function listCourseEventHandler(e) {
 		console.log("here");
-
 		return Groups.find({});
 	}
 });
@@ -19,6 +18,27 @@ function getParameterByName(name) {
 	//console.log(results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")));
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+
+
+
+
+
+
+
+// CLASS.JADE
+Template.group.helpers({
+	'studentInClass' : function(){
+		console.log("studentInClass>>");
+		console.log(this);
+		var classList = this.classlist;
+		var studentArray = new Array();
+		classList.forEach(function(curr,ind,arr){
+			studentArray.push(Meteor.users.findOne({_id:curr}));
+		});
+		return studentArray;
+	}
+});
 
 Template.group.helpers({
 
@@ -46,11 +66,11 @@ Template.group.helpers({
 		console.log(a);
 
         return Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).days;
-
-
-
     }
 });
+
+
+
 
 Template.course.onRendered(function(){
   var currentCourse = getParameterByName("cCode");
@@ -181,14 +201,16 @@ Template.addClass.events({
 		var str =  window.location.href;
 		var position = str.indexOf('=');		
 		var currentCourse=str.substr(position+1);
+		console.log("it all starts here > " + currentCourse);
 
 		var courseObject =  Courses.findOne({courseCode:currentCourse});
+		console.log("HERE >>> " + courseObject);
 
 
 
-		var gNoOfHours =  Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
+		// var courseObject =  Courses.findOne({courseCode:currentCourse});
+		// var gNoOfHours =  Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
 		// console.log(gNoOfHours + " number of Hours");
-
 		var days = document.getElementsByName("day");
 		/*
 		days[0-5]
@@ -206,13 +228,13 @@ Template.addClass.events({
 		obj.days = days2;
 		console.log(days);
 		console.log(obj);
-		var gdaysArr = new Array();
-		for(var x = 0, l = days.length; x < l;  x++){
-			// console.log(days[x].value + " DAYS");
-			if (days[x].checked){
-			  gdaysArr.push(days[x].value);
-			}
-		}
+		// var gdaysArr = new Array();
+		// for(var x = 0, l = days.length; x < l;  x++){
+			// // console.log(days[x].value + " DAYS");
+			// if (days[x].checked){
+			  // gdaysArr.push(days[x].value);
+			// }
+		// }
 
 		obj.startDate = document.getElementById("gNewStartDate").value;
 		obj.endDate = document.getElementById("gNewEndDate").value;
@@ -229,8 +251,11 @@ Template.addClass.events({
 		var grpNumI2 = grpNumI1+1;
 		obj.grpNum = "G"+grpNumI2;
 
-		// obj.days = {};
+		console.log("here4");
+		console.log(obj);
 		Meteor.call("createGroup",obj);
+		console.log("here4again");
+		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();
 	}
 });

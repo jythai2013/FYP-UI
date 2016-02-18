@@ -65,22 +65,16 @@ template(name="group")
             .table-responsive
               table#dataTables-example.table.table-bordered.table-hover
                 tbody
-                  tr 
-                    th Student 1
-                    td  
-                      input(type="button", value="Paid")
-                    td  
-                      input(type="button", value="Assessment")
-                    td 
-                      input(type="button", value="Remove Student")
-                   tr 
-                    th Student 2
-                    td  
-                      input(type="button", value="Paid")
-                    td  
-                      input(type="button", value="Assessment")
-                    td 
-                      input(type="button", value="Remove Student")
+                  each studentInClass
+                    tr
+                      td #{fullName}
+                      td 
+                        input(type="button", value="Paid")  
+                      td 
+                        input(type="button", value="Assessment")
+                      td 
+                        input(type="button", value="Remove Student")
+                 
             // /.table-responsive
             // /.row
           // /.panel-body
