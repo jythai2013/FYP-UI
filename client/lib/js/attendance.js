@@ -18,6 +18,13 @@ Template.trainerUploadAttendance.events({
 		// var courseCode = $("#courseCode")[0].value
 		// var groupNum = $("#classId")[0].value
 		var theGroup = Groups.findOne({_id:groupId});
+		try{
+			var groupNum = theGroup.grpNum;
+			var courseCode = theGroup.courseCode;
+		}catch(err){
+			console.error(err);
+			alert(err);
+		}
 		// var courseCode = $("#courseCode")[0].value
 		// var groupNum = $("#classId")[0].value
 		if(courseCode == undefined || groupNum == undefined || theGroup == undefined){
@@ -26,15 +33,9 @@ Template.trainerUploadAttendance.events({
 			alert("Invalid course and/or group selected!");
 			return false;
 		}
-		var groupNum = theGroup.grpNum;
-		var courseCode = theGroup.courseCode;
 		// var inData = "";
 		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
-		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:groupNum});
 		var inData = []; 
-		console.log(courseCode);
-		console.log(groupNum);
-		console.log(theGroup);
 		inData.push([null,"Sterling Training Hub", null, null])
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
