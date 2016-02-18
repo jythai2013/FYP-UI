@@ -1,0 +1,51 @@
+<template name="studentGrades">
+  <div id='wrapper-trainer'>
+    <!-- Sidebar -->
+    <section id='sidebar'>
+      <i class='icon-align-justify icon-large' id='toggle' style="color:#2c3e50"></i>
+      <ul id='dock'>
+        <li class='active launcher'>
+          <i class='icon-table'></i>
+          <a href="/student">Classes</a>
+        </li>
+        <li class='launcher'>     
+          <i class='icon-file-text-alt'></i>
+          <a href="/student/assignmentDropbox">Uploads</a>
+        </li>
+      </ul>
+    </section>
+    <!-- Tools -->
+    <section id='tools'>
+      <ul class='breadcrumb' id='breadcrumb'>
+        <li class='title'>Sterling - Student Portal</li>
+        <li class='#'>Enrolled Classes</li>
+        <li class='active'>View Grades</li>
+      </ul>
+    </section>
+    <!-- Content -->
+    <div id='content'>
+      <div class='panel panel-default grid'>
+        <div class='panel-heading'>
+          View Grades
+        </div>
+        <table class='table'>
+          <tr>
+            <td colspan="2">Class: courseName</td>
+          </tr>
+          <tr>
+            <td>Date of Attendence</td>
+            <td>Status</td>
+          </tr>
+          <tr>
+            <td> Eg. 10/10/2010</td>
+            <td><i class="fa fa-times" style="color: red"></i></td>
+          </tr>
+          <tr>
+            <td> Eg. 11/10/2010</td>
+            <td><i class="fa fa-check"></i></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>

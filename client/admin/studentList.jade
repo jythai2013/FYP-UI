@@ -39,7 +39,7 @@ template(name="studentList")
                   tr
                     th Name
                     th Particulars
-                    th Enrollments
+                    //th Enrollments
                     th Remarks
                     th Delete
                 tbody
@@ -49,8 +49,8 @@ template(name="studentList")
                       td 
                         a.btn.admin-btn.bt-sn(data-target="#viewParticulars#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                       +viewParticularsForm
-                      td 
-                        a.btn.admin-btn.bt-sn(data-target="#viewStudCourses#{_id}", data-toggle="modal", data-id="#{_id}") Courses
+                      //td 
+                        //a.btn.admin-btn.bt-sn(data-target="#viewStudCourses#{_id}", data-toggle="modal", data-id="#{_id}") Courses
                       td #{remarks}
                       td
                         a.btn.admin-btn.bt-sn(data-target="#deleteStud#{_id}", data-toggle="modal", data-id="#{_id}") Delete
@@ -76,12 +76,10 @@ template(name="addStudentAcctForm")
                 tr
                   td(style="width: 50%")  Gender
                   td 
-                    label.radio
-                      input#gender(type="radio", name="gender", value="Male", checked="")
-                      | Male
-                    label.radio
-                      input#gender(type="radio", name="gender", value="Female")
-                      | Female
+                    input(type="radio",id="gender",name="gender",value="Male",checked="")
+                    | Male
+                    input(type="radio",id="gender",name="gender",value="Female")
+                    | Female
                   td Date of Birth
                   td 
                     .form-group
@@ -109,29 +107,17 @@ template(name="addStudentAcctForm")
                   td 
                     .form-group
                       input.form-control(type='text', placeholder="Citizenship", id='nationality')
-                  td Postal Code
-                  td
-                    input.form-control(type='text', placeholder="ZipCode", id='code')
-                tr
-                  td Residential Address
-                  td(colspan='3')
-                    .form-group
-                      textarea.form-control(type='text', id='resAddr', placeholder='Apt. Street. Unit Number', style="max-width: 500px;")
                 tr
                   td Highest Qualification
                   td 
                     .form-group
                       select(id='qualification', style="color:black")
-                        option(value="0") PSLE
-                        option(value="1") O/N'Level
-                        option(value="2") A'Level
-                        option(value="3") Diploma
-                        option(value="4") Degree
-                tr
-                  td Proficieny
-                  td 
-                    .form-group
-                      textarea.form-control(type='text',id='proficiency')
+                        option(value="workshop") WPA Certified
+                        option(value="Primary") PSLE
+                        option(value="Secondary") O/N'Level
+                        option(value="JC") A'Level
+                        option(value="Polytechnic") Diploma
+                        option(value="University") Degree
                 tr
                   td Emergency Contact Name
                   td 
@@ -175,75 +161,60 @@ template(name="viewParticularsForm")
               table#dataTables-example.table(style="background:#333")
                 tbody  
                   tr
-                  td Name
-                  td #{fullName}
-                  td ID Number
-                  td 
-                    #{userID}
-                tr
-                  td Gender
-                  td 
-                    #{gender}
-                  td Date of Birth
-                  td 
-                    #{dateOfBirth}
-                tr
-                  td Email
-                  td 
-                    .form-group
-                      input.form-control(type='text', value="#{email}", id='email')
-                  td Mobile Number
-                  td 
-                    input.form-control(type='text', value="#{mobileNo}", id='mobileNo')
-                tr
-                  td Nationality
-                  td 
-                    .form-group
-                      input.form-control(type='text', value="#{nationality}", id='nationality')
-                  td Postal Code
-                  td
-                    input.form-control(type='text', value="#{postalCode}", id='code')
-                tr
-                  td Residential Address
-                  td(colspan='3')
-                    .form-group
-                      textarea.form-control(type='text', id='resAddr', value="#{resAddr}", style="max-width: 500px;")
-                tr
-                  td Highest Qualification
-                  td 
-                    .form-group
-                      select(id='qualification', style="color:black")
-                        option(value="0") PSLE
-                        option(value="1") O/N'Level
-                        option(value="2") A'Level
-                        option(value="3") Diploma
-                        option(value="4") Degree
-                tr
-                  td Proficiency
-                  td 
-                    .form-group
-                      textarea.form-control(type='text',id='proficiency')
-                        | #{proficiency}
-                tr
-                  td NOK Name
-                  td 
-                    .form-group
-                      input.form-control(type='text',id='nokName', value="#{nokName}")
-                  td Relationship
-                  td
-                    .form-group
-                      input.form-control(type='text', id='nokReln', value="#{nokReln}")
-                tr
-                  td NOK Contact
-                  td
-                    .form-group
-                      input.form-control(type='text', id='nokTel', value="#{nokTel}")
-                tr
-                  td Remarks
-                  td 
-                    .form-group
-                      textarea.form-control(type='text', id='remarks', style="max-width: 500px;")
-                        | #{remarks}
+                    td Name
+                    td #{fullName}
+                    td ID Number
+                    td 
+                      #{userID}
+                  tr
+                    td Email
+                    td 
+                      .form-group
+                        input.form-control(type='text', value="#{email}", id='email')
+                    td Mobile Number
+                    td 
+                      input.form-control(type='text', value="#{mobileNo}", id='mobileNo')
+                  tr
+                    td Nationality
+                    td 
+                      .form-group
+                        input.form-control(type='text', value="#{nationality}", id='nationality')
+                  tr
+                    td Highest Qualification
+                    td 
+                      .form-group
+                        select(id='qualification', style="color:black")
+                          option(value="0") PSLE
+                          option(value="1") O/N'Level
+                          option(value="2") A'Level
+                          option(value="3") Diploma
+                          option(value="4") Degree
+                  tr
+                    td Proficiency
+                    td 
+                      .form-group
+                        textarea.form-control(type='text',id='proficiency')
+                          | #{proficiency}
+                  tr
+                    td NOK Name
+                    td 
+                      .form-group
+                        input.form-control(type='text',id='nokName', value="#{nokName}")
+                    td Relationship
+                    td
+                      .form-group
+                        input.form-control(type='text', id='nokReln', value="#{nokReln}")
+                  tr
+                    td NOK Contact
+                    td
+                      .form-group
+                        input.form-control(type='text', id='nokTel', value="#{nokTel}")
+                  tr
+                    td Remarks
+                    td 
+                      .form-group
+                        textarea.form-control(type='text', id='remarks', style="max-width: 500px;")
+                          | #{remarks}
         .modal-footer
           button#editStudAcct.btn.btn-save(type="button", data-dismiss="modal") Confirm
 
