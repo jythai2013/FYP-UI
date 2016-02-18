@@ -152,27 +152,47 @@ function descDate(a,b) {
 
 Template.addClass.events({
 	"click #addGroupButton" : function(e) {
-		//TODO: Validation of user
-		// if(Meteor.user.userType != "admin"){
-		// return false;
-		// }
+		//Server was
+		// {
+  //         courseCode: courseCodeI,
+  //         grpNum: grpNumI1,
+  //         venue:venueI,
+  //         startTime: startTimeI,
+  //         endTime:endTimeI,
+  //         days: daysArrI,
+  //         startDate: startDateI,
+  //         endDate: endDateI,
+  //         paymentDeadline: paymentDeadlineI, 
+  //         noOfHours: noOfHoursI,
+  //         courseTrainers: {
+  //           trainerID: trainersI
+  //         }
+  //     }
+
+
 		console.log("here1");
+		var obj = new Object();
 
 		//TODO: Validation of input
-		var gCourseCode = document.getElementById("gCourseCode").value;
-		var gStartTime = document.getElementById("gNewStartTime").value;
-		var gEndTime = document.getElementById("gNewEndTime").value;
+		obj.courseCode = document.getElementById("gCourseCode").value;
+		obj.startTime = document.getElementById("gNewStartTime").value;
+		obj.endTime = document.getElementById("gNewEndTime").value;
 
 		var str =  window.location.href;
 		var position = str.indexOf('=');		
 		var currentCourse=str.substr(position+1);
+		console.log("it all starts here > " + currentCourse);
 
-		var gNoOfHours2 =  Courses.findOne({courseCode:currentCourse});
-		console.log("HERE >>> " + gNoOfHours2);
+		var courseObject =  Courses.findOne({courseCode:currentCourse});
+		console.log("HERE >>> " + courseObject);
+
+
+
 		var gNoOfHours =  Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
 		console.log(gNoOfHours + " number of Hours");
 
 		var days = document.getElementsByName("day");
+		obj.days = days;
 		var gdaysArr = new Array();
 		for(var x = 0, l = days.length; x < l;  x++){
 			console.log(days[x].value + " DAYS");
@@ -181,21 +201,25 @@ Template.addClass.events({
 			}
 		}
 
-
-		var gStartDate = document.getElementById("gNewStartDate").value;
-		var gEndDate = document.getElementById("gNewEndDate").value;
-		var gDeadline = document.getElementById("gNewDeadline").value;
-		var gVenue = document.getElementById("gVenue").value;
-		var trainerID = document.getElementById("gTrainers").value;
+		obj.startDate = document.getElementById("gNewStartDate").value;
+		obj.endDate = document.getElementById("gNewEndDate").value;
+		obj.paymentDeadline = document.getElementById("gNewDeadline").value;
+		obj.venue = document.getElementById("gVenue").value;
+		var trainId = document.getElementById("gTrainers").value;
+		obj.courseTrainers = {trainerId: trainId};
 		// var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
 		// var trainerLastName = Meteor.users.findOne(trainerID).lastName;
 		// var gTrainers = trainerFirstName + " " + trainerLastName;
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
+		console.log("What is this? : " + currentCourse);
 		var grpNumI2 = grpNumI1+1;
-		var grpNumI = "G"+grpNumI2;
-      	console.log(grpNumI + "group number");
-		Meteor.call("createGroup", gCourseCode, grpNumI, gStartTime, gEndTime, gdaysArr, gStartDate, gEndDate, gDeadline, gVenue, gNoOfHours, gTrainers);
+		obj.grpNum = "G"+grpNumI2;
+
+		console.log("here4");
+		console.log(obj);
+		Meteor.call("createGroup",obj);
+		console.log("here4again");
 		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();
 	}

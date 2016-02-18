@@ -113,31 +113,17 @@
       Groups.remove({ studFirstName: sFirstName, studLastName: sLastName });
     },
     
-    'createGroup': function createGroup(courseCodeI, grpNumI1, startTimeI, endTimeI, daysArrI, startDateI, endDateI, paymentDeadlineI, venueI, noOfHoursI, trainersI){
+    'createGroup': function createGroup(obj){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
 
-      // console.log(courseCodeI);
-
+      console.log("create group >> Server");
+      console.log(obj);
+      obj.classlist = new Array();
+      var options = obj;
       //var id = 
-			var emptyArray = new Array();
-      Groups.insert({
-          courseCode: courseCodeI,
-          grpNum: grpNumI1,
-          venue:venueI,
-          startTime: startTimeI,
-          endTime:endTimeI,
-          days: daysArrI,
-          startDate: startDateI,
-          endDate: endDateI,
-          paymentDeadline: paymentDeadlineI, 
-          noOfHours: noOfHoursI,
-					classlist: emptyArray,
-          courseTrainers: {
-            trainerID: trainersI
-          }
-      });
+      Groups.insert(obj);
 
       //console.log(id);
 			
