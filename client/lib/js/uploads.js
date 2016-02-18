@@ -16,10 +16,7 @@ Template.course.helpers({
       a.push(Files.findOne(item.fileName));
       console.log(item);
     });
-    // for(i = 0; i < fileList.fetch().length; i++){
-    //   a += Files.findOne(fileList[i]);
-    //   console.log(a);
-    // }
+
     console.log(a);
     return a;
   }
@@ -96,8 +93,22 @@ Template.addLSPFormForm.events({
     // Files.insert(fileZero);
     
 
-    console.log(Files);
-    var fileObjId = Files.insert(files[0], function (err, fileObj) {
+    console.log(files);
+    var fileObjId = new FS.File(files[0]);
+    fileObjId.category = sessionId;
+    var fName = fileObjId.name();
+    console.log(fName);
+    var a = Files.find({"original.name": fName}).fetch();
+    if(a == null || a.length == 0)
+    {
+      var version = 1; 
+      fileObjId.version = version;
+    } else {
+      var version = a.length + 1;
+      fileObjId.version = version;
+    } 
+
+    Files.insert(fileObjId, function (err, fileObj) {
       if (err){
         // handle error
         console.log(err);
@@ -111,6 +122,7 @@ Template.addLSPFormForm.events({
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
     });
     fileObjIdI = fileObjId._id;
-    Meteor.call("createMaterial", typeI,courseId, sessionId, fileObjIdI);
+      Meteor.call("createMaterial", typeI,courseId, sessionId,  fileObjIdI);  
+    
   }
 });

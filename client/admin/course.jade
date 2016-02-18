@@ -296,7 +296,7 @@ template(name="removeTrainer")
           h4#myModalLabel.modal-title Remove Trainers
         .modal-body
           form(name="removeClassForm", role="form", id="insert-removeClassForm", action="facilityResult", method="post")
-          p Remove the following trainer(s)
+          p Remove the following trainer(s)a
             //.table-responsive
               //table#dataTables-example.table.table-bordered.table-hover
                 //tbody
@@ -308,8 +308,8 @@ template(name="removeTrainer")
               each trainer2
                .checkbox
                  label
-                   input(type="checkbox", name="currentTrainers", value="#{trainerName} ")
-                   | #{trainerName}     
+                   input(type="checkbox", name="currentTrainers", value="#{_id} ")
+                   | #{fullName}     
                     
           // /.table-responsive
         .modal-footer
