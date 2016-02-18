@@ -101,14 +101,14 @@ Template.certificateManagement.helpers({
 		if(verbose){
 			console.log(v);
 		}
-		return v;
+		return v.reverse();
 	}
 });
 // End Search ////////////////////////
 
 Template.certificateManagement.events({
 	"click #go" : function doSearch(e, t){
-		activateSpinner();
+		// activateSpinner();
 		// console.log(this);
 		// console.log(e);
 		// console.log(t);
@@ -155,7 +155,12 @@ Template.certificateStudentList.onRendered(function(){
 	// var studentListName = getParameterByName("studentName");
 	// var StudentListCour = getParameterByName("courseCode");
 	// var StudentListGrou = getParameterByName("courseGroup");
-	// Session.set("certSearchStudentListName"  , studentListName);
+	var studentName = Session.get("certSearchStudentListName");
+	console.log(studentName);
+	if(studentName.length > 0) {
+		document.getElementById("studentName").value = studentName;
+	}
+	Session.set("certSearchStudent", studentName);
 	// Session.set("certSearchStudentListCourse", StudentListCour);
 	// Session.set("certSearchStudentListGroup" , StudentListGrou);
 });
@@ -174,22 +179,14 @@ Template.certificateStudentList.events({
 	"blur #studentName, blur #courseCode, blur #groupNum" : function s2(e){
 		//console.log(e);
 		var studentName = document.getElementById("studentName").value;
-		var courseCode = document.getElementById("courseCode").value;
-		var groupNum = document.getElementById("groupNum").value;
 		Session.set("certSearchStudent", studentName);
-		Session.set("certSearchCourseCode", courseCode);
-		Session.set("certSearchGroupNum", groupNum);
 	},
 	
 	"keydown #studentName, keydown #courseCode, keydown #groupNum" : function s5(e){
 		//console.log(e);
 		setTimeout(function() {
 			var studentName = document.getElementById("studentName").value;
-			var courseCode = document.getElementById("courseCode").value;
-			var groupNum = document.getElementById("groupNum").value;
 			Session.set("certSearchStudent", studentName);
-			Session.set("certSearchCourseCode", courseCode);
-			Session.set("certSearchGroupNum", groupNum);
 		}, 10);
 	}
 });
@@ -201,11 +198,11 @@ Template.certificateStudentList.helpers({
 		var courseCode 	= Session.get("certSearchCourseCode");
 		var groupNum 		= Session.get("certSearchGroupNum");
 		
-		// if(verbose){
+		if(verbose){
 			console.log(studentName);
 			console.log(courseCode);
 			console.log(groupNum);
-		// }
+		}
 		if(courseCode == undefined) courseCode 	= getParameterByName("cCode");
 		if(groupNum 	== undefined) groupNum 		= getParameterByName("grpNum");
 		Session.set("certSearchCourseCode", courseCode);
@@ -257,36 +254,40 @@ Template.certificateStudentList.helpers({
 		
 		//Filter the students
 		if(studentName != null && studentName != undefined && studentName.length > 0){ 
-			students.filter(function(thisStudent){
+			students = students.filter(function(studentId){
+				var thisStudent = Meteor.users.findOne({_id:studentId}, {userType:{learner:true}});
 				if(verbose){
+					console.log(studentId);
 					console.log(thisStudent);
 					console.log(thisStudent.fullName.toLowerCase().indexOf(studentName.toLowerCase())>-1);
 				}
-				return (thisStudent.name.toLowerCase().indexOf(studentName.toLowerCase())>-1);
+				return (thisStudent.fullName.toLowerCase().indexOf(studentName.toLowerCase())>-1);
 			});
 		}
 		
 		if(verbose){
-			console.log(typeof students);
+			// console.log(Array.isArray(students));
+			// console.log(typeof students);
 			console.log(students);
 		}
 		
 		studentsID = students.getUnique();
 		
-		if(verbose){
-			console.log(typeof students);
-			console.log(students);
-		}
+		// if(verbose){
+			// console.log(typeof students);
+			// console.log(students);
+		// }
 			
 		students = new Array();
 		studentsID.forEach(function(curr, ind, arr){
 			students.push(Meteor.users.findOne({_id:curr}))
 		});
 		
-			console.log(typeof students);
-			console.log(students);
+			// console.log(typeof students);
+			// console.log(students);
 		
 		Session.set("certificateStudentListStudents", students)
+		console.log(students);
 		return students;
 	}
 });
