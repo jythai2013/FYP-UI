@@ -134,12 +134,12 @@
 			// blastReminderCall(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI);
 			
 			//TODO: test schedule payment reminder checking
-			var courseName = Courses.findOne({courseCode:courseCodeI}).courseName;
-			var timeInMin = 1;
-			var newDateObj = new Date(startTimeI.getTime() + timeInMin*60000);
-			Meteor.call("schedulePaymentReminder", courseName, newDateObj);
+			// var courseName = Courses.findOne({courseCode:courseCodeI}).courseName;
+			// var timeInMin = 1;
+			// var newDateObj = new Date(startTimeI.getTime() + timeInMin*60000);
+			// Meteor.call("schedulePaymentReminder", courseName, newDateObj);
 			
-      console.log(Groups.find().count());
+   //    console.log(Groups.find().count());
 		},
 		
 		//can use this on a button to test also. after testing can just remove and use the above one
