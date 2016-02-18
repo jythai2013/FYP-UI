@@ -171,6 +171,10 @@ function processExcelFile(workbook){
 		
 		currentLineNumber += 1;
 	}
+	alert("done");
+	var rootUrl = window.location.href.substring(0, window.location.href.indexOf('/', 10));
+	// console.log(rootUrl);	
+	window.location.href=rootUrl+"/AccountsMgmt/studentList"
 }
 
 	function cellIsFilled(workbook, cellAddress){

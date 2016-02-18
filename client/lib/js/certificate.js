@@ -362,85 +362,138 @@ Array.prototype.getUnique = function(){
    // return a;
 // }
 
-// (function(API){
-	// alert(API);
-		// API.myText = function(txt, options, x, y) {
-				// options = options ||{};
-				// /* Use the options align property to specify desired text alignment
-				 // * Param x will be ignored if desired text alignment is 'center'.
-				 // * Usage of options can easily extend the function to apply different text 
-				 // * styles and sizes 
-				// */
-				// if( options.align == "center" ){
-						// // Get current font size
-						// var fontSize = this.internal.getFontSize();
+(function(API){
+	alert(API);
+		API.myText = function(txt, options, x, y) {
+				options = options ||{};
+				/* Use the options align property to specify desired text alignment
+				 * Param x will be ignored if desired text alignment is 'center'.
+				 * Usage of options can easily extend the function to apply different text 
+				 * styles and sizes 
+				*/
+				if( options.align == "center" ){
+						// Get current font size
+						var fontSize = this.internal.getFontSize();
 
-						// // Get page width
-						// var pageWidth = this.internal.pageSize.width;
+						// Get page width
+						var pageWidth = this.internal.pageSize.width;
 
-						// // Get the actual text's width
-						// /* You multiply the unit width of your string by your font size and divide
-						 // * by the internal scale factor. The division is necessary
-						 // * for the case where you use units other than 'pt' in the constructor
-						 // * of jsPDF.
-						// */
-						// txtWidth = this.getStringUnitWidth(txt)*fontSize/this.internal.scaleFactor;
+						// Get the actual text's width
+						/* You multiply the unit width of your string by your font size and divide
+						 * by the internal scale factor. The division is necessary
+						 * for the case where you use units other than 'pt' in the constructor
+						 * of jsPDF.
+						*/
+						txtWidth = this.getStringUnitWidth(txt)*fontSize/this.internal.scaleFactor;
 
-						// // Calculate text's x coordinate
-						// x = ( pageWidth - txtWidth ) / 2;
-				// }
+						// Calculate text's x coordinate
+						x = ( pageWidth - txtWidth ) / 2;
+				}
 
-				// // Draw text at x,y
-				// this.text(txt,x,y);
-		// }
-// })(jsPDF.API);
+				// Draw text at x,y
+				this.text(txt,x,y);
+		}
+})(jsPDF.API);
+
+var splitRegex = /\r\n|\r|\n/g;
+jsPDF.API.textEx = function (text, x, y, hAlign, vAlign) {
+    var fontSize = this.internal.getFontSize() / this.internal.scaleFactor;
+
+    // As defined in jsPDF source code
+    var lineHeightProportion = 1.15;
+
+    var splittedText = null;
+    var lineCount = 1;
+    if (vAlign === 'middle' || vAlign === 'bottom' || hAlign === 'center' || hAlign === 'right') {
+        splittedText = typeof text === 'string' ? text.split(splitRegex) : text;
+
+        lineCount = splittedText.length || 1;
+    }
+
+    // Align the top
+    y += fontSize * (2 - lineHeightProportion);
+
+    if (vAlign === 'middle')
+        y -= (lineCount / 2) * fontSize;
+    else if (vAlign === 'bottom')
+        y -= lineCount * fontSize;
+
+    if (hAlign === 'center' || hAlign === 'right') {
+        var alignSize = fontSize;
+        if (hAlign === 'center')
+            alignSize *= 0.5;
+
+        if (lineCount > 1) {
+            for (var iLine = 0; iLine < splittedText.length; iLine++) {
+                this.text(splittedText[iLine], x - this.getStringUnitWidth(splittedText[iLine]) * alignSize, y);
+                y += fontSize;
+            }
+            return this;
+        }
+        x -= this.getStringUnitWidth(text) * alignSize;
+    }
+
+    this.text(text, x, y);
+    return this;
+};
 
 
 function genP(options){
-	var doc = new jsPDF();
-	console.log(doc);
+	
+  var doc = new jsPDF();
 	
 	doc.setTextColor(100);
-	doc.setFontSize(22);
-	doc.text(20, 40, 'CERTIFICATE OF SUCCESSFUL COMPLETION');
+	doc.setFontSize(20);
+	doc.text(20, 55, 'CERTIFICATE OF SUCCESSFUL COMPLETION');
 
 	doc.setTextColor(150);
-    doc.setFontSize(10);
-	doc.text(100, 55, 'is awarded to ');
+  doc.setFontSize(10);
+	pdf.textEx('Example text', 100, 70, 'center', 'middle');
+	doc.text(100, 70, 'is awarded to ');
 
 	// doc.setFontStyle('italic');
-	doc.text(105, 70, "options.fullName");
-	//doc.myText("Centered text",{align: "center"},0,1);
+  doc.setFontSize(16);
+	doc.text(105, 85, "options.fullName");
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 500, "options.userID");
+  doc.setFontSize(12);
+	doc.text(20, 95, "options.userID");
 
 	doc.setTextColor(0, 255, 0);
-	doc.text(20, 600, 'for succesful completeion of the');
+  doc.setFontSize(10);
+	doc.text(20, 110, 'for succesful completeion of the');
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 700, "options.courseName");
+  doc.setFontSize(16);
+	doc.text(20, 130, "options.courseName");
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 800, 'Sterling Engineering Training Hub');
+  doc.setFontSize(10);
+	doc.text(20, 150, 'Sterling Engineering Training Hub');
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 900, 'Sterling address');
+  doc.setFontSize(10);
+	doc.text(20, 155, 'Sterling address');
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 1000, 'ISO');
+  doc.setFontSize(10);
+	doc.text(20, 160, 'ISO');
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 1100, 'Blah');
+  doc.setFontSize(10);
+	doc.text(20, 165, 'Blah');
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 1200, 'from');
+  doc.setFontSize(10);
+	doc.text(20, 170, 'from');
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 1300, "options.courseStart" + ' to ' + "options.courseEnd");
+  doc.setFontSize(12);
+	doc.text(20, 190, "options.courseStart" + ' to ' + "options.courseEnd");
 
 	doc.setTextColor(255, 0, 0);
-	doc.text(20, 1400, 'Validity: 5 Years');
+  doc.setFontSize(12);
+	doc.text(20, 200, 'Validity: 5 Years');
 	
 	doc.save('test.pdf');
 }
