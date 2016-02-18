@@ -104,21 +104,21 @@ function sendMail(details) {
 }
 
 function addTask(id, details) {
-		console.log("addTask");
+		// console.log("addTask");
 		SyncedCron.add({
 			name: id,
 			schedule: function(parser) {
 				return parser.recur().on(details.date).fullDate();
 			},
 			job: function() {
-				console.log(details);
+				// console.log(details);
 				sendMail(details);
 				FutureTasks.remove(id);
 				SyncedCron.remove(id);
 					return id;
 			}
 		});
-		console.log(SyncedCron._entries[0]);
+		// console.log(SyncedCron._entries[0]);
 	}
 
 // to remove and stop running the job referenced by jobName.

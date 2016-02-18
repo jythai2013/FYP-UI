@@ -11,12 +11,12 @@ Template.trainerUploadAttendance.events({
 	"click #generateExcel":function attendanceExcelGeneration(e, template){
 		e.preventDefault();
 		// console.log("generateExcel");
-		// console.log(e);
+		console.log(e);
 		// console.log(template);
 		// console.log(Template.currentData());
 		var courseCode = $("#courseCode").value
 		var groupNum = $("#classId").value
-		if(courseCode.length <= 0 || groupNum <= 0){
+		if(courseCode == undefined || groupNum == undefined){
 			alert("Invalid course and/or group selected!");
 			return false;
 		}

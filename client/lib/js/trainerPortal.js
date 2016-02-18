@@ -1,9 +1,30 @@
 Template.trainerUploads.helpers({
 	"trainerOngoingCourses" : function findTrainerOngoingCourses(e) {
-		var trainerId = Meteor.userId;
-		var trainer = Meteor.users.find({_id: trainerId});
-		var coursesTaught = Courses.find({courseTrainers: trainer}).fetch();
-		// how do i get the class?
+		var coursesTaught = Courses.find().fetch();
+		console.log(coursesTaught);
 		return coursesTaught;
+	},
+	
+	"trainerOngoingClasses" : function findTrainerOngoingCourses(e) {
+		var courseCode = Session.get("trainerOngoingCourseSelected");
+		console.log(courseCode);
+		var groupsTaught = Groups.find({courseCode:courseCode}).fetch();
+		console.log(groupsTaught);
+		return groupsTaught;
 	}
 });
+
+Template.trainerUploads.onRendered(function(){
+	console.log($("#classId")[0].value);
+	Session.set("trainerOngoingCourseSelected", $("#classId")[0].value);
+});
+
+Template.trainerUploads.events({
+	"change #classId":function(e){
+		e.preventDefault();
+		Session.set("trainerOngoingCourseSelected", e.target.value);
+		console.log(e.target.value);
+	}
+});
+
+//forEach(function(currentValueFromTheArray, IndexOfTheArray, TheArray){});
