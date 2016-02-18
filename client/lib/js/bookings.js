@@ -1,44 +1,44 @@
 
 
-// 	$(document).ready(function() {
+	$(document).ready(function() {
 
-//     // page is now ready, initialize the calendar...
-// 		// jQuery.noConflict();
-// 		makeQTip();
+    // page is now ready, initialize the calendar...
+		// jQuery.noConflict();
+		makeQTip();
 
-// });
+});
 
 // Setup QTip
-	// function makeQTip() {
-	// 	var date = new Date();
-	// 	var d = date.getDate();
-	// 	var m = date.getMonth();
-	// 	var y = date.getFullYear();
+	function makeQTip() {
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
 
-	// 	tooltip = $('<div/>').qtip({
-	// 		id: 'fullcalendar',
-	// 		prerender: true,
-	// 		content: {
-	// 			text: ' ',
-	// 			title: {
-	// 				button: true
-	// 			}
-	// 		},
-	// 		position: {
-	// 			my: 'bottom center',
-	// 			at: 'top center',
-	// 			target: 'mouse',
-	// 			viewport: $('#fullCalendarDiv'),
-	// 			adjust: {
-	// 				mouse: false,
-	// 				scroll: false
-	// 			}
-	// 		},
-	// 		show: false,
-	// 		hide: false,
-	// 		style: 'qtip-light'
-	// 	}).qtip('api');
-	// }
+		tooltip = $('<div/>').qtip({
+			id: 'fullcalendar',
+			prerender: true,
+			content: {
+				text: ' ',
+				title: {
+					button: true
+				}
+			},
+			position: {
+				my: 'bottom center',
+				at: 'top center',
+				target: 'mouse',
+				viewport: $('#fullCalendarDiv'),
+				adjust: {
+					mouse: false,
+					scroll: false
+				}
+			},
+			show: false,
+			hide: false,
+			style: 'qtip-light'
+		}).qtip('api');
+	}
 
 Template.facilityManagement.rendered = function(){
 	Tracker.autorun(function(){
@@ -57,12 +57,15 @@ Template.facilityManagement.rendered = function(){
 	        right: 'month,agendaWeek,agendaDay'
         },
         dayClick :function(date, allDay,jsEvent, view){
+						tooltip.hide();
             $('#fmModal').modal('show');
             Session.set("currentDate",date);
         },
         events: function(start, end, callback){
         	events = [];
+					console.log(array.fetch());
         	array.fetch().forEach(function(booking){
+						console.log(booking);
 						oneCourse = Courses.findOne({courseCode:booking.course});
 						if(oneCourse != undefined)
 							courseName = oneCourse.courseName;
@@ -82,7 +85,27 @@ Template.facilityManagement.rendered = function(){
 
 					callback(events);
 
-        }
+        },
+				eventMouseover: function(event, jsEvent, view){
+					/*
+					event is an Event Object that holds the event's information (date, title, etc).
+
+					jsEvent holds the native JavaScript event with low-level information such as mouse coordinates.
+
+					view holds the current View Object.*/
+					var content = '<h3>'+data.title+'</h3>' + 
+						'<p><b>Start:</b> '+data.start+'<br />' + 
+						(data.end && '<p><b>End:</b> '+data.end+'</p>' || '');
+
+					tooltip.set({
+						'content.text': content
+					})
+					.reposition(event).show(event);
+				},
+				eventResizeStart: function() { tooltip.hide() },
+				eventDragStart: function() { tooltip.hide() },
+				viewDisplay: function() { tooltip.hide()
+				}
 		})
 
 	})

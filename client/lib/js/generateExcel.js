@@ -57,7 +57,8 @@ Meteor.methods({
 		var ws_name = "SheetJS";
 		var excelName = "test";
 		 
-		var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
+		var wb = new Workbook(), ws = sheet_from_array_of_arrays(inData);
+		// var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
 		 
 		/* add worksheet to workbook */
 		wb.SheetNames.push(ws_name);

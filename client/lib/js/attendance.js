@@ -14,7 +14,12 @@ Template.trainerUploadAttendance.events({
 		// console.log(e);
 		// console.log(template);
 		// console.log(Template.currentData());
-		var groupId = $("#").value
+		var courseCode = $("#courseCode").value
+		var groupNum = $("#classId").value
+		if(courseCode.length <= 0 || groupNum <= 0){
+			alert("Invalid course and/or group selected!");
+			return false;
+		}
 		var inData = "";
 		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
 		//var inData = []; 

@@ -5,10 +5,12 @@ Template.addAnnouncement.events({
 		var title = document.getElementById("announTitle").value;
 		var content = document.getElementById("announDetails").value;
 		var createdBy = Meteor.user()._id;
+		var course = document.getElementById("courseId").value;
+		var group = document.getElementById("groupId").value;
 		//var announType = document.getElementById("announType").value;
-		//var group = document.getElementById("groupId").value;
 		//var dueDate = document.getElementById("announType").value;
-		Meteor.call("insertAnnouncement", title, content, createdBy, "G1");
+		//'insertAnnouncement': function insertAnnouncement(aTitle, aDetails, aAuthor, classId, cCode){
+		Meteor.call("insertAnnouncement", title, content, createdBy, group, course);
 	}
 });
 
