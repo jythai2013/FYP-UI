@@ -1,4 +1,4 @@
-<template name="trainerDashboard">
+<template name="studentCourseMaterial">
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
     <section id='sidebar'>
@@ -6,19 +6,15 @@
       <ul id='dock'>
         <li class='active launcher'>
           <i class='icon-dashboard'></i>
-          <a href="trainer">Dashboard</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="announcement">Announcements</a>
+          <a href="/student">Dashboard</a>
         </li>
         <li class='launcher'>
           <i class='icon-table'></i>
-          <a href="trainerClasslist">Classlist</a>
+          <a href="/student/viewYourClass">Classes</a>
         </li>
         <li class='launcher'>
           <i class='icon-file-text-alt'></i>
-          <a href="trainerUploads">Uploads</a>
+          <a href="/student/assignmentDropbox">Uploads</a>
         </li>
       </ul>
     </section>
@@ -26,7 +22,9 @@
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>
         <li class='title'>Sterling</li>
-        <li><a href="#">Dashboard</a></li>
+        <li><a href="/student">Student Portal</a></li>
+        <li><a href="/student/viewYourClass">Your Class</a></li>
+        <li><a href="#">Materials</a></li>
       </ul>
     </section>
     <!-- Content -->
@@ -38,16 +36,17 @@
         </div>
         <div class='panel-body'>
           <div class='page-header'>
-            <h4>Your Schedule</h4>
+            <h4>Course Materials</h4>
           </div>
-          Your Class Schedule
-          <div id = "dashboardCalendar">
-          </div>
-
-          <!-- <div class='page-header'>
-            <h4>Task List</h4>
-          </div>
-          Maybe something here... -->
+          <table>
+            <tr>
+              <th>Title</th>
+              <th>Uploaded by</th>
+              <th>From Module</th>
+              <th>Date of Upload</th>
+              <th>Download File</th>
+            </tr>
+          </table>
         </div>
       </div>
     </div>

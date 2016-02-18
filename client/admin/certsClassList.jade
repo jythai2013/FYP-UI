@@ -26,7 +26,7 @@ template(name="certificateStudentList")
                   tr
                     th Search Student
                     td 
-                      input.form-control(type="text", id="courseCode", placeholder="eg. John Doe")
+                      input.form-control(type="text", id="studentName", placeholder="eg. John Doe")
             
                   button#filter.btn.btn-save( style="position: absolute; margin-top: 1%; right: 6%; background: #333; color:#fff") filter          
 
@@ -35,7 +35,7 @@ template(name="certificateStudentList")
         .panel.panel-default
           .panel-body
             h4 Class Certificate Details
-              button.btn.btn.btn-sm(data-toggle="modal", id="dlAllCerts", style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+              button.btn.btn.btn-sm(data-toggle="modal", id="generateCerts", style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-download
                         |  All
             .table-responsive
@@ -48,6 +48,6 @@ template(name="certificateStudentList")
                   each students
                     tr
                       td
-                        #{fullName}
+                        |  #{fullName}
                       td
                         button#generateCert Generate Cert

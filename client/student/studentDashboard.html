@@ -1,4 +1,4 @@
-<template name="trainerDashboard">
+<template name="studentDashboard">
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
     <section id='sidebar'>
@@ -6,19 +6,15 @@
       <ul id='dock'>
         <li class='active launcher'>
           <i class='icon-dashboard'></i>
-          <a href="trainer">Dashboard</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="announcement">Announcements</a>
+          <a href="/student">Dashboard</a>
         </li>
         <li class='launcher'>
           <i class='icon-table'></i>
-          <a href="trainerClasslist">Classlist</a>
+          <a href="/student/viewYourClass">Classes</a>
         </li>
         <li class='launcher'>
           <i class='icon-file-text-alt'></i>
-          <a href="trainerUploads">Uploads</a>
+          <a href="/student/assignmentDropbox">Uploads</a>
         </li>
       </ul>
     </section>
@@ -26,6 +22,7 @@
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>
         <li class='title'>Sterling</li>
+        <li><a href="/student">Student Portal</a></li>
         <li><a href="#">Dashboard</a></li>
       </ul>
     </section>
@@ -37,6 +34,13 @@
           In a glance
         </div>
         <div class='panel-body'>
+          <div class='page-header'>
+            <h4>Announcement</h4>
+          </div>
+          Top 3 announcement here. 
+          1. Check what groups student are from
+          2.Calling Group.find(groupNum).announcement
+          3. print announcment where annouDate > currentDate
           <div class='page-header'>
             <h4>Your Schedule</h4>
           </div>

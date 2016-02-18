@@ -1,0 +1,126 @@
+<template name="studentClass">
+  <div id='wrapper-trainer'>
+    <!-- Sidebar -->
+    <section id='sidebar'>
+      <i class='icon-align-justify icon-large' id='toggle'></i>
+      <ul id='dock'>
+        <li class='launcher'>
+          <i class='icon-dashboard'></i>
+          <a href="/student">Dashboard</a>
+        </li>
+        <li class='active launcher'>
+          <i class='icon-table'></i>
+          <a href="/student/viewYourClass">Classes</a>
+        </li>
+        <li class='launcher'>
+          <i class='icon-file-text-alt'></i>
+          <a href="/student/assignmentDropbox">Uploads</a>
+        </li>
+      </ul>
+    </section>
+    <!-- Tools -->
+    <section id='tools'>
+      <ul class='breadcrumb' id='breadcrumb'>
+        <li class='title'>Sterling</li>
+        <li><a href="/student">Student Portal</a></li>
+        <li class='active'><a href="student/studentClass">Enrolled Classes</a></li>
+      </ul>
+    </section>
+    <!-- Content -->
+    <div id='content'>
+      <div class='panel panel-default grid'>
+        <div class='panel-heading'>
+          Ongoing Classes Information
+        </div>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th>Module Code</th>
+              <th>Module Name</th>
+              <th>Course Materials</th>
+              <th class='actions'>
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>IS101</td>
+              <td>Managing People</td>
+              <td>Button</td>
+              <td class='action'>
+                <a class="btn btn-info" data-target="#viewGrades" data-toggle="modal" data-id="" title="View Grades">
+                  <i class='icon-bar-chart'></i>
+                </a>
+                <a class="btn btn-success" data-target="#viewAttendence#{_id}" data-toggle="modal" data-id="#{_id}" title="View Attendence">
+                  <i class='fa fa-university'></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h1>Testing modal not working</h1>
+        <table class='table'>
+          <tr>
+            <td colspan="2">Class: courseName</td>
+          </tr>
+          <tr>
+            <td>Date of Attendence</td>
+            <td>Status</td>
+          </tr>
+          <tr>
+            <td> Eg. 10/10/2010</td>
+            <td><i class="fa fa-circle" style="color: red"></i></td>
+          </tr>
+          <tr>
+            <td> Eg. 11/10/2010</td>
+            <td><i class="fa fa-circle" style="color: green"></i></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="viewGrades">
+  <div id="viewGrades" class="modal fade adminFormDark" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 800px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 id="myModalLabel" class="modal-title"> View Grades</h4>
+        </div>
+        <div class="modal-body">
+          Class: courseName
+          <table class="table">
+            <THEAD>
+              <tr>
+                <td>Date of Attendence</td>
+                <td>Status</td>
+              </tr>
+            </THEAD>
+            <TBODY>
+              <tr>
+                <td> Eg. 10/10/2010</td>
+                <td><i class="fa fa-circle" style="color: red"></i></td>
+              </tr>
+              <tr>
+                <td> Eg. 11/10/2010</td>
+                <td><i class="fa fa-circle" style="color: green"></i></td>
+              </tr>
+              <tr>
+                <td>
+                  each Grade
+                </td>
+              </tr>
+            </TBODY>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="viewAttendence">
+</template>

@@ -1,8 +1,8 @@
-template(name="formRespo")
+template(name="completeformRespo")
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header LSP Form Repository
+        h1.page-header Completed LSP Form Repository
       // /.col-lg-12
     // /.row
     .row
@@ -10,10 +10,10 @@ template(name="formRespo")
         .panel.panel-default
           .panel-body
             h4 LSP Form
-              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addcompleteLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | LSP Form
-            +addLSPFormForm
+            +addcompleteLSPFormForm
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -23,27 +23,27 @@ template(name="formRespo")
                     th Category
                     th Upload Date
                     th Download
-                    th Version Number
+                    th Remarks
                 tbody
                   each upload
                     tr
                       td #{name}
-                      td #{category}
-                      td #{uploadedAt}
+                      td #{sessionNo}
+                      td Some Date
                       td(width="50px") 
                         a(href="{{url download = true}}", class="button btn admin-btn") Download
-                      td #{version}
+                      td Stuff
 
 
-template(name="addLSPFormForm")
+template(name="addcompleteLSPFormForm")
   #addLSPForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Add New Trainer
+          h4#myModalLabel.modal-title Add New Form
         .modal-body
-          form(role="form", id="insert-addLSPForm", action="#", method="post")
+          form(role="form", id="insert-addcompleteLSPForm", action="#", method="post")
           .table-responsive
             table#dataTables-example.table(style="background:#333")
               tbody
@@ -56,13 +56,7 @@ template(name="addLSPFormForm")
                   th Category
                   td 
                     .form-group
-                      //- input.form-control(type="text", id="categoryName")
-                      select(id="categoryName")
-                        option(value="") Select Option
-                        option(value="Review Form") Review Document
-                        option(value="Feedback Form") Feedback Form
-                        option(value="Checklist") Checklist
-                        option(value="Others") Others
+                      input.form-control(type="text", id="categoryName") 
                 tr
                   td Upload File
                   td

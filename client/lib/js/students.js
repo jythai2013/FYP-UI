@@ -1,4 +1,9 @@
 // STUDENT ///////////////////////////////////////////////////////////////////////
+Template.studentIndex.helpers({
+	"displayStudentName" : function displayTrainerName(e) {
+		return Meteor.user().fullName;
+	}
+});
 
 //Search ////////////////////////
 Template.studentList.onRendered(function(){
