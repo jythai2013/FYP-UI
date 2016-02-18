@@ -6,11 +6,18 @@ Template.addAnnouncement.events({
 		var content = document.getElementById("announDetails").value;
 		var createdBy = Meteor.user()._id;
 		var announType = document.getElementById("announType").value;
-		//var module = 
+		//var group = document.getElementById("groupId").value;
 		//var dueDate = document.getElementById("announType").value;
 		Meteor.call("insertAnnouncement", title, content, createdBy, "G1");
 	}
 });
+
+Template.addAnnouncement.helpers({
+	// and is ongoing class
+	var groupTaught = Groups.find(courseTrainers = Meteor.user()._id);
+	console.log("Groups taught: "+groupTaught);
+});
+
 
 /*
 

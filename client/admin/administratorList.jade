@@ -21,21 +21,21 @@ template(name="administratorList")
                   tr
                     th Name
                     th Particulars
-                    th AccessRights
+                    th Is Trainer
                     th Delete User
                 tbody
                   each administrators
                     tr
                       td #{fullName} 
                       td  
-                        a.btn.admin-btn.bt-sn(data-target="#viewAdminDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars, Access Rights
+                        a.btn.admin-btn.bt-sn(data-target="#viewAdminDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                         +viewAdminParticulars
-                      td #{accessType}
+                      td No.
                       td
                         a.btn.admin-btn.bt-sn(data-target="#goDeleteAdmin#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                         +deleteAdminForm 
-            p Legend:
-            p AccessType 1 = Accounts, 2 = Courses, 3 = Classes, 4 = Facilities
+            //h4 Legend:
+            //h6 AccessType 1 = Accounts, 2 = Courses, 3 = Classes, 4 = Facilities
 
 
 template(name="addAdminAcctForm")
@@ -63,33 +63,15 @@ template(name="addAdminAcctForm")
                   td 
                     input.form-control(type='text', id='mobileNo')
                 tr
-                  td Has Trainer Rights
                   td 
-                    label.radio
-                      input#isTrainer(type="radio", name="isTrainer", value="No", checked="")
-                      | No
+                    | Assign
+                    | Trainer Rights
+                  td(colspan="3")
+                    input(type="radio", name="isTrainer", id="isTrainer", value="No", checked="")
+                    | No
                     br
-                    label.radio
-                      input#isTrainer(type="radio", name="isTrainer", value="Yes")
-                      | Yes, Create Trainer Account
-                tr
-                  td Access Rights
-                  td 
-                    label.checkbox-inline
-                      input(type="checkbox", value="1", name="accessRightId")
-                      | Maintain Accounts
-                    br 
-                    label.checkbox-inline
-                        input(type="checkbox", value="2", name="accessRightId")
-                        | Maintain Courses
-                    br 
-                    label.checkbox-inline
-                      input(type="checkbox", value="3", name="accessRightId")
-                      | Maintain Classes
-                    br 
-                    label.checkbox-inline
-                      input(type="checkbox", value="4", name="accessRightId")
-                      | Maintain Facilities
+                    input(type="radio", name="isTrainer", id="isTrainer", value="Yes")
+                    | Yes, Create Trainer Account
 
             // /.table-responsive
         .modal-footer
@@ -123,7 +105,7 @@ template(name="viewAdminParticulars")
                     input.form-control(type="hidden", id="accessType", value="#{accessType}")
                 tr
                   td Access Rights
-                  td #{accessType}
+                  td Admin Portal
         .modal-footer
           button#editAdminAccountButton.btn.btn-save(type="button", data-dismiss="modal") Update
 

@@ -38,16 +38,17 @@ Template.addAdminAcctForm.events({
 		     return item.defaultValue;
 		});
 		var isTrainer = document.getElementById("isTrainer").value;
+		console.log("is Trainer? >" +isTrainer);
 		var createTrainer = false;
 
-		// if isTrainer == "Yes"
+		//console.log(isTrainer equals "Yes");
 		// 	createTrainer = true;
 
 		console.log("Access Rights Assigned: " + array);
 		var adminAccessId = array;
 		
 		Meteor.call("createAdminAccount", email, fullName, mobileNo, adminAccessId, createTrainer);
-		console.log("Sys: Admin Information Saved ("+fullName+","+mobileNo+","+email+","+password+","+adminAccessId+"isTrainer:)"+isTrainer);
+		console.log("Sys: Admin Information Saved ("+fullName+","+mobileNo+","+email+","+adminAccessId+"isTrainer:)"+isTrainer+">>>");
 	}
 });
 
