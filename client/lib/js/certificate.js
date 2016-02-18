@@ -152,17 +152,12 @@ function getParameterByName(name) {
 
 //Search ////////////////////////
 Template.certificateStudentList.onRendered(function(){
-	// var studentListName = getParameterByName("studentName");
-	// var StudentListCour = getParameterByName("courseCode");
-	// var StudentListGrou = getParameterByName("courseGroup");
-	var studentName = Session.get("certSearchStudentListName");
-	console.log(studentName);
-	if(studentName.length > 0) {
+	var studentName = Session.get("certSearchStudent");
+	if(studentName != undefined && studentName.length > 0) {
 		document.getElementById("studentName").value = studentName;
+	} else{
+		document.getElementById("studentName").value = "";
 	}
-	Session.set("certSearchStudent", studentName);
-	// Session.set("certSearchStudentListCourse", StudentListCour);
-	// Session.set("certSearchStudentListGroup" , StudentListGrou);
 });
 
 Template.certificateStudentList.events({
@@ -171,9 +166,6 @@ Template.certificateStudentList.events({
 		//var studentName = document.getElementById("studentName").value;
 		//var courseCode = document.getElementById("courseCode").value;
 		//var groupNum = document.getElementById("groupNum").value;
-		//Session.set("certSearchStudentListName", studentName);
-		//Session.set("certSearchStudentListCourse", courseCode);
-		//Session.set("certSearchStudentListGroup", groupNum);
 	},
 	
 	"blur #studentName, blur #courseCode, blur #groupNum" : function s2(e){
@@ -287,7 +279,7 @@ Template.certificateStudentList.helpers({
 			// console.log(students);
 		
 		Session.set("certificateStudentListStudents", students)
-		console.log(students);
+		if (verbose) console.log(students);
 		return students;
 	}
 });
