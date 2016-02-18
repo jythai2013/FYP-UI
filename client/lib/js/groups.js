@@ -170,7 +170,7 @@ Template.addClass.events({
   //     }
 
 
-		console.log("here1");
+		// console.log("here1");
 		var obj = new Object();
 
 		//TODO: Validation of input
@@ -181,21 +181,34 @@ Template.addClass.events({
 		var str =  window.location.href;
 		var position = str.indexOf('=');		
 		var currentCourse=str.substr(position+1);
-		console.log("it all starts here > " + currentCourse);
 
 		var courseObject =  Courses.findOne({courseCode:currentCourse});
-		console.log("HERE >>> " + courseObject);
 
 
 
 		var gNoOfHours =  Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
-		console.log(gNoOfHours + " number of Hours");
+		// console.log(gNoOfHours + " number of Hours");
 
 		var days = document.getElementsByName("day");
-		obj.days = days;
+		/*
+		days[0-5]
+		days[0].value = "monday"
+		days[0].checked = true
+		*/
+		// console.log((days));
+		days = Array.prototype.slice.call(days);
+		// console.log((days));
+		// console.log(Array.isArray(days));
+		days2 = new Array();
+		days.forEach(function(curr, ind, arr){
+			if(curr.checked) days2.push(curr.value.toLowerCase());
+		});
+		obj.days = days2;
+		console.log(days);
+		console.log(obj);
 		var gdaysArr = new Array();
 		for(var x = 0, l = days.length; x < l;  x++){
-			console.log(days[x].value + " DAYS");
+			// console.log(days[x].value + " DAYS");
 			if (days[x].checked){
 			  gdaysArr.push(days[x].value);
 			}
@@ -216,11 +229,8 @@ Template.addClass.events({
 		var grpNumI2 = grpNumI1+1;
 		obj.grpNum = "G"+grpNumI2;
 
-		console.log("here4");
-		console.log(obj);
+		// obj.days = {};
 		Meteor.call("createGroup",obj);
-		console.log("here4again");
-		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();
 	}
 });

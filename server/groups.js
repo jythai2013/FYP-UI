@@ -118,10 +118,9 @@
         // return false; //TODO: output error message in client
       // }
 
-      console.log("create group >> Server");
-      console.log(obj);
       obj.classlist = new Array();
-      var options = obj;
+      console.log("create group >> Server");
+      // console.log(obj);
       //var id = 
       Groups.insert(obj);
 
@@ -135,7 +134,13 @@
 			// blastReminderCall(courseCodeI, grpNumI1, startTimeI, endTimeI, startDateI, endDateI, paymentDeadlineI, statusI);
 			
 			//TODO: test schedule payment reminder checking
-			var courseName = Courses.findOne({courseCode:courseCodeI}).courseName;
+			var cCode = obj.courseCode;
+			var grpNum = obj.grpNum;
+			// console.log("courseCode: " + cCode);
+			var theCourse = Courses.findOne({courseCode:cCode});
+			if(theCourse == undefined){return false;}
+			var courseName = theCourse.courseName;
+			// console.log("courseName: " + courseName);
 			var timeInMin = 1;
 			var nowDateTime = new Date();
 			var year = nowDateTime.getFullYear();
@@ -144,11 +149,12 @@
 			var hours = nowDateTime.getHours();
 			var mins = nowDateTime.getMinutes();
 			var seconds = nowDateTime.getSeconds();
-			var newDateObj = new Date(year, month, dayD, hours, mins + 1, seconds);
+			var newDateObj = new Date(year, month, dayD, hours, mins, seconds+10);
 			// var newDateObj = new Date(startTimeI.getTime() + timeInMin*60000);
-			Meteor.call("schedulePaymentReminder", courseCodeI, grpNumI1, newDateObj);
-			
-      console.log(Groups.find().count());
+			console.log(newDateObj);
+			console.log("schedulePaymentReminder1");
+			Meteor.call("schedulePaymentReminder", cCode, obj.grpNum, newDateObj);
+			console.log("schedulePaymentReminder2");
 		},
 		
 		//can use this on a button to test also. after testing can just remove and use the above one
