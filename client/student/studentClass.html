@@ -2,17 +2,13 @@
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
     <section id='sidebar'>
-      <i class='icon-align-justify icon-large' id='toggle'></i>
+      <i class='icon-align-justify icon-large' id='toggle' style="color:#2c3e50"></i>
       <ul id='dock'>
-        <li class='launcher'>
-          <i class='icon-dashboard'></i>
-          <a href="/student">Dashboard</a>
-        </li>
         <li class='active launcher'>
           <i class='icon-table'></i>
-          <a href="/student/viewYourClass">Classes</a>
+          <a href="/student">Classes</a>
         </li>
-        <li class='launcher'>
+        <li class='launcher'>     
           <i class='icon-file-text-alt'></i>
           <a href="/student/assignmentDropbox">Uploads</a>
         </li>
@@ -21,9 +17,8 @@
     <!-- Tools -->
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>
-        <li class='title'>Sterling</li>
-        <li><a href="/student">Student Portal</a></li>
-        <li class='active'><a href="student/studentClass">Enrolled Classes</a></li>
+        <li class='title'>Sterling - Student Portal</li>
+        <li class='active'><a href="#">Enrolled Classes</a></li>
       </ul>
     </section>
     <!-- Content -->
@@ -47,9 +42,13 @@
             <tr>
               <td>IS101</td>
               <td>Managing People</td>
-              <td>Button</td>
               <td class='action'>
-                <a class="btn btn-info" data-target="#viewGrades" data-toggle="modal" data-id="" title="View Grades">
+                <a class="button btn admin-btn" href="/student/courseMaterials?group=is101" title="View Grades">
+                  <i class='fa fa-book'> View Materials</i>
+                </a>
+              </td>
+              <td class='action'>
+                <a class="btn btn-info" data-target="#viewGrades" data-toggle="modal" data-id="" title="View Grades" style="background-color: #2c3e50">
                   <i class='icon-bar-chart'></i>
                 </a>
                 <a class="btn btn-success" data-target="#viewAttendence#{_id}" data-toggle="modal" data-id="#{_id}" title="View Attendence">
@@ -71,11 +70,11 @@
           </tr>
           <tr>
             <td> Eg. 10/10/2010</td>
-            <td><i class="fa fa-circle" style="color: red"></i></td>
+            <td><i class="fa fa-times" style="color: red"></i></td>
           </tr>
           <tr>
             <td> Eg. 11/10/2010</td>
-            <td><i class="fa fa-circle" style="color: green"></i></td>
+            <td><i class="fa fa-check"></i></td>
           </tr>
         </table>
       </div>
