@@ -135,7 +135,6 @@
 			//TODO: test schedule payment reminder checking
 			var cCode = obj.courseCode;
 			var grpNum = obj.grpNum;
-			// console.log("courseCode: " + cCode);
 			var theCourse = Courses.findOne({courseCode:cCode});
 			if(theCourse == undefined){return false;}
 			var courseName = theCourse.courseName;
