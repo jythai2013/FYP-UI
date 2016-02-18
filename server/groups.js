@@ -44,10 +44,10 @@
         $push: {
           announcement: 
           {
-          title: aTitle,
-          content:aDetails,
-          author:aAuthor,
-          dateTime: new Date()
+          annouTitle: aTitle,
+          annouDetails:aDetails,
+          annouDate: new Date(),
+          annouAuthor:aAuthor
           }
         }
       });

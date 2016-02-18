@@ -31,13 +31,22 @@
                 <th>Posted Date</th>
                 <th>Title</th>
                 <th>View Details</th>
-                <th>Type</th>
                 <th>Posted To</th>
-                <th>Due Date</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
+              {{#each announcementList}}
+                <tr>
+                  {{#each announcements}}
+                    <td> {{annouDate}}</td>
+                    <td> {{annouTitle}}</td>
+                    <td> {{annouDetails}}</td>
+                  {{/each}}
+                  <td> {{courseCode}}</td>
+                  <td>Delete</td>
+                </tr>
+              {{/each}}
             </tbody>
           </table>
         </div>
@@ -56,12 +65,12 @@
 
 <template name="addAnnouncement">
   <form action="" method="post">
-    <table style="width:100%" class="spaceBelow">
+    <table style="width:100%" class="table table-striped" id="dataTables-example">
       <tr>
         <th style="width:25%">Announcement Title</th>
         <td><input type="text" name="announTitle" id="announTitle" style="width:100%"/></td>
       </tr>
-      <tr>
+      <!-- <tr>
         <th>Announcement Type</th>
         <td>
           <select name="announType" id="announType">
@@ -70,10 +79,16 @@
             <option value="general">General</option>
           </select>
         </td>
-      </tr>
+      </tr> -->
       <tr>
           <th>Post To:</th>
-          <td>Class and Group</td>
+          <td>
+            <select name="groupId" id="groupId" style="margin-top: 5px; margin-bottom: 5px; padding: 5px;">
+              {{#each trainerOngoingCourses}}
+                <option value="{{_id}}">{{courseCode}} - {{grpNum}}</option>
+              {{/each}}
+            </select>
+          </td>
       </tr>
       <tr>
         <th>Details:</th>

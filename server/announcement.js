@@ -1,30 +1,11 @@
 
 Meteor.methods({ 
 	
-	'insertAnnouncement': function insertAnnouncement(aTitle, aDetails, aAuthor, classId, cCode){
-		// if(Meteor.user.userType != "admin"){
-			// return false; //TODO: output error message in client
-		// }
-		Groups.update(_id, 
-			{
-				courseCode: cCode, 
-				groupNum: classId,
-				
-			}, //Query
-
-			{ $set:
-				{
-					annoucement : {
-						annouTitle: aTitle,
-						annouDetails: aDetails,
-						annouDate: new Date(),
-						annouAuthor: aAuthor
-					}
-				}
-
-			},
-			{ upset:true} //Append
-		)
+	'insertAnnouncement': function insertAnnouncement(gId, announList){
+		console.log("announcement.js >> insertAnnouncement (Server)");
+		console.log("update: "+gId);
+		Groups.update({_id:gId},{$set:{announcement:announList}});
+		console.log(">> insertAnnouncement (+1)");
 	},
 
 	'isLauncherActive': function checkForWindowURL(){

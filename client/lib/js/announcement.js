@@ -5,33 +5,29 @@ Template.addAnnouncement.events({
 		var title = document.getElementById("announTitle").value;
 		var content = document.getElementById("announDetails").value;
 		var createdBy = Meteor.user()._id;
-		var course = document.getElementById("courseId").value;
+		// var courseCode = document.getElementById("courseId").value;
 		var group = document.getElementById("groupId").value;
-		//var announType = document.getElementById("announType").value;
-		//var dueDate = document.getElementById("announType").value;
-		//'insertAnnouncement': function insertAnnouncement(aTitle, aDetails, aAuthor, classId, cCode){
-		Meteor.call("insertAnnouncement", title, content, createdBy, group, course);
+		var grpNo = document.getElementById("groupId").value;
+		var courseCode = document.getElementById("groupId").value;
+
+		var obj = new Object();
+		obj.annouTitle= title;
+		obj.annouDetails= content;
+		obj.annouDate= new Date();
+		obj.annouAuthor= createdBy;
+
+		console.log("clicked AddAnnounment >> announcement.js");
+		///
+		var annouList = [];
+		console.log(group == "Bx4Ltcfgfsh35DrDf");
+
+		if(Groups.findOne({_id: group}).announcement != undefined) annouList = Groups.announcement;		
+	    annouList.push(obj)
+	    ///
+	    console.log("List : " + annouList);
+		Meteor.call("insertAnnouncement", group, annouList);
 	}
 });
-
-Template.addAnnouncement.helpers({
-	// and is ongoing class
-	//var groupTaught = Groups.find(courseTrainers = Meteor.user()._id);
-	//console.log("Groups taught: "+groupTaught);
-});
-
-
-/*
-
-//Displaying
-Template.displayAnnoucements.helpers({
-
-	"groups" : function listCourseEventHandler(e) {
-	console.log("here");
-
-	return Courses.find({});
-	}
-});*/
 
 Template.postAnnounModel.helpers({
   // isAnnouncementPosted: (err) ->

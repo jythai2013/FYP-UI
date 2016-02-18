@@ -344,15 +344,11 @@ Template.addStudent.events({
 		 // console.log(templ);
 		 
 		var addStudents = document.getElementsByName("newStudentsC");
-    var addStudentsArr = new Array();
-    for(var x = 0, l = addStudents.length; x < l;  x++){
-      console.log(addStudents[x]);
-      addStudentsArr.push(addStudents[x].value);
-		}
-
-    addStudentsArr.forEach(function(entry) {
-      // console.log(entry + "");
-    });
+	    var addStudentsArr = new Array();
+	    for(var x = 0, l = addStudents.length; x < l;  x++){
+	      console.log(addStudents[x]);
+	      addStudentsArr.push(addStudents[x].value);
+			}
 
 
 		//TODO: Add student to class list
@@ -366,10 +362,10 @@ Template.addStudent.events({
 		
 		console.log(classlist);
 		
-    addStudentsArr.forEach(function(entry) {
-      // console.log(entry);
-			classlist.push(entry); 
-    });
+	    addStudentsArr.forEach(function(entry) {
+	      // console.log(entry);
+				classlist.push(entry); 
+	    });
 		
 		console.log(classlist);
 		Meteor.call("updateGroupClasslist", courseCode, grpNum, classlist);
