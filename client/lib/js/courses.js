@@ -63,14 +63,23 @@ Template.viewCourseForm.helpers({
 	}
 });
 
+Template.course.onRendered(function(e){
+	var url =  window.location.href;
+	var positionFirstEqual = url.indexOf('=');	
+	var currentCourseEsc=url.substring(positionFirstEqual+1);
+	console.log(currentCourseEsc+ " currnt course code escaped");
+	var currentCourse=unescape(currentCourseEsc);
+	Session.set("currentCourseCode", currentCourse);
+});
+
 Template.course.helpers({
 
 	"trainerList" : function(e) {
-		var url =  window.location.href;
-		var positionFirstEqual = url.indexOf('=');	
-		var currentCourseEsc=url.substring(positionFirstEqual+1);
-    	console.log(currentCourseEsc+ " currnt course code escaped");
-		var currentCourse=unescape(currentCourseEsc);
+		// var url =  window.location.href;
+		// var positionFirstEqual = url.indexOf('=');	
+		// var currentCourseEsc=url.substring(positionFirstEqual+1);
+    	// console.log(currentCourseEsc+ " currnt course code escaped");
+		var currentCourse=Session.get("currentCourseCode");
 		//console.log(currentCourse + "Code");
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
