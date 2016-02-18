@@ -11,8 +11,15 @@ Template.trainerUploadGrades.events({
 	"click #generateExcel":function gradesExcelGeneration(e, template){
 		e.preventDefault();
 		// console.log("generateExcel");
-		console.log(e);
-		console.log(template);
+		// console.log(e);
+		// console.log(template);
+		// console.log(Template.currentData());
+		var courseCode = $("#courseCode").value
+		var groupNum = $("#classId").value
+		if(courseCode.length <= 0 || groupNum <= 0){
+			alert("Invalid course and/or group selected!");
+			return false;
+		}
 		var inData = "";
 		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
 		//var inData = []; 
