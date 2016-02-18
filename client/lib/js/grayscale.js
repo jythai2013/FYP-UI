@@ -5,7 +5,7 @@
  */
 
  $(window).scroll(function() {
-    if ($(".grayscale-navbar").offset().top > 50) {
+    if ($(".grayscale-navbar") != undefined && $(".grayscale-navbar").offset() != undefined && $(".grayscale-navbar").offset().top > 50) {
         $(".navbar-fixed-top").addClass("grayscale-top-nav-collapse");
     } else {
         $(".navbar-fixed-top").removeClass("grayscale-top-nav-collapse");

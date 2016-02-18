@@ -63,14 +63,23 @@ Template.viewCourseForm.helpers({
 	}
 });
 
+Template.course.onRendered(function(e){
+	var url =  window.location.href;
+	var positionFirstEqual = url.indexOf('=');	
+	var currentCourseEsc=url.substring(positionFirstEqual+1);
+	console.log(currentCourseEsc+ " currnt course code escaped");
+	var currentCourse=unescape(currentCourseEsc);
+	Session.set("currentCourseCode", currentCourse);
+});
+
 Template.course.helpers({
 
 	"trainerList" : function(e) {
-		var url =  window.location.href;
-		var positionFirstEqual = url.indexOf('=');	
-		var currentCourseEsc=url.substring(positionFirstEqual+1);
-    	console.log(currentCourseEsc+ " currnt course code escaped");
-		var currentCourse=unescape(currentCourseEsc);
+		// var url =  window.location.href;
+		// var positionFirstEqual = url.indexOf('=');	
+		// var currentCourseEsc=url.substring(positionFirstEqual+1);
+    	// console.log(currentCourseEsc+ " currnt course code escaped");
+		var currentCourse=Session.get("currentCourseCode");
 		//console.log(currentCourse + "Code");
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
@@ -108,8 +117,8 @@ Template.addClass.helpers({
 		//console.log(currentCourse + "Code");
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
-		var size = Courses.findOne({courseCode:currentCourse});
-		console.log(size);
+		var theCourse = Courses.findOne({courseCode:currentCourse});
+		console.log(theCourse);
 		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
 
 		var trainersArr = new Array();
@@ -203,6 +212,9 @@ Template.addCourseForm.events({
 
 		console.log("here8");
 		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType,cFLR);
+		var temp = Session.get("courseSearchCode");
+		Session.set("courseSearchCode", "123");
+		Session.set("courseSearchCode", temp);
 	}
 
 

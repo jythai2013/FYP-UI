@@ -1,4 +1,48 @@
-Template.dashboard.rendered = function(){
+
+
+ $(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+   // jQuery.noConflict();
+   makeQTip();
+
+});
+
+// Setup QTip
+  function makeQTip() {
+   var date = new Date();
+   var d = date.getDate();
+   var m = date.getMonth();
+   var y = date.getFullYear();
+
+   tooltip = $('<div/>').qtip({
+     id: 'fullcalendar',
+     prerender: true,
+     content: {
+       text: ' ',
+       title: {
+         button: true
+       }
+     },
+     position: {
+       my: 'bottom center',
+       at: 'top center',
+       target: 'mouse',
+       viewport: $('#fullCalendarDiv'),
+       adjust: {
+         mouse: false,
+         scroll: false
+       }
+     },
+     show: false,
+     hide: false,
+     style: 'qtip-light'
+   }).qtip('api');
+  }
+	
+	
+	
+	Template.dashboard.rendered = function(){
   Tracker.autorun(function(){
     var array = Bookings.find();
     
@@ -31,7 +75,23 @@ Template.dashboard.rendered = function(){
 
           callback(events);
 
-        }
+        },
+      eventMouseover: function(data, event, view) {
+				// alert();
+        var content = '<h3>'+data.title+'</h3>' + 
+          '<p><b>Start:</b> '+data.start+'<br />' + 
+          (data.end && '<p><b>End:</b> '+data.end+'</p>' || '');
+
+        tooltip.set({
+          'content.text': content
+        })
+        .reposition(event).show(event);
+      },
+      eventMouseout: function() {tooltip.hide()},
+      dayClick: function() { tooltip.hide() },
+      eventResizeStart: function() { tooltip.hide() },
+      eventDragStart: function() { tooltip.hide() },
+      viewDisplay: function() { tooltip.hide() },
     })
 
   })

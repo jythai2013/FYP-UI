@@ -121,6 +121,7 @@
       console.log("create group >> Server");
       console.log(obj);
       //var id = 
+			if(obj.classlist == undefined) obj.classlist = new Array();
       Groups.insert(obj);
 
       //console.log(id);
