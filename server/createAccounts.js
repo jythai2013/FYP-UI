@@ -36,15 +36,18 @@
 
 		'deleteUsers2': function deleteUsers(_id){
 	        console.log("Method: deleteUsers2 (users.js)");
-	        Meteor.users.remove(_id);
 					var allGroups = Groups.find({}).fetch();
 					allGroups.forEach(function(currentValue, index, origArray){
-						var indexOfId = currentValue.classlist.indexOf(_id);
-						if(indexOfId > -1){
-							currentValue.classlist.splice(indexOfId, 1);
-							Groups.update({_id:currentValue._id},{$set:{classlist:currentValue.classlist}})
+						console.log(currentValue);
+						if(currentValue.classlist != null){
+							var indexOfId = currentValue.classlist.indexOf(_id);
+							if(indexOfId > -1){
+								currentValue.classlist.splice(indexOfId, 1);
+								Groups.update({_id:currentValue._id},{$set:{classlist:currentValue.classlist}})
+							}
 						}
 					});
+	        Meteor.users.remove(_id);
 	    },
 		
 		'createTrainerAccount': function createTrainerAccount(obj){

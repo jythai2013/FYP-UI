@@ -181,7 +181,7 @@ function processExcelFile(workbook){
 		debugObj.nokReln	       			= Relationship	      ;
 		debugObj.nokTel		            = NOKNo		            ;
 		
-		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
+		// var theGroup = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
 		// console.log(courseCode)
 		// console.log(grpNum)
 		// console.log(theGroup)
