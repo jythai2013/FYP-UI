@@ -130,7 +130,8 @@ Template.addLSPFormForm.events({
 
 Template.trainerUploads.events({
 
-'click .addFormButton':function(event, template){
+  'click #addFormButton':function(event, template){
+    event.preventDefault();
     var type = "groups";
 
     var e = document.getElementById("courseCode");
@@ -156,16 +157,19 @@ Template.trainerUploads.events({
         // handle error
         console.log(err);
       } else {
-        var userId = Meteor.userId();
-        fileObjId = fileObja._id;
-        // console.log(fileObj);
+        // var userId = Meteor.userId();
+        // fileObjId = fileObja._id;
+        console.log(fileObj);
         // console.log(Files);
         // console.log(fileObjId = fileObj._id);
       }
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
     });
     
+		console.log("bbbefore call");
     fileObjIdI = fileObjId._id;
+		console.log("before call");
     Meteor.call("createMaterial",type, courseId, sessionId, fileObjIdI);
+		console.log("!before call");
   }
 });

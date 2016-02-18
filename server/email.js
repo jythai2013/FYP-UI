@@ -62,18 +62,17 @@ Meteor.methods({
 		// console.log(dateToSend);
 		// console.log(groupToBlast);
 		// groupToBlast.forEach(function(group){
-			groupToBlast.classlist.forEach(function(student){
-				toEmail = student.email[0];
-				details = {to:toEmail, from:"asdf154dev@gmail.com", subject:subject, text:text, date:tDate} //to, from, subject, text
-				Meteor.call("scheduleMail", details)
-			});
-		// console.log("8");
-				toEmail = "cassy94@gmail.com";
-				details = {to:toEmail, from:"asdf154dev@gmail.com", subject:subject, text:text, date:tDate} //to, from, subject, text
-		// 		console.log(details);
-				Meteor.call("scheduleMail", details)
-		// console.log("9");
-		// });
+		if(groupToBlast.classlist == undefined){
+			toEmail = "cassy94@gmail.com";
+			details = {to:toEmail, from:"asdf154dev@gmail.com", subject:subject, text:text, date:tDate} //to, from, subject, text
+			Meteor.call("scheduleMail", details)
+			return false;
+		}
+		groupToBlast.classlist.forEach(function(student){
+			toEmail = student.email[0];
+			details = {to:toEmail, from:"asdf154dev@gmail.com", subject:subject, text:text, date:tDate} //to, from, subject, text
+			Meteor.call("scheduleMail", details)
+		});
 	}
 });
 
