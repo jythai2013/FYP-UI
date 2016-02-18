@@ -11,7 +11,6 @@ Template.trainerUploadAttendance.events({
 	"click #generateExcel":function attendanceExcelGeneration(e, template){
 		e.preventDefault();
 		// console.log("generateExcel");
-		console.log(e);
 		// console.log(template);
 		// console.log(Template.currentData());
 		var courseCode = $("#courseCode")[0].value
@@ -26,6 +25,9 @@ Template.trainerUploadAttendance.events({
 		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
 		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:groupNum});
 		var inData = []; 
+		console.log(courseCode);
+		console.log(groupNum);
+		console.log(theGroup);
 		inData.push([null,"Sterling Training Hub", null, null])
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
@@ -34,7 +36,6 @@ Template.trainerUploadAttendance.events({
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
 		inData.push([null, "Student Name", "Student ID", new Date()])
-		console.log(theGroup);
 		var studentIds = theGroup.classlist;
 		var students = new Array();
 		i=0;
@@ -45,7 +46,7 @@ Template.trainerUploadAttendance.events({
 				inData.push([++i, student.FullName, student._id, true]);
 			});
 		}
-		var inWs_name = "sheet 1";
+		var inWs_name = "Sheet1";
 		var inExcelName = "test";
 		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
 		//console.log("generateExcel");
@@ -123,6 +124,7 @@ function handleFile(e) {
 
 function processExcelFile(workbook){
 	/* Get worksheet name */
+	$('#inputExcelElementAttendance')[0].value = "";
 	var first_sheet_name = workbook.SheetNames[0];
 	
 	/* Get worksheet */
@@ -199,9 +201,9 @@ function processExcelFile(workbook){
 		currentLineNumber += 1;
 	}
 	alert("done");
-	var rootUrl = window.location.href.substring(0, window.location.href.indexOf('/', 10));
+	// var rootUrl = window.location.href.substring(0, window.location.href.indexOf('/', 10));
 	// console.log(rootUrl);	
-	window.location.href=rootUrl+"/AccountsMgmt/studentList"
+	// window.location.href=rootUrl+"/AccountsMgmt/studentList"
 }
 
 	function cellIsFilled(workbook, cellAddress){

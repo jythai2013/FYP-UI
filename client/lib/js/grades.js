@@ -41,7 +41,7 @@ Template.trainerUploadGrades.events({
 			students.push(student);
 			inData.push([null, student.FullName, student._id, "marks"]);
 		});
-		var inWs_name = "sheet 1";
+		var inWs_name = "Sheet1";
 		var inExcelName = "test";
 		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
 		//console.log("generateExcel");
@@ -120,6 +120,8 @@ function handleFile(e) {
 
 function processExcelFile(workbook){
 	console.log("processExcelFile")
+	$('#inputExcelElementGrades')[0].value = "";
+	
 	/* Get worksheet name */
 	var first_sheet_name = workbook.SheetNames[0];
 	
@@ -134,9 +136,9 @@ function processExcelFile(workbook){
 	
 	var cellOf_CourseID	= 'C4';
 	var cellOf_GroupID 	= 'C5';
-	var CourseID	= cellOf_CourseID.v;
-	var GroupID 	= cellOf_GroupID.v;
-	
+	var CourseID	= worksheet[cellOf_CourseID].v;
+	var GroupID 	= worksheet[cellOf_GroupID].v;
+	console.log(GroupID);
 	var startingLineNumber	= 9;
 	var currentLineNumber		= startingLineNumber;
 	
@@ -182,7 +184,8 @@ function processExcelFile(workbook){
 		debugObj.StudentName	= StudentName	;
 		debugObj.StudentID		= StudentID	  ;
 		debugObj.grades	      = grades	    ;
-		debugObj.groupId      = GroupID	    ;
+		debugObj.courseID     = CourseID	    ;
+		debugObj.groupID      = GroupID	    ;
 		console.log(debugObj);
 		
 		
@@ -193,7 +196,11 @@ function processExcelFile(workbook){
 		
 		currentLineNumber += 1;
 	}
-	console.log("processExcelFile end")
+	alert("done");
+	// console.log("processExcelFile end")
+	// var rootUrl = window.location.href.substring(0, window.location.href.indexOf('/', 10));
+	// console.log(rootUrl);	
+	// window.location.href=rootUrl+"/AccountsMgmt/studentList"
 }
 
 	function cellIsFilled(workbook, cellAddress){

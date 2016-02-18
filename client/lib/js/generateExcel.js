@@ -54,8 +54,8 @@ Meteor.methods({
 	"generateExcel":function(inData, inWs_name, inExcelName){
 		// console.log("generateExcel");
 		var data = [[1,2,3],[true, false, null, "sheetjs"],["foo","bar",new Date("2014-02-19T14:30Z"), "0.3"], ["baz", null, "qux"]]
-		var ws_name = "SheetJS";
-		var excelName = "test";
+		var ws_name = inWs_name;
+		var excelName = inExcelName;
 		 
 		var wb = new Workbook(), ws = sheet_from_array_of_arrays(inData);
 		// var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
