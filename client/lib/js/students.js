@@ -91,10 +91,7 @@ Template.addStudentAcctForm.events({
 		obj.userIDType = 				document.getElementById("idType").value;
 		obj.userID = 					document.getElementById("idNo").value;
 		obj.nationality = 	document.getElementById("nationality").value;
-		obj.postalCode = 					document.getElementById("code").value;
-		obj.resAddr= 				document.getElementById("resAddr").value;
 		obj.highestQualification = document.getElementById("qualification").value;
-		obj.proficiency = 				document.getElementById("proficiency").value;
 		obj.nokName = 			document.getElementById("nokName").value;		
 		obj.nokReln = 			document.getElementById("nokReln").value;		
 		obj.nokTel = 				document.getElementById("nokTel").value;		

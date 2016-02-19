@@ -238,7 +238,6 @@ Template.addClass.events({
 
 		obj.startDate = document.getElementById("gNewStartDate").value;
 		obj.endDate = document.getElementById("gNewEndDate").value;
-		obj.paymentDeadline = document.getElementById("gNewDeadline").value;
 		obj.venue = document.getElementById("gVenue").value;
 		var trainId = document.getElementById("gTrainers").value;
 		obj.courseTrainers = {trainerId: trainId};
