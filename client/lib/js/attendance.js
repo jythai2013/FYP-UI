@@ -1,4 +1,4 @@
-
+ 
 Template.trainerUploadAttendance.events({
 	"click #updateAttendance":function updateAttendanceHandler(e, template){
 		group_id = 

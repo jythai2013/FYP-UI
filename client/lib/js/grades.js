@@ -1,4 +1,4 @@
-
+ 
 Template.trainerUploadGrades.events({
 	// "click #updateGrades":function updateGradesHandler(e, template){
 		// group_id = 
