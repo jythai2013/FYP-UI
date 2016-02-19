@@ -19,8 +19,8 @@
 		}
 	</style>
 <!-- Courses Section -->
-    <section class="content-section text-center" id="courses">
-    	<div class="gray-section">
+    <section class="gray-section text-center" id="courses">
+    	<div class="row">
     		<div class="row">
                 <div class="col-lg-12">
                 	<h1>Courses</h1>
@@ -28,8 +28,6 @@
                 	<p> At Sterling Training Hub, we create a platform where you will be able to enhance your self with new skills. Through our leading trainers, and well-thought practical and theory modules, Sterling Training Hub is a place for you to bring yourself to the next level.</p>
                 </div>
             </div>
-            
-
 	        <!-- Portfolio Section -->
 			<div class="row">
 <!-- 	            <div class="col-lg-12">
@@ -43,7 +41,7 @@
 	            </div>
 	            {{#each retrieveAllCourse}}
 		            <div class="col-md-4 col-sm-6" id="courseBG">
-		                <table style="height:100%; width:100%; color:gray">
+		                <table style="height:100%; width:100%; color:gray; font-size: 150%">
 		                	<tr>
 		                		<td>{{courseCode}} - {{courseName}}</td>
 		                	</tr>
@@ -59,8 +57,8 @@
 		            </div>
      	        {{/each}}
 	        </div>
-	        <!-- END: Portfolio Section -->
 	    </div>
+	    <!-- END: Portfolio Section -->
     </section>
 </template>
 
