@@ -7,11 +7,18 @@ Template.course.helpers({
   },
   uploads:function(){
     var a = Files.find({type: "course"});
-    var fileList = Materials.find({type:"course"});
+    var fileList = Materials.find({type:"groups"});
+    var fileList2 = Materials.find({type: "course"});
     console.log(fileList);
     var a = new Array();
 
     fileList.forEach(function(item, index){
+      console.log(item.fileName);
+      a.push(Files.findOne(item.fileName));
+      console.log(item);
+    });
+
+    fileList2.forEach(function(item, index){
       console.log(item.fileName);
       a.push(Files.findOne(item.fileName));
       console.log(item);

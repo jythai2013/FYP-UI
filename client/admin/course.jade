@@ -80,17 +80,13 @@ template(name="course")
               table#dataTables-example.table.table-bordered.table-hover
                 thead
                   tr
-                    th Session
-                    th Topic
                     th(colspan="2") Course Materials
                     th Download File
                 tbody
                   each uploads                   
                     tr 
-                      td 01
                       td #{name}
-                      td Files here
-                      td(width="50px") 
+                      td
                         a(href="{{url download = true}}", class="button btn admin-btn") Download 
                 tfoot        
                     tr
@@ -107,9 +103,6 @@ template(name="course")
                     button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
                     h4#myModalLabel.modal-title Upload Files
                   .modal-body
-                    | Select Course Material For Session:
-                    .form-group
-                      input.form-control(type="text", id="cUploadSession")
                       input(type ="hidden", value = "#{courseCode}", id ="cUploadCourseCode")                
                     input#myFileInput(type="file", name="courseMaterials")
                   .modal-footer
