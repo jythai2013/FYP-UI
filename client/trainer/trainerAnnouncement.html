@@ -39,7 +39,7 @@
               {{#each announcementList}}
                 <tr>
                   {{#each announcements}}
-                    <td> {{annouDate}}</td>
+                    <td> {{formatDate annouDate}}</td>
                     <td> {{annouTitle}}</td>
                     <td> {{annouDetails}}</td>
                   {{/each}}
@@ -84,7 +84,7 @@
           <td>
             <select name="groupId" id="groupId" style="margin-top: 5px; margin-bottom: 5px; padding: 5px;">
               {{#each trainerOngoingCourses}}
-                <option value="{{_id}}">{{courseCode}} - {{grpNum}}</option>
+                <option value="{{_id}}">{{courseCode}} {{grpNum}}</option>
               {{/each}}
             </select>
           </td>

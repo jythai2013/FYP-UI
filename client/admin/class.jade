@@ -99,11 +99,11 @@ template(name="announcementForm")
                 tr
                   td Title
                   td 
-                    input.form-control(id='annouTitle',type='text',value='',placeholder='Title', style="max-width: 500px;")
+                    input.form-control(id='aTitle',type='text',placeholder='Title')
                 tr
                   td Details
                   td 
-                    textarea.form-control(id='annouDetails',type='text',value='',placeholder='Details Here', style="max-width: 500px;")
+                    textarea.form-control(id='annouDetails',type='text',placeholder='Details Here', style="max-width: 500px;")
           // /.table-responsive
         .modal-footer
           //input.btn.admin-btn#submitButton(type='submit',value='Post Annoucenment',data-transition='fade', data-theme='c', data-dismiss="modal")
@@ -124,10 +124,10 @@ template(name="displayAnnouncements")
       tbody 
         each groupAnnouncements
           tr
-            td #{title}
-            td #{content}
-            td {{formatDate dateTime}}
-            td #{author} 
+            td #{annouTitle}
+            td #{annouDetails}
+            td {{formatDate annouDate}}
+            td #{annouAuthor} 
   // /.table-responsive
 
 template(name="editClassDetails")

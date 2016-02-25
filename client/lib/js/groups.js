@@ -1,7 +1,6 @@
 Template.classList.helpers({
 
 	"classes" : function listCourseEventHandler(e) {
-		console.log("here");
 		return Groups.find({});
 	}
 });
@@ -29,8 +28,8 @@ function getParameterByName(name) {
 // CLASS.JADE
 Template.group.helpers({
 	'studentInClass' : function(){
-		console.log("studentInClass>>");
-		console.log(this);
+		// console.log("studentInClass>>");
+		// console.log(this);
 		var classList = this.classlist;
 		var studentArray = new Array();
 		classList.forEach(function(curr,ind,arr){
@@ -134,11 +133,8 @@ Template.displayAnnouncements.helpers({
 
 	"groupAnnouncements" : function listGroupAnnouncementsEventHandler(e) {
 		console.log("here in class announcement");
-		//extracting from url
-
-		
+		//extracting from url		
 		var courseGrp =  window.location.href;
-		
 		var positionFirstEqual = courseGrp.indexOf('=');
 		//problem starts here
 		//extracting course
@@ -266,14 +262,31 @@ Template.announcementForm.events({
 		// if(Meteor.user.userType != "admin"){
 		// return false;
 		// }
-
+		//extracting from url		
+		var courseGrp =  window.location.href;
+		var positionFirstEqual = courseGrp.indexOf('=');
+		//problem starts here
+		//extracting course
+		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
+		var positionOfAND = courseGrp.indexOf('&');
+		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+		//extracting grpNum
+		var grpNumStr=courseGrp.substr(positionOfAND-1);
+		var positionSecondEqual = currentCourseGrp.indexOf('=');
+		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id
+		gId = a;
 		//TODO: Validation of input
-		var aTitle = document.getElementById("annouTitle").value;
-		var aDetails = document.getElementById("annouDetails").value;
-		//and the author. To ask Stel or matt about this but for now
-		var aAuthor = "Cass"
-      	console.log(aTitle + "group number");
-		Meteor.call("insertGroupAnnouncement", this._id, aTitle, aDetails, aAuthor);
+		var obj = new Object();
+		var title = document.getElementById("aTitle").value;
+
+		console.log(">>>>>TITLEEEEEEEE: " + title);
+		obj.annouTitle= title;
+		obj.annouDetails= document.getElementById("annouDetails").value;
+		obj.annouDate= new Date();
+		obj.annouAuthor= Meteor.user()._id;
+		console.log("Admin Add Announcement for "+gId);
+		Meteor.call("insertAnnouncement", gId, obj);
 		//console.log(Groups.find({}).fetch();
 	}
 });
@@ -291,7 +304,7 @@ Template.viewCourseForm.events({
 		// if(Meteor.user.userType != "admin"){
 		// return false;
 		// }
-		console.log(this.courseCode);
+		// console.log(this.courseCode);
 
 		Session.set('currentCourseGroup', this.courseCode);
 		  //modal.find('.modal-title').text('New message to ' + recipient)

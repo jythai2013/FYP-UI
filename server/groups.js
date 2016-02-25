@@ -33,26 +33,26 @@
       });
     },
 
-  'insertGroupAnnouncement': function editGroupAnnounce(_id, aTitle, aDetails, aAuthor){
-      // if(Meteor.user.userType != "admin"){
-        // return false; //TODO: output error message in client
-      // }
-      console.log("in SERVER");
-      console.log(aTitle);
-      // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
-      Groups.update(_id, {
-        $push: {
-          announcement: 
-          {
-          annouTitle: aTitle,
-          annouDetails:aDetails,
-          annouDate: new Date(),
-          annouAuthor:aAuthor
-          }
-        }
-      });
-      console.log("in SERVER");
-    },
+  // 'insertGroupAnnouncement': function editGroupAnnounce(_id, aTitle, aDetails, aAuthor){
+  //     // if(Meteor.user.userType != "admin"){
+  //       // return false; //TODO: output error message in client
+  //     // }
+  //     console.log("in SERVER");
+  //     console.log(aTitle);
+  //     // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
+  //     Groups.update(_id, {
+  //       $push: {
+  //         announcement: 
+  //         {
+  //         annouTitle: aTitle,
+  //         annouDetails:aDetails,
+  //         annouDate: new Date(),
+  //         annouAuthor:aAuthor
+  //         }
+  //       }
+  //     });
+  //     console.log("in SERVER");
+  //   },
 
   'addStudent': function addStudent(_id, cCode, sFirstName, sLastName){
       // if(Meteor.user.userType != "admin"){
