@@ -1,7 +1,3 @@
-// http://stackoverflow.com/questions/1183419/parse-page-for-checkboxes-via-javascript
-// http://stackoverflow.com/questions/4606791/how-to-access-checkboxes-and-their-values-with-getelementsbyname
-// http://stackoverflow.com/questions/169506/obtain-form-input-fields-using-jquery
-
 // Template.addFeedback.events({
 	// "submit #feedbackForm" : function deleteCourseEventHandler(e) {
 		// console.log(e);
@@ -34,6 +30,11 @@ Template.feedbackQnMgmt.onRendered(function(){
   Session.set('currentfb', currentfb);
 });
 
+Template.viewFeedbackSurvey.onRendered(function(){
+  var currentfb = getParameterByName("fbid");
+  Session.set('currentViewingfb', currentfb);
+});
+
 Template.addFeedback.onRendered(function(){
 	// console.log($("input")[0]);
 	// console.log($("input"));
@@ -48,7 +49,7 @@ Template.createQn.onRendered(function(){
 
 Template.feedbackQnMgmt.onRendered(function(){
 	// console.log($("input")[0]);
-	// console.log($("input"));
+	console.log(Session.get("sessionQnID") + " sessionQnID");
 	Session.set('statusTitle', 'notEditting');
 });
 
@@ -78,6 +79,40 @@ Template.feedbackQnMgmt.helpers({
 		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
 		console.log(feedbackQnOptions);
 		 return feedbackQnOptions;
+	}
+});
+
+
+Template.viewFeedbackSurvey.helpers({
+
+	"viewFeedbackDetails": function() {
+		var fbId=Session.get("currentViewingfb");
+
+		var feedbackTitle = Feedback.findOne({_id:fbId});
+    		console.log(feedbackTitle);
+    	return feedbackTitle;
+	},
+
+	"viewFeedbackQns1": function() {
+		//Session.set('currentfb', currentfb);	
+		var fbId = Session.get("currentViewingfb");
+		console.log(fbId);
+		//console.log(fbId);
+		//var fbId=Session.set('currentfb', currentfb);
+		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
+		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
+		 return feedbackQnOptions;
+	}
+});
+
+Template.addFeedback.helpers({
+
+	"feedbackTemplateType": function() {
+		var feedbackType=Session.get("classFeedbackType");
+
+		var feedbackTitle = Feedback.find({feedbackType:feedbackType,status:"launched"});
+    		console.log(feedbackTitle);
+    	return feedbackTitle;
 	}
 });
 
@@ -114,6 +149,16 @@ Template.viewQn.helpers({
     return fakeArray;
 	}
 
+});
+
+Template.radioCreate.helpers({
+	"addRadioFields": function() {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('radioFields'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
+	}	
 });
 
 Template.radioCreate.helpers({
@@ -171,7 +216,10 @@ Template.viewQn.helpers({
 
 Template.feedbackList.helpers({
 	"survey": function() {
-		return Feedback.find({});
+		return Feedback.find({status:"editting"});
+	},	
+	"launchedSurvey": function() {
+		return Feedback.find({status:"launched"});
 	}	
 });
 
@@ -274,6 +322,7 @@ Template.addFeedbackForm.events({
 		 e.preventDefault();
 
 		var feedbackTitle = document.getElementById("feedbackTitle").value;
+		console.log(feedbackTitle);
 		var feedbackType = document.getElementById("feedbackType").value;
 		var feedbackQnSize = 0;
 		Meteor.call("createNewFeedback", feedbackTitle, feedbackType, feedbackQnSize);
@@ -332,8 +381,9 @@ Template.viewQn.events({
 	    	console.log(optionsForQn.length+ " ARR SIZE") 
 		}
 		//var hello=Feedback.find ({ _id:fbId}, {qnOptions:{qnID: qnId}});
-		//console.log(hello);
+		
 		Session.set('sessionQnID', null);
+		console.log("Hello");
 		Meteor.call("editQuestion", fbId, qnID, question, qnType, LSPQnID, optionsForQn);
 	},
 
@@ -351,9 +401,6 @@ Template.viewQn.events({
 		 console.log(this.feedbackDetails.qnID);
 		 
 		 
-
-
-		 
 		var url =  window.location.href;
     		console.log(url+ " url")
 		var positionEqual = url.indexOf('=');	
@@ -368,10 +415,10 @@ Template.viewQn.events({
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var radioFieldsEd = Session.get('radioFieldsEd');
-		 var noOfRadioFields = radioFieldsEd+1;
-		 if(isNaN(radioFieldsEd)) noOfRadioFields = 1;
-		 console.log("radioFieldsEd " + radioFieldsEd);
+		 var noOfRadioFields = Session.get('radioFieldsEd');
+		 if(isNaN(noOfRadioFields)) noOfRadioFields = 0;
+		 if(noOfRadioFields<0) noOfRadioFields = 0;
+		 var noOfRadioFields = noOfRadioFields+1;
 		 console.log("noOfRadioFields " + noOfRadioFields);
 		 Session.set('radioFieldsEd', noOfRadioFields);
 	},
@@ -379,10 +426,10 @@ Template.viewQn.events({
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var radioFieldsEd = Session.get('radioFieldsEd');
-		 if(isNaN(radioFieldsEd)) noOfRadioFields = 1;
-		 var noOfRadioFields = radioFieldsEd-1;
-		 console.log("radioFieldsEd " + radioFieldsEd);
+		 var noOfRadioFields = Session.get('radioFieldsEd');
+		 if(isNaN(noOfRadioFields)) noOfRadioFields = 1;
+		 if(noOfRadioFields<0) noOfRadioFields = 1;
+		 var noOfRadioFields = noOfRadioFields-1;
 		 console.log("noOfRadioFields " + noOfRadioFields);
 		 Session.set('radioFieldsEd', noOfRadioFields);
 	},
@@ -559,6 +606,20 @@ Template.radioCreateInline.events({
 
 });
 
+
+Template.feedbackQnMgmt.events({
+	"click #launchSurvey" : function(e) {
+		
+		var url =  window.location.href;
+    		console.log(url+ " url")
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+
+		Meteor.call("launchSurvey", fbId); 
+	}
+
+});
+
 Template.createQn.events({
 	"click #addField" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
@@ -607,123 +668,159 @@ Template.createQn.events({
 
 });
 
-
-
-
-
 Template.addFeedback.events({
-	"submit #feedbackFormadt" : function submitFeedbackFormadtHandler(e) {
-		e.preventDefault();
-		// console.log(e);
-		var options = new Object();
-		
-		// options.quantitative = new Array();
-		// options.qualitatives = new Array();
-		
-		quantitative = new Object();
-		qualitatives = new Object();
-		questions = new Object();
-		
-		// console.log($(".qualitativeQuestion"));
-		
-		$(".quantitativeQuestion").each(function(index, value){
-			// console.log(index);
-			// console.log(value);
-			// console.log(value.value);
-			// console.log(value.nextSibling);
-			// var key = value.nextSibling.innerHTML.toString();
-			// console.log(key);
-			// quantitative[key] = value.value;
-			if(quantitative[this.name] != undefined){
-				var temp = quantitative[this.name];
-				if( Object.prototype.toString.call( temp ) === '[object Array]' ) {
-					temp.push(value.value);
-				} else{
-					var temp2 = new Array();
-					temp2.push(temp);
-					temp2.push(value.value);
-					temp = temp2;
-				}
-				quantitative[this.name] = temp;
-			} else{
-				quantitative[this.name] = this.value;
-			}
-			// console.log(quantitative);
-		});
-		
-		$(".qualitativeQuestion").each(function(index, value){
-			qualitatives[this.name] = value.value;
-			// console.log(qualitatives);
-		});
-		
-		$(".questionLabel").each(function(index, value){
-			console.log(this);
-			var n = this.getAttribute("name");
-			// var v = this.getAttribute("data-question-label"); //this also works. choose
-			questions[n] = this.innerHTML;
-			console.log(questions);
-		});
-		
-		options.questions = questions;
-		options.qualitatives = qualitatives;
-		options.quantitative = quantitative;
-		
-		
-		
-		
-		
-		
-    // // get all the inputs into an array.
-    // var $inputs = $('#myForm :input');
+	"change #feedbackSearchType" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+		var feedbackType = document.getElementById("feedbackSearchType").value;
+		 console.log(feedbackType + " feedbackType");
+		 Session.set('classFeedbackType', feedbackType);
+		 //set some session variable???
 
-    // // not sure if you wanted this, but I thought I'd add it.
-    // // get an associative array of just the values.
-    // var values = {};
-    // $inputs.each(function() {
-        // values[this.name] = $(this).val();
-    // });
+	},
+
+	"click #addFeedbackClassButton" : function(e) {
+		e.preventDefault();
+		var feedbackType = document.getElementById("feedbackSearchType").value;
+		var feedbackTemplate = document.getElementById("feedbackTemplateType").value;
+        
+		var a = Groups.findOne({_id:this._id});
+
+        if (feedbackType==="Trainer"){
+			var classCFTType = Groups.findOne({_id:this._id}).courseTrainers;
+        } else if(feedbackType === "Facility"){
+			var classCFTType = Groups.findOne({_id:this._id}).venue;
+        }else{
+			var classCFTType = Groups.findOne({_id:this._id}).courseCode;
+        }
+		console.log(classCFTType);
+		Meteor.call("createFeedbackResults", feedbackTemplate, this._id, classCFTType);
+
+
+	}
+
+});
+
+
+// Template.addFeedback.events({
+// 	"submit #feedbackFormadt" : function submitFeedbackFormadtHandler(e) {
+// 		e.preventDefault();
+// 		// console.log(e);
+// 		var options = new Object();
+		
+// 		// options.quantitative = new Array();
+// 		// options.qualitatives = new Array();
+		
+// 		quantitative = new Object();
+// 		qualitatives = new Object();
+// 		questions = new Object();
+		
+// 		// console.log($(".qualitativeQuestion"));
+		
+// 		$(".quantitativeQuestion").each(function(index, value){
+// 			// console.log(index);
+// 			// console.log(value);
+// 			// console.log(value.value);
+// 			// console.log(value.nextSibling);
+// 			// var key = value.nextSibling.innerHTML.toString();
+// 			// console.log(key);
+// 			// quantitative[key] = value.value;
+// 			if(quantitative[this.name] != undefined){
+// 				var temp = quantitative[this.name];
+// 				if( Object.prototype.toString.call( temp ) === '[object Array]' ) {
+// 					temp.push(value.value);
+// 				} else{
+// 					var temp2 = new Array();
+// 					temp2.push(temp);
+// 					temp2.push(value.value);
+// 					temp = temp2;
+// 				}
+// 				quantitative[this.name] = temp;
+// 			} else{
+// 				quantitative[this.name] = this.value;
+// 			}
+// 			// console.log(quantitative);
+// 		});
+		
+// 		$(".qualitativeQuestion").each(function(index, value){
+// 			qualitatives[this.name] = value.value;
+// 			// console.log(qualitatives);
+// 		});
+		
+// 		$(".questionLabel").each(function(index, value){
+// 			console.log(this);
+// 			var n = this.getAttribute("name");
+// 			// var v = this.getAttribute("data-question-label"); //this also works. choose
+// 			questions[n] = this.innerHTML;
+// 			console.log(questions);
+// 		});
+		
+// 		options.questions = questions;
+// 		options.qualitatives = qualitatives;
+// 		options.quantitative = quantitative;
 		
 		
 		
-		// Session.set("option", options);
-		console.log(options);
-		Meteor.call("createFeedback", options);
-	}, 
+		
+		
+		
+//     // // get all the inputs into an array.
+//     // var $inputs = $('#myForm :input');
+
+//     // // not sure if you wanted this, but I thought I'd add it.
+//     // // get an associative array of just the values.
+//     // var values = {};
+//     // $inputs.each(function() {
+//         // values[this.name] = $(this).val();
+//     // });
+		
+		
+		
+// 		// Session.set("option", options);
+// 		console.log(options);
+// 		Meteor.call("createFeedback", options);
+// 	}, 
 	
-	"submit #feedbackForm" : function submitFeedbackFormHandler(e, t) {
-		e.preventDefault();
-		options = {};
-		options.qnID = 
-		options.courseID = 
-		options.trainerID = 
-		options.facilityID = 
-		options.response.studentID = 
-		options.response.response = 
-		Meteor.call("upsertFeedback", options);
-/*
+// 	"submit #feedbackForm" : function submitFeedbackFormHandler(e, t) {
+// 		e.preventDefault();
+// 		options = {};
+// 		options.qnID = 
+// 		options.courseID = 
+// 		options.trainerID = 
+// 		options.facilityID = 
+// 		options.response.studentID = 
+// 		options.response.response = 
+// 		Meteor.call("upsertFeedback", options);
 
+// 	}
+// });
+
+
+/*
 editTitleFeedback	//Title of survey
 saveSurvey //button to save survey to db
 launchSurvey //button to save survey to db and launch it (set status to active)
 
 
 feedbackAnswer{
-	qnID: (link to the qnID)
-	courseID: 
-	trainerID: [If evaluating trainer]
-	facilityID: [If evaluating facility]
-	Response: [
-		studentID:
-		response:
+	feedbackTemplate: (link to the feedbackID)
+	courseID:
+	class:
+	trainer/facility ID: 
+	qnOption: [
+		qnID:
+		lspQnId:
+		// options:[
+		// 	optionsTitle:
+		// 	total: 
+		// 	(eg. optionTitle:hey, total: 10)
+		// ]
+		Response:[
+			studentID:
+			response: (optionTitle)
+
+		]
+		
 	]
 }
-
 */
-	}
-});
-
-// Template.addTrainer.helpers({
-	// "times" : function listCourseEventHandler(e) {
-		// Session.set('times', 0);
-	// }
-// });

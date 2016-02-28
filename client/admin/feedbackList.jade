@@ -31,7 +31,6 @@ template(name="feedbackList")
                     th Title
                     th Type
                     th Details
-                    th Results
                     th Remarks
                 tbody
                   each survey
@@ -42,8 +41,30 @@ template(name="feedbackList")
                         a(href="feedbackQnMgmt?fbid=#{_id}", class="button btn admin-btn") 
                             | Edit Feedback
                       td 
-                        a(href="course?cCode=#{courseCode}&cgrpNum=#{grpNum}", class="button btn admin-btn") 
-                            | View Results
+                        button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteFeedback#{_id}")
+                          | Delete
+                        +deleteFeedback 
+
+    
+          .panel-body
+            h4 Launched Feedback Details
+          
+            .table-responsive
+              table#dataTables-example.table.table-striped.table-bordered
+                thead
+                  tr
+                    th Title
+                    th Type
+                    th Details
+                    th Remarks
+                tbody
+                  each launchedSurvey
+                    tr
+                      td #{feedbackTitle}  
+                      td #{feedbackType}   
+                      td
+                        a(href="viewFeedbackSurvey?fbid=#{_id}", class="button btn admin-btn") 
+                            | View Feedback
                       td 
                         button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteFeedback#{_id}")
                           | Delete

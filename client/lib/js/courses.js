@@ -63,6 +63,17 @@ Template.viewCourseForm.helpers({
 	}
 });
 
+Template.addClassForm.helpers({
+
+	"cCourse" : function(e) {
+		// var currentCode = Session.get('currentCourseCode');
+		// var currentCourse = Courses.find({courseCode:currentCode}).fetch();
+		//console.log(currentCode + " current codes bitch");
+		//console.log(currentCourse);
+		return Courses.find({});
+	}
+});
+
 Template.course.onRendered(function(e){
 	var url =  window.location.href;
 	var positionFirstEqual = url.indexOf('=');	

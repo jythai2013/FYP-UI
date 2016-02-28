@@ -24,7 +24,7 @@ template(name="classList")
               table#dataTables-example.table.table-striped.table-bordered
                 tbody
                   tr
-                    th Search  
+                    th Course  
                     td 
                       input.form-control(type="text", id="courseCode", placeholder="eg. IS101 or Workplace Safety and Health")
                       
@@ -57,7 +57,7 @@ template(name="classList")
                 tbody
                   each classes
                     tr
-                      td #{courseCode}  
+                      td #{classCourseCode}  
                       td #{grpNum}  
                       td #{startDate}  
                       td #{endDate}  
@@ -85,79 +85,81 @@ template(name="addClassForm")
               tbody
                 tr
                   th Course Code
-                  td(colspan="3") #{courseCode}
+                  td(colspan="3") 
                     .form-group
-                      input.form-control(type="hidden", id="gCourseCode", value="#{courseCode}")
+                      select(name="courseCode", id="classListCourseCode", style="color: black")
+                        each cCourse
+                          option(value="#{_id}") #{courseName} 
                 tr
                   th Session Timing  
                   td(colspan="3") 
-                    input(type="time", id="gNewStartTime", style="width:40%; color:black") 
+                    input(type="time", id="classListNewStartTime", style="width:40%; color:black") 
                     | TO 
-                    input(type="time", id="gNewEndTime", style="width:40%; color:black")
+                    input(type="time", id="classListNewEndTime", style="width:40%; color:black")
                 tr  
                   th Days
                   td 
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Monday", name="day")
+                        input(type="checkbox", value="Monday", name="classListday")
                         | Monday
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Tuesday", name="day")
+                        input(type="checkbox", value="Tuesday", name="classListday")
                         | Tuesday
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Wednesday", name="day")
+                        input(type="checkbox", value="Wednesday", name="classListday")
                         | Wednesday
                 tr
                   th  
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Thursday", name="day")
+                        input(type="checkbox", value="Thursday", name="classListday")
                         | Thursday
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Friday", name="day")
+                        input(type="checkbox", value="Friday", name="classListday")
                        | Friday
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Saturday", name="day")
+                        input(type="checkbox", value="Saturday", name="classListday")
                         | Saturday
                
                 tr
                   th Duration (Date)
                   td(colspan="3")
-                    input(type="date", id="gNewStartDate", style="color:black; width: 40%")
+                    input(type="date", id="classListNewStartDate", style="color:black; width: 40%")
                     | TO
-                    input(type="date", id="gNewEndDate", style="color:black; width: 40%")
+                    input(type="date", id="classListNewEndDate", style="color:black; width: 40%")
                 tr 
                   th Payment Deadline
                   td(colspan="3")
                     .form-group
-                      input.form-control(type="date", id="gNewDeadline")
+                      input.form-control(type="date", id="classListNewDeadline")
                 tr
                   th Venue
                   td 
                     .form-group
-                      select(name="type", id="gVenue", style="color: black")
-                        each facilitiesList
+                      select(name="type", id="classListVenue", style="color: black")
+                        each facilitiesList1
                           option(value="#{fac}") #{fac}
                 tr  
                   th Trainers
                   td
                     .form-group.input-group
-                      select(name="type", id="gTrainers", style="color: black")
-                        each courseTrainers
-                          option(value="#{_id}") {{.}}
+                      select(name="type", id="classListTrainers", style="color: black")
+                        each courseTrainers1
+                          option(value="#{_id}") {{fullName}}
                     
           // /.table-responsive
         .modal-footer
-          button#addGroupButton.btn.btn-save(type="button", data-dismiss="modal") Add Class
+          button#addGroupFormButton.btn.btn-save(type="button", data-dismiss="modal") Add Class
       // /.modal-content
     // /.modal-dialog
   // /.modal

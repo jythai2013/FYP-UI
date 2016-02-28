@@ -1,8 +1,16 @@
 Template.classList.helpers({
 
-	"classes" : function listCourseEventHandler(e) {
+	"classes" : function (e) {
+		console.log(Groups.find({}).fetch());
+
 		return Groups.find({});
-	}
+	},
+
+    "classCourseCode" : function(e) {
+        console.log("classCourseTitle");
+		console.log(this);
+        return Courses.findOne({_id:this.courseCode}).courseName;
+    }
 });
 
 function getParameterByName(name) {
@@ -42,12 +50,9 @@ Template.group.helpers({
 Template.group.helpers({
 
     "noOfDays" : function(e) {
-        //var currentCourse = Session.get('currentCourseCode');
-
 		var courseGrp =  window.location.href;
 		
 		var positionFirstEqual = courseGrp.indexOf('=');
-		//problem starts here
 		//extracting course
 		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
 		var positionOfAND = courseGrp.indexOf('&');
@@ -65,10 +70,25 @@ Template.group.helpers({
 		console.log(a);
 
         return Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).days;
+    },
+
+    "classCourseTitle" : function(e) {
+        console.log("classCourseTitle");
+		console.log(this);
+        return Courses.findOne({_id:this.courseCode}).courseName;
+    },
+
+    "feedbackClass" : function(e) {
+        console.log("feedbackClass");
+        var fb =  FeedbackAnswers.find({groupID:this._id}).count();
+		console.log(fb);
+		// var fbArray = new Array();
+		// fb.forEach(function(curr,ind,arr){
+		// 	fbArray.push(Meteor.users.findOne({_id:curr}));
+		// });
+		//return fb;
     }
 });
-
-
 
 
 Template.course.onRendered(function(){
@@ -92,9 +112,37 @@ Template.course.helpers({
 
 Template.addClass.helpers({
 
-    "facilitiesList" : function listFacilitiesEventHandler(e) {
-        
-        return Facilities.find({});
+    "facilitiesList" : function(e) {
+        return Facilities.find({}).fetch();
+    },
+
+    "courseTrainers" : function(e) {
+        console.log ("facilitiesList");
+        return Facilities.find({}).fetch();
+    }
+});
+
+Template.addClassForm.helpers({
+
+    "facilitiesList1" : function(e) {
+        return Facilities.find({}).fetch();
+    },
+
+    "courseTrainers1" : function(e) {
+        var courseCode = Session.get("classListCourseCode");
+		console.log(courseCode);
+
+		// var a =  Courses.findOne({_id:courseCode});
+		var a =  Courses.findOne({_id:courseCode}).courseTrainers;
+		console.log(a);
+		var trainersArr = new Array();
+		for(var x = 0, l = a.length; x < l;  x++){
+			var entry = a[x].trainerID;
+			var trainer = Meteor.users.findOne({_id:entry});
+			trainersArr.push(trainer);
+    	}
+
+		return trainersArr;
     }
 });
 
@@ -309,6 +357,89 @@ Template.viewCourseForm.events({
 		Session.set('currentCourseGroup', this.courseCode);
 		  //modal.find('.modal-title').text('New message to ' + recipient)
 		  //modal.find('.modal-body input').val(recipient)
+	}
+});
+
+
+
+Template.addClassForm.events({
+
+	"change #classListCourseCode" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+		 console.log(" qn type course code");
+		var courseCode = document.getElementById("classListCourseCode").value;
+		 console.log(courseCode + " courseCode");
+		 Session.set('classListCourseCode', courseCode);
+		 //set some session variable???
+
+	},
+	"click #addGroupFormButton" : function(e) {
+		 console.log("in client");
+		var obj = new Object();
+
+		//TODO: Validation of input
+		obj.courseCode = document.getElementById("classListCourseCode").value;
+		obj.startTime = document.getElementById("classListNewStartTime").value;
+		obj.endTime = document.getElementById("classListNewEndTime").value;
+
+		var str =  window.location.href;
+		var position = str.indexOf('=');		
+		var currentCourse=str.substr(position+1);
+		console.log("it all starts here > " + currentCourse);
+
+		var courseObject =  Courses.findOne({courseCode:currentCourse});
+		console.log("HERE >>> " + courseObject);
+
+
+
+		// var courseObject =  Courses.findOne({courseCode:currentCourse});
+		// var gNoOfHours =  Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
+		// console.log(gNoOfHours + " number of Hours");
+		var days = document.getElementsByName("classListday");
+		/*
+		days[0-5]
+		days[0].value = "monday"
+		days[0].checked = true
+		*/
+		// console.log((days));
+		days = Array.prototype.slice.call(days);
+		// console.log((days));
+		// console.log(Array.isArray(days));
+		days2 = new Array();
+		days.forEach(function(curr, ind, arr){
+			if(curr.checked) days2.push(curr.value.toLowerCase());
+		});
+		obj.days = days2;
+		console.log(days);
+		console.log(obj);
+		// var gdaysArr = new Array();
+		// for(var x = 0, l = days.length; x < l;  x++){
+			// // console.log(days[x].value + " DAYS");
+			// if (days[x].checked){
+			  // gdaysArr.push(days[x].value);
+			// }
+		// }
+
+		obj.startDate = document.getElementById("classListNewStartDate").value;
+		obj.endDate = document.getElementById("classListNewEndDate").value;
+		obj.venue = document.getElementById("classListVenue").value;
+		var trainId = document.getElementById("classListTrainers").value;
+		obj.courseTrainers = {trainerId: trainId};
+		// var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
+		// var trainerLastName = Meteor.users.findOne(trainerID).lastName;
+		// var gTrainers = trainerFirstName + " " + trainerLastName;
+
+		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
+		console.log("What is this? : " + currentCourse);
+		var grpNumI2 = grpNumI1+1;
+		obj.grpNum = "G"+grpNumI2;
+
+		console.log("here4");
+		console.log(obj);
+		Meteor.call("createGroup",obj);
+		console.log("here4again");
+
 	}
 });
 

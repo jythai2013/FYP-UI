@@ -39,8 +39,30 @@ Meteor.methods({
 			Feedback.insert({
 				feedbackTitle: title,
 				feedbackType: type,
-				qnSize: size
+				qnSize: size,
+				status: "editting"
 			});
+		
+	},
+	
+	"createFeedbackResults":function(fbTemplateID, groupID, classCFTType){
+		console.log("in server");
+		FeedbackAnswers.insert({
+			feedbackTemplateID: fbTemplateID,
+			groupID: groupID,
+			assessedOn: classCFTType
+		});
+		
+	},
+	
+	"launchSurvey":function(_id){
+		console.log("in server");
+		Feedback.update(_id, {
+	        $set: {
+	          status: "launched"
+	        }
+	        
+      	});
 		
 	},
 

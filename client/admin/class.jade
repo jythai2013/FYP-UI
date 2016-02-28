@@ -2,7 +2,7 @@ template(name="group")
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header #{courseCode} #{grpNum}
+        h1.page-header #{classCourseTitle} #{grpNum}
       // /.col-lg-12
     // /.row
     .row
@@ -20,12 +20,12 @@ template(name="group")
                 tbody
                   tr
                     th Course
-                    td #{courseCode}
+                    td #{classCourseTitle}
                   tr
                     th Venue
                     td #{venue}
                   tr
-                    th No. of Sessions(s)
+                    th No. of Hour(s)
                     td #{noOfSessions}
                   tr
                     th Timing
@@ -74,6 +74,29 @@ template(name="group")
                         input(type="button", value="Assessment")
                       td 
                         input(type="button", value="Remove Student")
+                 
+
+            p.breakH4
+            h4 Feedback Management
+              button.btn.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addFeedback" style="margin-top: -1%;  background: #333; color:#fff")
+                i.fa.fa-plus  
+                | Feedback 
+              +addFeedback
+            .table-responsive
+              table#dataTables-example.table.table-bordered.table-hover
+                tbody
+                  tr
+                    th Title
+                    th Type
+                    th Assessed on
+                    th Results
+                  each feedbackClass
+                    tr
+                      td #{this.feedbackTemplateID}
+                      td #{feedbackTemplateID}
+                      td #{assessedOn}
+                      td 
+                        input(type="button", value="View Results")
                  
             // /.table-responsive
             // /.row
@@ -185,6 +208,37 @@ template(name="addStudent")
           // /.table-responsive
         .modal-footer
           button#addStudentButton.btn.btn-save(type="button", data-dismiss="modal") Add 
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+template(name="addFeedback")
+  #addFeedback.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add New Feedback
+        .modal-body
+            tr
+              th Type  
+              td(colspan="2")
+                .form-group()
+                    select(id="feedbackSearchType", style="color: black")
+                      option(value="Course") Course
+                      option(value="Facility") Facility
+                      option(value="Trainer") Trainer  
+            tr 
+              th Feedback Name
+              td(colspan="2")
+                .form-group()
+                  select(id="feedbackTemplateType", style="color: black; width: 100%")
+                    each feedbackTemplateType
+                      option(value="#{_id}") #{feedbackTitle}    
+              
+          // /.table-responsive
+        .modal-footer
+          button#addFeedbackClassButton.btn.btn-save(type="button", data-dismiss="modal") Add 
       // /.modal-content
     // /.modal-dialog
   // /.modal
