@@ -2,7 +2,7 @@ template(name="group")
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header #{classCourseTitle} #{grpNum}
+        h1.page-header #{courseCode} #{grpNum}
       // /.col-lg-12
     // /.row
     .row
@@ -20,7 +20,7 @@ template(name="group")
                 tbody
                   tr
                     th Course
-                    td #{classCourseTitle}
+                    td #{courseCode}
                   tr
                     th Venue
                     td #{venue}
@@ -92,8 +92,8 @@ template(name="group")
                     th Results
                   each feedbackClass
                     tr
-                      td #{this.feedbackTemplateID}
-                      td #{feedbackTemplateID}
+                      td #{this.fbTitle}
+                      td #{fbType}
                       td #{assessedOn}
                       td 
                         input(type="button", value="View Results")

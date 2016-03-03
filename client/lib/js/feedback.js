@@ -94,7 +94,6 @@ Template.viewFeedbackSurvey.helpers({
 	},
 
 	"viewFeedbackQns1": function() {
-		//Session.set('currentfb', currentfb);	
 		var fbId = Session.get("currentViewingfb");
 		console.log(fbId);
 		//console.log(fbId);
@@ -248,7 +247,8 @@ Template.feedbackQnMgmt.events({
 	},
 
 	"click #saveFeedback" : function(e) {
-		//
+		var arr = $("div .subtemplate-wrapper");
+		console.log(arr);
 	},
 
 	"click #editTitle" : function(e) {

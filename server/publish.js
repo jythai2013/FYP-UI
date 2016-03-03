@@ -44,6 +44,11 @@ Meteor.publish('feedbackData',function() {
 		return Feedback.find({});
 });
 
+Meteor.publish('feedbackAnswersData',function() {
+		// if(!this.userId) return null;
+		return FeedbackAnswers.find({});
+});
+
 Meteor.publish('questionData',function() {
 		// if(!this.userId) return null;
 		return FeedbackQuestions.find({});

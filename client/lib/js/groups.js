@@ -72,21 +72,34 @@ Template.group.helpers({
         return Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).days;
     },
 
-    "classCourseTitle" : function(e) {
-        console.log("classCourseTitle");
-		console.log(this);
-        return Courses.findOne({_id:this.courseCode}).courseName;
-    },
-
     "feedbackClass" : function(e) {
         console.log("feedbackClass");
-        var fb =  FeedbackAnswers.find({groupID:this._id}).count();
-		console.log(fb);
-		// var fbArray = new Array();
-		// fb.forEach(function(curr,ind,arr){
-		// 	fbArray.push(Meteor.users.findOne({_id:curr}));
-		// });
-		//return fb;
+        var fbCount = FeedbackAnswers.find({groupID:this._id}).count();
+		console.log(fbCount);
+		var fb = FeedbackAnswers.find({groupID:this._id});
+		var fbArray = new Array();
+		
+		fb.forEach(function(entry) {
+			var obj = new Object();
+			var fbTemplateID = entry.feedbackTemplateID;
+			obj.fbTitle= Feedback.findOne({_id:fbTemplateID}).feedbackTitle;
+			obj.fbType= Feedback.findOne({_id:fbTemplateID}).feedbackType;
+			var feedbackType = Feedback.findOne({_id:fbTemplateID}).feedbackType;
+			var groupID = entry.groupID;
+			
+			if(feedbackType === "Course"){
+				obj.assessedOn = Groups.findOne({_id:groupID}).courseCode;
+			} else if (feedbackType === "Facilty"){
+				obj.assessedOn = Groups.findOne({_id:groupID}).venue;
+			} else{
+				var courseTrainers = Groups.findOne({_id:groupID}).courseTrainers;
+				obj.assessedOn = courseTrainers[0];
+
+			}
+			fbArray.push(obj);
+		});
+		console.log(fbArray);
+		return fbArray;
     }
 });
 
