@@ -271,9 +271,19 @@ Template.feedbackQnMgmt.events({
 		Meteor.call("editFeedbackDetails", fbId, newTitle, newType);
 
 		 Session.set('statusTitle', "notEditting");
+	},
+	"click #launchSurvey" : function(e) {
+		
+		var url =  window.location.href;
+    		console.log(url+ " url")
+		var positionEqual = url.indexOf('=');	
+		var fbId=url.substring(positionEqual+1);
+
+		Meteor.call("launchSurvey", fbId); 
 	}
 
 });
+
 
 Template.createQn.events({
 	"click #saveQn" : function(e) {
@@ -687,19 +697,95 @@ Template.addFeedback.events({
 		var a = Groups.findOne({_id:this._id});
 
         if (feedbackType==="Trainer"){
-			var classCFTType = Groups.findOne({_id:this._id}).courseTrainers;
+			var classCFTType = Groups.findOne({_id:this._id}).courseTrainers.trainerId;
         } else if(feedbackType === "Facility"){
 			var classCFTType = Groups.findOne({_id:this._id}).venue;
         }else{
 			var classCFTType = Groups.findOne({_id:this._id}).courseCode;
         }
-		console.log(classCFTType);
-		Meteor.call("createFeedbackResults", feedbackTemplate, this._id, classCFTType);
 
+        console.log(classCFTType);
 
+		var thisFeedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
+		console.log(thisFeedbackQnOptions);
+
+		//i need to put in qnID, feedbackQn, lspQnId, options and the number associated with it. 
+
+		var fakeArray2 = new Array();
+		console.log(thisFeedbackQnOptions.count);
+		
+			for(i = 0; i < thisFeedbackQnOptions.length; i++){
+				var fakeArray = new Array();
+				var optionsNumber = new Array();
+				for(j = 0; j < thisFeedbackQnOptions[i].options.length; j++){
+					optionsNumber.push(0);
+				}
+				
+				console.log(thisFeedbackQnOptions[i].qnID + " qnID");
+				console.log(optionsNumber);
+
+				fakeArray.push(thisFeedbackQnOptions[i].qnID);
+				fakeArray.push(thisFeedbackQnOptions[i].feedbackQn);
+				fakeArray.push(thisFeedbackQnOptions[i].lspQnId);
+				fakeArray.push(optionsNumber);
+				fakeArray2.push(fakeArray);
+				
+			}
+			console.log (fakeArray2);
+
+		Meteor.call("createFeedbackResults", feedbackTemplate, this._id, classCFTType,fakeArray2);
 	}
 
 });
+
+
+
+Template.doFeedbackSurvey.onRendered(function(){
+  var currentfb = getParameterByName("fbid");
+  Session.set('currentDoingfb', currentfb);
+});
+
+Template.doFeedbackSurvey.helpers({
+
+	"viewFeedbackDetails1": function() {
+		var fbId=Session.get("currentDoingfb");
+
+		var feedbackTitle = Feedback.findOne({_id:fbId});
+    		console.log(feedbackTitle);
+    	return feedbackTitle;
+	},
+
+	"viewFeedbackQns2": function() {
+		var fbId = Session.get("currentDoingfb");
+		console.log(fbId);
+		//console.log(fbId);
+		//var fbId=Session.set('currentfb', currentfb);
+		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
+		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
+		 return feedbackQnOptions;
+	}
+
+});
+
+Template.doFeedbackSurvey.events({
+
+	"click #saveFeedbackAnswers" : function(e) {
+		e.preventDefault();
+		console.log("saving");
+	}	
+});
+
+
+// Template.doSurveyQn.events({
+
+// 	"click #qnAns" : function(e) {
+// 		e.preventDefault();
+// 		console.log(this);
+// 		var arr = new Array();
+
+
+// 	}	
+// });
 
 
 // Template.addFeedback.events({

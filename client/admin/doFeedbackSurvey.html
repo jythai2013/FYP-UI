@@ -1,0 +1,103 @@
+<template name="doFeedbackSurvey">
+    <div id="page-wrapper" style="min-height: 861px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"> Feedback Questions</h1>
+                
+                <div class="subtemplate-wrapper"> 
+                    <h3>  
+                        
+                        {{viewFeedbackDetails1.feedbackTitle}}
+
+                    </h3>
+
+
+                        <a class = "js-duplicate fb-button  btn pull-right" id="saveFeedbackAnswers">
+                            <i> Save</i>
+                        </a>
+
+                    Feedback Type: {{viewFeedbackDetails1.feedbackType}}
+                    
+
+                </div>
+            </div>
+        </div>
+        <div class='fb-main'>
+            <div class="fb-response-fields ui-sortable">
+                <div class="fb-field-wrapper response-field-file"> </div>
+                    {{#each viewFeedbackQns2}}
+
+                        {{> doSurveyQn feedbackDetails = this}}
+                    {{/each}}
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="doSurveyQn">
+<!--{{#each feedbackQns feedbackDetails = "y"}}-->
+    <div class="fb-field-wrapper response-field-text">
+        <div class="subtemplate-wrapper">
+                <label> <span class="a">{{feedbackDetails.feedbackQn}} </span></label>
+                {{#if equals feedbackDetails.qnType 'vtext'}}
+                    <label>
+                        <input  type="text" id="qnAns" value="Answer">   <abbr title="required">*</abbr>
+                    </label>
+                {{/if}}   
+                {{#if equals feedbackDetails.qnType 'paraText'}}
+                    <label>
+                        <textarea  type="text" id="qnAns" value="Answer"> </textarea>
+                    </label>
+                {{/if}}  
+                {{#if equals feedbackDetails.qnType 'radioButtons'}}
+                    <label class="fb-option">
+                        {{#each feedbackDetails.options}} 
+                            <input type="radio" id="qnAns" value="{{this}}"> {{this}} <br>
+                        {{/each}}      
+                    </label>
+                {{/if}}   
+                {{#if equals feedbackDetails.qnType 'radioButtonsInline'}}
+                
+                    <label class="fb-option">
+                        {{#each feedbackDetails.options}}  
+                            <label class="radio-inline">
+                              <input type="radio" id="qnAns" value="{{this}}"> {{this}} 
+                            </label>
+                        {{/each}}      
+                    </label>
+                {{/if}}  
+                {{#if equals feedbackDetails.qnType 'checkboxes'}}
+                    <label class="fb-option">
+                        {{#each feedbackDetails.options}} 
+                            <input type="checkbox" id="qnAns" value="{{this}}"> {{this}} <br>
+                        {{/each}}      
+                    </label>
+                {{/if}}  
+                {{#if equals feedbackDetails.qnType 'dropdown'}}
+                    <label class="fb-option">
+                        <select id="qnAns">
+                        {{#each feedbackDetails.options}} 
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}      
+                        </select>
+                    </label>
+                {{/if}}     
+
+                 
+                <div class="actions-wrapper">
+                    <a class = "js-save fb-button" id="saveFieldsEd">
+                        <i class = "fa fa-check-circle"></i>
+                    </a>
+                    <a class = "js-duplicate fb-button" id="addFields">
+                        <i class = "fa fa-plus-circle"></i>
+                    </a>
+                    <a class = "js-clear fb-button" id="deleteQnEd">
+                        <i class = "fa fa-minus-circle"></i>
+                    </a>
+                </div>      
+
+        </div>
+    </div>
+    <!--{{/each}}-->
+</template>

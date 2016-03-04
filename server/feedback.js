@@ -45,12 +45,16 @@ Meteor.methods({
 		
 	},
 	
-	"createFeedbackResults":function(fbTemplateID, groupID, classCFTType){
+	"createFeedbackResults":function(fbTemplateID, groupID, classCFTType, optionsArray){
 		console.log("in server");
+		// for 
+
+			
 		FeedbackAnswers.insert({
 			feedbackTemplateID: fbTemplateID,
 			groupID: groupID,
-			assessedOn: classCFTType
+			assessedOn: classCFTType,
+			options: optionsArray
 		});
 		
 	},
