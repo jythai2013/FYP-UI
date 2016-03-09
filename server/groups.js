@@ -1,6 +1,4 @@
-
-
-//TODO: shift this function to the file where a student is enrolled into a group
+//schedules checking of recommendations for a student when he finishes a course
 scheduleRecommender = function addTask(id, details) {
 	// console.log("addTask");
 	SyncedCron.add({
@@ -11,7 +9,8 @@ scheduleRecommender = function addTask(id, details) {
 		job: function() {
 			// console.log(details);
 			studentId = details.studentId;
-			studentFinishedCourseRecommender(studentId)
+			groupId = details.groupId;
+			studentFinishedCourseRecommender(studentId, )
 			FutureTasks.remove(id);
 			SyncedCron.remove(id);
 				return id;
@@ -19,6 +18,7 @@ scheduleRecommender = function addTask(id, details) {
 	});
 };
 
+//checks for differences between 2 arrays
 function arr_diff (a1, a2) {
     var a = [], diff = [];
     for (var i = 0; i < a1.length; i++) {
@@ -47,6 +47,7 @@ Meteor.methods({
 		details = {"studentId": user_id};
 		dateClassFinishes = Groups.findOne({_id:theGroup_id}).endDate;
 		details.date = dateClassFinishes	//TODO: Date when course finishes
+		details.groupId = theGroup_id;
 		var thisId = FutureTasks.insert(details);
 		scheduleRecommender(thisId, details);
 	},
@@ -64,6 +65,7 @@ Meteor.methods({
 			details = {"studentId": studentId};
 			dateClassFinishes = theGroup.endDate;
 			details.date = dateClassFinishes	//TODO: Date when course finishes
+			details.groupId = theGroup._id;
 			var thisId = FutureTasks.insert(details);
 			scheduleRecommender(thisId, details);
 		})
