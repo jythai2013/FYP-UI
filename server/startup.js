@@ -9,8 +9,8 @@ Meteor.startup(function() {
 	});
 	SyncedCron.start();
 	
-//if(Meteor.users.findOne({userType:{admin:true}}) == undefined){
-if(Meteor.users.findOne({username:"admin"}) == undefined){
+	//if(Meteor.users.findOne({userType:{admin:true}}) == undefined){
+	if(Meteor.users.findOne({username:"admin"}) == undefined){
 		var ust = new Object();
 		ust.admin = true;
 		var options = {username:"admin", email:"admin@sterling", password:"admin", userType:ust, mobileNo:987654321, fullName:"Elements Admin"};

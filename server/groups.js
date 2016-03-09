@@ -1,15 +1,72 @@
- Meteor.methods({ 
+
+
+//TODO: shift this function to the file where a student is enrolled into a group
+scheduleRecommender = function addTask(id, details) {
+	// console.log("addTask");
+	SyncedCron.add({
+		name: id,
+		schedule: function(parser) {
+			return parser.recur().on(details.date).fullDate();
+		},
+		job: function() {
+			// console.log(details);
+			studentId = details.studentId;
+			studentFinishedCourseRecommender(studentId)
+			FutureTasks.remove(id);
+			SyncedCron.remove(id);
+				return id;
+		}
+	});
+};
+
+function arr_diff (a1, a2) {
+    var a = [], diff = [];
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+    for (var k in a) {
+        diff.push(k);
+    }
+    return diff;
+};
+
+Meteor.methods({
 
   'pushStudentIdToGroupClasslist': function editGroup(theGroup_id, user_id){
 		// console.log(courseCode + " " + grpNum);
 		Groups.update({_id:theGroup_id},{$push:{classlist:user_id}});
 		// console.log(classlist);
+		
+		details = {"studentId": user_id};
+		dateClassFinishes = Groups.findOne({_id:theGroup_id}).endDate;
+		details.date = dateClassFinishes	//TODO: Date when course finishes
+		var thisId = FutureTasks.insert(details);
+		scheduleRecommender(thisId, details);
 	},
 	
   'updateGroupClasslist': function editGroup(courseCode, grpNum, classlist){
 		// console.log(courseCode + " " + grpNum);
 		Groups.update({courseCode:courseCode, grpNum:grpNum},{$set:{classlist:classlist}});
 		// console.log(classlist);
+		
+		theGroup = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
+		oldClasslist = theGroup.classlist;
+		studentsToSchedule = arr_diff(oldClasslist, classlist);
+		studentsToSchedule.forEach(function(student, index, arr){
+			studentId = student._id;
+			details = {"studentId": studentId};
+			dateClassFinishes = theGroup.endDate;
+			details.date = dateClassFinishes	//TODO: Date when course finishes
+			var thisId = FutureTasks.insert(details);
+			scheduleRecommender(thisId, details);
+		})
 	},
 
   'editGroup': function editGroup(_id, courseCodeI, grpNumI, dateTimeSessionI, startDateI,endDateI, studentListI, trainersI, gradesI, paymentDeadlineI, minI, maxI, attendanceI, statusI){
