@@ -10,7 +10,7 @@ scheduleRecommender = function addTask(id, details) {
 			// console.log(details);
 			studentId = details.studentId;
 			groupId = details.groupId;
-			studentFinishedCourseRecommender(studentId, )
+			studentFinishedCourseRecommender(studentId, groupId)
 			FutureTasks.remove(id);
 			SyncedCron.remove(id);
 				return id;

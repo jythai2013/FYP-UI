@@ -17,12 +17,15 @@ Meteor.methods({
 		
 //this method is called when a student is enrolled. (via addTask)
 studentFinishedCourseRecommender = function recommend(studentId, groupId){
+	theGroup = Groups.findOne({_id:groupId});
+	var courseId = theGroup.courseId;
+	theCourse = Courses.findOne({_id:courseId});
 	todaysDate = new Date();
 	var groupsThatHaventStarted = Groups.find({startDate: {$gt:todaysDate} }).fetch();
 	
 	
-	//TODO: genre
-	//TODO: check through each group that hasn't started. if it is the same genre as the latest course the student has just finished, recommend a few of the more popular ones if he also hasn't taken it
+	//genre
+	//check through each group that hasn't started. if it is the same genre as the latest course the student has just finished, recommend a few of the more popular ones if he also hasn't taken it
 	latestFinishedCourseGenre = undefined; //TODO:
 	potentialCoursesFromGenre = [];
 	groupsThatHaventStarted.forEach(function(thisGroup, ind, arr){
@@ -34,8 +37,8 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 	
 	
 	
-	//TODO: pre-requisite
-	//TODO: check through each group that hasn't started. if it has a pre-requisite that is the course the student has just finished, recommend.
+	//pre-requisite
+	//check through each group that hasn't started. if it has a pre-requisite that is the course the student has just finished, recommend.
 	latestFinishedCourseCode = undefined; //TODO:
 	potentialCoursesFromPrerequisite = [];
 	groupsThatHaventStarted.forEach(function(thisGroup, ind, arr){
@@ -47,7 +50,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 	
 	
 	
-	//TODO: classmates
+	//classmates
 	//TODO: recEngine. 
 	
 	
