@@ -81,6 +81,8 @@ Template.group.helpers({
 		
 		fb.forEach(function(entry) {
 			var obj = new Object();
+			// console.log(entry._id);
+			obj._id= entry._id;
 			var fbTemplateID = entry.feedbackTemplateID;
 			obj.fbTitle= Feedback.findOne({_id:fbTemplateID}).feedbackTitle;
 			obj.fbType= Feedback.findOne({_id:fbTemplateID}).feedbackType;

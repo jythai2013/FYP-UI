@@ -38,22 +38,22 @@
 <template name="doSurveyQn">
 <!--{{#each feedbackQns feedbackDetails = "y"}}-->
     <div class="fb-field-wrapper response-field-text">
-        <div class="subtemplate-wrapper">
+        <div class="subtemplate-wrapper" id="findmyans">
                 <label> <span class="a">{{feedbackDetails.feedbackQn}} </span></label>
                 {{#if equals feedbackDetails.qnType 'vtext'}}
                     <label>
-                        <input  type="text" id="qnAns" value="Answer">   <abbr title="required">*</abbr>
+                        <input  type="text" id="qnAns" name="qnAns" value="Answer">   <abbr title="required">*</abbr>
                     </label>
                 {{/if}}   
                 {{#if equals feedbackDetails.qnType 'paraText'}}
                     <label>
-                        <textarea  type="text" id="qnAns" value="Answer"> </textarea>
+                        <textarea  type="text" name="qnAns" id="qnAns" value="Answer"> </textarea>
                     </label>
                 {{/if}}  
                 {{#if equals feedbackDetails.qnType 'radioButtons'}}
                     <label class="fb-option">
                         {{#each feedbackDetails.options}} 
-                            <input type="radio" id="qnAns" value="{{this}}"> {{this}} <br>
+                            <input type="radio" name="qnAns" id="qnAns" value="{{this}}"> {{this}} <br>
                         {{/each}}      
                     </label>
                 {{/if}}   
@@ -62,7 +62,7 @@
                     <label class="fb-option">
                         {{#each feedbackDetails.options}}  
                             <label class="radio-inline">
-                              <input type="radio" id="qnAns" value="{{this}}"> {{this}} 
+                              <input type="radio" id="qnAns" name="qnAns" value="{{this}}"> {{this}} 
                             </label>
                         {{/each}}      
                     </label>
@@ -70,13 +70,13 @@
                 {{#if equals feedbackDetails.qnType 'checkboxes'}}
                     <label class="fb-option">
                         {{#each feedbackDetails.options}} 
-                            <input type="checkbox" id="qnAns" value="{{this}}"> {{this}} <br>
+                            <input type="checkbox" id="qnAns" name="qnAns" value="{{this}}"> {{this}} <br>
                         {{/each}}      
                     </label>
                 {{/if}}  
                 {{#if equals feedbackDetails.qnType 'dropdown'}}
                     <label class="fb-option">
-                        <select id="qnAns">
+                        <select id="qnAns" name="qnAns">
                         {{#each feedbackDetails.options}} 
                             <option value="{{this}}">{{this}}</option>
                         {{/each}}      
@@ -86,13 +86,13 @@
 
                  
                 <div class="actions-wrapper">
-                    <a class = "js-save fb-button" id="saveFieldsEd">
+                    <a class = "js-save fb-button" id="saveFieldsDo">
                         <i class = "fa fa-check-circle"></i>
                     </a>
                     <a class = "js-duplicate fb-button" id="addFields">
                         <i class = "fa fa-plus-circle"></i>
                     </a>
-                    <a class = "js-clear fb-button" id="deleteQnEd">
+                    <a class = "js-clear fb-button" id="deleteQnDo">
                         <i class = "fa fa-minus-circle"></i>
                     </a>
                 </div>      

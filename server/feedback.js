@@ -59,6 +59,20 @@ Meteor.methods({
 		
 	},
 	
+	"insertFeedbackResults":function(fbTemplateID, groupID, classCFTType, optionsArray){
+		console.log("in server");
+		// for 
+
+			
+		FeedbackAnswers.insert({
+			feedbackTemplateID: fbTemplateID,
+			groupID: groupID,
+			assessedOn: classCFTType,
+			options: optionsArray
+		});
+		
+	},
+	
 	"launchSurvey":function(_id){
 		console.log("in server");
 		Feedback.update(_id, {

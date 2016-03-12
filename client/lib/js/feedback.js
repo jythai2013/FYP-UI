@@ -35,6 +35,11 @@ Template.viewFeedbackSurvey.onRendered(function(){
   Session.set('currentViewingfb', currentfb);
 });
 
+Template.doFeedbackSurvey.onRendered(function(){
+  var currentfb = getParameterByName("fbidAns");
+  Session.set('currentDoingfb', currentfb);
+});
+
 Template.addFeedback.onRendered(function(){
 	// console.log($("input")[0]);
 	// console.log($("input"));
@@ -707,28 +712,34 @@ Template.addFeedback.events({
         console.log(classCFTType);
 
 		var thisFeedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
-		console.log(thisFeedbackQnOptions);
+		console.log(feedbackTemplate);
 
 		//i need to put in qnID, feedbackQn, lspQnId, options and the number associated with it. 
 
 		var fakeArray2 = new Array();
-		console.log(thisFeedbackQnOptions.count);
+		console.log(thisFeedbackQnOptions.length);
 		
 			for(i = 0; i < thisFeedbackQnOptions.length; i++){
 				var fakeArray = new Array();
-				var optionsNumber = new Array();
+				// var optionsNumber = new Array();
+				// var object = new Object();
+				var obj = new Object();
+					console.log(thisFeedbackQnOptions[i].options.length + "inforloop");
 				for(j = 0; j < thisFeedbackQnOptions[i].options.length; j++){
-					optionsNumber.push(0);
+					fakeArray.push(0);
+					// object.thisFeedbackQnOptions[i].options[j] = 0;
+					// console.log(object.qnOption);
+					// optionsNumber.push(0);
 				}
 				
 				console.log(thisFeedbackQnOptions[i].qnID + " qnID");
-				console.log(optionsNumber);
+				// console.log(optionsNumber);
 
-				fakeArray.push(thisFeedbackQnOptions[i].qnID);
-				fakeArray.push(thisFeedbackQnOptions[i].feedbackQn);
-				fakeArray.push(thisFeedbackQnOptions[i].lspQnId);
-				fakeArray.push(optionsNumber);
-				fakeArray2.push(fakeArray);
+				obj.qnID = thisFeedbackQnOptions[i].qnID;
+				obj.feedbackQn = thisFeedbackQnOptions[i].feedbackQn;
+				obj.lspQnId = thisFeedbackQnOptions[i].lspQnId;
+				obj.options = fakeArray;
+				fakeArray2.push(obj);
 				
 			}
 			console.log (fakeArray2);
@@ -740,17 +751,19 @@ Template.addFeedback.events({
 
 
 
-Template.doFeedbackSurvey.onRendered(function(){
-  var currentfb = getParameterByName("fbid");
-  Session.set('currentDoingfb', currentfb);
-});
-
 Template.doFeedbackSurvey.helpers({
 
 	"viewFeedbackDetails1": function() {
 		var fbId=Session.get("currentDoingfb");
+		console.log(fbId);
+		var url =  window.location.href;
+		
+		var positionFirstEqual = url.indexOf('=');		
+		var fbId=url.substr(positionFirstEqual+1);	
+		console.log(fbId);
+		var feedbackTemplateID = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
 
-		var feedbackTitle = Feedback.findOne({_id:fbId});
+		var feedbackTitle = Feedback.findOne({_id:feedbackTemplateID});
     		console.log(feedbackTitle);
     	return feedbackTitle;
 	},
@@ -758,11 +771,14 @@ Template.doFeedbackSurvey.helpers({
 	"viewFeedbackQns2": function() {
 		var fbId = Session.get("currentDoingfb");
 		console.log(fbId);
-		//console.log(fbId);
 		//var fbId=Session.set('currentfb', currentfb);
-		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
+		console.log(feedbackTemplate);
+		var feedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
 		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
 		 return feedbackQnOptions;
+		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
+		 // return feedbackQnOptions;
 	}
 
 });
@@ -771,21 +787,52 @@ Template.doFeedbackSurvey.events({
 
 	"click #saveFeedbackAnswers" : function(e) {
 		e.preventDefault();
-		console.log("saving");
+		// var fbId = Session.get("currentDoingfb");
+		// console.log(fbId);
+		//var fbId=Session.set('currentfb', currentfb);
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:this._id}).feedbackTemplateID;
+		var feedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
+		console.log(feedbackQnOptions.length);
+		for (var i = 0, l = feedbackQnOptions.length; i < l; i++)
+    	{
+	        var ans = Session.get(feedbackQnOptions[i].feedbackQn);
+	        console.log(ans);
+	        console.log(feedbackQnOptions[i].options.length);
+	        for (var j = 0, l = feedbackQnOptions[i].options.length; j < l; j++)
+    		{
+    			if(feedbackQnOptions[i].options[j] === ans){
+    				console.log("here");
+    				FeedbackAnswers.findOne({_id:feedbackTemplate});
+    			}
+    		}	
+    	}
+
+		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
+		 // return feedbackQnOptions;
 	}	
 });
 
 
-// Template.doSurveyQn.events({
-
-// 	"click #qnAns" : function(e) {
-// 		e.preventDefault();
-// 		console.log(this);
-// 		var arr = new Array();
-
-
-// 	}	
-// });
+Template.doSurveyQn.events({
+	"change #findmyans" : function(e) {
+		e.preventDefault();
+		console.log(this);
+		console.log(this.feedbackDetails.feedbackQn);
+		var answers = new Array()
+		var elements  = document.getElementsByName("qnAns");
+		for (var i = 0, l = elements.length; i < l; i++)
+    	{
+	        if (elements[i].checked)
+	        {
+	            console.log (elements[i].value);
+	            answers.push(elements[i].value);
+	        }
+    	}
+    	var qn  = this.feedbackDetails.feedbackQn;
+    	console.log(qn);
+    	Session.set(qn, answers);
+	}	
+});
 
 
 // Template.addFeedback.events({
