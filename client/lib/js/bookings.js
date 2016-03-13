@@ -56,7 +56,15 @@ Template.bookingFacilityForm.events({
     InumSessions = document.getElementById("facNumSessionSearch").value;
     var startDateTimeI = document.getElementById("input_time_beginning").value;
     var endinDateTimeI = document.getElementById("input_time_end").value;
-    // repeatOption = document.getElementById("facRepeatOptionSearch").value;
+    repeatOption = []
+ 
+    var inputElements = document.getElementsByClassName('messageCheckbox');
+    for(var i=0; inputElements[i]; ++i){
+      if(inputElements[i].checked){
+           repeatOption.push(inputElements[i].value);
+      }
+    }
+
     var e = document.getElementById("courseId");
     var courseI = e.options[e.selectedIndex].value;
     
@@ -68,7 +76,7 @@ Template.bookingFacilityForm.events({
     Session.set("facTypeSearch", IfacType);
     Session.set("facCapacitySearch", Icapacity);
     Session.set("facNumSessionSearch", InumSessions);
-    // Session.set("facReapeatOptionSearch", repeatOption);
+    Session.set("facReapeatOptionSearch", repeatOption);
     Session.set("facStartDateTimeSearch", startDateTime);
     Session.set("facEndinDateTimeSearch", endinDateTime);
     Session.set("courseSearch", courseI);
@@ -319,105 +327,158 @@ function getDatesFromRepeat(){
   console.log(startDateTime);
   console.log("endDateTime is printing:");
   console.log(endinDateTime);
-  var temp1 = new Date();
-      temp1.setHours(startDateTime.getHours());
-      temp1.setMinutes(startDateTime.getMinutes());
-  var temp2 = new Date();
-      temp2.setHours(endinDateTime.getHours());
-      temp2.setMinutes(endinDateTime.getMinutes());
-  var duration  = temp2 - temp1
-  var oneDay = 24*60*60*1000;
+
+  // var temp1 = new Date();
+  //     temp1.setHours(startDateTime.getHours());
+  //     temp1.setMinutes(startDateTime.getMinutes());
+  // var temp2 = new Date();
+  //     temp2.setHours(endinDateTime.getHours());
+  //     temp2.setMinutes(endinDateTime.getMinutes());
+  // var duration  = temp2 - temp1
+  // var oneDay = 24*60*60*1000;
   
-  
-  //first timeslot
-  results = new Array();
-  var firstSlot = new Object();
-  firstSlot.start = new Date(startDateTime);
-  firstSlot.end = new Date(endinDateTime);
+  var timeSlot = new Object();
+  var repeat = [];
+  var result = [];
+  start = new Date(startDateTime);
+  end = new Date(endinDateTime);
+
+  startTimeString = start.hour() + ':' + start.minutes();
+  endTimeString = end.hour() + ':' + end.minutes();
+  startTime = moment(startTimeString, "hh:mm a");
+  endTime = moment(endTimeString, "hh:mm a");
+  duration = endTime.diff(startTime, 'hours');
+
+  firstSlot.start = new Date(moment(startDateTime));
+  firstSlot.end = new Date(moment().date(startDateTime).hour(endinDateTimeI).minute(endinDateTimeI));
   results.push(firstSlot);
   
-  //subsequent timeslots
   var timeSlot = new Object();
+  if(repeatOptions.length != 0){
+  
+    for (var i = 0; i < repeatOptions.length; i ++){
+      repeat.push(repeatOptions[i]);
+    }
+
+    var counter = 0;
+    var currentPoint = start
+
+    for (var i = 0; i < repeatOptions; i++){
+      for(var j = 0; j < InumSessions; j++){
+        if(start < end && counter <=InumSessions){
+          if (repeatOptions[i] > start.isoWeekday()){
+
+            date = currentPoint
+            newStart = moment(date).add(1, "week").isoWeekday(repeatOptions[i]);
+            newStartEnd = moment(newStart).add(duration, 'hours');
+            timeSlot.start = newStart;
+            timeSlot.end = newStartEnd;
+            result.push(timeSlot);
+            counter+=1
+          } else {
+            counter+=1;
+          }
+          
+        } else {
+          break;
+        }
+
+      }
+    }  
+
+  }
+};  
+
+  
+//   //first timeslot
+//   results = new Array();
+//   var firstSlot = new Object();
+//   firstSlot.start = new Date(startDateTime);
+//   firstSlot.end = new Date(endinDateTime);
+//   results.push(firstSlot);
+  
+//   //subsequent timeslots
+//   var timeSlot = new Object();
     
-  // <option value="everyday">Everyday</option>
-  if (repeatOption=="everyday"){
-    if(InumSessions > 0 && InumSessions != undefined){
-      for(var i = 1; i < InumSessions; i++){
-        timeSlot.start = addDays(startDateTime, i);
-        timeSlot.end   = addMilis(timeSlot.start, duration);
-        results.push(timeSlot);
-      }
-    } else if(endinDateTime != undefined){
-      var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
-      for(var i = 1; i < diffDays; i++){
-        timeSlot.start = addDays(startDateTime, i);
-        timeSlot.end   = addMilis(timeSlot.start, duration);
-        results.push(timeSlot);
-      }
-    }
-  }
-  // <option value="weekday">Weekdays</option>
-  else if (repeatOption=="weekday"){
-    if(InumSessions > 0 && InumSessions != undefined){
-      for(var i = 1; i < InumSessions; i++){
-        timeSlot.start = addDays(startDateTime, i);
-        if(timeSlot.start.getDay() > 0 && timeSlot.start.getDay() < 7){
-          timeSlot.end   = addMilis(timeSlot.start, duration);
-          results.push(timeSlot);
-        }
-      }
-    } else if(endinDateTime != undefined){
-      var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
-      for(var i = 1; i < diffDays; i++){
-        timeSlot.start = addDays(startDateTime, i);
-        if(timeSlot.start.getDay() > 0 && timeSlot.start.getDay() < 7){
-          timeSlot.end   = addMilis(timeSlot.start, duration);
-          results.push(timeSlot);
-        }
-      }
-    }
-  }
-  // <option value="weekends">Weekends</option>
-  else if (repeatOption=="weekends"){
-    if(InumSessions > 0 && InumSessions != undefined){
-      for(var i = 1; i < InumSessions; i++){
-        timeSlot.start = addDays(startDateTime, i);
-        if(timeSlot.start.getDay() == 0 || timeSlot.start.getDay() == 7){
-          timeSlot.end   = addMilis(timeSlot.start, duration);
-          results.push(timeSlot);
-        }
-      }
-    } else if(endinDateTime != undefined){
-      var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
-      for(var i = 1; i < diffDays; i++){
-        timeSlot.start = addDays(startDateTime, i);
-        if(timeSlot.start.getDay() == 0 || timeSlot.start.getDay() == 7){
-          timeSlot.end   = addMilis(timeSlot.start, duration);
-          results.push(timeSlot);
-        }
-      }
-    }
-  }
-  // <option value="weekly">Weekly</option>
-  else if (repeatOption=="weekly"){
-    if(InumSessions > 0 && InumSessions != undefined){
+//   // <option value="everyday">Everyday</option>
+//   if (repeatOption=="everyday"){
+//     if(InumSessions > 0 && InumSessions != undefined){
+//       for(var i = 1; i < InumSessions; i++){
+//         timeSlot.start = addDays(startDateTime, i);
+//         timeSlot.end   = addMilis(timeSlot.start, duration);
+//         results.push(timeSlot);
+//       }
+//     } else if(endinDateTime != undefined){
+//       var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
+//       for(var i = 1; i < diffDays; i++){
+//         timeSlot.start = addDays(startDateTime, i);
+//         timeSlot.end   = addMilis(timeSlot.start, duration);
+//         results.push(timeSlot);
+//       }
+//     }
+//   }
+//   // <option value="weekday">Weekdays</option>
+//   else if (repeatOption=="weekday"){
+//     if(InumSessions > 0 && InumSessions != undefined){
+//       for(var i = 1; i < InumSessions; i++){
+//         timeSlot.start = addDays(startDateTime, i);
+//         if(timeSlot.start.getDay() > 0 && timeSlot.start.getDay() < 7){
+//           timeSlot.end   = addMilis(timeSlot.start, duration);
+//           results.push(timeSlot);
+//         }
+//       }
+//     } else if(endinDateTime != undefined){
+//       var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
+//       for(var i = 1; i < diffDays; i++){
+//         timeSlot.start = addDays(startDateTime, i);
+//         if(timeSlot.start.getDay() > 0 && timeSlot.start.getDay() < 7){
+//           timeSlot.end   = addMilis(timeSlot.start, duration);
+//           results.push(timeSlot);
+//         }
+//       }
+//     }
+//   }
+//   // <option value="weekends">Weekends</option>
+//   else if (repeatOption=="weekends"){
+//     if(InumSessions > 0 && InumSessions != undefined){
+//       for(var i = 1; i < InumSessions; i++){
+//         timeSlot.start = addDays(startDateTime, i);
+//         if(timeSlot.start.getDay() == 0 || timeSlot.start.getDay() == 7){
+//           timeSlot.end   = addMilis(timeSlot.start, duration);
+//           results.push(timeSlot);
+//         }
+//       }
+//     } else if(endinDateTime != undefined){
+//       var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
+//       for(var i = 1; i < diffDays; i++){
+//         timeSlot.start = addDays(startDateTime, i);
+//         if(timeSlot.start.getDay() == 0 || timeSlot.start.getDay() == 7){
+//           timeSlot.end   = addMilis(timeSlot.start, duration);
+//           results.push(timeSlot);
+//         }
+//       }
+//     }
+//   }
+//   // <option value="weekly">Weekly</option>
+//   else if (repeatOption=="weekly"){
+//     if(InumSessions > 0 && InumSessions != undefined){
       
-    } else if(endinDateTime != undefined){
+//     } else if(endinDateTime != undefined){
       
-    }
-  }
-  // <option value="mothly">Monthly</option>
-  else if (repeatOption=="mothly"){
-    if(InumSessions > 0 && InumSessions != undefined){
+//     }
+//   }
+//   // <option value="mothly">Monthly</option>
+//   else if (repeatOption=="mothly"){
+//     if(InumSessions > 0 && InumSessions != undefined){
       
-    } else if(endinDateTime != undefined){
+//     } else if(endinDateTime != undefined){
       
-    }
-  } else{
-    //repeatOption not set, just return 1 timeslot
-    return results;
-  }
-}
+//     }
+//   } else{
+//     //repeatOption not set, just return 1 timeslot
+//     return results;
+//   }
+// }
 
 Template.bookingFacilityForm.helpers({
   courseSearchResult:function(){
