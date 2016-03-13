@@ -69,7 +69,6 @@ template(name="classList")
                         button.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_id}',data-target="#deleteClass#{_id}")
                           | Delete
                         +deleteClass 
-   
 
 template(name="addClassForm")
   #addClassForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -85,7 +84,7 @@ template(name="addClassForm")
               tbody
                 tr
                   th Course Code
-                  td(colspan="3") 
+                  td(colspan="3") #{courseCode}
                     .form-group
                       select(name="courseCode", id="classListCourseCode", style="color: black")
                         each cCourse
@@ -93,78 +92,71 @@ template(name="addClassForm")
                 tr
                   th Session Timing  
                   td(colspan="3") 
-                    input(type="time", id="classListNewStartTime", style="width:40%; color:black") 
+                    input(type="time", id="gNewStartTime", style="width:40%; color:black") 
                     | TO 
-                    input(type="time", id="classListNewEndTime", style="width:40%; color:black")
+                    input(type="time", id="gNewEndTime", style="width:40%; color:black")
                 tr  
                   th Days
                   td 
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Monday", name="classListday")
+                        input(type="checkbox", value="Monday", name="day")
                         | Monday
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Tuesday", name="classListday")
+                        input(type="checkbox", value="Tuesday", name="day")
                         | Tuesday
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Wednesday", name="classListday")
+                        input(type="checkbox", value="Wednesday", name="day")
                         | Wednesday
                 tr
                   th  
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Thursday", name="classListday")
+                        input(type="checkbox", value="Thursday", name="day")
                         | Thursday
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Friday", name="classListday")
+                        input(type="checkbox", value="Friday", name="day")
                        | Friday
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Saturday", name="classListday")
+                        input(type="checkbox", value="Saturday", name="day")
                         | Saturday
                
                 tr
                   th Duration (Date)
                   td(colspan="3")
-                    input(type="date", id="classListNewStartDate", style="color:black; width: 40%")
+                    input(type="date", id="gNewStartDate", style="color:black; width: 40%")
                     | TO
-                    input(type="date", id="classListNewEndDate", style="color:black; width: 40%")
-                tr 
-                  th Payment Deadline
-                  td(colspan="3")
-                    .form-group
-                      input.form-control(type="date", id="classListNewDeadline")
+                    input(type="date", id="gNewEndDate", style="color:black; width: 40%")
                 tr
                   th Venue
                   td 
                     .form-group
-                      select(name="type", id="classListVenue", style="color: black")
+                      select(name="type", id="gVenue", style="color: black")
                         each facilitiesList1
                           option(value="#{fac}") #{fac}
                 tr  
                   th Trainers
                   td
                     .form-group.input-group
-                      select(name="type", id="classListTrainers", style="color: black")
+                      select(name="type", id="gTrainers", style="color: black")
                         each courseTrainers1
-                          option(value="#{_id}") {{fullName}}
+                          option(value="#{_id}") #{fullName}
                     
           // /.table-responsive
         .modal-footer
-          button#addGroupFormButton.btn.btn-save(type="button", data-dismiss="modal") Add Class
+          button#addGroupButton.btn.btn-save(type="button", data-dismiss="modal") Add Class
       // /.modal-content
     // /.modal-dialog
   // /.modal
-
-
 
 
 template(name="deleteClass")
