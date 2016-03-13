@@ -16,6 +16,14 @@
                             <i> Save</i>
                         </a>
 
+                        <button class="btn btn btn-sm" data-toggle="modal" data-target="#saveSurvey" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff">
+                            <i class="fa fa-plus"></i>
+                            Save all
+                        </button>
+
+
+
+
                     Feedback Type: {{viewFeedbackDetails1.feedbackType}}
                     
 
@@ -36,24 +44,25 @@
 </template>
 
 <template name="doSurveyQn">
-<!--{{#each feedbackQns feedbackDetails = "y"}}-->
+<!--{{#each feedbackQns feedbackDetails = "y"}}<div class="form-group">-->
     <div class="fb-field-wrapper response-field-text">
         <div class="subtemplate-wrapper" id="findmyans">
+        
                 <label> <span class="a">{{feedbackDetails.feedbackQn}} </span></label>
                 {{#if equals feedbackDetails.qnType 'vtext'}}
                     <label>
-                        <input  type="text" id="qnAns" name="qnAns" value="Answer">   <abbr title="required">*</abbr>
+                        <input  type="text" name="{{../feedbackDetails.feedbackQn}}" value="Answer">   <abbr title="required">*</abbr>
                     </label>
                 {{/if}}   
                 {{#if equals feedbackDetails.qnType 'paraText'}}
                     <label>
-                        <textarea  type="text" name="qnAns" id="qnAns" value="Answer"> </textarea>
+                        <textarea  type="text" name="{{../feedbackDetails.feedbackQn}}" value="Answer"> </textarea>
                     </label>
                 {{/if}}  
                 {{#if equals feedbackDetails.qnType 'radioButtons'}}
                     <label class="fb-option">
                         {{#each feedbackDetails.options}} 
-                            <input type="radio" name="qnAns" id="qnAns" value="{{this}}"> {{this}} <br>
+                            <input type="radio" name="{{../feedbackDetails.feedbackQn}}"  id="qnAns" value="{{this}}"> {{this}} <br>
                         {{/each}}      
                     </label>
                 {{/if}}   
@@ -62,7 +71,7 @@
                     <label class="fb-option">
                         {{#each feedbackDetails.options}}  
                             <label class="radio-inline">
-                              <input type="radio" id="qnAns" name="qnAns" value="{{this}}"> {{this}} 
+                              <input type="radio" name="{{../feedbackDetails.feedbackQn}}" value="{{this}}"> {{this}} 
                             </label>
                         {{/each}}      
                     </label>
@@ -70,13 +79,13 @@
                 {{#if equals feedbackDetails.qnType 'checkboxes'}}
                     <label class="fb-option">
                         {{#each feedbackDetails.options}} 
-                            <input type="checkbox" id="qnAns" name="qnAns" value="{{this}}"> {{this}} <br>
+                            <input type="checkbox" name="{{../feedbackDetails.feedbackQn}}" value="{{this}}"> {{this}} <br>
                         {{/each}}      
                     </label>
                 {{/if}}  
                 {{#if equals feedbackDetails.qnType 'dropdown'}}
                     <label class="fb-option">
-                        <select id="qnAns" name="qnAns">
+                        <select id="qnAns" name="{{../feedbackDetails.feedbackQn}}">
                         {{#each feedbackDetails.options}} 
                             <option value="{{this}}">{{this}}</option>
                         {{/each}}      
@@ -89,15 +98,46 @@
                     <a class = "js-save fb-button" id="saveFieldsDo">
                         <i class = "fa fa-check-circle"></i>
                     </a>
-                    <a class = "js-duplicate fb-button" id="addFields">
-                        <i class = "fa fa-plus-circle"></i>
-                    </a>
-                    <a class = "js-clear fb-button" id="deleteQnDo">
-                        <i class = "fa fa-minus-circle"></i>
-                    </a>
                 </div>      
-
+            
         </div>
     </div>
     <!--{{/each}}-->
 </template>
+
+<template name="saveSurvey">
+    <div class="modal fade adminFormDark">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Submit feedback</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="dataTables-example" class="table" style="background:#333">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Are you sure you want to submit this feedback form?
+                                        You will be unable to edit your answers.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="saveFeedbackAnswers2" class="btn btn-save" type="button" data-dismiss="modal">Confirm</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>
+
+

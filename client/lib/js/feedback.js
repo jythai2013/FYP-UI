@@ -787,27 +787,39 @@ Template.doFeedbackSurvey.events({
 
 	"click #saveFeedbackAnswers" : function(e) {
 		e.preventDefault();
-		// var fbId = Session.get("currentDoingfb");
-		// console.log(fbId);
-		//var fbId=Session.set('currentfb', currentfb);
 		var feedbackTemplate = FeedbackAnswers.findOne({_id:this._id}).feedbackTemplateID;
-		var feedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
-		console.log(feedbackQnOptions.length);
-		for (var i = 0, l = feedbackQnOptions.length; i < l; i++)
+		//trying to get the name of the options out
+		var feedbackTemplateQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
+		console.log(feedbackTemplateQnOptions.length);
+		//loop to get the qns out
+		for (var i = 0, l = feedbackTemplateQnOptions.length; i < l; i++)
     	{
-	        var ans = Session.get(feedbackQnOptions[i].feedbackQn);
+	        var ans = Session.get(feedbackTemplateQnOptions[i].feedbackQn);
 	        console.log(ans);
-	        console.log(feedbackQnOptions[i].options.length);
-	        for (var j = 0, l = feedbackQnOptions[i].options.length; j < l; j++)
+	        console.log(feedbackTemplateQnOptions[i].options.length);
+	        //extracting the options
+		        var optionsTotalnum = FeedbackAnswers.findOne({_id:this._id}).options[i].options;
+
+		        console.log(optionsTotalnum);
+	        for (var j = 0, k = feedbackTemplateQnOptions[i].options.length; j < k; j++)
     		{
-    			if(feedbackQnOptions[i].options[j] === ans){
-    				console.log("here");
-    				FeedbackAnswers.findOne({_id:feedbackTemplate});
-    			}
+    			for (var h = 0, g = ans.length; h < g; h++)
+    			{	
+	    			if(feedbackTemplateQnOptions[i].options[j] === ans[h]){
+	    				// var ansOptions = FeedbackAnswers.findOne({_id:this._id}).options;
+	    				// console.log(ansOptions);
+
+	    				var num = optionsTotalnum[j];
+	    				num = num +1;
+	    				optionsTotalnum[j]=num;
+		        	console.log(optionsTotalnum);
+
+
+	    			}
+	    		}
     		}	
     	}
 
-		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
 		 // return feedbackQnOptions;
 	}	
 });
@@ -818,8 +830,10 @@ Template.doSurveyQn.events({
 		e.preventDefault();
 		console.log(this);
 		console.log(this.feedbackDetails.feedbackQn);
+		var qn = this.feedbackDetails.feedbackQn
 		var answers = new Array()
-		var elements  = document.getElementsByName("qnAns");
+		var elements  = document.getElementsByName(qn);
+		// console.log(elements);
 		for (var i = 0, l = elements.length; i < l; i++)
     	{
 	        if (elements[i].checked)
@@ -831,6 +845,10 @@ Template.doSurveyQn.events({
     	var qn  = this.feedbackDetails.feedbackQn;
     	console.log(qn);
     	Session.set(qn, answers);
+	},	
+	"click #saveFieldsDo" : function(e) {
+		e.preventDefault();
+		console.log(this);
 	}	
 });
 

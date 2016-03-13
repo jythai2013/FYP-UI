@@ -95,6 +95,14 @@ template(name="addFeedbackForm")
                         option(value="Course") Course
                         option(value="Facility") Facility
                         option(value="Trainer") Trainer
+                tr
+                  th LSP Form  
+                  td 
+                    .form-group
+                      select(name="type", id="LSPForm", style="color: black")
+                        option(value="Course") Course Assessment
+                        option(value="Facility") Facility Assessment
+                        option(value="Trainer") Trainer Assessment
             // /.table-responsive
         .modal-footer
           button#addFeedbackButton.btn.btn-save(type="button", data-dismiss="modal") Add Feedback
