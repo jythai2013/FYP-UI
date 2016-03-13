@@ -119,7 +119,6 @@ Template.course.helpers({
 Template.addClass.helpers({
 	"courseTrainers" : function trainerList(e) {
 		
-		
 		var url =  window.location.href;
 		var positionFirstEqual = url.indexOf('=');	
 		var currentCourseEsc=url.substring(positionFirstEqual+1);
@@ -244,16 +243,15 @@ Template.editCourseForm.events({
 		var cCode = document.getElementById("cCCode").value;
 		var cName = document.getElementById("cCName").value;
 		var cDesc = document.getElementById("cCDesc").value;
-		var cSession = document.getElementById("cCSession").value;
+		var cHours = document.getElementById("cCHour").value;
 		var cFees = document.getElementById("cCFees").value;
-		var cMin = document.getElementById("cCMin").value;
-		var cMax = document.getElementById("cCMax").value;
+		var cFLR = document.getElementById("cCFLR").value;
 		var cType = document.getElementById("cCType").value;
 		//var cTrainers = document.getElementById("cCTrainers").value;
 
 		
 		console.log("here8");
-		Meteor.call("editCourse", cCode, cName, cDesc, cSession, cFees, cMin, cMax, cType);
+		Meteor.call("editCourse", cCode, cName, cDesc, cHours, cFees, cFLR, cType);
 	}
 
 
