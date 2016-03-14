@@ -797,18 +797,21 @@ Template.doFeedbackSurvey.events({
 	        var ans = Session.get(feedbackTemplateQnOptions[i].feedbackQn);
 	        console.log(ans);
 	        console.log(feedbackTemplateQnOptions[i].options.length);
+	        var qnID = qnID = feedbackTemplateQnOptions[i].feedbackQn;
+	        console.log(qnID);
 	        //extracting the options
 		        var optionsTotalnum = FeedbackAnswers.findOne({_id:this._id}).options[i].options;
 
 		        console.log(optionsTotalnum);
 	        for (var j = 0, k = feedbackTemplateQnOptions[i].options.length; j < k; j++)
     		{
+
     			for (var h = 0, g = ans.length; h < g; h++)
     			{	
 	    			if(feedbackTemplateQnOptions[i].options[j] === ans[h]){
 	    				// var ansOptions = FeedbackAnswers.findOne({_id:this._id}).options;
 	    				// console.log(ansOptions);
-
+						
 	    				var num = optionsTotalnum[j];
 	    				num = num +1;
 	    				optionsTotalnum[j]=num;
@@ -818,6 +821,8 @@ Template.doFeedbackSurvey.events({
 	    			}
 	    		}
     		}	
+
+    		Meteor.call("insertFeedbackAnswers", this._id, qnID ,optionsTotalnum);
     	}
 
 		 // return feedbackQnOptions;

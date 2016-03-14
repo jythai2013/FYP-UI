@@ -60,16 +60,25 @@ Meteor.methods({
 	},
 	
 	"insertFeedbackResults":function(fbTemplateID, groupID, classCFTType, optionsArray){
-		console.log("in server");
-		// for 
-
-			
+		console.log("in server");			
 		FeedbackAnswers.insert({
 			feedbackTemplateID: fbTemplateID,
 			groupID: groupID,
 			assessedOn: classCFTType,
 			options: optionsArray
 		});
+		
+	},
+	
+	"insertFeedbackAnswers":function(fbAnswerID, qnId, optionsAnsArray){
+		console.log("in server");
+		
+		FeedbackAnswers.update( {_id: fbAnswerID, "options.feedbackQn":qnId},{
+	        $set: {
+				"options.$.options": optionsAnsArray
+	        }
+	        		
+	    });
 		
 	},
 	
@@ -88,13 +97,10 @@ Meteor.methods({
 
    		Feedback.update( {_id: fbId, "qnOptions.qnID":qnId},{
 	        $set: {
-	        	// qnOptions:{
-	        	// 	qnID: qnId,
 					"qnOptions.$.feedbackQn": question,
 					"qnOptions.$.qnType": questionType,
 					"qnOptions.$.lspQnId": LSPQnID,
 					"qnOptions.$.options": optionsForQn
-	          	//}
 	        }
 	        		
 	    });

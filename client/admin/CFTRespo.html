@@ -2,40 +2,46 @@
     <div id="page-wrapper" style="min-height: 861px;">
         <div class="row col-lg-12">
             <!--<div class="col-lg-12">-->
-            <div class="col-lg-4">
+            <div class="col-lg-3">
 				<div class='fb-main'>
 			        <div class="fb-response-fields ui-sortable">
 			            <div class="fb-field-wrapper response-field-file"> </div>
 			                    
 			    		<div class="fb-field-wrapper response-field-text">
-			        		<div class="subtemplate-wrapper" id="findmyans">
-			        		hi
+			        		<div class="subtemplate-wrapper" id="createNewCourseLSP" style="text-align:center">
+				        		Create New <br>
+				        		<h2>Course</h2>
+				        		LSP Form <br>
 			            	</div>
 			            </div>
 			        </div>
 			    </div>
 			</div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
 				<div class='fb-main'>
 			        <div class="fb-response-fields ui-sortable">
 			            <div class="fb-field-wrapper response-field-file"> </div>
 			                    
 			    		<div class="fb-field-wrapper response-field-text">
-			        		<div class="subtemplate-wrapper" id="findmyans">
-			        		hi
+			        		<div class="subtemplate-wrapper" id="createNewFacilityLSP" style="text-align:center">
+				        		Create New <br>
+				        		<h2>Facility</h2>
+				        		LSP Form <br>
 			            	</div>
 			            </div>
 			        </div>
 			    </div>
 			</div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
 				<div class='fb-main'>
 			        <div class="fb-response-fields ui-sortable">
 			            <div class="fb-field-wrapper response-field-file"> </div>
 			                    
 			    		<div class="fb-field-wrapper response-field-text">
-			        		<div class="subtemplate-wrapper" id="findmyans">
-			        		hi
+			        		<div class="subtemplate-wrapper" id="createNewTrainerLSP" style="text-align:center">
+				        		Create New <br>
+				        		<h2>Trainer</h2>
+				        		LSP Form <br>
 			            	</div>
 			            </div>
 			        </div>
@@ -43,5 +49,67 @@
 			</div>
 			<!--</div>-->
 		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4>Search For LSP Form</h4>
+						<div class="table-responsive">
+							<table id="dataTables-example" class="table table-bordered">
+								<tbody>
+									<tr>
+										<th> Search</th>
+										<td>
+											<input class="form-control" type="text" id="cftLSPFormSearchInput">
+										</td>
+										<th> Type of Form</th>
+										<td style="width: 50%;">
+											<select id="typeOfForm">
+												<option value="Course">Course</option>
+												<option value="Facility">Facility</option>
+												<option value="Trainer">Trainer</option>
+											</select>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<button id="filter" class="btn btn-save" style="position: static; margin-bottom:1%; margin-left:91%; background: #333; color:#fff">
+							Search 
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4>Form Details</h4>
+
+						<div class="table-responsive">
+							<table id="dataTables-example" class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th>Form Name</th>
+										<th>Category</th>
+										<th>Upload Date</th>
+										<th>Assessed On</th>
+										<th>Reviewer</th>
+										<th>Download</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
+
