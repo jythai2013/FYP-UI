@@ -14,6 +14,7 @@
 				        		LSP Form <br>
 			            	</div>
 			            </div>
+			            {{> createLSPCourseForm}}
 			        </div>
 			    </div>
 			</div>
@@ -29,6 +30,7 @@
 				        		LSP Form <br>
 			            	</div>
 			            </div>
+			            {{> createLSPFacilityForm}}
 			        </div>
 			    </div>
 			</div>
@@ -44,6 +46,7 @@
 				        		LSP Form <br>
 			            	</div>
 			            </div>
+			            {{> createLSPTrainerForm}}
 			        </div>
 			    </div>
 			</div>
@@ -83,9 +86,6 @@
 			</div>
 		</div>
 
-
-
-
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
@@ -104,6 +104,8 @@
 										<th>Download</th>
 									</tr>
 								</thead>
+								<tbody>
+								</tbody>
 							</table>
 						</div>
 					</div>
@@ -113,3 +115,136 @@
 	</div>
 </template>
 
+<template name="createLSPCourseForm">
+    <div class="modal fade adminFormDark" id="createLSPCourseForm"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Add new Course LSP Form</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="dataTables-example" class="table" style="background:#333">
+                            <tbody>
+                                <tr>
+                                	<th>LSP Form Type</th>
+                                    <td>
+                                        Course
+                                    </td>
+                                </tr>
+                                <tr>
+                                	<th>Assesed Subject</th>
+                                    <td>
+                                        <select id="courseLSPSubject" style="color: black">
+                                        	{{#each coursesList5}}
+                                        		<option value="{{_id}}">{{courseCode}}</option>
+                                        	{{/each}}
+										</select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+		            <a href="courseLSP?cLSP=#{_id}" class = "fb-button btn btn-save" data-dismiss="modal" id="generateCourseLSP">
+		                <i> Confirm</i>
+		            </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="createLSPFacilityForm">
+    <div class="modal fade adminFormDark" id="createLSPFacilityForm"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Add new Facility LSP Form</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="dataTables-example" class="table" style="background:#333">
+                            <tbody>
+                                <tr>
+                                	<th>LSP Form Type</th>
+                                    <td>
+                                        Facility
+                                    </td>
+                                </tr>
+                                <tr>
+                                	<th>Assesed Subject</th>
+                                    <td>
+                                        <select id="facilityLSPSubject" style="color: black">
+                                        	{{#each facilitiesList5}}
+                                        		<option value="{{_id}}">{{fac}}</option>
+                                        	{{/each}}
+										</select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="generateFacilityLSP" class="btn btn-save" type="button" data-dismiss="modal">Confirm</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="createLSPTrainerForm">
+    <div class="modal fade adminFormDark" id="createLSPTrainerForm"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Add new Trainer LSP Form</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="dataTables-example" class="table" style="background:#333">
+                            <tbody>
+                                <tr>
+                                	<th>LSP Form Type</th>
+                                    <td>
+                                        Trainer
+                                    </td>
+                                </tr>
+                                <tr>
+                                	<th>Assesed Subject</th>
+                                    <td>
+                                        <select id="trainerLSPSubject" style="color: black">
+                                        	{{#each trainersList5}}
+                                        		<option value="{{_id}}">{{fullName}}</option>
+                                        	{{/each}}
+										</select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="generateTrainerLSP" class="btn btn-save" type="button" data-dismiss="modal">Confirm</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

@@ -11,15 +11,12 @@
 
                     </h3>
 
-
-                        <a class = "js-duplicate fb-button  btn pull-right" id="saveFeedbackAnswers">
-                            <i> Save</i>
-                        </a>
-
-                        <button class="btn btn btn-sm" data-toggle="modal" data-target="#saveSurvey" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff">
-                            <i class="fa fa-plus"></i>
-                            Save all
+                        <button class="btn btn btn-sm" data-toggle="modal" data-target="saveSurvey" id="saveFeedbackAnswersModal" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff">
+                            <i class="fa fa-save"></i>
+                             Save all   
                         </button>
+                         {{> saveSurvey}}
+                        
 
 
 
@@ -106,7 +103,7 @@
 </template>
 
 <template name="saveSurvey">
-    <div class="modal fade adminFormDark">
+    <div class="modal fade adminFormDark" id="saveSurvey"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -121,7 +118,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        Are you sure you want to submit this feedback form?
+                                        Are you sure you want to submit this feedback form? <br>
                                         You will be unable to edit your answers.
                                     </td>
                                 </tr>
@@ -131,7 +128,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button id="saveFeedbackAnswers2" class="btn btn-save" type="button" data-dismiss="modal">Confirm</button>
+                    <button id="saveFeedbackAnswers" class="btn btn-save" type="button" data-dismiss="modal">Confirm</button>
                 </div>
 
             </div>
