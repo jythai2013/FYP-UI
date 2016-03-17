@@ -324,19 +324,12 @@ template(name="editCourseForm")
                   th Description
                   td 
                     .form-group
-                      textarea.form-control(id="cCDesc", value="#{courseDescription}")
+                      textarea.form-control(id="cCDesc") #{courseDescription}
                 tr
                   th No. of Hour(s)
                   td
                     .form-group
-                      select.form-control(name="cHour", id="cCHour",)
-                        option 1
-                        option 2
-                        option 3
-                        option 4
-                        option 5
-                        option 6
-                        option 7
+                      input.form-control(type="text", id="cCHour", value="#{courseNoOfHours}")
                 tr
                   th Fees
                   td

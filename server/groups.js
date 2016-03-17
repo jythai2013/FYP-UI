@@ -10,7 +10,7 @@ scheduleRecommender = function addTask(id, details) {
 			// console.log(details);
 			studentId = details.studentId;
 			groupId = details.groupId;
-			studentFinishedCourseRecommender(studentId, )
+			studentFinishedCourseRecommender(studentId, groupId)
 			FutureTasks.remove(id);
 			SyncedCron.remove(id);
 				return id;
@@ -45,11 +45,13 @@ Meteor.methods({
 		// console.log(classlist);
 		
 		details = {"studentId": user_id};
-		dateClassFinishes = Groups.findOne({_id:theGroup_id}).endDate;
+		var theGroup = Groups.findOne({_id:theGroup_id});
+		dateClassFinishes = theGroup.endDate;
 		details.date = dateClassFinishes	//TODO: Date when course finishes
 		details.groupId = theGroup_id;
 		var thisId = FutureTasks.insert(details);
 		scheduleRecommender(thisId, details);
+		recEngine.link(user_id, theGroup.courseId);
 	},
 	
   'updateGroupClasslist': function editGroup(courseCode, grpNum, classlist){
@@ -68,6 +70,7 @@ Meteor.methods({
 			details.groupId = theGroup._id;
 			var thisId = FutureTasks.insert(details);
 			scheduleRecommender(thisId, details);
+			recEngine.link(user_id, theGroup.courseId);
 		})
 	},
 

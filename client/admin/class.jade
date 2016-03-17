@@ -89,12 +89,16 @@ template(name="group")
                     th Title
                     th Type
                     th Assessed on
+                    th View survey
                     th Results
                   each feedbackClass
                     tr
                       td #{this.fbTitle}
                       td #{fbType}
                       td #{assessedOn}
+                      td 
+                        a(href="../FeedbackMgmt/doFeedbackSurvey?fbidAns=#{_id}", class="button btn admin-btn") 
+                            | View Feedback Form
                       td 
                         input(type="button", value="View Results")
                  

@@ -35,6 +35,11 @@ Template.viewFeedbackSurvey.onRendered(function(){
   Session.set('currentViewingfb', currentfb);
 });
 
+Template.doFeedbackSurvey.onRendered(function(){
+  var currentfb = getParameterByName("fbidAns");
+  Session.set('currentDoingfb', currentfb);
+});
+
 Template.addFeedback.onRendered(function(){
 	// console.log($("input")[0]);
 	// console.log($("input"));
@@ -707,28 +712,29 @@ Template.addFeedback.events({
         console.log(classCFTType);
 
 		var thisFeedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
-		console.log(thisFeedbackQnOptions);
-
-		//i need to put in qnID, feedbackQn, lspQnId, options and the number associated with it. 
+		console.log(feedbackTemplate);
 
 		var fakeArray2 = new Array();
-		console.log(thisFeedbackQnOptions.count);
+		console.log(thisFeedbackQnOptions.length);
 		
 			for(i = 0; i < thisFeedbackQnOptions.length; i++){
 				var fakeArray = new Array();
-				var optionsNumber = new Array();
+				// var optionsNumber = new Array();
+				// var object = new Object();
+				var obj = new Object();
+					console.log(thisFeedbackQnOptions[i].options.length + "inforloop");
 				for(j = 0; j < thisFeedbackQnOptions[i].options.length; j++){
-					optionsNumber.push(0);
+					fakeArray.push(0);
 				}
 				
 				console.log(thisFeedbackQnOptions[i].qnID + " qnID");
-				console.log(optionsNumber);
+				// console.log(optionsNumber);
 
-				fakeArray.push(thisFeedbackQnOptions[i].qnID);
-				fakeArray.push(thisFeedbackQnOptions[i].feedbackQn);
-				fakeArray.push(thisFeedbackQnOptions[i].lspQnId);
-				fakeArray.push(optionsNumber);
-				fakeArray2.push(fakeArray);
+				obj.qnID = thisFeedbackQnOptions[i].qnID;
+				obj.feedbackQn = thisFeedbackQnOptions[i].feedbackQn;
+				obj.lspQnId = thisFeedbackQnOptions[i].lspQnId;
+				obj.options = fakeArray;
+				fakeArray2.push(obj);
 				
 			}
 			console.log (fakeArray2);
@@ -740,52 +746,182 @@ Template.addFeedback.events({
 
 
 
-Template.doFeedbackSurvey.onRendered(function(){
-  var currentfb = getParameterByName("fbid");
-  Session.set('currentDoingfb', currentfb);
-});
-
 Template.doFeedbackSurvey.helpers({
 
 	"viewFeedbackDetails1": function() {
 		var fbId=Session.get("currentDoingfb");
+		var feedbackTemplateID = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
 
-		var feedbackTitle = Feedback.findOne({_id:fbId});
+		var feedbackTitle = Feedback.findOne({_id:feedbackTemplateID});
     		console.log(feedbackTitle);
     	return feedbackTitle;
 	},
 
 	"viewFeedbackQns2": function() {
 		var fbId = Session.get("currentDoingfb");
-		console.log(fbId);
-		//console.log(fbId);
-		//var fbId=Session.set('currentfb', currentfb);
-		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
-		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
+		console.log(feedbackTemplate);
+		var feedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
 		 return feedbackQnOptions;
 	}
 
 });
 
 Template.doFeedbackSurvey.events({
-
-	"click #saveFeedbackAnswers" : function(e) {
-		e.preventDefault();
-		console.log("saving");
+	"click #saveFeedbackAnswersModal" : function(e) {
+        $("#saveSurvey").modal("show");
 	}	
 });
 
 
-// Template.doSurveyQn.events({
+Template.saveSurvey.events({
+	"click #saveFeedbackAnswers" : function(e) {
+		e.preventDefault();
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:this._id}).feedbackTemplateID;
+		//trying to get the name of the options out
+		var feedbackTemplateQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
+		console.log(feedbackTemplateQnOptions.length);
+		//loop to get the qns out
+		for (var i = 0, l = feedbackTemplateQnOptions.length; i < l; i++)
+    	{
+	        var ans = Session.get(feedbackTemplateQnOptions[i].feedbackQn);
+	        console.log(ans);
+	        console.log(feedbackTemplateQnOptions[i].options.length);
+	        var qnID = qnID = feedbackTemplateQnOptions[i].feedbackQn;
+	        console.log(qnID);
+	        //extracting the options
+		        var optionsTotalnum = FeedbackAnswers.findOne({_id:this._id}).options[i].options;
 
-// 	"click #qnAns" : function(e) {
-// 		e.preventDefault();
-// 		console.log(this);
-// 		var arr = new Array();
+		        console.log(optionsTotalnum);
+	        for (var j = 0, k = feedbackTemplateQnOptions[i].options.length; j < k; j++)
+    		{
+
+    			for (var h = 0, g = ans.length; h < g; h++)
+    			{	
+	    			if(feedbackTemplateQnOptions[i].options[j] === ans[h]){
+	    				// var ansOptions = FeedbackAnswers.findOne({_id:this._id}).options;
+	    				// console.log(ansOptions);
+						
+	    				var num = optionsTotalnum[j];
+	    				num = num +1;
+	    				optionsTotalnum[j]=num;
+		        	console.log(optionsTotalnum);
 
 
-// 	}	
-// });
+	    			}
+	    		}
+    		}	
+
+    		Meteor.call("insertFeedbackAnswers", this._id, qnID ,optionsTotalnum);
+    	}
+
+		 // return feedbackQnOptions;
+	}
+});
+
+
+
+Template.doSurveyQn.events({
+	"change #findmyans" : function(e) {
+		e.preventDefault();
+		console.log(this);
+		console.log(this.feedbackDetails.feedbackQn);
+		var qn = this.feedbackDetails.feedbackQn
+		var answers = new Array()
+		var elements  = document.getElementsByName(qn);
+		// console.log(elements);
+		for (var i = 0, l = elements.length; i < l; i++)
+    	{
+	        if (elements[i].checked)
+	        {
+	            console.log (elements[i].value);
+	            answers.push(elements[i].value);
+	        }
+    	}
+    	var qn  = this.feedbackDetails.feedbackQn;
+    	console.log(qn);
+    	Session.set(qn, answers);
+	},	
+	"click #saveFieldsDo" : function(e) {
+		e.preventDefault();
+
+		console.log(this);
+		console.log(this.feedbackDetails.feedbackQn);
+		var qn = this.feedbackDetails.feedbackQn
+		var ans = new Array()
+		var elements  = document.getElementsByName(qn);
+		// console.log(elements);
+		for (var i = 0, l = elements.length; i < l; i++)
+    	{
+	        if (elements[i].checked)
+	        {
+	            console.log (elements[i].value);
+	            ans.push(elements[i].value);
+	        }
+    	}
+    	
+
+		var url =  window.location.href;
+		var positionEqual = url.indexOf('=');	
+		var fbIdAns=url.substring(positionEqual+1);
+		console.log (fbIdAns);
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbIdAns}).feedbackTemplateID;
+		var feedbackTemplateQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
+
+ 		for (var i = 0, k = feedbackTemplateQnOptions.length; i < k; i++)
+    		{
+    			var optionsTotalnum = FeedbackAnswers.findOne({_id:fbIdAns}).options[i].options;
+	        	var qnQn = feedbackTemplateQnOptions[i].feedbackQn;
+
+		        console.log(optionsTotalnum);
+    			for (var j = 0, k = feedbackTemplateQnOptions[i].options.length; j < k; j++)
+    			{
+	    			for (var h = 0, g = ans.length; h < g; h++)
+	    			{	
+		    			if(feedbackTemplateQnOptions[i].options[j] === ans[h]){
+		    				// var ansOptions = FeedbackAnswers.findOne({_id:this._id}).options;
+		    				// console.log(ansOptions);
+							
+		    				var num = optionsTotalnum[j];
+		    				num = num +1;
+		    				optionsTotalnum[j]=num;
+			        	console.log(optionsTotalnum);
+
+
+		    			}
+		    		}
+		    	}
+		    	Meteor.call("insertFeedbackAnswers", fbIdAns, qnQn ,optionsTotalnum);
+    		}
+	// 
+	// 	//trying to get the name of the options out
+	// 	console.log(feedbackTemplateQnOptions.length);
+	// 	//loop to get the qns out
+	// 	for (var i = 0, l = feedbackTemplateQnOptions.length; i < l; i++)
+ //    	{
+	//         var ans = Session.get(feedbackTemplateQnOptions[i].feedbackQn);
+	//         console.log(ans);
+	//         console.log(feedbackTemplateQnOptions[i].options.length);
+	//         var qnID = qnID = feedbackTemplateQnOptions[i].feedbackQn;
+	//         console.log(qnID);
+	//         //extracting the options
+	// 	        var optionsTotalnum = FeedbackAnswers.findOne({_id:this._id}).options[i].options;
+
+	// 	        console.log(optionsTotalnum);
+	//        	
+
+ //    		Meteor.call("insertFeedbackAnswers", this._id, qnID ,optionsTotalnum);
+ //    	}
+
+}
+
+
+
+
+
+
+
+});
 
 
 // Template.addFeedback.events({
@@ -882,31 +1018,3 @@ Template.doFeedbackSurvey.events({
 // });
 
 
-/*
-editTitleFeedback	//Title of survey
-saveSurvey //button to save survey to db
-launchSurvey //button to save survey to db and launch it (set status to active)
-
-
-feedbackAnswer{
-	feedbackTemplate: (link to the feedbackID)
-	courseID:
-	class:
-	trainer/facility ID: 
-	qnOption: [
-		qnID:
-		lspQnId:
-		// options:[
-		// 	optionsTitle:
-		// 	total: 
-		// 	(eg. optionTitle:hey, total: 10)
-		// ]
-		Response:[
-			studentID:
-			response: (optionTitle)
-
-		]
-		
-	]
-}
-*/
