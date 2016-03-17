@@ -148,23 +148,31 @@ Template.viewParticularsForm.events({
 		console.log("Updating Student Information...");
 
 		//TODO: Validation of input
-		var sRemarks = document.getElementById("remarks").value;
-		var smobileNo = document.getElementById("mobileNo").value;
-		var sPostalCode = document.getElementById("code").value;
-		var sResAddress = document.getElementById("resAddr").value;
-		var sQualif = document.getElementById("qualification").value;
-		var sProficiency = document.getElementById("profi").value;
+		var sRemark = document.getElementById("remarks").value;
+		//var idNo = document.getElementById("remarks").value;
+		//var email = document.getElementById("remarks").value;
+		//var nationality = document.getElementById("remarks").value;
+		var sMobileNo = document.getElementById("mobileNo").value;
+		var qualification = document.getElementById("qualification").value;
+		var sProficiency = document.getElementById("proficiency").value;
 		
 		// var scompName = document.getElementById("compName").value;
 		// var scompOfficeNo = document.getElementById("compOfficeNo").value;		
 		
 		var snokName = document.getElementById("nokName").value;		
 		var snokReln = document.getElementById("nokReln").value;		
-		var snokTel = document.getElementById("nokTel").value;		
-		var snokAddr = document.getElementById("nokAddr").value;		
-		var snokPostalCode = document.getElementById("nokCode").value
-		Meteor.call("editLearnerAccount", smobileNo, sPostalCode, sResAddr, sQualif, 
-			_sProficiency, scompName, scmopOfficeNo, scompOfficeNo, snokName, 
-			_snokReln, snokTel, snokAddr, snokPostalCode, sRemarks);
+		var snokTel = document.getElementById("nokTel").value;
+
+			console.log("Remarks-"+ sRemark);
+			console.log("MobileNo-"+ sMobileNo);
+			console.log("proficiency-"+ sProficiency);
+			console.log("qualitifation-"+ qualification);
+			console.log("name-"+ snokName);
+			console.log("tel-"+ snokTel);
+			console.log("reln-"+ snokReln);
+		
+		// sRemark, sMobileNo, sProficiency, qualification, snokName, snokTel, snokReln
+		Meteor.call("editLearnerAccount", this._id, sRemark, sMobileNo, sProficiency, qualification, snokName, snokTel, snokReln);
+		console.log(">> Completed");
 	}
 });

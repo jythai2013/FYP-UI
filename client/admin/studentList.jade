@@ -173,7 +173,7 @@ template(name="viewParticularsForm")
                         input.form-control(type='text', value="#{email}", id='email')
                     td Mobile Number
                     td 
-                      input.form-control(type='text', value="#{mobileNo}", id='mobileNo')
+                      input#mobileNo.form-control(type='text', value="#{mobileNo}")
                   tr
                     td Nationality
                     td 
@@ -193,13 +193,13 @@ template(name="viewParticularsForm")
                     td Proficiency
                     td 
                       .form-group
-                        textarea.form-control(type='text',id='proficiency')
+                        textarea.form-control(type='text', id='proficiency')
                           | #{proficiency}
                   tr
                     td NOK Name
                     td 
                       .form-group
-                        input.form-control(type='text',id='nokName', value="#{nokName}")
+                        input.form-control(type='text', id='nokName', value="#{nokName}")
                     td Relationship
                     td
                       .form-group

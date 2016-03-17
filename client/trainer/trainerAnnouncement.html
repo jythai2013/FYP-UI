@@ -32,19 +32,29 @@
                 <th>Title</th>
                 <th>View Details</th>
                 <th>Posted To</th>
-<!--                 <th>Delete</th>
- -->              </tr>
+                <th>Delete</th>
+              </tr>
             </thead>
             <tbody>
-              {{#each announcementList}}
+              {{#each trainerOngoingCourses1}}
+              <form action="" method="post">
+                <input type="hidden" id="groupId" value="{_id}">
                 <tr>
                   {{#each announcements}}
                     <td> {{formatDate annouDate}}</td>
                     <td> {{annouTitle}}</td>
                     <td> {{annouDetails}}</td>
+                    <td>
+                      {{loggedInUserId}}
+                        <input type="hidden" id="announId" value="{_id}">
+                        <!-- {{annouAuthor}} is equal to {{Session.get("loggedInUser")._id}}
+                        <a class="btn.admin-btn bt-sn" data-target="#deleteTAnnounButton#{_id}" data-toggle="modal" data-id="#{_id}"> Delete </a> -->
+                        <button class="button btn admin-btn" id="deleteTAnnounButton">Delete</button>
+                    </td>
                   {{/each}}
                   <td> {{courseCode}}</td>
                 </tr>
+              </form>
               {{/each}}
             </tbody>
           </table>
@@ -69,16 +79,40 @@
         <th style="width:25%">Announcement Title</th>
         <td><input type="text" name="announTitle" id="announTitle" style="width:100%"/></td>
       </tr>
-      <!-- <tr>
-        <th>Announcement Type</th>
-        <td>
-          <select name="announType" id="announType">
-            <option value="assignment">Assignment Related</option>
-            <option value="discussion">Discussion Related</option>
-            <option value="general">General</option>
-          </select>
+      <tr>
+          <th>Post To:</th>
+          <td>
+            <select name="groupId" id="groupId" style="margin-top: 5px; margin-bottom: 5px; padding: 5px;">
+              {{#each trainerOngoingCourses1}}
+                <option value="{{_id}}">{{courseCode}} {{grpNum}}</option>
+              {{/each}}
+            </select>
+          </td>
+      </tr>
+      <tr>
+        <th>Details:</th>
+        <td><textarea id="announDetails" style="width:100%"></textarea></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>            
+          <button class="button btn admin-btn" id="trainerPostAnnouncement">Post Announcement</button>
         </td>
-      </tr> -->
+      </tr>
+    </table>
+  </form>
+</template>
+
+
+
+
+<template name="editAnnouncement">
+  <form action="" method="post">
+    <table style="width:100%" class="table table-striped" id="dataTables-example">
+      <tr>
+        <th style="width:25%">Announcement Title</th>
+        <td><input type="text" name="announTitle" id="announTitle" style="width:100%"/></td>
+      </tr>
       <tr>
           <th>Post To:</th>
           <td>
