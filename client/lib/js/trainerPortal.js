@@ -22,8 +22,8 @@ Template.trainerUploads.helpers({
 	}
 });
 
-Template.trainerAnnouncment.helper({
-	'loggedInUserId' : function getLoginId(e) {
+Template.trainerAnnouncment.onRendered({
+	'loggedInUserId': function getLoginId(e) {
 		return Meteor.user()._id;/*Session.get("loggedInUser")._id*/
 	}
 });

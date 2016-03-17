@@ -1,4 +1,70 @@
-Template.trainerGraph.rendered = function drawChart() {
+function courseData(){
+    var courseArray = Courses.find({}).fetch();
+    //find the number of class the course have had in history
+    var returnArray = [];
+    for (var i = 0; i < courseArray.length; i ){
+      var groups = Groups.find({courseCode: courseArray[i].courseCode}).fetch();
+      var data = [courseArray[i], groups.length];
+      return Array.push(data);
+    }
+}
+
+function groupData(){
+    var groupArray = Groups.find({}).fetch();
+  
+    var returnArray = [];
+    for (var i = 0; i < groupArray.length; i ){
+        var classList = groupArray[i].studentList;
+        var data = [groupArray[i], classList.length];
+        return Array.push(data);
+    }  
+};
+
+function revenueData(){
+    var courseArray = Courses.find({}).fetch();
+    //find the number of class the course have had in history
+    var revenue = 0;
+    var returnArray = [];
+    for (var i = 0; i < courseArray.length; i ){
+        revenue = 0;
+        var groups = Groups.find({courseCode: courseArray[i].courseCode}).fetch();
+        for (var j = 0; j < groups.length; j ){
+           var classList = groups[j].classList;
+           var courseFee = parseInt(courseArray[i].courseFees);
+           revenue  = classList.length * courseFee
+        }
+        var data = [courseArray[i], revenue];
+        return Array.push(data);
+    }
+ 
+};
+
+
+Template.adminAnalytics.Onrendered = function drawChartAdmin() {
+    //clear the contents of the div, in the event this function is called more than once.
+    console.log("courseData chart >> Start ");
+    $('#adminCourseChart').empty();
+    var data = courseData();
+    console.log(data);
+
+    // if (data) {
+    //     new Morris.Line({
+    //         element: 'adminCourseChart',
+    //         data:    data,
+    //         xkey:    'course',
+    //         ykeys:   ['value'],
+    //         // chart.
+    //         labels:  ['Value'],
+    //         resize:  true
+    //     });
+    // }
+    console.log("courseData chart >> END");
+}
+
+
+
+// STELLA's
+Template.trainerGraph.Onrendered = function drawChart() {
     //clear the contents of the div, in the event this function is called more than once.
     $('#myfirstchart').empty();
 
