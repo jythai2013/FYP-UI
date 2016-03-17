@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 // Meteor.methods({
 // 	"recommend":function(){
 // 		// //TODO: check all students, if they are to be recommended this course, then send them an emails
@@ -13,6 +14,24 @@
 			
 // 	}
 // });
+=======
+Meteor.methods({
+	"recommend":function(studentId, groupId){
+		// //TODO: check all students, if they are to be recommended this course, then send them an emails
+		// //	They are to be recommended when the following happens
+		// //		pre-requisite
+		// //		genre
+		// //		classmates take similar
+		// var students = Meteor.users.find({userType:{learner:true}}).fetch();
+		// students.forEach(function(student, index, array){
+		// }
+			
+		var r = studentFinishedCourseRecommender(studentId, groupId);
+		Session.set("recommendedCourses", r);
+		return r;
+	}
+});
+>>>>>>> Stashed changes
 		
 		
 // //this method is called when a student is enrolled. (via addTask)
@@ -62,6 +81,7 @@
 	
 	
 	
+<<<<<<< Updated upstream
 // 	//classmates
 // 	//recEngine
 // 	var recEngineWorks = true;
@@ -79,6 +99,25 @@
 // 		})
 // 		finalResult.concat(potentialCoursesFromRecEngine);
 // 	}
+=======
+	//classmates
+	//recEngine
+	var recEngineWorks = true;
+	if(recEngineWorks){
+		var potentialCoursesFromRecEngine;
+		recEngine.suggest(studentId, numberOfCoursesToRecommend, function(err,res) {
+			if (err) {console.log(err);}
+			else{
+				console.log(res);
+				res.forEach(function(thCourseCode, indexxx, array){
+					var thCourse = Courses.findOne({courseCode:thCourseCode});
+					potentialCoursesFromRecEngine.push(thCourse);
+				});
+			}
+		})
+		finalResult.concat(potentialCoursesFromRecEngine);
+	}
+>>>>>>> Stashed changes
 	
 // 	if(recEngineWorks){
 // 		// find the courses which this student has enrolled in
@@ -145,6 +184,7 @@
 	
 // 	console.log(finalResult);	
 	
+<<<<<<< Updated upstream
 // 	//TODO: email the student
 // 	var trySendMail = !true;
 // 	if(trySendMail){
@@ -156,6 +196,19 @@
 // 		Meteor.call("sendMail", details);
 // 	}
 // }
+=======
+	//TODO: email the student
+	var trySendMail = !true;
+	if(trySendMail){
+		details = {};
+		details.to = Meteor.users.findOne({_id:studentId});
+		details.from = "Matt";
+		details.subject = "Your next course with us!";
+		details.text = "TEXT";
+		Meteor.call("sendMail", details);
+	}
+}
+>>>>>>> Stashed changes
 
 
 
