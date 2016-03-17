@@ -290,8 +290,14 @@ Template.addClass.events({
 			// }
 		// }
 
-		obj.startDate = document.getElementById("gNewStartDate").value;
-		obj.endDate = document.getElementById("gNewEndDate").value;
+		var stringSDate = document.getElementById("gNewStartDate").value;
+		var stringEDate = document.getElementById("gNewEndDate").value;
+
+		var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
+		var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
+
+		obj.startDate = SDate;
+		obj.endDate = EDate;
 		obj.venue = document.getElementById("gVenue").value;
 		var trainId = document.getElementById("gTrainers").value;
 		obj.courseTrainers = {trainerId: trainId};
@@ -431,8 +437,15 @@ Template.addClassForm.events({
 			// }
 		// }
 
-		obj.startDate = document.getElementById("classListNewStartDate").value;
-		obj.endDate = document.getElementById("classListNewEndDate").value;
+		var stringSDate = document.getElementById("classListNewStartDate").value;
+		var stringEDate = document.getElementById("classListNewEndDate").value;
+
+		var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
+		var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
+
+
+		obj.startDate = document.SDate;
+		obj.endDate = document.EDate;
 		obj.venue = document.getElementById("classListVenue").value;
 		var trainId = document.getElementById("classListTrainers").value;
 		obj.courseTrainers = {trainerId: trainId};

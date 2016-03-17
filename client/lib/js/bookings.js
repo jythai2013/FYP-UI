@@ -296,20 +296,6 @@ function isFacilityAvailableOnThisTimeslot(facility, timeStart, timeEnd){
 }
 
 
-function addDays(date, days) {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    console.log(result);
-    return result;
-}
-
-function addMilis(date, num) {
-    var result = new Date(date);
-    result.setTime(result.getTime() + num);
-    console.log(result);
-    return result;
-}
-
 // return an array of objects, each object having a start and end
 function getDatesFromRepeat(){
   IDays = Session.get("facDaysSearch");
