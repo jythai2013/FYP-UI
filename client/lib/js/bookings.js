@@ -137,7 +137,7 @@ Template.facilityManagement.helpers({
       },
       events: array,
       eventMouseover: function(data, event, view) {
-				alert();
+        alert();
         var content = '<h3>'+data.title+'</h3>' + 
           '<p><b>Start:</b> '+data.start+'<br />' + 
           (data.end && '<p><b>End:</b> '+data.end+'</p>' || '');
@@ -328,157 +328,57 @@ function getDatesFromRepeat(){
   console.log("endDateTime is printing:");
   console.log(endinDateTime);
 
-  // var temp1 = new Date();
-  //     temp1.setHours(startDateTime.getHours());
-  //     temp1.setMinutes(startDateTime.getMinutes());
-  // var temp2 = new Date();
-  //     temp2.setHours(endinDateTime.getHours());
-  //     temp2.setMinutes(endinDateTime.getMinutes());
-  // var duration  = temp2 - temp1
-  // var oneDay = 24*60*60*1000;
-  
-  var timeSlot = new Object();
-  var repeat = [];
+  var timeslot = new Object();
   var result = [];
-  start = new Date(startDateTime);
-  end = new Date(endinDateTime);
-
-  startTimeString = start.hour() + ':' + start.minutes();
-  endTimeString = end.hour() + ':' + end.minutes();
-  startTime = moment(startTimeString, "hh:mm a");
-  endTime = moment(endTimeString, "hh:mm a");
-  duration = endTime.diff(startTime, 'hours');
-
-  firstSlot.start = new Date(moment(startDateTime));
-  firstSlot.end = new Date(moment().date(startDateTime).hour(endinDateTimeI).minute(endinDateTimeI));
-  results.push(firstSlot);
-  
-  var timeSlot = new Object();
-  if(repeatOptions.length != 0){
-  
-    for (var i = 0; i < repeatOptions.length; i ++){
-      repeat.push(repeatOptions[i]);
+  if(repeatOptions.length == 0){
+    timeSlot.start = startDateTime;
+    timeSlot.end = endinDateTime;
+    result.push(timeSlot);
+  } else {
+    var currentIndex = 0;
+    var weekIndex = 0;
+    var currentIsoDay = moment(startDateTime).isoWeekDay();
+    var goNextWeek = false; //if goNextWeek is true, no need to check isoDay anymore
+    // startTime = moment().startDateTimeInput.hour().minute();
+    var startTime = {
+      hour: moment(startDateTime).hour(),
+      minute: moment(startDateTime).minute()
     }
 
-    var counter = 0;
-    var currentPoint = start
+    var endTime = {
+      hour: moment(endinDateTime).hour(),
+      minute: moment(endinDateTime).minute()
+    }
 
-    for (var i = 0; i < repeatOptions; i++){
-      for(var j = 0; j < InumSessions; j++){
-        if(start < end && counter <=InumSessions){
-          if (repeatOptions[i] > start.isoWeekday()){
+    currentStartDate = moment(startDateTimeInput);
 
-            date = currentPoint
-            newStart = moment(date).add(1, "week").isoWeekday(repeatOptions[i]);
-            newStartEnd = moment(newStart).add(duration, 'hours');
-            timeSlot.start = newStart;
-            timeSlot.end = newStartEnd;
-            result.push(timeSlot);
-            counter+=1
-          } else {
-            counter+=1;
-          }
-          
-        } else {
-          break;
-        }
+    moment(result[result.length -1].end) < moment(endUserInput)
+    while (result.length < numOfSession && moment(result[result.length -1].end).isBefore(endinDateTime)){
+      if (repeatOptions[currentIndex] >= currentIsoDay || goNextWeek)
 
+        DateSlot = moment(currentStartDate).add(weekIndex, "week").isoWeekday(arrOfIsoDay[currentIndex]);
+
+        timeSlot.start = moment(DateSlot).hour(startTime.hour).minute(startTime.minute);
+        timeSlot.end = moment(DateSlot).hour(endTime.hour).minute(endTime.minute);  
+        result.push(timeSlot);
+        
+        currentIndex +=1;
+        goNextWeek = false;
+        // currentStartDate = startDate;
+      //update currentIndex, weekIndex and goNextWeek when necessary
+      if (currentIndex === arrOfIsoDay.length){
+        goNextWeek = true;
+        currentIndex = 0;
+        weekIndex +=1;
+      } else {
+        currentIndex += 1;
       }
-    }  
-
+    }    
   }
+
+  
 };  
 
-  
-//   //first timeslot
-//   results = new Array();
-//   var firstSlot = new Object();
-//   firstSlot.start = new Date(startDateTime);
-//   firstSlot.end = new Date(endinDateTime);
-//   results.push(firstSlot);
-  
-//   //subsequent timeslots
-//   var timeSlot = new Object();
-    
-//   // <option value="everyday">Everyday</option>
-//   if (repeatOption=="everyday"){
-//     if(InumSessions > 0 && InumSessions != undefined){
-//       for(var i = 1; i < InumSessions; i++){
-//         timeSlot.start = addDays(startDateTime, i);
-//         timeSlot.end   = addMilis(timeSlot.start, duration);
-//         results.push(timeSlot);
-//       }
-//     } else if(endinDateTime != undefined){
-//       var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
-//       for(var i = 1; i < diffDays; i++){
-//         timeSlot.start = addDays(startDateTime, i);
-//         timeSlot.end   = addMilis(timeSlot.start, duration);
-//         results.push(timeSlot);
-//       }
-//     }
-//   }
-//   // <option value="weekday">Weekdays</option>
-//   else if (repeatOption=="weekday"){
-//     if(InumSessions > 0 && InumSessions != undefined){
-//       for(var i = 1; i < InumSessions; i++){
-//         timeSlot.start = addDays(startDateTime, i);
-//         if(timeSlot.start.getDay() > 0 && timeSlot.start.getDay() < 7){
-//           timeSlot.end   = addMilis(timeSlot.start, duration);
-//           results.push(timeSlot);
-//         }
-//       }
-//     } else if(endinDateTime != undefined){
-//       var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
-//       for(var i = 1; i < diffDays; i++){
-//         timeSlot.start = addDays(startDateTime, i);
-//         if(timeSlot.start.getDay() > 0 && timeSlot.start.getDay() < 7){
-//           timeSlot.end   = addMilis(timeSlot.start, duration);
-//           results.push(timeSlot);
-//         }
-//       }
-//     }
-//   }
-//   // <option value="weekends">Weekends</option>
-//   else if (repeatOption=="weekends"){
-//     if(InumSessions > 0 && InumSessions != undefined){
-//       for(var i = 1; i < InumSessions; i++){
-//         timeSlot.start = addDays(startDateTime, i);
-//         if(timeSlot.start.getDay() == 0 || timeSlot.start.getDay() == 7){
-//           timeSlot.end   = addMilis(timeSlot.start, duration);
-//           results.push(timeSlot);
-//         }
-//       }
-//     } else if(endinDateTime != undefined){
-//       var diffDays = Math.round(Math.abs((startDateTime.getTime() - endinDateTime.getTime())/(oneDay)));
-//       for(var i = 1; i < diffDays; i++){
-//         timeSlot.start = addDays(startDateTime, i);
-//         if(timeSlot.start.getDay() == 0 || timeSlot.start.getDay() == 7){
-//           timeSlot.end   = addMilis(timeSlot.start, duration);
-//           results.push(timeSlot);
-//         }
-//       }
-//     }
-//   }
-//   // <option value="weekly">Weekly</option>
-//   else if (repeatOption=="weekly"){
-//     if(InumSessions > 0 && InumSessions != undefined){
-      
-//     } else if(endinDateTime != undefined){
-      
-//     }
-//   }
-//   // <option value="mothly">Monthly</option>
-//   else if (repeatOption=="mothly"){
-//     if(InumSessions > 0 && InumSessions != undefined){
-      
-//     } else if(endinDateTime != undefined){
-      
-//     }
-//   } else{
-//     //repeatOption not set, just return 1 timeslot
-//     return results;
-//   }
-// }
 
 Template.bookingFacilityForm.helpers({
   courseSearchResult:function(){
