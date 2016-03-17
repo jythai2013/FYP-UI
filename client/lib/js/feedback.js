@@ -714,8 +714,6 @@ Template.addFeedback.events({
 		var thisFeedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
 		console.log(feedbackTemplate);
 
-		//i need to put in qnID, feedbackQn, lspQnId, options and the number associated with it. 
-
 		var fakeArray2 = new Array();
 		console.log(thisFeedbackQnOptions.length);
 		
@@ -727,9 +725,6 @@ Template.addFeedback.events({
 					console.log(thisFeedbackQnOptions[i].options.length + "inforloop");
 				for(j = 0; j < thisFeedbackQnOptions[i].options.length; j++){
 					fakeArray.push(0);
-					// object.thisFeedbackQnOptions[i].options[j] = 0;
-					// console.log(object.qnOption);
-					// optionsNumber.push(0);
 				}
 				
 				console.log(thisFeedbackQnOptions[i].qnID + " qnID");
@@ -755,12 +750,6 @@ Template.doFeedbackSurvey.helpers({
 
 	"viewFeedbackDetails1": function() {
 		var fbId=Session.get("currentDoingfb");
-		console.log(fbId);
-		var url =  window.location.href;
-		
-		var positionFirstEqual = url.indexOf('=');		
-		var fbId=url.substr(positionFirstEqual+1);	
-		console.log(fbId);
 		var feedbackTemplateID = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
 
 		var feedbackTitle = Feedback.findOne({_id:feedbackTemplateID});
@@ -770,47 +759,66 @@ Template.doFeedbackSurvey.helpers({
 
 	"viewFeedbackQns2": function() {
 		var fbId = Session.get("currentDoingfb");
-		console.log(fbId);
-		//var fbId=Session.set('currentfb', currentfb);
 		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
 		console.log(feedbackTemplate);
 		var feedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
-		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
 		 return feedbackQnOptions;
-		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
-		 // return feedbackQnOptions;
 	}
 
 });
 
 Template.doFeedbackSurvey.events({
-
-	"click #saveFeedbackAnswers" : function(e) {
-		e.preventDefault();
-		// var fbId = Session.get("currentDoingfb");
-		// console.log(fbId);
-		//var fbId=Session.set('currentfb', currentfb);
-		var feedbackTemplate = FeedbackAnswers.findOne({_id:this._id}).feedbackTemplateID;
-		var feedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
-		console.log(feedbackQnOptions.length);
-		for (var i = 0, l = feedbackQnOptions.length; i < l; i++)
-    	{
-	        var ans = Session.get(feedbackQnOptions[i].feedbackQn);
-	        console.log(ans);
-	        console.log(feedbackQnOptions[i].options.length);
-	        for (var j = 0, l = feedbackQnOptions[i].options.length; j < l; j++)
-    		{
-    			if(feedbackQnOptions[i].options[j] === ans){
-    				console.log("here");
-    				FeedbackAnswers.findOne({_id:feedbackTemplate});
-    			}
-    		}	
-    	}
-
-		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
-		 // return feedbackQnOptions;
+	"click #saveFeedbackAnswersModal" : function(e) {
+        $("#saveSurvey").modal("show");
 	}	
 });
+
+
+Template.saveSurvey.events({
+	"click #saveFeedbackAnswers" : function(e) {
+		e.preventDefault();
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:this._id}).feedbackTemplateID;
+		//trying to get the name of the options out
+		var feedbackTemplateQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
+		console.log(feedbackTemplateQnOptions.length);
+		//loop to get the qns out
+		for (var i = 0, l = feedbackTemplateQnOptions.length; i < l; i++)
+    	{
+	        var ans = Session.get(feedbackTemplateQnOptions[i].feedbackQn);
+	        console.log(ans);
+	        console.log(feedbackTemplateQnOptions[i].options.length);
+	        var qnID = qnID = feedbackTemplateQnOptions[i].feedbackQn;
+	        console.log(qnID);
+	        //extracting the options
+		        var optionsTotalnum = FeedbackAnswers.findOne({_id:this._id}).options[i].options;
+
+		        console.log(optionsTotalnum);
+	        for (var j = 0, k = feedbackTemplateQnOptions[i].options.length; j < k; j++)
+    		{
+
+    			for (var h = 0, g = ans.length; h < g; h++)
+    			{	
+	    			if(feedbackTemplateQnOptions[i].options[j] === ans[h]){
+	    				// var ansOptions = FeedbackAnswers.findOne({_id:this._id}).options;
+	    				// console.log(ansOptions);
+						
+	    				var num = optionsTotalnum[j];
+	    				num = num +1;
+	    				optionsTotalnum[j]=num;
+		        	console.log(optionsTotalnum);
+
+
+	    			}
+	    		}
+    		}	
+
+    		Meteor.call("insertFeedbackAnswers", this._id, qnID ,optionsTotalnum);
+    	}
+
+		 // return feedbackQnOptions;
+	}
+});
+
 
 
 Template.doSurveyQn.events({
@@ -818,8 +826,10 @@ Template.doSurveyQn.events({
 		e.preventDefault();
 		console.log(this);
 		console.log(this.feedbackDetails.feedbackQn);
+		var qn = this.feedbackDetails.feedbackQn
 		var answers = new Array()
-		var elements  = document.getElementsByName("qnAns");
+		var elements  = document.getElementsByName(qn);
+		// console.log(elements);
 		for (var i = 0, l = elements.length; i < l; i++)
     	{
 	        if (elements[i].checked)
@@ -831,7 +841,86 @@ Template.doSurveyQn.events({
     	var qn  = this.feedbackDetails.feedbackQn;
     	console.log(qn);
     	Session.set(qn, answers);
-	}	
+	},	
+	"click #saveFieldsDo" : function(e) {
+		e.preventDefault();
+
+		console.log(this);
+		console.log(this.feedbackDetails.feedbackQn);
+		var qn = this.feedbackDetails.feedbackQn
+		var ans = new Array()
+		var elements  = document.getElementsByName(qn);
+		// console.log(elements);
+		for (var i = 0, l = elements.length; i < l; i++)
+    	{
+	        if (elements[i].checked)
+	        {
+	            console.log (elements[i].value);
+	            ans.push(elements[i].value);
+	        }
+    	}
+    	
+
+		var url =  window.location.href;
+		var positionEqual = url.indexOf('=');	
+		var fbIdAns=url.substring(positionEqual+1);
+		console.log (fbIdAns);
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbIdAns}).feedbackTemplateID;
+		var feedbackTemplateQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
+
+ 		for (var i = 0, k = feedbackTemplateQnOptions.length; i < k; i++)
+    		{
+    			var optionsTotalnum = FeedbackAnswers.findOne({_id:fbIdAns}).options[i].options;
+	        	var qnQn = feedbackTemplateQnOptions[i].feedbackQn;
+
+		        console.log(optionsTotalnum);
+    			for (var j = 0, k = feedbackTemplateQnOptions[i].options.length; j < k; j++)
+    			{
+	    			for (var h = 0, g = ans.length; h < g; h++)
+	    			{	
+		    			if(feedbackTemplateQnOptions[i].options[j] === ans[h]){
+		    				// var ansOptions = FeedbackAnswers.findOne({_id:this._id}).options;
+		    				// console.log(ansOptions);
+							
+		    				var num = optionsTotalnum[j];
+		    				num = num +1;
+		    				optionsTotalnum[j]=num;
+			        	console.log(optionsTotalnum);
+
+
+		    			}
+		    		}
+		    	}
+		    	Meteor.call("insertFeedbackAnswers", fbIdAns, qnQn ,optionsTotalnum);
+    		}
+	// 
+	// 	//trying to get the name of the options out
+	// 	console.log(feedbackTemplateQnOptions.length);
+	// 	//loop to get the qns out
+	// 	for (var i = 0, l = feedbackTemplateQnOptions.length; i < l; i++)
+ //    	{
+	//         var ans = Session.get(feedbackTemplateQnOptions[i].feedbackQn);
+	//         console.log(ans);
+	//         console.log(feedbackTemplateQnOptions[i].options.length);
+	//         var qnID = qnID = feedbackTemplateQnOptions[i].feedbackQn;
+	//         console.log(qnID);
+	//         //extracting the options
+	// 	        var optionsTotalnum = FeedbackAnswers.findOne({_id:this._id}).options[i].options;
+
+	// 	        console.log(optionsTotalnum);
+	//        	
+
+ //    		Meteor.call("insertFeedbackAnswers", this._id, qnID ,optionsTotalnum);
+ //    	}
+
+}
+
+
+
+
+
+
+
 });
 
 
@@ -929,31 +1018,3 @@ Template.doSurveyQn.events({
 // });
 
 
-/*
-editTitleFeedback	//Title of survey
-saveSurvey //button to save survey to db
-launchSurvey //button to save survey to db and launch it (set status to active)
-
-
-feedbackAnswer{
-	feedbackTemplate: (link to the feedbackID)
-	courseID:
-	class:
-	trainer/facility ID: 
-	qnOption: [
-		qnID:
-		lspQnId:
-		// options:[
-		// 	optionsTitle:
-		// 	total: 
-		// 	(eg. optionTitle:hey, total: 10)
-		// ]
-		Response:[
-			studentID:
-			response: (optionTitle)
-
-		]
-		
-	]
-}
-*/

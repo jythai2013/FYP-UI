@@ -41,11 +41,30 @@ Template.addTrainerAcctForm.events({
 		var array = _.map(selected, function(item) {
 		     return item.defaultValue;
 		});
-		obj.speciality = 			array;
+		obj.speciality = array;
 		obj.userType = {trainer:true};
 
 		Meteor.call("createTrainerAccount", obj);
 		console.log("Sys: Trainer Information Saved");
+	}
+});
+
+Template.viewTrainerParticulars.events({
+	"click #editTrainerAcctButton" : function editTrainerEventHandler(event, template) {
+		console.log("Sys: trainers.js >> Collect Trainer Information" + this._id);
+
+		//TODO: Validation of input		
+		var mobileNo = 			document.getElementById("mobileNo").value;
+		var nationality = 	document.getElementById("nationality").value;
+		var proficiency = 		document.getElementById("proficiency").value;
+		// var selected = template.findAll("input[type=checkbox]:checked");
+		// var array = _.map(selected, function(item) {
+		//      return item.defaultValue;
+		// });
+		//obj.speciality = array;
+
+		Meteor.call("editTrainerAccount", this._id, mobileNo, nationality, proficiency);
+		console.log("Sys: Trainer Information Updated");
 	}
 });
 

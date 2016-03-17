@@ -129,11 +129,6 @@ Template.addClass.helpers({
 
     "facilitiesList" : function(e) {
         return Facilities.find({}).fetch();
-    },
-
-    "courseTrainers" : function(e) {
-        console.log ("facilitiesList");
-        return Facilities.find({}).fetch();
     }
 });
 
