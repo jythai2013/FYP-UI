@@ -103,10 +103,12 @@ template(name="course")
                     button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
                     h4#myModalLabel.modal-title Upload Files
                   .modal-body
-                      input(type ="hidden", value = "#{courseCode}", id ="cUploadCourseCode")                
+                    input(type ="hidden", value = "#{courseCode}", id ="cUploadCourseCode")    
+                    input(type ="hidden", value = "#{courseCode}", id ="cUploadSession")   
                     input#myFileInput(type="file", name="courseMaterials")
                   .modal-footer
-                    button.myFileInputButton.btn.admin-btn(type="button") Upload
+                    button.myFileInputButton.btn.admin-btn(type="button", data-dismiss="modal") Upload
+
 
 
 template(name="addClass")
