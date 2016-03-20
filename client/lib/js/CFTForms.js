@@ -23,7 +23,8 @@ Template.createLSPCourseForm.helpers({
 
 Template.createLSPCourseForm.events({
 	"click #generateCourseLSP" : function(e) {
-		console.log("Hertr");
+		var courseID = document.getElementById("courseLSPSubject").value;
+		var courseCode = document.getElementById("courseLSPSubject").value;
 	}
 });
 
@@ -37,6 +38,7 @@ Template.createLSPFacilityForm.helpers({
 
 Template.createLSPFacilityForm.events({
 	"click #generateFacilityLSP" : function(e) {
+		var facilityID = document.getElementById("facilityLSPSubject").value;
 	}
 });
 
@@ -50,6 +52,14 @@ Template.createLSPTrainerForm.helpers({
 
 Template.createLSPTrainerForm.events({
 	"click #generateTrainerLSP" : function(e) {
+
+		var trainerID = document.getElementById("trainerLSPSubject").value;
+		var a = feedbackAnswers.find({assessedOn:trainerID}).length;
+		console.log(a);
+		for(i = 0; i < thisFeedbackQnOptions.length; i++){
+
+		}
+
 	}
 });
 
