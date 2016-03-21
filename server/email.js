@@ -82,21 +82,21 @@ function sendMail(details) {
 	// if(Meteor.user.userType != "admin"){
 	// alert("You are not an admin"); //TODO: make a nice message
 	// return false;
-	// }
-	to = details.to;
-	from = details.from;
-	subject = details.subject;
-	text = details.text;
-	check([to, from, subject, text], [String]);
+	// // }
+	// to = details.to;
+	// from = details.from;
+	// subject = details.subject;
+	// text = details.text;
+	// check([to, from, subject, text], [String]);
 
-	// this.unblock();
+	// // this.unblock();
 
-	Email.send({
-		to: to,
-		from: from,
-		subject: subject,
-		text: text
-	});
+	// Email.send({
+	// 	to: to,
+	// 	from: from,
+	// 	subject: subject,
+	// 	text: text
+	// });
 	
 	console.log("Email Sent")
 	FutureTasks.remove(details._id);

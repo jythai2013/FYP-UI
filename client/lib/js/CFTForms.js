@@ -21,12 +21,51 @@ Template.createLSPCourseForm.helpers({
 
 });
 
+
+Template.courseLSPForm.onRendered(function(e){
+	var courseID = Session.get("currentCourseIDLSPForm");
+	Session.set("currentCourseIDLSPForm", courseID);
+});
+
+Template.createLSPCourseForm.helpers({
+
+	"courseID2": function() {
+		return Session.get("currentCourseIDLSPForm");
+	}
+});
+
 Template.createLSPCourseForm.events({
 	"click #generateCourseLSP" : function(e) {
 		var courseID = document.getElementById("courseLSPSubject").value;
-		var courseCode = document.getElementById("courseLSPSubject").value;
+		console.log(courseID);
+		var courseCode = Courses.findOne({_id:courseID}).courseCode;
+		Session.set("currentCourseIDLSPForm", courseID);
+
+
+
+		// var courseFeedbackAnswers = FeedbackAnswers.find({assessedOn:courseCode}).fetch();
+		// //if return null generate message
+		// console.log(courseFeedbackAnswers);
+
+		// for(i = 0; i < courseFeedbackAnswers.length; i++){
+
+
+		// }
 	}
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Template.createLSPFacilityForm.helpers({
 
