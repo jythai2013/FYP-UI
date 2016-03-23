@@ -51,8 +51,10 @@ Template.createLSPCourseForm.events({
 
 
 		// }
-		var aaa = e.currentTarget;
-		e.currentTarget.click();
+		
+		
+		
+		window.location.assign(e.currentTarget.href + document.getElementById("courseLSPSubject").value);
 	}
 });
 
@@ -80,6 +82,9 @@ Template.createLSPFacilityForm.helpers({
 Template.createLSPFacilityForm.events({
 	"click #generateFacilityLSP" : function(e) {
 		var facilityID = document.getElementById("facilityLSPSubject").value;
+		
+		
+		window.location.assign(e.currentTarget.href + document.getElementById("facilityLSPSubject").value);
 	}
 });
 
@@ -101,6 +106,9 @@ Template.createLSPTrainerForm.events({
 
 		}
 
+		
+		
+		window.location.assign(e.currentTarget.href + document.getElementById("trainerLSPSubject").value);
 	}
 });
 

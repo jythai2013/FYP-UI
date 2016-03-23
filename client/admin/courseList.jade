@@ -161,9 +161,9 @@ template(name="addCourseForm")
                   th(style="white-space: normal; width=30%;") Prerequisites
                   td 
                     .form-group.input-group
-                      input.form-control(type="select", id="cNewPrereq")
+                      select(id="cNewPrereq")
                         each exisitingCourse
-                          option(value={{courseCode}}; text={{courseCode}})
+                          option(value="#{courseCode}") #{courseCode}
                 tr
                   th(style="white-space: normal; width=30%;") Genre
                   td 
