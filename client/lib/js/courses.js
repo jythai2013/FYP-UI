@@ -71,6 +71,10 @@ Template.addClassForm.helpers({
 		//console.log(currentCode + " current codes bitch");
 		//console.log(currentCourse);
 		return Courses.find({});
+	},
+	
+	"exisitingCourse" : function(e){
+		return Courses.find({});
 	}
 });
 
@@ -81,6 +85,7 @@ Template.course.onRendered(function(e){
 	console.log(currentCourseEsc+ " currnt course code escaped");
 	var currentCourse=unescape(currentCourseEsc);
 	Session.set("currentCourseCode", currentCourse);
+	$('#cNewPrereq').select2();
 });
 
 Template.course.helpers({
@@ -219,9 +224,11 @@ Template.addCourseForm.events({
 		var cDescription = document.getElementById("cNewDesc").value;
 		var cType = document.getElementById("cNewType").value;
 		var cFLR = document.getElementById("cNewFLR").value;
+		var cPrereq = document.getElementById("cNewPrereq").value;
+		var cGenre = document.getElementById("cNewGenre").value;
 
 		console.log("here8");
-		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType,cFLR);
+		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType, cFLR, cPrereq, cGenre);
 		var temp = Session.get("courseSearchCode");
 		Session.set("courseSearchCode", "123");
 		Session.set("courseSearchCode", temp);

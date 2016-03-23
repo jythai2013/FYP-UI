@@ -158,6 +158,18 @@ template(name="addCourseForm")
                     .form-group.input-group
                       input.form-control(type="text", id="cNewFLR")
                 tr
+                  th(style="white-space: normal; width=30%;") Prerequisites
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="select", id="cNewPrereq")
+												each exisitingCourse
+													option(value={{courseCode}}; text={{courseCode}})
+                tr
+                  th(style="white-space: normal; width=30%;") Genre
+                  td 
+                    .form-group.input-group
+                      input.form-control(type="text", id="cNewGenre")
+                tr
                   th Fees (excluding GST)
                   td 
                     .form-group.input-group
