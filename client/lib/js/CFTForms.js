@@ -51,6 +51,8 @@ Template.createLSPCourseForm.events({
 
 
 		// }
+		var aaa = e.currentTarget;
+		e.currentTarget.click();
 	}
 });
 
