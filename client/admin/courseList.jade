@@ -160,10 +160,23 @@ template(name="addCourseForm")
                 tr
                   th(style="white-space: normal; width=30%;") Prerequisites
                   td 
-                    .form-group.input-group
-                      select(id="cNewPrereq")
+                    .form-group()
+                      select(id="cNewPrereq", style="color: black")
                         each exisitingCourse
-                          option(value="#{courseCode}") #{courseCode}
+                          option(value="#{courseCode}") #{courseCode} 
+                  td 
+                    button#addMoreCourses.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                      i.fa.fa-plus  
+
+                      
+
+                each noOfCourseReq
+                  tr 
+                    td(colspan="2")
+                      .form-group()
+                        select(name="cNewPrereq", style="color: black; width: 100%")
+                          each exisitingCourse
+                            option(value="#{courseCode}") #{courseCode} 
                 tr
                   th(style="white-space: normal; width=30%;") Genre
                   td 

@@ -71,10 +71,20 @@ Template.addClassForm.helpers({
 		//console.log(currentCode + " current codes bitch");
 		//console.log(currentCourse);
 		return Courses.find({});
-	},
+	}
+});
+
+Template.addCourseForm.helpers({
 	
 	"exisitingCourse" : function(e){
 		return Courses.find({});
+	}, 
+	"noOfCourseReq" : function(e){
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('courseTimes'); i++){
+			fakeArray.push("a")
+		}
+    	return fakeArray;
 	}
 });
 
@@ -232,6 +242,18 @@ Template.addCourseForm.events({
 		var temp = Session.get("courseSearchCode");
 		Session.set("courseSearchCode", "123");
 		Session.set("courseSearchCode", temp);
+
+	},
+	"click #addMoreCourses" : function(e) {
+		
+		 e.preventDefault();
+
+		 var courseTimes = Session.get('courseTimes');
+		 var noOfCourses = courseTimes+1;
+		 if(isNaN(courseTimes)) noOfCourses = 1;
+		 console.log("courseTimes " + courseTimes);
+		 console.log("noOfCourses " + noOfCourses);
+		 Session.set('courseTimes', noOfCourses);
 	}
 
 
