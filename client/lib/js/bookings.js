@@ -223,7 +223,7 @@ function findIfFacilityIsAvailable(facIdI) {
   dates.forEach(function(details){
     startDT = details.start; 
     endinDT = details.end;
-    var available = isFacilityAvailableOnThisTimeslot(facIdI, startDT, endinDT) | false;
+    var available = isFacilityAvailableOnThistimeslot(facIdI, startDT, endinDT) | false;
     console.log(facIdI);
     console.log(available);
     if(!available){
@@ -234,7 +234,7 @@ function findIfFacilityIsAvailable(facIdI) {
 }
 
 
-function isFacilityAvailableOnThisTimeslot(facility, timeStart, timeEnd){
+function isFacilityAvailableOnThistimeslot(facility, timeStart, timeEnd){
   // results = new Array();
   soFarSoGood = true;
   // |        |
@@ -316,10 +316,11 @@ function getDatesFromRepeat(){
 
   var timeslot = new Object();
   var result = [];
-  if(repeatOptions.length == 0){
-    timeSlot.start = startDateTime;
-    timeSlot.end = endinDateTime;
-    result.push(timeSlot);
+	console.log(repeatOptions);
+  if(repeatOptions === undefined || repeatOptions.length == 0){
+    timeslot.start = startDateTime;
+    timeslot.end = endinDateTime;
+    result.push(timeslot);
   } else {
     var currentIndex = 0;
     var weekIndex = 0;
@@ -344,9 +345,10 @@ function getDatesFromRepeat(){
 
         DateSlot = moment(currentStartDate).add(weekIndex, "week").isoWeekday(arrOfIsoDay[currentIndex]);
 
-        timeSlot.start = moment(DateSlot).hour(startTime.hour).minute(startTime.minute);
-        timeSlot.end = moment(DateSlot).hour(endTime.hour).minute(endTime.minute);  
-        result.push(timeSlot);
+				console.log(timeslot);
+        timeslot.start = moment(DateSlot).hour(startTime.hour).minute(startTime.minute);
+        timeslot.end = moment(DateSlot).hour(endTime.hour).minute(endTime.minute);  
+        result.push(timeslot);
         
         currentIndex +=1;
         goNextWeek = false;
@@ -361,9 +363,8 @@ function getDatesFromRepeat(){
       }
     }    
   }
-
-  
-};  
+		return result;
+}
 
 
 Template.bookingFacilityForm.helpers({
