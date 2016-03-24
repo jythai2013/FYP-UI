@@ -146,22 +146,24 @@ Template.deleteStudentForm.events({
 Template.viewParticularsForm.events({
 	"click #editStudAcct" : function viewStudentDetailsEventHandler(e) {
 		console.log("Updating Student Information...");
+		console.log(e);
+		console.log(this);
 
 		//TODO: Validation of input
-		var sRemark = document.getElementById("remarks").value;
+		var sRemark = $("#"+this._id+" #remarks")[0].value;
 		//var idNo = document.getElementById("remarks").value;
 		//var email = document.getElementById("remarks").value;
 		//var nationality = document.getElementById("remarks").value;
-		var sMobileNo = document.getElementById("mobileNo").value;
-		var qualification = document.getElementById("qualification").value;
-		var sProficiency = document.getElementById("proficiency").value;
+		var sMobileNo 		= $("#"+this._id+" #mobileNo")[0].value;
+		var qualification = $("#"+this._id+" #qualification")[0].value;
+		var sProficiency 	= $("#"+this._id+" #proficiency")[0].value;
 		
 		// var scompName = document.getElementById("compName").value;
 		// var scompOfficeNo = document.getElementById("compOfficeNo").value;		
 		
-		var snokName = document.getElementById("nokName").value;		
-		var snokReln = document.getElementById("nokReln").value;		
-		var snokTel = document.getElementById("nokTel").value;
+		var snokName = $("#"+this._id+" #nokName")[0].value;		
+		var snokReln = $("#"+this._id+" #nokReln")[0].value;		
+		var snokTel =  $("#"+this._id+" #nokTel")[0].value;
 
 			console.log("Remarks-"+ sRemark);
 			console.log("MobileNo-"+ sMobileNo);

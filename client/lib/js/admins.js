@@ -29,9 +29,9 @@ Template.addAdminAcctForm.events({
 	"click #addAdminAcctButton" : function createAdminEventHandler(event, template) {
 		console.log("Sys: Collect Admin Information");
 		//TODO: Validation of input
-		var fullName = document.getElementById("sName").value;
-		var mobileNo = document.getElementById("mobileNo").value;
-		var email = document.getElementById("email").value;
+		var fullName = 	$("#"+this._id+" #sName").value;
+		var mobileNo = 	$("#"+this._id+" #mobileNo").value;
+		var email = 		$("#"+this._id+" #email").value;
 
 		var selected = template.findAll("input[type=checkbox]:checked");
 		var array = _.map(selected, function(item) {
