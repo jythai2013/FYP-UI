@@ -54,9 +54,9 @@ Template.viewTrainerParticulars.events({
 		console.log("Sys: trainers.js >> Collect Trainer Information" + this._id);
 
 		//TODO: Validation of input		
-		var mobileNo = 				$("#"+this._id+" #mobileNo")[0].value;
-		var nationality = 		$("#"+this._id+" #nationality")[0].value;
-		var proficiency = 		$("#"+this._id+" #proficiency")[0].value;
+		var mobileNo = 				$("."+this._id+" #mobileNo")[0].value;
+		var nationality = 		$("."+this._id+" #nationality")[0].value;
+		var proficiency = 		$("."+this._id+" #proficiency")[0].value;
 		// var selected = template.findAll("input[type=checkbox]:checked");
 		// var array = _.map(selected, function(item) {
 		//      return item.defaultValue;

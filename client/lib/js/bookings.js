@@ -174,11 +174,11 @@ Template.bookingFacilityForm.helpers({
   facilitySearchResult:function(){
     
     details = new Object();
-    if (Session.get("facCapacitySearch")                  != undefined) {details.capacity     = Session.get("facCapacitySearch"); }
+    if (Session.get("facCapacitySearch")            != undefined) {details.capacity	= Session.get("facCapacitySearch"); }
     else{Session.set("facCapacitySearch", 0);}    
     if (Session.get("facStartDateTimeSearch")       != undefined) {details.start    = Session.get("facStartDateTimeSearch").value;}
     else{console.log("pls set date");}
-    if (Session.get("facEndDateTimeSearch")       != undefined) {details.end    = Session.get("facEndDateTimeSearch").value;}
+    if (Session.get("facEndDateTimeSearch")       	!= undefined) {details.end    	= Session.get("facEndDateTimeSearch").value;}
     else{console.log("pls set start time");}
     if( Session.get("facTypeSearch") != undefined && Session.get("facTypeSearch").length > 0){
       ascapacity = parseInt(Session.get("facCapacitySearch"));
