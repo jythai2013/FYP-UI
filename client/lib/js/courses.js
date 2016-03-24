@@ -234,11 +234,27 @@ Template.addCourseForm.events({
 		var cDescription = document.getElementById("cNewDesc").value;
 		var cType = document.getElementById("cNewType").value;
 		var cFLR = document.getElementById("cNewFLR").value;
-		var cPrereq = document.getElementById("cNewPrereq").value;
+		// var cPrereq = document.getElementById("cNewPrereq").value;
+
+
+		var cPrereq = document.getElementsByName("cNewPrereq");
+		console.log(cPrereq +" adding PREREQ");
+		var addPrereqArr = new Array();
+		for(var x = 0, l = cPrereq.length; x < l;  x++){
+   			console.log(cPrereq[x] + "cPrereq line 236");
+			
+			addPrereqArr.push(cPrereq[x].value);
+    	}
+
+    	addPrereqArr.forEach(function(entry) {
+   			console.log(entry + "cPrereq");
+		});
+
+
 		var cGenre = document.getElementById("cNewGenre").value;
 
 		console.log("here8");
-		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType, cFLR, cPrereq, cGenre);
+		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType, cFLR, addPrereqArr, cGenre);
 		var temp = Session.get("courseSearchCode");
 		Session.set("courseSearchCode", "123");
 		Session.set("courseSearchCode", temp);
@@ -251,6 +267,18 @@ Template.addCourseForm.events({
 		 var courseTimes = Session.get('courseTimes');
 		 var noOfCourses = courseTimes+1;
 		 if(isNaN(courseTimes)) noOfCourses = 1;
+		 console.log("courseTimes " + courseTimes);
+		 console.log("noOfCourses " + noOfCourses);
+		 Session.set('courseTimes', noOfCourses);
+	},
+
+	"click #removeMoreCourses" : function(e) {
+		
+		 e.preventDefault();
+
+		 var courseTimes = Session.get('courseTimes');
+		 var noOfCourses = courseTimes-1;
+		 if(isNaN(courseTimes)) noOfCourses = 0;
 		 console.log("courseTimes " + courseTimes);
 		 console.log("noOfCourses " + noOfCourses);
 		 Session.set('courseTimes', noOfCourses);
@@ -269,7 +297,16 @@ Template.editCourseForm.events({
 		console.log("editting");
 
 		//TODO: Validation of input
+		
+		var url =  window.location.href;
+		var positionFirstEqual = url.indexOf('=');	
+		var currentCourse=url.substring(positionFirstEqual+1);
+		console.log(currentCourse);
+		var _id = Courses.findOne({courseCode:currentCourse})._id;
+		console.log(_id);
+
 		var cCode = document.getElementById("cCCode").value;
+		console.log(cCode);
 		var cName = document.getElementById("cCName").value;
 		var cDesc = document.getElementById("cCDesc").value;
 		var cHours = document.getElementById("cCHour").value;
@@ -280,7 +317,9 @@ Template.editCourseForm.events({
 
 		
 		console.log("here8");
-		Meteor.call("editCourse", cCode, cName, cDesc, cHours, cFees, cFLR, cType);
+		Meteor.call("editCourse", _id, cCode, cName, cDesc, cHours, cFees, cFLR, cType);
+		var newURL =url.substring(0, positionFirstEqual+1); ;
+		window.location.assign(newURL +cCode);
 	}
 
 

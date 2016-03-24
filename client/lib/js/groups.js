@@ -129,6 +129,9 @@ Template.addClass.helpers({
 
     "facilitiesList" : function(e) {
         return Facilities.find({}).fetch();
+    },
+    "courseTrainers2" : function(e) {
+		return Meteor.users.find({userType:{"trainer":true}});
     }
 });
 

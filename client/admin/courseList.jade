@@ -161,27 +161,34 @@ template(name="addCourseForm")
                   th(style="white-space: normal; width=30%;") Prerequisites
                   td 
                     .form-group()
-                      select(id="cNewPrereq", style="color: black")
+                      select(name="cNewPrereq", style="color: black; width:70%;")
+                        option(value="")
                         each exisitingCourse
-                          option(value="#{courseCode}") #{courseCode} 
-                  td 
-                    button#addMoreCourses.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                      i.fa.fa-plus  
-
-                      
+                          option(value="#{courseCode}") #{courseCode}
+                      button#addMoreCourses.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                        i.fa.fa-plus  
 
                 each noOfCourseReq
                   tr 
-                    td(colspan="2")
+                    th
+                    td
                       .form-group()
-                        select(name="cNewPrereq", style="color: black; width: 100%")
+                        select(name="cNewPrereq", style="color: black")
                           each exisitingCourse
-                            option(value="#{courseCode}") #{courseCode} 
+                            option(value="#{courseCode}") #{courseCode}
+                        button#addMoreCourses.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                          i.fa.fa-plus 
+                        button#removeMoreCourses.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                          i.fa.fa-minus  
                 tr
                   th(style="white-space: normal; width=30%;") Genre
-                  td 
-                    .form-group.input-group
-                      input.form-control(type="text", id="cNewGenre")
+                  td   
+                    .form-group()
+                      select(name="type", id="cNewGenre", style="color: black")
+                        option(value="Manufacturing") Manufacturing
+                        option(value="Construction") Construction
+                        option(value="Workplace Health & Safety") Workplace Health & Safety
+                        option(value="Others") Others
                 tr
                   th Fees (excluding GST)
                   td 
