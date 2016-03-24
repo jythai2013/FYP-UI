@@ -88,8 +88,7 @@ template(name="viewTrainerParticulars")
                 tr
                   td Nationality
                   td
-                    .form-group
-                      input.form-control(type="text", id="nationality", value="#{nationality}")
+                    +nationalityList
                 tr
                   td Mobile
                   td 
@@ -131,8 +130,7 @@ template(name="addTrainerAcctForm")
                 tr
                   td Nationality
                   td
-                    .form-group
-                      input.form-control(type="text", id="nationality")
+                    +nationalityList
                 tr
                   td ID Type
                   td

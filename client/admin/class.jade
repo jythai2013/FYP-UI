@@ -148,13 +148,19 @@ template(name="displayAnnouncements")
           th Details
           th Date
           th Author
-      tbody 
+          th Delete
+      tbody
         each groupAnnouncements
           tr
             td #{annouTitle}
             td #{annouDetails}
             td {{formatDate annouDate}}
-            td #{annouAuthor} 
+            td {{authorName annouAuthor}}
+            if isAuthor
+              form(name="deleteAdminAnnou", role="form", method="post")
+                td 
+                  input#deleteAAnnounButton(type="submit",value="Delete")
+
   // /.table-responsive
 
 template(name="editClassDetails")

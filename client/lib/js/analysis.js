@@ -1,30 +1,33 @@
 function courseData(){
     var courseArray = Courses.find({}).fetch();
     //find the number of class the course have had in history
-    var returnArray = [];
+    var returnArray = new Array();
     for (var i = 0; i < courseArray.length; i ){
       var groups = Groups.find({courseCode: courseArray[i].courseCode}).fetch();
       var data = [courseArray[i], groups.length];
-      return Array.push(data);
+      //console.log("Function courseData : >> push "+ data);
+      returnArray.push(data);
     }
+    return returnArray;
 }
 
 function groupData(){
     var groupArray = Groups.find({}).fetch();
   
-    var returnArray = [];
+    var returnArray = new Array();
     for (var i = 0; i < groupArray.length; i ){
         var classList = groupArray[i].studentList;
         var data = [groupArray[i], classList.length];
-        return Array.push(data);
-    }  
+        returnArray.push(data);
+    }
+    return returnArray;  
 };
 
 function revenueData(){
     var courseArray = Courses.find({}).fetch();
     //find the number of class the course have had in history
     var revenue = 0;
-    var returnArray = [];
+    var returnArray = new Array();
     for (var i = 0; i < courseArray.length; i ){
         revenue = 0;
         var groups = Groups.find({courseCode: courseArray[i].courseCode}).fetch();
@@ -34,13 +37,12 @@ function revenueData(){
            revenue  = classList.length * courseFee
         }
         var data = [courseArray[i], revenue];
-        return Array.push(data);
+        returnArray.push(data);
     }
- 
+    return returnArray;
 };
 
-
-Template.adminAnalytics.Onrendered = function drawChartAdmin() {
+Template.adminAnalytics.onRendered(function drawChartAdmin() {
     //clear the contents of the div, in the event this function is called more than once.
     console.log("courseData chart >> Start ");
     $('#adminCourseChart').empty();
@@ -59,12 +61,12 @@ Template.adminAnalytics.Onrendered = function drawChartAdmin() {
     //     });
     // }
     console.log("courseData chart >> END");
-}
+});
 
 
 
 // STELLA's
-Template.trainerGraph.Onrendered = function drawChart() {
+Template.trainerGraph.onRendered(function drawChart() {
     //clear the contents of the div, in the event this function is called more than once.
     $('#myfirstchart').empty();
 
@@ -96,4 +98,4 @@ Template.trainerGraph.Onrendered = function drawChart() {
             resize:  true
         });
     }
-}
+});
