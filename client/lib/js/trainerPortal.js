@@ -25,7 +25,16 @@ Template.trainerUploads.helpers({
 Template.trainerAnnouncment.onRendered({
 	'loggedInUserId': function getLoginId(e) {
 		return Meteor.user()._id;/*Session.get("loggedInUser")._id*/
-	}
+	},
+
+	'storeGroupId': function getLoginId(e) {
+		var groupThis = this;
+		return groupThis;
+	},
+
+	'returnStoreGroupId' : function getLoginId(e) {
+		return groupThis;
+	},
 });
 
 Template.trainerUploads.onRendered(function(){
@@ -127,3 +136,27 @@ Template.postAnnounModel.helpers({
   //   else
   //     return false
 });
+
+
+// Sidebar
+Template.trainerSidebar.helpers({
+	'isActive' : function(browserN) {
+
+		var browserUrl =  window.location.href;
+		var positionFirstEqual = browserUrl.indexOf('/');
+		var removeDomain=browserUrl.substr(positionFirstEqual+1);
+		var positionSecondEqual = removeDomain.indexOf('/');
+		console.log("url "+ browerURL.length);
+		console.log("url "+ positionSecondEqual);
+		var browerName=removeDomain.substr(positionSecondEqual+1);
+		console.log(browerName + " equals "+ browserN);
+		var a = browerName == browserN;
+		console.log(a);
+		if (browerName === browserN){
+			return "active";
+		} else {
+			return "";
+		}
+	}
+});
+		

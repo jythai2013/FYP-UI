@@ -37,24 +37,27 @@
             </thead>
             <tbody>
               {{#each trainerOngoingCourses1}}
-              <form action="" method="post">
                 <input type="hidden" id="groupId" value="{_id}">
+                {{storeGroupId}}
                 <tr>
                   {{#each announcements}}
                     <td> {{formatDate annouDate}}</td>
                     <td> {{annouTitle}}</td>
                     <td> {{annouDetails}}</td>
+                    <td> {{returnStoreGroupId.courseCode}} {{returnStoreGroupId.grpNum}}</td>
                     <td>
-                      {{loggedInUserId}}
-                        <input type="hidden" id="announId" value="{_id}">
-                        <!-- {{annouAuthor}} is equal to {{Session.get("loggedInUser")._id}}
-                        <a class="btn.admin-btn bt-sn" data-target="#deleteTAnnounButton#{_id}" data-toggle="modal" data-id="#{_id}"> Delete </a> -->
-                        <button class="button btn admin-btn" id="deleteTAnnounButton">Delete</button>
+                      {{#if isAuthor}}
+                        <form name="deleteTrainerAnnou" role="form" method="post">
+                          <input type="hidden" id="groupId" value="{{returnStoreGroupId._id}}">
+                          <input type="hidden" id="annouDate" value="{{annouDate}}">
+                          <input type="hidden" id="annouTitle" value="{{annouTitle}}">
+                          <input type="hidden" id="annouDetails" value="{{annouDetails}}">
+                          <input id="deleteTAnnounButton" type="submit" value="Delete"/>
+                        </form>
+                      {{/if}}
                     </td>
                   {{/each}}
-                  <td> {{courseCode}}</td>
                 </tr>
-              </form>
               {{/each}}
             </tbody>
           </table>

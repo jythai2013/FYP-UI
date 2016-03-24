@@ -1,7 +1,7 @@
 // Trainer ///////////////////////////////////////////////////////////////////////
 Template.trainerIndex.helpers({
 	"displayTrainerName" : function displayTrainerName(e) {
-		return Meteor.user().fullName;
+		Meteor.user().fullName;
 	}
 });
 
