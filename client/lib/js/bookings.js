@@ -338,6 +338,7 @@ function getDatesFromRepeat(){
 
     currentStartDate = moment(startDateTime);
 
+		console.log(results);
     while (moment(result[result.length -1]) != undefined && result.length < InumSessions && moment(result[result.length -1].end).isBefore(endinDateTime)){
       if (repeatOptions[currentIndex] >= currentIsoDay || goNextWeek)
 

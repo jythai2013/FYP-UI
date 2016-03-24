@@ -64,12 +64,14 @@
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ nationality);
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ proficiency);
 			//		Meteor.call("editTrainerAccount", this._id, mobileNo, nationality, proficiency);
-			Meteor.users.update({_id: _id}, {
-				$set: {
-					mobileNo: mobileNo,
-					nationality: nationality, 
-					proficiency: proficiency
+			Meteor.users.update({'_id': _id}, { $set:{
+					'mobileNo': mobileNo,
+					'nationality': nationality, 
+					'proficiency': proficiency
 				}
+			}, function(error, numAffected){
+				console.log(error);
+				console.log(numAffected);
 			});
 		},
 		

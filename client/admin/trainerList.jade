@@ -77,10 +77,10 @@ template(name="viewTrainerParticulars")
           button.close(type="button", data-dismiss="modal", aria-hidden="true")
           h4#myModalLabel.modal-title View/Update Trainer Details
         .modal-body
-          form(role="form", id="insert-addTrainerForm", action="#", method="post" class="#{_id}")
+          form(role="form", id="insert-addTrainerForm", action="#", method="post")
           .table-responsive
             table#dataTables-example.table(style="background:#333")
-              tbody
+              tbody(id="#{_id}")
                 tr
                   th Name
                   td
@@ -101,11 +101,12 @@ template(name="viewTrainerParticulars")
                   td Proficiency
                   td 
                     .form-group
-                      textarea.form-control(type='text',id='proficiency', value="#{proficiency}")
+                      textarea.form-control(type='text',id='proficiency')
+                        | #{proficiency}
                 
             // /.table-responsive
         .modal-footer
-          button#addTrainerAcctButton.btn.btn-save(type="button", data-dismiss="modal") Update Detail
+          button#editTrainerAcctButton.btn.btn-save(type="button", data-dismiss="modal") Update Detail
       // /.modal-content
     // /.modal-dialog
   // /.modal
