@@ -302,7 +302,7 @@ function getDatesFromRepeat(){
   IfacType = Session.get("facTypeSearch");
   Icapacity = Session.get("facCapacitySearch");
   InumSessions = Session.get("facNumSessionSearch");
-  repeatOption = Session.get("facReapeatOptionSearch");
+  repeatOptions = Session.get("facReapeatOptionSearch");
   startDateTime = Session.get("facStartDateTimeSearch");
   endinDateTime = Session.get("facEndinDateTimeSearch");
   // console.log(this);
@@ -323,7 +323,7 @@ function getDatesFromRepeat(){
   } else {
     var currentIndex = 0;
     var weekIndex = 0;
-    var currentIsoDay = moment(startDateTime).isoWeekDay();
+    var currentIsoDay = moment(startDateTime).isoWeekday();
     var goNextWeek = false; //if goNextWeek is true, no need to check isoDay anymore
     // startTime = moment().startDateTimeInput.hour().minute();
     var startTime = {
@@ -336,10 +336,9 @@ function getDatesFromRepeat(){
       minute: moment(endinDateTime).minute()
     }
 
-    currentStartDate = moment(startDateTimeInput);
+    currentStartDate = moment(startDateTime);
 
-    moment(result[result.length -1].end) < moment(endUserInput)
-    while (result.length < numOfSession && moment(result[result.length -1].end).isBefore(endinDateTime)){
+    while (moment(result[result.length -1]) != undefined && result.length < InumSessions && moment(result[result.length -1].end).isBefore(endinDateTime)){
       if (repeatOptions[currentIndex] >= currentIsoDay || goNextWeek)
 
         DateSlot = moment(currentStartDate).add(weekIndex, "week").isoWeekday(arrOfIsoDay[currentIndex]);
