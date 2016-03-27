@@ -105,6 +105,21 @@
 									</tr>
 								</thead>
 								<tbody>
+                                    {{#each lspForms}}
+                                        <tr>
+                                            <td> this.formName </td> 
+                                            <td> this.category </td> 
+                                            <td> this.uploadDate </td> 
+                                            <td> this.asessedOn </td> 
+                                            <td> this.reviewer </td> 
+                                            <td> 
+                                                <button class="btn btn btn-sm" id="downloadLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff">
+                                                    <i class="fa fa-save"></i>
+                                                    Download   
+                                                </button>
+                                            </td> 
+                                        </tr>
+                                    {{/each}}
 								</tbody>
 							</table>
 						</div>

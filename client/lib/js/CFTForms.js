@@ -17,6 +17,18 @@ Template.createLSPCourseForm.helpers({
 
 	"coursesList5": function() {
 		return Courses.find({});
+	},
+	"courseLSPQns": function() {
+		
+		var fakeArray = new Array();
+
+		
+		for(i = 0; i < Session.get('radioFields'); i++){
+			var obj = new Object();
+			fakeArray.push("a")
+		}
+    	return fakeArray;
+
 	}
 
 });
@@ -40,26 +52,22 @@ Template.createLSPCourseForm.events({
 		console.log(courseID);
 		var courseCode = Courses.findOne({_id:courseID}).courseCode;
 		Session.set("currentCourseIDLSPForm", courseID);
+		var assessedBy = Meteor.user().fullname;
+		//assessmentDate = today
 
+		// Meteor.call("createNewLSPForm", courseID, "Course", assessedBy, assessmentDate);
+				
+		//lspID = LSPSurvey.findOne({asessedOn:courseID, assessmentDate:today});
 
-
-		// var courseFeedbackAnswers = FeedbackAnswers.find({assessedOn:courseCode}).fetch();
-		// //if return null generate message
-		// console.log(courseFeedbackAnswers);
-
-		// for(i = 0; i < courseFeedbackAnswers.length; i++){
-
-
-		// }
-		
-		
-		
+		//substitute the "document.getElementById("courseLSPSubject").value" with lspID when done
 		window.location.assign(e.currentTarget.href + document.getElementById("courseLSPSubject").value);
 	}
 });
 
 
-
+Template.courseLSPRatings.numbering = function() {
+  return _.map(_.range(1, 5));
+};
 
 
 

@@ -161,7 +161,7 @@ Template.radioCreate.helpers({
 		for(i = 0; i < Session.get('radioFields'); i++){
 			fakeArray.push("a")
 		}
-    return fakeArray;
+    	return fakeArray;
 	}	
 });
 

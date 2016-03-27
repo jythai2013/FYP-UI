@@ -1,13 +1,13 @@
-<template name="courseLSPForm">
+<template name="facilityLSPForm">
     <div id="page-wrapper" style="min-height: 861px;">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"> Course LSP Form
+                <h1 class="page-header"> Facility LSP Form
                     
-					<a class = "js-duplicate fb-button  btn pull-right" id="saveExportCourseLSP">
+					<a class = "js-duplicate fb-button  btn pull-right" id="saveExportFacilityLSP">
                         <i class="fa fa-file-pdf-o"> PDF</i>
                     </a>
-					<a class = "js-duplicate fb-button btn pull-right" id="saveCourseLSP" href="/FeedbackMgmt/CFTRespo">
+					<a class = "js-duplicate fb-button btn pull-right" id="saveFacilityLSP" href="/FeedbackMgmt/CFTRespo">
                         <i class="fa fa-floppy-o"> Save </i>
 					</a>
                 </h1>
@@ -17,53 +17,23 @@
 						<table id="dataTables-example" class="table table-bordered">
 							<tbody>
 								<tr>
-									<th> Course Code: </th>
+									<th> Facility Name: </th>
 									<td>
 										{{courseCode}}
 									</td>
-									<th> Course Name: </th>
+									<th> Facility Type Name: </th>
 									<td>
-										{{courseName}}
+										{{facType}}
 									</td>
 								</tr>
 								<tr>
-									<th> Course Type: </th>
+									<th> Capacity: </th>
 									<td>
-										{{courseType}}
+										{{capacity}}
 									</td>
-									<th> Course Genre: </th>
+									<th> Description </th>
 									<td>
-										{{courseGenre}}
-									</td>
-								</tr>
-								<tr>
-									<th> Trainer Name(s): </th>
-									<td>
-										{{courseTrainers2}}
-									</td>
-									<th> Learning Objective: </th>
-									<td>
-										{{courseDescription}}
-									</td>
-								</tr>
-								<tr>
-									<th> No. Of Hours: </th>
-									<td>
-										{{courseNoOfHours}}
-									</td>
-									<th> Facilitator to Learner Ratio: </th>
-									<td>
-										{{courseFLR}}
-									</td>
-								</tr>
-								<tr>
-									<th> Total No. of classes: </th>
-									<td>
-										{{courseTotalClass}}
-									</td>
-									<th> Fees </th>
-									<td>
-										{{courseFees}}
+										{{description}}
 									</td>
 								</tr>
 								<tr>
@@ -91,8 +61,8 @@
 							</thead>
 							<tbody>
 								
-			                    {{#each courseLSPQns}}
-			                        {{> courseLSPRatings courseLSPDetails = this}}
+			                    {{#each facilityLSPQns}}
+			                        {{> facilityLSPRatings facilityLSPDetails = this}}
 			                    {{/each}}
 
 
@@ -104,25 +74,18 @@
 
 					</div>
                 </div>
-
-
-				<a class = "fb-button btn pull-right" id="saveCourseLSP" href="/FeedbackMgmt/CFTRespo" style="background:#800000; border: none;">
-                    <i> Cancel </i>
-				</a>
-
-
             </div>
         </div>
     </div>
 </template>
 
-<template name="courseLSPRatings">
+<template name="facilityLSPRatings">
 	<tr>
-		<td> <label> <span class="a">{{courseLSPDetails.feedbackQn}} </span></label> </td>
+		<td> <label> <span class="a">{{facilityLSPDetails.feedbackQn}} </span></label> </td>
 		<td> 
 			{{#each numbering}}
 	            <label class="radio-inline">
-	            	{{#if equals courseLSPDetails.feedbackQnResults this}}
+	            	{{#if equals facilityLSPDetails.feedbackQnResults this}}
 	                	<input type="radio" id="optradio"><input type="text" name="qnOptionsEd5" value="{{this}}" checked="checked">
 	               	{{else}}
 	                	<input type="radio" id="optradio"><input type="text" name="qnOptionsEd5" value="{{this}}">
@@ -132,7 +95,7 @@
 			{{/each}}
                 
 		</td>
-		<td> {{courseLSPDetails.feedbackQnResults}}</td>
+		<td> {{facilityLSPDetails.feedbackQnResults}}</td>
 
 
 	</tr>

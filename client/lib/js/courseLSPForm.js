@@ -21,6 +21,15 @@ Template.courseLSPForm.helpers({
 		return Meteor.user().fullname;
 	},
 	
+	"courseTotalClass":function(){
+		//currently returning nothing. no idea why =.=
+		var courseID = Session.get("currentCourseIDLSPForm");
+		console.log(courseID);
+		var coursecode = Courses.findOne({_id:courseID}).courseCode;
+		console.log (Groups.find({courseCode:coursecode}).fetch().count);
+		// return ;
+	},
+	
 	"todayDate":function(){
 		var mmlookup = [];
 		mmlookup.push("Jan");
