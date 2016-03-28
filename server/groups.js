@@ -48,6 +48,7 @@ Meteor.methods({
 		var theGroup = Groups.findOne({_id:theGroup_id});
 		dateClassFinishes = theGroup.endDate;
 		details.date = dateClassFinishes	//TODO: Date when course finishes
+		details.date = new Date();
 		details.groupId = theGroup_id;
 		var thisId = FutureTasks.insert(details);
 		scheduleRecommender(thisId, details);

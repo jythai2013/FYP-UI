@@ -1,4 +1,20 @@
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    url = url;
+    name = name.replace(/[\[\]]/g, "\\$&").toString();
+		console.log(name);
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+		console.log(results);
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
+Template.courseLSPForm.onRendered(function(){
+	var cLSP = getParameterByName("cLSP");
+	Session.set("currentCourseIDLSPForm2", cLSP);
+});
 
 Template.courseLSPForm.helpers({
 	"courseTrainers2":function(){
@@ -23,9 +39,12 @@ Template.courseLSPForm.helpers({
 	
 	"courseTotalClass":function(){
 		//currently returning nothing. no idea why =.=
-		var courseID = Session.get("currentCourseIDLSPForm");
+		var courseID = Session.get("currentCourseIDLSPForm2");
 		console.log(courseID);
-		var coursecode = Courses.findOne({_id:courseID}).courseCode;
+		var theCourse = Courses.findOne({_id:courseID});
+		console.log(theCourse);
+		var coursecode = theCourse.courseCode;
+		console.log(coursecode);
 		console.log (Groups.find({courseCode:coursecode}).fetch().count);
 		// return ;
 	},

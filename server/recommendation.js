@@ -1,14 +1,6 @@
 
 Meteor.methods({
 	"recommend":function(studentId, groupId){
-		// //TODO: check all students, if they are to be recommended this course, then send them an emails
-		// //	They are to be recommended when the following happens
-		// //		pre-requisite
-		// //		genre
-		// //		classmates take similar
-		// var students = Meteor.users.find({userType:{learner:true}}).fetch();
-		// students.forEach(function(student, index, array){
-		// }
 			
 		var r = studentFinishedCourseRecommender(studentId, groupId);
 		Session.set("recommendedCourses", r);
@@ -40,7 +32,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
  			potentialCoursesFromGenre.push(theCourse);
  		}
  	});
- 	//TODO: return most popular course from potentialCoursesFromGenre
+ 	//return most popular course from potentialCoursesFromGenre
  	var temp = getMostPopularCoursesBelowMax(potentialCoursesFromGenre, numberOfCoursesToRecommend);
  	finalResult.concat(temp);
  	//console.log(res);
@@ -57,7 +49,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
  			potentialCoursesFromPrerequisite.push(thisGroup);
  		}
  	});
- 	//TODO: return most popular course from potentialCoursesFromPrerequisite
+ 	//return most popular course from potentialCoursesFromPrerequisite
  	temp = getMostPopularCoursesBelowMax(potentialCoursesFromPrerequisite, numberOfCoursesToRecommend);
  	finalResult.concat(temp);
  	//console.log(res);
@@ -82,7 +74,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 		finalResult.concat(potentialCoursesFromRecEngine);
 	}
 	
- 	if(recEngineWorks){
+ 	if(!recEngineWorks){
  		// find the courses which this student has enrolled in
  		theStudentCourses = Groups.find({classlist:studentId}).fetch();
 	
@@ -155,6 +147,8 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 		details.from = "Matt";
 		details.subject = "Your next course with us!";
 		details.text = "TEXT";
+		console.log("The details of the email are:");
+		console.log(details);
 		Meteor.call("sendMail", details);
 	}
 }

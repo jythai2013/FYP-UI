@@ -142,20 +142,20 @@ Template.addClassForm.helpers({
     },
 
     "courseTrainers1" : function(e) {
-        var courseCode = Session.get("classListCourseCode");
-		console.log(courseCode);
+			var course_id = Session.get("classListCourse_id");
+			console.log(course_id);
 
-		// var a =  Courses.findOne({_id:courseCode});
-		var a =  Courses.findOne({_id:courseCode}).courseTrainers;
-		console.log(a);
-		var trainersArr = new Array();
-		for(var x = 0, l = a.length; x < l;  x++){
-			var entry = a[x].trainerID;
-			var trainer = Meteor.users.findOne({_id:entry});
-			trainersArr.push(trainer);
-    	}
+			// var a =  Courses.findOne({_id:courseCode});
+			var a =  Courses.findOne({_id:course_id}).courseTrainers;
+			console.log(a);
+			var trainersArr = new Array();
+			for(var x = 0, l = a.length; x < l;  x++){
+				var entry = a[x].trainerID;
+				var trainer = Meteor.users.findOne({_id:entry});
+				trainersArr.push(trainer);
+			}
 
-		return trainersArr;
+			return trainersArr;
     }
 });
 
@@ -388,8 +388,10 @@ Template.addClassForm.events({
 		 e.preventDefault();
 		 console.log(" qn type course code");
 		var courseCode = document.getElementById("classListCourseCode").value;
+		var course_id = document.getElementById("classListCourseCode").value;
 		 console.log(courseCode + " courseCode");
 		 Session.set('classListCourseCode', courseCode);
+		 Session.set('classListCourse_id', course_id);
 		 //set some session variable???
 
 	},
