@@ -1,0 +1,30 @@
+<template name="studentDetails">
+	<div id="page-wrapper">
+		<br />
+		<br />
+		<br />THIS:
+		<br />{{this}}
+		<br />
+		<br />_id:
+		<br />{{_id}}
+		<br />
+		<br />Full Name:
+		<br />{{fullName}}
+		<br />
+		<br />Courses Enrolled in (past and pressent):
+		<br />|| START ||
+		{{#each enrolledCourses}}
+			{{this}}
+		{{/each}}
+		<br />|| END ||
+		<br />
+		<br />Recommendations:
+		<br />|| START ||
+		{{#each recommendeds}}
+			{{this}}
+		{{/each}}
+		<br />|| END ||
+		<br />
+		<br />
+	</div>
+</template>

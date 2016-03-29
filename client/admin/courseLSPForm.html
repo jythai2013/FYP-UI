@@ -78,9 +78,13 @@
 								</tr>
 							</tbody>
 						</table>
+					</div>
 
+						<br />
+						<br />
+						<br />
 
-
+					<div class="table-responsive">
 						<table id="dataTables-example" class="table table-bordered">
 							<thead>
 								<tr>
@@ -92,7 +96,7 @@
 							<tbody>
 								
 			                    {{#each courseLSPQns}}
-			                        {{> courseLSPRatings courseLSPDetails = this}}
+			                        {{> courseLSPRatings}}
 			                    {{/each}}
 
 
@@ -118,21 +122,20 @@
 
 <template name="courseLSPRatings">
 	<tr>
-		<td> <label> <span class="a">{{courseLSPDetails.feedbackQn}} </span></label> </td>
+		<td> <label> <span class="a">{{feedbackQn}} </span></label> </td>
 		<td> 
-			{{#each numbering}}
+			{{#each courseLSPDetails.options}}
 	            <label class="radio-inline">
 	            	{{#if equals courseLSPDetails.feedbackQnResults this}}
 	                	<input type="radio" id="optradio"><input type="text" name="qnOptionsEd5" value="{{this}}" checked="checked">
 	               	{{else}}
 	                	<input type="radio" id="optradio"><input type="text" name="qnOptionsEd5" value="{{this}}">
-
 	                {{/if}}  
 	            </label>
 			{{/each}}
                 
 		</td>
-		<td> {{courseLSPDetails.feedbackQnResults}}</td>
+		<td> {{averageRating}}</td>
 
 
 	</tr>

@@ -5,6 +5,26 @@ Meteor.methods({
 		var r = studentFinishedCourseRecommender(studentId, groupId);
 		Session.set("recommendedCourses", r);
 		return r;
+	},
+	
+	"recommendRecEngine":function(studentId){
+		recEngineWorks = true;
+		if(recEngineWorks){
+			var potentialCoursesFromRecEngine;
+			recEngine.suggest(studentId, numberOfCoursesToRecommend, function(err,res) {
+				if (err) {console.log(err);}
+				else{
+					console.log(res);
+					res.forEach(function(thCourseCode, indexxx, array){
+						var thCourse = Courses.findOne({courseCode:thCourseCode});
+						potentialCoursesFromRecEngine.push(thCourse);
+					});
+				}
+			})
+			finalResult.concat(potentialCoursesFromRecEngine);
+		}
+		Session.set("recommendedCoursesRecEngine", r);
+		return r;
 	}
 });
 		

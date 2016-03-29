@@ -2,12 +2,12 @@ function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     url = url;
     name = name.replace(/[\[\]]/g, "\\$&").toString();
-		console.log(name);
+		//console.log(name);
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
-		console.log(results);
+		//console.log(results);
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
@@ -16,7 +16,33 @@ Template.courseLSPForm.onRendered(function(){
 	Session.set("currentCourseIDLSPForm2", cLSP);
 });
 
+Template.courseLSPRatings.helpers({
+	"averageRating":function(){
+		console.log(this);
+		var sum = 0;
+		var num = 0;
+		for(i=0;i<this.options.length;i++){
+			num += this.options[i];
+			sum += this.options[i]*(i+1);
+		}
+		console.log("sum = " + sum);
+		console.log("num = " + num);
+		var res = sum/num;
+		if (isNaN(res)) res = "-";
+		return res;
+	}
+});
+
 Template.courseLSPForm.helpers({
+	"courseLSPQns":function(){
+		var courseId = Session.get("currentCourseIDLSPForm2");
+		var theCourse = Courses.findOne({_id:courseId});
+		var courseCode = theCourse.courseCode;
+		var feedbackAnswerObj = FeedbackAnswers.findOne({assessedOn:courseCode});
+		console.log(feedbackAnswerObj);
+		return feedbackAnswerObj.options
+	},
+	
 	"courseTrainers2":function(){
 		// console.log(this);
 		var CT = this.courseTrainers;
@@ -45,8 +71,13 @@ Template.courseLSPForm.helpers({
 		console.log(theCourse);
 		var coursecode = theCourse.courseCode;
 		console.log(coursecode);
-		console.log (Groups.find({courseCode:coursecode}).fetch().count);
-		// return ;
+		var theCourses = Groups.find({courseCode:coursecode}).fetch();
+		console.log (theCourses);
+		// console.log (theCourses.count);
+		var res = theCourses.count;
+		if(res === undefined) res = 0;
+		console.log(res);
+		return res;
 	},
 	
 	"todayDate":function(){
