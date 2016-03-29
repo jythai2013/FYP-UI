@@ -148,15 +148,16 @@
 	<tr>
 		<td> <label> <span class="a">{{feedbackQn}} </span></label> </td>
 		<td> 
-			{{#each courseLSPDetails.options}}
+			{{test options}}
+			<!--{{#each options}}
 	            <label class="radio-inline">
-	            	{{#if equals courseLSPDetails.feedbackQnResults this}}
-	                	<input type="radio" id="optradio"><input type="text" name="qnOptionsEd5" value="{{this}}" checked="checked">
-	               	{{else}}
-	                	<input type="radio" id="optradio"><input type="text" name="qnOptionsEd5" value="{{this}}">
-	                {{/if}}  
+	            	{{#if toBeChecked this}}
+									<input type="radio" id="optradio"><input type="text" name="qnOptionsEd5" value="abbb" checked="checked">
+								{{else}}
+									<input type="radio" id="optradio"><input type="text" name="qnOptionsEd5" value="baaa">
+								{{/if}}  
 	            </label>
-			{{/each}}
+			{{/each}}-->
                 
 		</td>
 		<td> {{averageRating}}</td>

@@ -18,18 +18,53 @@ Template.courseLSPForm.onRendered(function(){
 
 Template.courseLSPRatings.helpers({
 	"averageRating":function(){
-		console.log(this);
+		//console.log(this);
 		var sum = 0;
 		var num = 0;
 		for(i=0;i<this.options.length;i++){
 			num += this.options[i];
 			sum += this.options[i]*(i+1);
 		}
-		console.log("sum = " + sum);
-		console.log("num = " + num);
+		//console.log("sum = " + sum);
+		//console.log("num = " + num);
 		var res = sum/num;
 		if (isNaN(res)) res = "-";
 		return res;
+	},
+	
+	"test":function(a){
+		console.log(this);
+		console.log(a);
+		
+		//calculate average rating
+		var sum = 0;
+		var num = 0;
+		for(i=0;i<this.options.length;i++){
+			num += this.options[i];
+			sum += this.options[i]*(i+1);
+		}
+		//console.log("sum = " + sum);
+		//console.log("num = " + num);
+		var avg = sum/num;
+		
+		
+		
+		var res = "";
+		for(i=0;i<a.length;i++){
+			if(Math.round(avg) == (i+1)){
+				res += '<input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'" checked="checked">'+i;
+			} else{
+				res += '<input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'">'+i;
+			}
+		}
+		
+		return Spacebars.SafeString(res);
+	},
+	
+	"toBeChecked":function(a){
+		console.log(this);
+		console.log(a);
+		return true;
 	}
 });
 
