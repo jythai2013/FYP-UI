@@ -36,7 +36,7 @@ Template.addTrainerAcctForm.events({
 
 		obj.userID = 					document.getElementById("idNo").value;
 		console.log(document.getElementById("idNo").value);
-		obj.nationality = 	document.getElementById("nationality").value;
+		obj.nationality = 	document.getElementById("addNationality").value;
 		obj.proficiency = 		document.getElementById("proficiency").value;
 		obj.password = 			obj.mobileNo;
 		var selected = template.findAll("input[type=checkbox]:checked");

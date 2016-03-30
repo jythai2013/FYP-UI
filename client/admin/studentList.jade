@@ -111,7 +111,7 @@ template(name="addStudentAcctForm")
                   td Highest Qualification
                   td 
                     .form-group
-                      select(id='qualification', style="color:black")
+                      select.form-control(id='qualification', style="color:black")
                         option(value="workshop") WPA Certified
                         option(value="Primary") PSLE
                         option(value="Secondary") O/N'Level
@@ -177,13 +177,17 @@ template(name="viewParticularsForm")
                   tr
                     td Nationality
                     td 
-                      .form-group
-                        input.form-control(type='text', value="#{nationality}", id='nationality')
+                      select.form-control(id="nationality", name="nationality", style="color:black")
+                        option(value="#{nationality}") #{nationality}
+                        option(disabled)──────────
+                        +nationalityList
                   tr
                     td Highest Qualification
                     td 
                       .form-group
-                        select(id='qualification', style="color:black")
+                        select.form-control(id='qualification', style="color:black")
+                          option(value="#{qualification}") #{qualification}
+                          option(disabled)──────────
                           option(value="0") PSLE
                           option(value="1") O/N'Level
                           option(value="2") A'Level
@@ -202,8 +206,18 @@ template(name="viewParticularsForm")
                         input.form-control(type='text', id='nokName', value="#{nokName}")
                     td Relationship
                     td
-                      .form-group
+                      
                         input.form-control(type='text', id='nokReln', value="#{nokReln}")
+                        .form-group
+                      select.form-group(id='nokReln', style="color:black")
+                        option(value="#{nokReln}") #{nokReln}
+                        option(disabled)────────── 
+                        option(value="Employer") Employer
+                        option(value="Spouse") Spouse
+                        option(value="Family") Family
+                        option(value="Others") Co-worker
+                        option(value="Relative") Relative
+                        option(value="Friend") Friend
                   tr
                     td NOK Contact
                     td

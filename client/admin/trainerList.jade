@@ -88,7 +88,10 @@ template(name="viewTrainerParticulars")
                 tr
                   td Nationality
                   td
-                    +nationalityList
+                    select.form-control(id="nationality", name="nationality", style="color:black")
+                      option(value="#{nationality}") #{nationality}
+                      option(disabled)──────────
+                      +nationalityList
                 tr
                   td Mobile
                   td 
@@ -131,13 +134,15 @@ template(name="addTrainerAcctForm")
                 tr
                   td Nationality
                   td
-                    +nationalityList
+                    select.form-control(id="addNationality", name="nationality", style="color:black")
+                      +nationalityList
                 tr
                   td ID Type
                   td
-                    select(id="trainerType", style="color:black")
-                      option(value="0") NRIC
-                      option(value="1") FIN
+                    select.form-control(id="trainerType", style="color:black")
+                      option(value="NROC") NRIC
+                      option(value="FIN") FIN
+                      option(value="others") Others
                   td ID No.
                   td  
                     .form-group
