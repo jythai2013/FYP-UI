@@ -94,31 +94,6 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-								<td> Were the learning objectives clearly specified and defined?</td>
-								<td> 
-									 
-                          
-                            <label class="radio-inline">
-                              <input type="radio" name="Were the learning objectives clearly specified and defined?" value="1"> 1 
-                            </label>
-                          
-                            <label class="radio-inline">
-                              <input type="radio" name="Were the learning objectives clearly specified and defined?" value="2"> 2 
-                            </label>
-                          
-                            <label class="radio-inline">
-                              <input type="radio" name="Were the learning objectives clearly specified and defined?" value="3"> 3 
-                            </label>
-                          
-                            <label class="radio-inline">
-                              <input type="radio" name="Were the learning objectives clearly specified and defined?" value="4"> 4 
-                            </label>
-                              
-
-								</td>
-								<td> 2.57142</td>
-								</tr>
 			                    {{#each courseLSPQns}}
 			                        {{> courseLSPRatings}}
 			                    {{/each}}
@@ -130,6 +105,8 @@
 						Additional Comments:
 						<!-- All the "any additional feedback you have" questions come here-->
 
+						<textarea rows="4" cols="50" id="courseAddComments">
+						</textarea>
 					</div>
                 </div>
 
@@ -146,7 +123,7 @@
 
 <template name="courseLSPRatings">
 	<tr>
-		<td> <label> <span class="a">{{feedbackQn}} </span></label> </td>
+		<td> {{feedbackQn}} </td>
 		<td> 
 			{{test options}}
 			<!--{{#each options}}

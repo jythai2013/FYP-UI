@@ -1,8 +1,8 @@
-<template name="facilityLSPForm">
+<template name="trainerLSPForm">
     <div id="page-wrapper" style="min-height: 861px;">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"> Facility LSP Form
+                <h1 class="page-header"> Trainer LSP Form
                     
 					<a class = "js-duplicate fb-button  btn pull-right" id="saveExportFacilityLSP">
                         <i class="fa fa-file-pdf-o"> PDF</i>
@@ -17,21 +17,36 @@
 						<table id="dataTables-example" class="table table-bordered">
 							<tbody>
 								<tr>
-									<th> Facility Name: </th>
+									<th> Trainer Name: </th>
 									<td>
-										{{fac}}
+										{{fullName}}
 									</td>
-									<th> Facility Type: </th>
+									<th> IC/FIN: </th>
 									<td>
-										{{facType}}
+										{{userID}}
 									</td>
 								</tr>
 								<tr>
-									<th> Capacity: </th>
+									<th> Supervisor's Name: </th>
 									<td>
 										{{capacity}}
 									</td>
-									<th> Description </th>
+									<th> Corrective Action Required </th>
+									<td>
+				                        <label class="radio-inline">
+				                           <input type="radio" name="correctiveAction" value="Yes"> Yes 
+				                        </label>
+				                        <label class="radio-inline">
+				                           <input type="radio" name="correctiveAction" value="No"> No 
+				                        </label>
+									</td>
+								</tr>
+								<tr>
+									<th> Course Code Assessed: </th>
+									<td>
+										{{capacity}}
+									</td>
+									<th> Number of Students </th>
 									<td>
 										{{description}}
 									</td>
@@ -61,18 +76,18 @@
 							</thead>
 							<tbody>
 								
-			                    {{#each facilityLSPQns}}
-			                        {{> facilityLSPRatings}}
+			                    {{#each trainerLSPQns}}
+			                        {{> trainerLSPRatings}}
 			                    {{/each}}
 
 
 							</tbody>
 						</table>
 
-						Additional Comments:
+						Additional Comments: 
+						<br>
 						<!-- All the "any additional feedback you have" questions come here-->
-
-						<textarea rows="4" cols="50" id="facilityAddComments">
+						<textarea rows="4" cols="50" id="trainerAddComments">
 						</textarea>
 					</div>
                 </div>
@@ -81,11 +96,11 @@
     </div>
 </template>
 
-<template name="facilityLSPRatings">
+<template name="trainerLSPRatings">
 	<tr>
 		<td> {{feedbackQn}} </td>
 		<td> 
-			{{testFac options}}
+			{{testTrainer options}}
 			<!--{{#each options}}
 	            <label class="radio-inline">
 	            	{{#if toBeChecked this}}
@@ -97,7 +112,7 @@
 			{{/each}}-->
                 
 		</td>
-		<td> {{facAverageRating}}</td>
+		<td> {{trainerAverageRating}}</td>
 
 
 	</tr>

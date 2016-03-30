@@ -49,6 +49,11 @@ Meteor.publish('feedbackAnswersData',function() {
 		return FeedbackAnswers.find({});
 });
 
+Meteor.publish('lspSurveyData',function() {
+		// if(!this.userId) return null;
+		return LSPSurvey.find({});
+});
+
 Meteor.publish('questionData',function() {
 		// if(!this.userId) return null;
 		return FeedbackQuestions.find({});

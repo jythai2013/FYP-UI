@@ -5,7 +5,7 @@ Meteor.methods({
 	"createNewLSPForm":function(id, type, IassessedBy, IassessmentDate){
 
 			LSPSurvey.insert({
-				asessedOn: id,
+				assessedOn: id,
 				formType: type,
 				assessedBy: IassessedBy, 
 				assessmentDate : IassessmentDate

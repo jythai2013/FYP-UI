@@ -32,8 +32,10 @@ Template.addTrainerAcctForm.events({
 		obj.fullName = 		document.getElementById("sName").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
 		obj.email = 				document.getElementById("email").value;
-		obj.userIDType = 				document.getElementById("idType").value;
+		obj.userIDType = 				document.getElementById("trainerType").value;
+
 		obj.userID = 					document.getElementById("idNo").value;
+		console.log(document.getElementById("idNo").value);
 		obj.nationality = 	document.getElementById("nationality").value;
 		obj.proficiency = 		document.getElementById("proficiency").value;
 		obj.password = 			obj.mobileNo;

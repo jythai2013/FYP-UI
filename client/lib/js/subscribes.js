@@ -10,6 +10,7 @@ Deps.autorun(function () {
   Meteor.subscribe('filesData');
   Meteor.subscribe('feedbackData');
   Meteor.subscribe('feedbackAnswersData');
+  Meteor.subscribe('lspSurveyData');
   Meteor.subscribe('questionData');
   Meteor.subscribe('materialsData');
 });

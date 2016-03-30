@@ -34,15 +34,23 @@ Template.createLSPCourseForm.helpers({
 });
 
 
-Template.courseLSPForm.onRendered(function(e){
-	var courseID = Session.get("currentCourseIDLSPForm");
-	Session.set("currentCourseIDLSPForm", courseID);
-});
+// Template.courseLSPForm.onRendered(function(e){
+// 	var courseID = Session.get("currentCourseIDLSPForm");
+// 	Session.set("currentCourseIDLSPForm", courseID);
+// });
+
 
 Template.createLSPCourseForm.helpers({
 
 	"courseID2": function() {
 		return Session.get("currentCourseIDLSPForm");
+	}
+});
+
+Template.createLSPFacilityForm.helpers({
+
+	"facID2": function() {
+		return Session.get("currentFacilityIDLSPForm");
 	}
 });
 
@@ -53,14 +61,14 @@ Template.createLSPCourseForm.events({
 		var courseCode = Courses.findOne({_id:courseID}).courseCode;
 		Session.set("currentCourseIDLSPForm", courseID);
 		var assessedBy = Meteor.user().fullname;
-		//assessmentDate = today
+		var today = new Date();
 
-		// Meteor.call("createNewLSPForm", courseID, "Course", assessedBy, assessmentDate);
+		Meteor.call("createNewLSPForm", courseID, "Course", assessedBy, today);
 				
-		//lspID = LSPSurvey.findOne({asessedOn:courseID, assessmentDate:today});
-
+		var lspID = LSPSurvey.findOne({assessedOn:courseID});
+		console.log(lspID);
 		//substitute the "document.getElementById("courseLSPSubject").value" with lspID when done
-		window.location.assign(e.currentTarget.href + document.getElementById("courseLSPSubject").value);
+		window.location.assign(e.currentTarget.href + courseID);
 	}
 });
 
@@ -68,14 +76,6 @@ Template.createLSPCourseForm.events({
 Template.courseLSPRatings.numbering = function() {
   return _.map(_.range(1, 5));
 };
-
-
-
-
-
-
-
-
 
 
 
@@ -92,6 +92,17 @@ Template.createLSPFacilityForm.events({
 		var facilityID = document.getElementById("facilityLSPSubject").value;
 		
 		
+		// var facID = Facilities.findOne({_id:courseID}).courseCode;
+		Session.set("currentFacilityIDLSPForm", facilityID);
+		var assessedBy = Meteor.user().fullname;
+		var today = new Date();
+
+		Meteor.call("createNewLSPForm", facilityID, "Facility", assessedBy, today);
+				
+		// var lspID = LSPSurvey.findOne({assessedOn:courseID});
+		// console.log(lspID);
+		//substitute the "document.getElementById("courseLSPSubject").value" with lspID when done
+		
 		window.location.assign(e.currentTarget.href + document.getElementById("facilityLSPSubject").value);
 	}
 });
@@ -106,13 +117,12 @@ Template.createLSPTrainerForm.helpers({
 
 Template.createLSPTrainerForm.events({
 	"click #generateTrainerLSP" : function(e) {
-
 		var trainerID = document.getElementById("trainerLSPSubject").value;
-		var a = feedbackAnswers.find({assessedOn:trainerID}).length;
-		console.log(a);
-		for(i = 0; i < thisFeedbackQnOptions.length; i++){
+		Session.set("currentTrainerIDLSPForm", trainerID);
+		var assessedBy = Meteor.user().fullname;
+		var today = new Date();
 
-		}
+		Meteor.call("createNewLSPForm", trainerID, "Trainer", assessedBy, today);
 
 		
 		
