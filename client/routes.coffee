@@ -33,6 +33,9 @@ navRoutes = [
   new NavRoute('feedbackList', '', {parentName: 'FeedbackMgmt', label: "Feedback List"})
   #new NavRoute('feedbackQnMgmt', '', {parentName: 'FeedbackMgmt', label: "Feedback Questions"})
 
+  #Analytics
+  new NavRoute('adminAnalytics', 'fa-group ', {label: "Analytics Overview"})
+
   #new NavRoute('forms', 'fa-edit')
   #new NavRoute('ui-elements', 'fa-wrench', {label: "UI Elements"})
   #new NavRoute('grid', '', {parentName: 'ui-elements'})
