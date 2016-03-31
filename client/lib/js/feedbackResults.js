@@ -19,7 +19,7 @@ function feedbackData(question){
         //     var groupsSize = Groups.find({courseCode: cCode}).count();
         //     //{year: '2008', value: 20 }
             var data = {question: questionFromFeedback, answer: ansFromFeedbackAns};
-        //     console.log("Function courseData : >> push "+ data);
+            console.log("Function courseData : >> push "+ data);
             returnArray.push(data);
         }
     console.log("return >> " + returnArray);
@@ -66,7 +66,7 @@ Template.displayFeedbackResults.onRendered(function drawingChart() { //create on
     if (data) {
         new Morris.Bar({
             // ID of the element in which to draw the chart.
-            element: 'displayFeedbackChart', //must be same as line 60
+            element: '#{_id}_displayFeedbackChart', //must be same as line 60
             // Chart data records -- each entry in this array corresponds to a point on
             // the chart.
             data:    data, //reflects line 61

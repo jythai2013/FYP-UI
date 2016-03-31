@@ -95,7 +95,7 @@ Template.courseLSPForm.helpers({
 	},
 	
 	"loggedInUsersName":function(){
-		return Meteor.user().fullname;
+		return Meteor.user().fullName;
 	},
 	
 	"courseTotalClass":function(){
