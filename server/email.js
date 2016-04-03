@@ -68,7 +68,8 @@ Meteor.methods({
 			Meteor.call("scheduleMail", details)
 			return false;
 		}
-		groupToBlast.classlist.forEach(function(student){
+		groupToBlast.classlist.forEach(function(entry){
+			student = entry.studentID;
 			toEmail = student.email[0];
 			details = {to:toEmail, from:"asdf154dev@gmail.com", subject:subject, text:text, date:tDate} //to, from, subject, text
 			Meteor.call("scheduleMail", details)

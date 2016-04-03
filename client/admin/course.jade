@@ -24,6 +24,9 @@ template(name="course")
                     th Course Name
                     td #{courseName}
                   tr
+                    th Course Genre
+                    td #{genre}
+                  tr
                     th Course Type
                     td #{courseType}
                   tr
@@ -108,6 +111,24 @@ template(name="course")
                     input#myFileInput(type="file", name="courseMaterials")
                   .modal-footer
                     button.myFileInputButton.btn.admin-btn(type="button", data-dismiss="modal") Upload
+            p.breakH4
+            h4 Course Components
+                button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                    i.fa.fa-plus
+                    | Components 
+                +addClass
+            .table-responsive
+              table#dataTables-example.table.table-bordered.table-hover
+                thead
+                  tr
+                    th(colspan="2") Components
+                    th Weightage
+                tbody
+                  each uploads                   
+                    tr 
+                      td(colspan="2") #{name}
+                      td
+                        a(href="{{url download = true}}", class="button btn admin-btn") Download 
 
 
 
@@ -186,9 +207,26 @@ template(name="addClass")
                   th Trainers
                   td
                     .form-group.input-group
-                      select(name="type", id="gTrainers", style="color: black")
+                      select(name="gTrainers", style="color: black")
                         each courseTrainers2
                           option(value="#{_id}") #{fullName}
+                  td 
+                    button#addMoreTrainersToClass.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                      i.fa.fa-plus  
+
+            each noOfTrainers
+              tr 
+                th   
+                td 
+                  .form-group()
+                    select(name="gTrainers", style="color: black; width: 100%")
+                      each courseTrainers2
+                        option(value="#{_id}") #{fullName} 
+                td 
+                  button#addMoreTrainersToClass.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-plus
+                  button#removeTrainersFromClass.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-minus 
                     
           // /.table-responsive
         .modal-footer
@@ -343,6 +381,11 @@ template(name="editCourseForm")
                   td
                     .form-group.input-group
                       input.form-control(type="text", id="cCFLR", value="#{courseFLR}")
+                tr
+                  th Genre
+                  td
+                    .form-group.input-group
+                      input.form-control(type="text", id="cCGenre", value="#{genre}")
                 tr
                   th Type
                   td

@@ -312,12 +312,13 @@ Template.editCourseForm.events({
 		var cHours = document.getElementById("cCHour").value;
 		var cFees = document.getElementById("cCFees").value;
 		var cFLR = document.getElementById("cCFLR").value;
+		var cGenre = document.getElementById("cCGenre").value;
 		var cType = document.getElementById("cCType").value;
 		//var cTrainers = document.getElementById("cCTrainers").value;
 
 		
 		console.log("here8");
-		Meteor.call("editCourse", _id, cCode, cName, cDesc, cHours, cFees, cFLR, cType);
+		Meteor.call("editCourse", _id, cCode, cName, cDesc, cHours, cFees, cFLR, cGenre, cType);
 		var newURL =url.substring(0, positionFirstEqual+1); ;
 		window.location.assign(newURL +cCode);
 	}

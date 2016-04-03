@@ -96,43 +96,35 @@ Meteor.methods({
       });
     },
 
-  // 'insertGroupAnnouncement': function editGroupAnnounce(_id, aTitle, aDetails, aAuthor){
-  //     // if(Meteor.user.userType != "admin"){
-  //       // return false; //TODO: output error message in client
-  //     // }
-  //     console.log("in SERVER");
-  //     console.log(aTitle);
-  //     // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
-  //     Groups.update(_id, {
-  //       $push: {
-  //         announcement: 
-  //         {
-  //         annouTitle: aTitle,
-  //         annouDetails:aDetails,
-  //         annouDate: new Date(),
-  //         annouAuthor:aAuthor
-  //         }
-  //       }
-  //     });
-  //     console.log("in SERVER");
-  //   },
-
-  'addStudent': function addStudent(_id, cCode, sFirstName, sLastName){
+  'removeStudentFromClass': function(groupID, studID){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
-      
-      // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
-      Groups.update( 
-        {courseCode: cCode},
-        {
-          studentList:{
-            studFirstName: sFirstName, 
-            studLastName: sLastName
-          } 
-        },
-        {upsert:true}
-      );
+      console.log("here");
+        Groups.update({_id: groupID},
+			{ $pull: { 
+				classlist: {studentID:studID} 
+				} 
+			}
+
+
+      	);
+    },
+    
+
+  'studentPaid': function(groupID, studID){
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+      console.log("here");
+        Groups.update({_id: groupID, "classlist.studentID":studID},
+			{ $set: { 
+				"classlist.$.paid": true
+				} 
+			}
+
+
+      	);
     },
     
     'deleteGroup': function deleteGroup(removeCurrentGroupsArr){
@@ -166,14 +158,6 @@ Meteor.methods({
          
       // }
      
-    },
-
-    'deleteStudent': function deleteStudent(sFirstName, sLastName){
-      // if(Meteor.user.userType != "admin"){
-        // return false; //TODO: output error message in client
-      // }
-
-      Groups.remove({ studFirstName: sFirstName, studLastName: sLastName });
     },
     
     'createGroup': function createGroup(obj){

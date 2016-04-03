@@ -52,6 +52,7 @@ Template.courseLSPRatings.helpers({
 		var res = "";
 		for(i=0;i<a.length;i++){
 			if(Math.round(avg) == (i+1)){
+				i=i+1;
 				res += '<input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'" checked="checked">'+i;
 			} else{
 				res += '<input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'">'+i;

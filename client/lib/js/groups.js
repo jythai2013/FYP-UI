@@ -13,6 +13,67 @@ Template.classList.helpers({
     }
 });
 
+
+Template.addClassForm.events({
+	"click #addGroupCLButton" : function(e) {
+		var obj = new Object();
+
+		//TODO: Validation of input
+
+
+		var courseObject =  document.getElementById("classListCourseCode").value;
+		obj.courseCode = Courses.findOne({_id:courseObject}).courseCode;
+		obj.startTime = document.getElementById("classListNewStartTime").value;
+		obj.endTime = document.getElementById("classListNewEndTime").value;
+
+		var str =  window.location.href;
+		var position = str.indexOf('=');		
+		var currentCourse=str.substr(position+1);
+		console.log("it all starts here > " + currentCourse);
+
+		var courseObject =  Courses.findOne({courseCode:currentCourse});
+		console.log("HERE >>> " + courseObject);
+
+		var days = document.getElementsByName("classListDay");
+		days = Array.prototype.slice.call(days);
+		days2 = new Array();
+		days.forEach(function(curr, ind, arr){
+			if(curr.checked) days2.push(curr.value.toLowerCase());
+		});
+		obj.days = days2;
+		console.log(days);
+		console.log(obj);
+
+		var stringSDate = document.getElementById("classListNewStartDate").value;
+		var stringEDate = document.getElementById("classListNewEndDate").value;
+
+		var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
+		var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
+
+		obj.startDate = SDate;
+		obj.endDate = EDate;
+		obj.venue = document.getElementById("classListVenue").value;
+		var trainId = document.getElementById("classListTrainers").value;
+		obj.courseTrainers = {trainerId: trainId};
+		// var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
+		// var trainerLastName = Meteor.users.findOne(trainerID).lastName;
+		// var gTrainers = trainerFirstName + " " + trainerLastName;
+
+		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
+		console.log("What is this? : " + currentCourse);
+		var grpNumI2 = grpNumI1+1;
+		obj.grpNum = "G"+grpNumI2;
+
+		console.log("here4");
+		console.log(obj);
+		Meteor.call("createGroup",obj);
+		console.log("here4again");
+		//TODO: schedule payment reminder checking
+		//console.log(Groups.find({}).fetch();
+	}
+});
+
+
 function getParameterByName(name) {
 	//console.log(name);
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -27,27 +88,63 @@ function getParameterByName(name) {
 }
 
 
-
-
-
-
-
-
 // CLASS.JADE
+
+Template.addClass.onRendered(function(){
+  // var currentfb = getParameterByName("fbid");
+  Session.set('noOfTrainerToaddtoClass', 0);
+});
+
+
 Template.group.helpers({
 	'studentInClass' : function(){
 		// console.log("studentInClass>>");
 		// console.log(this);
 		var classList = this.classlist;
+		console.log(classList);
 		var studentArray = new Array();
 		classList.forEach(function(curr,ind,arr){
-			studentArray.push(Meteor.users.findOne({_id:curr}));
+			var obj = new Object();
+			var studID = curr.studentID;
+			obj.studentID = curr.studentID;
+			obj.fullName = Meteor.users.findOne({_id:studID}).fullName;
+			obj.paid = curr.paid;
+			obj.assessment = curr.assessmentStatus;
+			studentArray.push(obj);
 		});
 		return studentArray;
-	}
-});
+	},
+	'classTrainers' : function(){
+		var trainersList = this.courseTrainers;
+				console.log(this.courseTrainers);
+				console.log(trainersList.trainerId);
+		var trainerID = trainersList.trainerId;
+		var trainerArray = Meteor.users.findOne({_id:trainerID}).fullName;
+		console.log(trainerArray);
+		// var trainersArray = new Array();
+		
+		// 	for(var x = 0, l = trainersList.length; x < l;  x++){
+		// 		var entry = trainersList[x].trainerId;
+		// 		var trainer = Meteor.users.findOne({_id:entry});
+		// 		console.log(trainer);
+		// 		trainersArray.push(trainer);
+		// 	}
+		return trainersArray;
+	},
+	'courseNoOfHours' : function(){
+		
+		
+		var courseGrp =  window.location.href;
+		
+		var positionFirstEqual = courseGrp.indexOf('=');
+		//extracting course
+		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
+		var positionOfAND = courseGrp.indexOf('&');
+		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
 
-Template.group.helpers({
+
+		return Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
+	},
 
     "noOfDays" : function(e) {
 		var courseGrp =  window.location.href;
@@ -106,6 +203,7 @@ Template.group.helpers({
 });
 
 
+
 Template.course.onRendered(function(){
   var currentCourse = getParameterByName("cCode");
 	console.log(currentCourse);
@@ -131,7 +229,22 @@ Template.addClass.helpers({
         return Facilities.find({}).fetch();
     },
     "courseTrainers2" : function(e) {
-		return Meteor.users.find({userType:{"trainer":true}});
+    	var a = this.courseTrainers;
+		var courseTrainerArr = new Array();
+		for(var x = 0, l = a.length; x < l;  x++){
+			var entry = a[x].trainerID;
+			var trainer = Meteor.users.findOne({_id:entry});
+			courseTrainerArr.push(trainer);
+		}
+		return courseTrainerArr;
+    },
+    "noOfTrainers" : function(e) {
+		
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('noOfTrainerToaddtoClass'); i++){
+			fakeArray.push("a")
+		}
+    	return fakeArray;
     }
 });
 
@@ -229,25 +342,6 @@ function descDate(a,b) {
 
 Template.addClass.events({
 	"click #addGroupButton" : function(e) {
-		//Server was
-		// {
-  //         courseCode: courseCodeI,
-  //         grpNum: grpNumI1,
-  //         venue:venueI,
-  //         startTime: startTimeI,
-  //         endTime:endTimeI,
-  //         days: daysArrI,
-  //         startDate: startDateI,
-  //         endDate: endDateI,
-  //         paymentDeadline: paymentDeadlineI, 
-  //         noOfHours: noOfHoursI,
-  //         courseTrainers: {
-  //           trainerID: trainersI
-  //         }
-  //     }
-
-
-		// console.log("here1");
 		var obj = new Object();
 
 		//TODO: Validation of input
@@ -263,18 +357,7 @@ Template.addClass.events({
 		var courseObject =  Courses.findOne({courseCode:currentCourse});
 		console.log("HERE >>> " + courseObject);
 
-
-
-		// var courseObject =  Courses.findOne({courseCode:currentCourse});
-		// var gNoOfHours =  Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
-		// console.log(gNoOfHours + " number of Hours");
 		var days = document.getElementsByName("day");
-		/*
-		days[0-5]
-		days[0].value = "monday"
-		days[0].checked = true
-		*/
-		// console.log((days));
 		days = Array.prototype.slice.call(days);
 		// console.log((days));
 		// console.log(Array.isArray(days));
@@ -302,11 +385,9 @@ Template.addClass.events({
 		obj.startDate = SDate;
 		obj.endDate = EDate;
 		obj.venue = document.getElementById("gVenue").value;
-		var trainId = document.getElementById("gTrainers").value;
+		var trainId = document.getElementsByName("gTrainers").value;
+
 		obj.courseTrainers = {trainerId: trainId};
-		// var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
-		// var trainerLastName = Meteor.users.findOne(trainerID).lastName;
-		// var gTrainers = trainerFirstName + " " + trainerLastName;
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		console.log("What is this? : " + currentCourse);
@@ -319,6 +400,26 @@ Template.addClass.events({
 		console.log("here4again");
 		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();
+	},
+	"click #addMoreTrainersToClass" : function(e) {
+		
+
+		 var noOfTrainerToaddtoClass = Session.get('noOfTrainerToaddtoClass');
+		 if(isNaN(noOfTrainerToaddtoClass)) noOfRadioFields = 0;
+		 var noOfRadioFields = noOfTrainerToaddtoClass+1;
+		 console.log("noOfTrainerToaddtoClass " + noOfTrainerToaddtoClass);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('noOfTrainerToaddtoClass', noOfRadioFields);
+	},
+	"click #removeTrainersFromClass" : function(e) {
+		
+
+		 var noOfTrainerToaddtoClass = Session.get('noOfTrainerToaddtoClass');
+		 if(isNaN(noOfTrainerToaddtoClass)) noOfRadioFields = 1;
+		 var noOfRadioFields = noOfTrainerToaddtoClass-1;
+		 console.log("noOfTrainerToaddtoClass " + noOfTrainerToaddtoClass);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('noOfTrainerToaddtoClass', noOfRadioFields);
 	}
 });
 
@@ -363,9 +464,30 @@ Template.registerHelper('formatDate', function(date){
 
 });
 
+Template.registerHelper('formatDateee', function(date){
+	return moment(date).format("DD-MM-YYYY");
+
+});
+
 
 Template.viewCourseForm.events({
 	"click #enterCoursePageButton" : function viewCoursePageEventHandler(e) {
+		e.preventDefault();
+		//TODO: Validation of user
+		// if(Meteor.user.userType != "admin"){
+		// return false;
+		// }
+		// console.log(this.courseCode);
+
+		Session.set('currentCourseGroup', this.courseCode);
+		  //modal.find('.modal-title').text('New message to ' + recipient)
+		  //modal.find('.modal-body input').val(recipient)
+	}
+});
+
+
+Template.editClassDetails.events({
+	"click #editGroupDetailsButton" : function(e) {
 		e.preventDefault();
 		//TODO: Validation of user
 		// if(Meteor.user.userType != "admin"){
@@ -412,36 +534,14 @@ Template.addClassForm.events({
 		var courseObject =  Courses.findOne({courseCode:currentCourse});
 		console.log("HERE >>> " + courseObject);
 
-
-
-		// var courseObject =  Courses.findOne({courseCode:currentCourse});
-		// var gNoOfHours =  Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
-		// console.log(gNoOfHours + " number of Hours");
 		var days = document.getElementsByName("classListday");
-		/*
-		days[0-5]
-		days[0].value = "monday"
-		days[0].checked = true
-		*/
-		// console.log((days));
 		days = Array.prototype.slice.call(days);
-		// console.log((days));
-		// console.log(Array.isArray(days));
-		days2 = new Array();
 		days.forEach(function(curr, ind, arr){
 			if(curr.checked) days2.push(curr.value.toLowerCase());
 		});
 		obj.days = days2;
 		console.log(days);
 		console.log(obj);
-		// var gdaysArr = new Array();
-		// for(var x = 0, l = days.length; x < l;  x++){
-			// // console.log(days[x].value + " DAYS");
-			// if (days[x].checked){
-			  // gdaysArr.push(days[x].value);
-			// }
-		// }
-
 		var stringSDate = document.getElementById("classListNewStartDate").value;
 		var stringEDate = document.getElementById("classListNewEndDate").value;
 
@@ -454,9 +554,6 @@ Template.addClassForm.events({
 		obj.venue = document.getElementById("classListVenue").value;
 		var trainId = document.getElementById("classListTrainers").value;
 		obj.courseTrainers = {trainerId: trainId};
-		// var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
-		// var trainerLastName = Meteor.users.findOne(trainerID).lastName;
-		// var gTrainers = trainerFirstName + " " + trainerLastName;
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		console.log("What is this? : " + currentCourse);
@@ -506,6 +603,51 @@ Template.deleteClass.events({
 	}
 });
 
+
+Template.group.events({
+	"click #removeStudentFromClass" : function deleteCourseEventHandler(e) {
+			console.log(this);
+			
+
+			//extracting from url		
+		var courseGrp =  window.location.href;
+		var positionFirstEqual = courseGrp.indexOf('=');
+		//problem starts here
+		//extracting course
+		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
+		var positionOfAND = courseGrp.indexOf('&');
+		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+		//extracting grpNum
+		var grpNumStr=courseGrp.substr(positionOfAND-1);
+		var positionSecondEqual = currentCourseGrp.indexOf('=');
+		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+		var groupID = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id
+			
+		console.log(groupID);
+		Meteor.call("removeStudentFromClass", groupID, this.studentID);
+	},
+	"click #paidStudentFromClass" : function deleteCourseEventHandler(e) {
+			console.log("canclick");
+			console.log(this);
+
+			//extracting from url		
+		var courseGrp =  window.location.href;
+		var positionFirstEqual = courseGrp.indexOf('=');
+		//problem starts here
+		//extracting course
+		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
+		var positionOfAND = courseGrp.indexOf('&');
+		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+		//extracting grpNum
+		var grpNumStr=courseGrp.substr(positionOfAND-1);
+		var positionSecondEqual = currentCourseGrp.indexOf('=');
+		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+		var groupID = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id
+
+		Meteor.call("studentPaid", groupID, this.studentID);
+	}
+});
+
 Template.addStudent.events({
 	
 	"click #addStudentButton" : function(e, templ) {
@@ -518,8 +660,12 @@ Template.addStudent.events({
 	    var addStudentsArr = new Array();
 	    for(var x = 0, l = addStudents.length; x < l;  x++){
 	      console.log(addStudents[x]);
-	      addStudentsArr.push(addStudents[x].value);
-			}
+	      var obj = new Object();
+	      obj.studentID = addStudents[x].value;
+	      obj.paid = false;
+	      obj.assessmentStatus = "uncompleted";
+	      addStudentsArr.push(obj);
+		}
 
 
 		//TODO: Add student to class list

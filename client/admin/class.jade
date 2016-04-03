@@ -26,7 +26,7 @@ template(name="group")
                     td #{venue}
                   tr
                     th No. of Hour(s)
-                    td #{noOfSessions}
+                    td #{courseNoOfHours}
                   tr
                     th Timing
                     td #{startTime} - #{endTime}
@@ -34,16 +34,18 @@ template(name="group")
                     th Days
                     td 
                       each noOfDays
-                        | #{.}
+                        | #{.}, 
                   tr
                     th Start Date
-                    td #{startDate}
+                    td {{formatDateee startDate}}
                   tr
                     th End Date
-                    td #{endDate}
+                    td {{formatDateee endDate}}
                   tr
                     th Trainer(s)
-                    td #{trainers}
+                    td  #{classTrainers}
+                      //each classTrainers
+                        //| #{trainerId}, 
             // /.table-responsive
             
 
@@ -69,11 +71,15 @@ template(name="group")
                     tr
                       td #{fullName}
                       td 
-                        input(type="button", value="Paid")  
+                        if equals paid "true"
+                          input(type="button", value="Paid", id="paidStudentFromClass", disabled="disabled")  
+                        else
+                          input(type="button", value="Paid", id="paidStudentFromClass") 
+
                       td 
-                        input(type="button", value="Assessment")
+                        input(type="button", value="Assessment", id="assessStudentFromClass")
                       td 
-                        input(type="button", value="Remove Student")
+                        input(type="button", value="Remove Student", id="removeStudentFromClass")
                  
 
             p.breakH4
@@ -165,7 +171,7 @@ template(name="displayAnnouncements")
   // /.table-responsive
 
 template(name="editClassDetails")
- #editClass.modal.fade(tabindex="-1", role="dialog", aria-hidden="true").adminFormDark
+ #editClass.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -177,12 +183,72 @@ template(name="editClassDetails")
             table#dataTables-example.table
               tbody
                 tr
+                  td Course
+                  td(colspan="3") #{courseCode}
+                    
+                tr
                   td Venue
+                  td(colspan="3") 
+                    input.form-control(id='annouTitle',type='text',value='#{venue}',placeholder='Venue', style="max-width: 500px;")
+                tr
+                  td No. of Hours
+                  td(colspan="3") 
+                    
+                tr
+                  td Timing
+                  td(colspan="3") 
+                    input(type="time", id="classListNewStartTime", style="width:40%; color:black", value="#{startTime}") 
+                    | TO 
+                    input(type="time", id="classListNewEndTime", style="width:40%; color:black", value="#{endTime}")
+                tr  
+                  th Days
                   td 
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Monday", name="classListDay")
+                        | Monday
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Tuesday", name="classListDay")
+                        | Tuesday
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Wednesday", name="classListDay")
+                        | Wednesday
+                tr
+                  th  
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Thursday", name="classListDay")
+                        | Thursday
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Friday", name="classListDay")
+                       | Friday
+                  td
+                    .form-group
+                      label.checkbox-inline
+                        input(type="checkbox", value="Saturday", name="classListDay")
+                        | Saturday
+
+                
+                tr
+                  th Duration (Date)
+                  td(colspan="3")
+                    input(type="date", id="classListNewStartDate", placeholder="dd/mm/yyyy", style="color:black; width: 40%", value="#{startDate}")
+                    | TO
+                    input(type="date", id="classListNewEndDate", placeholder="dd/mm/yyyy", style="color:black; width: 40%")
+                tr
+                  td Trainer(s)
+                  td(colspan="3") 
                     input.form-control(id='annouTitle',type='text',value='',placeholder='Venue', style="max-width: 500px;")
            // /.table-responsive
         .modal-footer
-          input.btn.admin-btn#submitButton(type='submit',value='Edit',data-transition='fade', data-theme='c', data-dismiss="modal")
+          button#editGroupDetailsButton.btn.btn-save(type="button", data-dismiss="modal") Edit
 
 template(name="addStudent")
   #addStudent.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
