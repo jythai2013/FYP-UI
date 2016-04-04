@@ -306,8 +306,15 @@ Template.certificateStudentList.events({
 			// console.log(this);
 			var myData={};
 			// try{
-			myData.fullName = Meteor.users.findOne({_id:student._id.toString()}).fullName;
-			myData.userID = Meteor.users.findOne({_id:student._id.toString()}).userID;
+			var groupId = thisGroup._id;
+			var theStudent = Meteor.users.findOne({_id:this._id.toString()});
+			var passStatus = theStudent.grades[groupId].passStatus
+			if(passStatus != true) {
+				//TODO: error message. not yet pass
+				return false;
+			}
+			myData.fullName = theStudent.fullName;
+			myData.userID = theStudent.userID;
 			myData.courseName = thisCourse.courseName;
 			myData.courseCode = thisCourse.courseCode;
 			myData.courseStart = thisGroup.startDate;
@@ -346,8 +353,15 @@ Template.certificateStudentList.events({
 		// console.log(this.toString());
 		// console.log(Meteor.users.findOne({_id:this.toString()}));
 		// try{
-		myData.fullName = Meteor.users.findOne({_id:this._id.toString()}).fullName;
-		myData.userID = Meteor.users.findOne({_id:this._id.toString()}).userID;
+		var groupId = thisGroup._id;
+		var theStudent = Meteor.users.findOne({_id:this._id.toString()});
+		var passStatus = theStudent.grades[groupId].passStatus
+		if(passStatus != true) {
+			//TODO: error message. not yet pass
+				return false;
+		}
+		myData.fullName = theStudent.fullName;
+		myData.userID = theStudent.userID;
 		myData.courseName = thisCourse.courseName;
 		myData.courseCode = thisCourse.courseCode;
 		myData.courseStart = thisGroup.startDate;
