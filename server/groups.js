@@ -44,15 +44,15 @@ Meteor.methods({
 		Groups.update({_id:theGroup_id},{$push:{classlist:user_id}});
 		// console.log(classlist);
 		
-		details = {"studentId": user_id};
-		var theGroup = Groups.findOne({_id:theGroup_id});
-		dateClassFinishes = theGroup.endDate;
-		details.date = dateClassFinishes	//TODO: Date when course finishes
-		details.date = new Date();
-		details.groupId = theGroup_id;
-		var thisId = FutureTasks.insert(details);
-		scheduleRecommender(thisId, details);
-		recEngine.link(user_id, theGroup.courseId);
+		// details = {"studentId": user_id};
+		// var theGroup = Groups.findOne({_id:theGroup_id});
+		// dateClassFinishes = theGroup.endDate;
+		// details.date = dateClassFinishes	//TODO: Date when course finishes
+		// details.date = new Date();
+		// details.groupId = theGroup_id;
+		// var thisId = FutureTasks.insert(details);
+		// scheduleRecommender(thisId, details);
+		// recEngine.link(user_id, theGroup.courseId);
 	},
 	
   'updateGroupClasslist': function editGroup(courseCode, grpNum, classlist){
@@ -103,12 +103,32 @@ Meteor.methods({
       console.log("here");
         Groups.update({_id: groupID},
 			{ $pull: { 
-				classlist: {studentID:studID} 
+				classlist: studID}
 				} 
-			}
-
-
+			// }
       	);
+    },
+
+  'addClassToStudent': function(studID, groupId, gradesInfo, paymentStatusArr){
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+
+
+		var theUser = Meteor.users.findOne({_id:studID});
+		console.log(theUser);
+		 if(theUser.grades == undefined || theUser.grades == null){ theUser.grades = {}; }
+		 if(theUser.paymentStatus == undefined || theUser.paymentStatus == null){ theUser.paymentStatus = {}; }
+		theUser.grades[groupId] = gradesInfo;
+		theUser.paymentStatus[groupId] = gradesInfo;
+		console.log(theUser)
+		// console.log(inObj.StudentID)
+		// console.log(theUser.grades)
+		
+		Meteor.users.update({_id:studID}, theUser);
+
+
+      console.log("here");
     },
     
 
@@ -117,12 +137,11 @@ Meteor.methods({
         // return false; //TODO: output error message in client
       // }
       console.log("here");
-        Groups.update({_id: groupID, "classlist.studentID":studID},
-			{ $set: { 
-				"classlist.$.paid": true
-				} 
+      	Meteor.users.update({'_id': studID, "paymentStatus.groupID":groupID}, 
+      		{ $set:{
+					status: "paid"
+				}
 			}
-
 
       	);
     },
