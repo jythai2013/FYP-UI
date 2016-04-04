@@ -12,7 +12,11 @@ function getParameterByName(name, url) {
 }
 
 Template.courseLSPForm.onRendered(function(){
-	var cLSP = getParameterByName("cLSP");
+	// var cLSP = getParameterByName("cLSP");
+	var lspid = getParameterByName("LSPformID");
+	Session.set("currentLSPIdLSPForm2", lspid);
+	var theLSP = LSPSurvey.findOne({_id:lspid});
+	cLSP = theLSP.courseId;
 	Session.set("currentCourseIDLSPForm2", cLSP);
 });
 
