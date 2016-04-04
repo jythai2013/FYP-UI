@@ -22,13 +22,16 @@ Meteor.methods({
 			}
 		}
 		theUser.grades[inObj.groupID] = grades;
-		// console.log(theUser)
+		console.log(theUser)
 		// console.log(inObj.StudentID)
 		// console.log(theUser.grades)
 		
 		Meteor.users.update({_id:inObj.StudentID}, theUser);
 		// Meteor.users.update({inObj.StudentID}, {$set: {grades: grades}});
 		
+		//theUser.grades[groupId]["midterms"]
+		
+		//below is wrong:
 		// theUser.grades is an object, with each assesment as attribute names (eg midterms, finals, etc) (eg theUser.grades["midterms"] = 50)
 		// each attribute of the grades object is the number of marks he has
 	}
