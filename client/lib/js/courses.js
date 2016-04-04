@@ -128,6 +128,36 @@ Template.course.helpers({
 
 		return trainersArr;
 		
+	},
+	"courseComponents" : function(e) {
+		// var url =  window.location.href;
+		// var positionFirstEqual = url.indexOf('=');	
+		// var currentCourseEsc=url.substring(positionFirstEqual+1);
+    	// console.log(currentCourseEsc+ " currnt course code escaped");
+		var currentCourse=Session.get("currentCourseCode");
+		//console.log(currentCourse + "Code");
+
+		//var size = Courses.find({courseCode:currentCourse}).count();
+		var size = Courses.findOne({courseCode:currentCourse});
+		console.log(size);
+		var a =  Courses.findOne({courseCode:currentCourse}).components;
+
+		var componentsArr = new Array();
+		for(var x = 0, l = a.length; x < l;  x++){
+			var obj = new Object();
+			obj.componentName = a[x].componentName;
+			obj.weightage = a[x].weightage;
+
+			componentssArr.push(obj);
+    	}
+
+    	componentsArr.forEach(function(entry) {
+   			console.log(entry + " full name");
+
+		});
+
+		return componentsArr;
+		
 	}
 });
 
@@ -434,6 +464,56 @@ Template.addTrainer.events({
 		 Session.set('trainerTimes', noOfTimes);
 	}
 });
+
+Template.addComponents.onRendered(function(){
+	Session.set("componentsTimes", 0);
+});
+
+Template.addComponents.helpers({
+
+	"noOfTimesComponents" : function (e) {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('componentsTimes'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
+	},	
+});
+
+
+
+Template.addComponents.events({
+	"click #addMoreComponents" : function deleteCourseEventHandler(e) {
+		
+		 e.preventDefault();
+
+		 var componentsTimes = Session.get('componentsTimes');
+		 var noOfRadioFields = componentsTimes+1;
+		 if(isNaN(componentsTimes)) noOfRadioFields = 1;
+		 console.log("componentsTimes " + componentsTimes);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('componentsTimes', noOfRadioFields);
+	},
+	"click #removeComponents" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+
+		 var componentsTimes = Session.get('componentsTimes');
+		 if(isNaN(componentsTimes)) noOfRadioFields = 1;
+		 var noOfRadioFields = componentsTimes-1;
+		 console.log("componentsTimes " + componentsTimes);
+		 console.log("noOfRadioFields " + noOfRadioFields);
+		 Session.set('componentsTimes', noOfRadioFields);
+	},
+	"click #editComponentsButton" : function(e) {
+		 //var name = template.$(event.target).data('modal-template');
+		 e.preventDefault();
+		 console.log("to do");
+		// Meteor.call("editComponents", courseID, components);
+	}
+});
+
+
 
 
 // WEBSITE

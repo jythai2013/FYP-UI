@@ -104,13 +104,8 @@ Template.group.helpers({
 		console.log(classList);
 		var studentArray = new Array();
 		classList.forEach(function(curr,ind,arr){
-			var obj = new Object();
-			var studID = curr.studentID;
-			obj.studentID = curr.studentID;
-			obj.fullName = Meteor.users.findOne({_id:studID}).fullName;
-			obj.paid = curr.paid;
-			obj.assessment = curr.assessmentStatus;
-			studentArray.push(obj);
+			var student = Meteor.users.findOne({_id:curr});
+			studentArray.push(student);
 		});
 		return studentArray;
 	},
@@ -624,7 +619,7 @@ Template.group.events({
 		var groupID = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id
 			
 		console.log(groupID);
-		Meteor.call("removeStudentFromClass", groupID, this.studentID);
+		Meteor.call("removeStudentFromClass", groupID, this._id);
 	},
 	"click #paidStudentFromClass" : function deleteCourseEventHandler(e) {
 			console.log("canclick");
@@ -660,12 +655,8 @@ Template.addStudent.events({
 	    var addStudentsArr = new Array();
 	    for(var x = 0, l = addStudents.length; x < l;  x++){
 	      console.log(addStudents[x]);
-	      var obj = new Object();
-	      obj.studentID = addStudents[x].value;
-	      obj.paid = false;
-	      obj.assessmentStatus = "uncompleted";
-	      addStudentsArr.push(obj);
-		}
+	      addStudentsArr.push(addStudents[x].value);
+			}
 
 
 		//TODO: Add student to class list
@@ -686,6 +677,19 @@ Template.addStudent.events({
 		
 		console.log(classlist);
 		Meteor.call("updateGroupClasslist", courseCode, grpNum, classlist);
+
+		var obj = new Object();
+		var paymentStatus = new Object();
+	    for(var x = 0, l = classlist.length; x < l;  x++){
+	    	var studentID = classlist[x];
+	    	
+	      	obj.passStatus = false;
+
+	      	paymentStatus.paid = false;
+
+	      	Meteor.call("addClassToStudent", studentID, group._id, obj, paymentStatus);
+		}
+
 	},
 
 	"click #addMoreStudents" : function(e) {

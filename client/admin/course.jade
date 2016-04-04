@@ -113,10 +113,10 @@ template(name="course")
                     button.myFileInputButton.btn.admin-btn(type="button", data-dismiss="modal") Upload
             p.breakH4
             h4 Course Components
-                button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addComponents", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
                     i.fa.fa-plus
                     | Components 
-                +addClass
+                +addComponents
             .table-responsive
               table#dataTables-example.table.table-bordered.table-hover
                 thead
@@ -124,7 +124,7 @@ template(name="course")
                     th(colspan="2") Components
                     th Weightage
                 tbody
-                  each uploads                   
+                  each courseComponents                   
                     tr 
                       td(colspan="2") #{name}
                       td
@@ -269,6 +269,88 @@ template(name="addTrainer")
           // /.table-responsive
         .modal-footer
           button#addTrainerButton.btn.btn-save(type="button", data-dismiss="modal") Add 
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+template(name="addComponents")
+  #addComponents.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Edit Components
+        .modal-body
+          form(name="addTrainerForm", role="form", id="insert-addTrainerForm", method="post")
+            tr
+              th(colspan="2") Component   
+              th Weightage
+            tr
+              td(colspan="2")
+                  .form-group
+                    input.form-control(type="text", id="components", placeholder="eg. Assignment 1") 
+              td
+                .form-group()
+                  select(name="weightage", style="color: black; width: 100%")
+                    option(value="5") 5   
+                    option(value="10") 10   
+                    option(value="15") 15   
+                    option(value="20") 20   
+                    option(value="25") 25   
+                    option(value="30") 30   
+                    option(value="35") 35   
+                    option(value="40") 40   
+                    option(value="45") 45   
+                    option(value="50") 50   
+                    option(value="55") 55   
+                    option(value="55") 55   
+                    option(value="65") 55   
+                    option(value="70") 70   
+                    option(value="75") 75   
+                    option(value="80") 80   
+                    option(value="85") 85   
+                    option(value="90") 90   
+                    option(value="95") 95   
+              td 
+                button#addMoreComponents.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-plus  
+
+            each noOfTimesComponents
+              tr 
+                td(colspan="2")
+                  .form-group
+                    input.form-control(type="text", id="components", placeholder="eg. Assignment 1") 
+                td
+                  .form-group()
+                    select(name="weightage", style="color: black; width: 100%")
+                      option(value="5") 5   
+                      option(value="10") 10   
+                      option(value="15") 15   
+                      option(value="20") 20   
+                      option(value="25") 25   
+                      option(value="30") 30   
+                      option(value="35") 35   
+                      option(value="40") 40   
+                      option(value="45") 45   
+                      option(value="50") 50   
+                      option(value="55") 55   
+                      option(value="55") 55   
+                      option(value="65") 55   
+                      option(value="70") 70   
+                      option(value="75") 75   
+                      option(value="80") 80   
+                      option(value="85") 85   
+                      option(value="90") 90   
+                      option(value="95") 95   
+                td  
+                  button#addMoreComponents.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-plus 
+                  button#removeComponents.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                    i.fa.fa-minus 
+              
+          // /.table-responsive
+        .modal-footer
+          button#editComponentsButton.btn.btn-save(type="button", data-dismiss="modal") Edit 
       // /.modal-content
     // /.modal-dialog
   // /.modal
