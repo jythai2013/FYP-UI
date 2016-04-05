@@ -30,6 +30,20 @@
 
 		},
 		
+		'editComponents': function editCourse(currentCourseCode, courseComponents){
+			// if(Meteor.user.userType != "admin"){
+				// return false; //TODO: output error message in client
+			// }
+
+			Courses.update({courseCode: currentCourseCode}, {
+		        $set: {
+					components: courseComponents
+				}
+      		});
+			console.log("edittingCourse");
+
+		},
+		
 		'deleteCourse': function deleteCourse(_id){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
