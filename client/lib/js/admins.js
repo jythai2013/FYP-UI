@@ -25,8 +25,13 @@ Template.administratorList.helpers({
 
 Template.administratorList.helpers({
 	"checkIsTrainer" : function adminList(userType) {
-		// console.log(this.userType.trainer);
-		return userType === true;
+		console.log("Check : " + this.fullName + ", " + this.userType.trainer);
+		console.log(this.userType.trainer !== undefined);
+		if (this.userType.trainer !== undefined){
+			return "Yes";
+		} else {
+			return "No";
+		}
 	}
 });
 

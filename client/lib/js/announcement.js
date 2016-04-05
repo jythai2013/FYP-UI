@@ -40,23 +40,24 @@ Template.displayAnnouncements.helpers({
 
 	"groupAnnouncements" : function listGroupAnnouncementsEventHandler(e) {
  		//extracting from url        
-        // var courseGrp =  window.location.href;
-        // var positionFirstEqual = courseGrp.indexOf('=');
-        // //problem starts here
-        // //extracting course
-        // var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);    
-        // var positionOfAND = courseGrp.indexOf('&');
-        // var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+        var courseGrp =  window.location.href;
+        var positionFirstEqual = courseGrp.indexOf('=');
+        //problem starts here
+        //extracting course
+        var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);    
+        var positionOfAND = courseGrp.indexOf('&');
+        var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
 
-        // //extracting grpNum
-        // var grpNumStr=courseGrp.substr(positionOfAND-1);
-        // var positionSecondEqual = currentCourseGrp.indexOf('=');
-        // var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+        //extracting grpNum
+        var grpNumStr=courseGrp.substr(positionOfAND-1);
+        var positionSecondEqual = currentCourseGrp.indexOf('=');
+        var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
 
-        // var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
-        // var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).announcement;
+        console.log("courseCode: " + currentCourse +", grpNum:" +currentGrpNum);
+        var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).announcement;
         // a = a.sort(a.annouDate);
-        // return a;
+        console.log("aaaa >>>" + a);
+        return a;
     }
 
 });

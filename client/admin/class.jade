@@ -13,7 +13,7 @@ template(name="group")
               button.btn.btn.btn-sn.pull-right(data-toggle="modal", data-target="#editClass" style="margin-top: -1%; background: #333; color:#fff")
                     i.fa.fa-pencil-square-o  
                     | Edit
-              +editClassDetails
+                +editClassDetails
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -184,8 +184,7 @@ template(name="editClassDetails")
               tbody
                 tr
                   td Course
-                  td(colspan="3") #{courseCode}
-                    
+                  td(colspan="3") #{courseCode}   
                 tr
                   td Venue
                   td(colspan="3") 

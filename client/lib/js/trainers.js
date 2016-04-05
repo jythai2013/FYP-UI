@@ -1,3 +1,8 @@
+function getTrainerList()
+{
+    return Meteor.users.find({"userType.trainer":true});
+}
+
 // Trainer ///////////////////////////////////////////////////////////////////////
 Template.trainerIndex.helpers({
 	"displayTrainerName" : function displayTrainerName(e) {
@@ -7,19 +12,25 @@ Template.trainerIndex.helpers({
 
 Template.trainerList.helpers({
 	"trainers" : function trainerList(e) {
-		return Meteor.users.find({userType:{"trainer":true}});
+		return getTrainerList();
+	},
+
+	"isAlsoAdmin" : function trainerList(e) {
+		var checkUserType = this.userType.admin;
+		console.log(this.fullName + " isAlsoAdmin>>> " +checkUserType);
+		return checkUserType !== undefined;
 	}
 });
 
 Template.addTrainer.helpers({
 	"trainers" : function trainerList(e) {
-		return Meteor.users.find({userType:{"trainer":true}});
+		return getTrainerList();
 	}
 });
 
 Template.trainerList.helpers({
 	"getTrainerCount" : function countTrainerList(e) {
-		return Meteor.users.find({userType:{"trainer":true}}).count();
+		return getTrainerList().count();
 	}
 });
 

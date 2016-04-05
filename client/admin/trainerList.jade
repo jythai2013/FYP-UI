@@ -30,12 +30,16 @@ template(name="trainerList")
                       td  
                         a.btn.admin-btn.bt-sn(data-target="#viewTrainerDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                         +viewTrainerParticulars
-                      td
-                        a.btn.admin-btn.bt-sn(data-target="#viewCV#{_id}", data-toggle="modal", data-id="#{_id}") Edit Credentials
-                        +viewCVForm
-                      td
-                        a.btn.admin-btn.bt-sn(data-target="#goDeleteTrainer#{_id}", data-toggle="modal", data-id="#{_id}") Delete
-                        +deleteTrainerForm 
+                      if isAlsoAdmin
+                        td
+                        td Administrator
+                      else
+                        td
+                          a.btn.admin-btn.bt-sn(data-target="#viewCV#{_id}", data-toggle="modal", data-id="#{_id}") Edit Credentials
+                          +viewCVForm
+                        td
+                          a.btn.admin-btn.bt-sn(data-target="#goDeleteTrainer#{_id}", data-toggle="modal", data-id="#{_id}") Delete
+                          +deleteTrainerForm 
 
 
 template(name="viewCVForm")

@@ -120,12 +120,23 @@
 		'editAdminAccount': function editAdminAccount(_id, sMobileNo, isTrainer){
 			console.log("Update: editAdminAccount >> " + _id);
 			console.log(sMobileNo + " " + isTrainer);
-			Meteor.users.update(_id, {
-				$set:{
-					"mobileNo": sMobileNo,
-					"userType.trainer": isTrainer
-				}
-			});
+			if (isTrainer === "true"){
+				Meteor.users.update(_id, {
+					$set:{
+						"mobileNo": sMobileNo,
+						"userType": {admin: true, trainer: true}
+					}
+				});
+				console.log("here trainer is true >>> END");
+			} else {
+				Meteor.users.update(_id, {
+					$set:{
+						"mobileNo": sMobileNo,
+						"userType": {admin: true}
+					}
+				});
+				console.log("here trainer is false >>> END");
+			}
 			
 		}
 
