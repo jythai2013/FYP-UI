@@ -1,40 +1,46 @@
+ function getTrainerOngoingCourse(e) {
+    console.log("trainerPortal.js - trainerOngoingCourses >>>");
+    var tId = Meteor.user()._id;
+    var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
+    console.log(coursesTaught);
+    return coursesTaught;
+ }
+
+ Template.trainerUploads.helpers({
+    "trainerOngoingCourses" : function findTrainerOngoingCoursesTA(e) {
+        var a = getTrainerOngoingCourse();
+        return a;
+    }
+ });
+
+ Template.trainerAnnouncment.helpers({
+    "trainerOngoingCourses1" : function findTrainerOngoingCoursesTA(e) {
+        var a = getTrainerOngoingCourse();
+        return a;
+    }
+ });
+ 
+ Template.editAnnouncement.helpers({
+    "trainerOngoingCourses" : function findTrainerOngoingCoursesEA(e) {
+         var a = getTrainerOngoingCourse();
+         return a;
+    }
+ });
+ 
+
+
 Template.addAnnouncement.helpers({
 	"trainerOngoingCourses1" : function findTrainerOngoingCourses2(e) {
-		console.log("trainerPortal.js - trainerOngoingCourses >>>");
-		var tId = Meteor.user()._id;
-		var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
-		console.log(coursesTaught);
-		return coursesTaught;
-	}
-});
-
-Template.trainerUploads.helpers({
-	"trainerOngoingCourses" : function findTrainerOngoingCourses1(e) {
-		console.log("trainerPortal.js - trainerOngoingCourses >>>");
-		var tId = Session.get("loggedInUser")._id;
-		var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
-		console.log(coursesTaught);
-		// var classes = new Array();
-		// classList.forEach(function(curr,ind,arr){
-		// 	classes.push(Meteor.users.findOne({_id:curr}));
-		// });
-		return coursesTaught;
+		var a = getTrainerOngoingCourse();
+        console.log("TrainerAnnouncement: " a.length);
+        return a;
 	}
 });
 
 Template.trainerAnnouncment.onRendered({
 	'loggedInUserId': function getLoginId(e) {
 		return Meteor.user()._id;/*Session.get("loggedInUser")._id*/
-	},
-
-	'storeGroupId': function getLoginId(e) {
-		var groupThis = this;
-		return groupThis;
-	},
-
-	'returnStoreGroupId' : function getLoginId(e) {
-		return groupThis;
-	},
+	}
 });
 
 Template.trainerUploads.onRendered(function(){
@@ -49,14 +55,6 @@ Template.trainerUploads.events({
 		// console.log(e.target.value);
 	}
 });
-
-//forEach(function(currentValueFromTheArray, IndexOfTheArray, TheArray){});
-
-
-
-
-
-// trainerAnnouncment
 
 Template.addAnnouncement.events({
 	
@@ -76,7 +74,7 @@ Template.addAnnouncement.events({
 		console.log("clicked AddAnnounment >> announcement.js");
 
 	    ///
-	    console.log("List : " + obj);
+	    console.log("List : " obj);
 		Meteor.call("insertAnnouncement", group, obj);
 	}
 });
@@ -114,7 +112,7 @@ Template.editAnnouncement.events({
 		// 	}
   //   	}
 	    ///
-	    console.log("List : " + obj);
+	    console.log("List : " obj);
 		//Meteor.call("editAnnouncement", group, obj);
 	}
 });
@@ -123,40 +121,62 @@ Template.trainerAnnouncment.events({
 	"click #deleteTAnnounButton" : function deleteTAnnounEventHandler(e) {
 		var groupId = document.getElementById("groupId").value;
 		var removeId = document.getElementById("announId").value;
-		console.log(">>> Delete Announ" + removeId);
+		console.log(">>> Delete Announ" removeId);
 		Meteor.call("deleteAnnouncement", groupId, removeId);
 	}
 });
 
+ Template.trainerClassList.helpers({
+     "test" : function test(e) {
+         var tId = Meteor.user()._id;
+         // add date factor here
+         return Meteor.user().fullName;
+     },
+ 
+     "classesCL" : function findTrainerOngoingCoursesCL(e) {
+        var tId = Meteor.user()._id;
+        // add date factor here
+        return Groups.find({courseTrainers: {trainerId: tId}}).count();
+     },
+ 
+     "getCourseDesc" : function findDescCL(courseName) {
+         return Courses.find({courseName: courseName}).courseDescription;
+     },
+ 
+     "trainerOngoingCourses" : function findTrainerOngoingCoursesCL(e) {
+         return getTrainerOngoingCourse();
+       }
+ });
 
-Template.postAnnounModel.helpers({
-  // isAnnouncementPosted: (err) ->
-  //   if Meteor.user()
-  //     return true
-  //   else
-  //     return false
+
+Template.trainerIndex.helpers({
+    "displayTrainerName" : function test(e) {
+        console.log("fetch user's name");
+        return Meteor.user().fullName;
+    }
 });
 
 
-// Sidebar
-Template.trainerSidebar.helpers({
-	'isActive' : function(browserN) {
 
-		var browserUrl =  window.location.href;
-		var positionFirstEqual = browserUrl.indexOf('/');
-		var removeDomain=browserUrl.substr(positionFirstEqual+1);
-		var positionSecondEqual = removeDomain.indexOf('/');
-		console.log("url "+ browerURL.length);
-		console.log("url "+ positionSecondEqual);
-		var browerName=removeDomain.substr(positionSecondEqual+1);
-		console.log(browerName + " equals "+ browserN);
-		var a = browerName == browserN;
-		console.log(a);
-		if (browerName === browserN){
-			return "active";
-		} else {
-			return "";
-		}
-	}
-});
-		
+// // Sidebar
+// Template.trainerSidebar.helpers({
+// 	'isActive' : function(browserN) {
+
+// 		var browserUrl =  window.location.href;
+// 		var positionFirstEqual = browserUrl.indexOf('/');
+// 		var removeDomain=browserUrl.substr(positionFirstEqual+1);
+// 		var positionSecondEqual = removeDomain.indexOf('/');
+// 		console.log("url "browerURL.length);
+// 		console.log("url "positionSecondEqual);
+// 		var browerName=removeDomain.substr(positionSecondEqual+1);
+// 		console.log(browerName " equals "browserN);
+// 		var a = browerName == browserN;
+// 		console.log(a);
+// 		if (browerName === browserN){
+// 			return "active";
+// 		} else {
+// 			return "";
+// 		}
+// 	}
+// });
+// 		

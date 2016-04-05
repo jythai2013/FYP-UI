@@ -298,33 +298,6 @@ Template.removeClass.helpers({
 	}
 });
 
-Template.displayAnnouncements.helpers({
-
-	"groupAnnouncements" : function listGroupAnnouncementsEventHandler(e) {
-		console.log("here in class announcement");
-		//extracting from url		
-		var courseGrp =  window.location.href;
-		var positionFirstEqual = courseGrp.indexOf('=');
-		//problem starts here
-		//extracting course
-		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-		var positionOfAND = courseGrp.indexOf('&');
-		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-
-		//extracting grpNum
-		var grpNumStr=courseGrp.substr(positionOfAND-1);
-		var positionSecondEqual = currentCourseGrp.indexOf('=');
-		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-
-		var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
-		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).announcement;
-		console.log(a);
-		a = a.sort(descDate)
-		return a;
-		
-	}
-});
-
 
 function descDate(a,b) {
   if (a.dateTime < b.dateTime)
@@ -418,41 +391,6 @@ Template.addClass.events({
 	}
 });
 
-Template.announcementForm.events({
-	"click #addAnnouncementButton" : function createAnnouncementEventHandler(e) {
-		e.preventDefault();
-		//TODO: Validation of user
-		// if(Meteor.user.userType != "admin"){
-		// return false;
-		// }
-		//extracting from url		
-		var courseGrp =  window.location.href;
-		var positionFirstEqual = courseGrp.indexOf('=');
-		//problem starts here
-		//extracting course
-		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-		var positionOfAND = courseGrp.indexOf('&');
-		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-		//extracting grpNum
-		var grpNumStr=courseGrp.substr(positionOfAND-1);
-		var positionSecondEqual = currentCourseGrp.indexOf('=');
-		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id
-		gId = a;
-		//TODO: Validation of input
-		var obj = new Object();
-		var title = document.getElementById("aTitle").value;
-
-		console.log(">>>>>TITLEEEEEEEE: " + title);
-		obj.annouTitle= title;
-		obj.annouDetails= document.getElementById("annouDetails").value;
-		obj.annouDate= new Date();
-		obj.annouAuthor= Meteor.user()._id;
-		console.log("Admin Add Announcement for "+gId);
-		Meteor.call("insertAnnouncement", gId, obj);
-		//console.log(Groups.find({}).fetch();
-	}
-});
 
 Template.registerHelper('formatDate', function(date){
 	return moment(date).format("DD-MM-YYYY HH:mm:ss");

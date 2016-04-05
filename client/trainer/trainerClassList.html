@@ -39,47 +39,23 @@
         </div>
         <div class='panel-body'>
           <div class='page-header'>
-            <h4>Active ClassList</h4>
+            <h4>Active ClassList: {{classesCL}}</h4>
+            {{test}}
           </div>
-          Note: still wondering how to get the class from course
-
-          <h1>Default:</h1>
-          <table border="0">
-            <tr>
-              <td><h3> IS101 G1</h3></td>
-              <td><a href="trainerClass" class="btn-save">View Class</a></td>
-              <td><button class="btn-save">Download Classlist</button></td>
-            </tr>
-          </table>
-
-<!--           Progress:
-            <div class='progress'>
-              <div class='progress-bar progress-bar-success' style='width: 35%'></div>
-              <div class='progress-bar progress-bar-warning' style='width: 20%'></div>
-              <div class='progress-bar progress-bar-danger' style='width: 10%'></div>
-            </div> -->
-              
-          Course Description: <br>
-          Class Start Date:<br>
-          Class End Date:<br>
-          Venue:<br>
-          Number of students:<br>
-
-          <h1>Testing:</h1>
-
           {{#each trainerOngoingCourses}}
             <table border="0">
               <tr>
-                <td><h3> {{> courseCode}} G1</h3></td>
-                <td><button class="btn-save">View Class</button></td>
+                <td><h3>{{courseCode}} {{grpNum}}</h3></td>
+                <td><a href="trainerClass" class="btn-save">View Class</a></td>
                 <td><button class="btn-save">Download Classlist</button></td>
               </tr>
             </table>
-            Course Description: <br>
-            Class Start Date:<br>
-            Class End Date:<br>
-            Venue:<br>
-            Number of students:<br>
+            Course Description: {{getCourseDesc courseCode}}<br>
+            Class Start Date: {{ startDate}}<br>
+            Class End Date: {{endDate}}<br>
+            Duration: {{startTime}} to {{endTime}}<br>
+            Venue: {{venue}}<br>
+            Number of students: {{classlist.length}}<br>
           {{/each}}
 
         </div>
