@@ -28,7 +28,7 @@
 		user.nokReln = options.nokReln;
 		user.nokTel = options.nokTel;
 
-		user.creationDate = option.createdDate;
+		user.creationDate = options.createdDate;
 	// 	}
 		return user;
 	});
@@ -65,7 +65,7 @@
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ nationality);
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ proficiency);
 
-			Meteor.users.update({'_id': _id}, { $set:{
+			Meteor.users.update(_id, { $set:{
 					'mobileNo': mobileNo,
 					'nationality': nationality, 
 					'proficiency': proficiency
@@ -96,7 +96,7 @@
 			console.log("datasName-"+ snokName);
 			console.log("datasTel-"+ snokTel);
 			console.log("datasReln-"+ snokReln);
-			Meteor.users.update({'_id':sid}, { $set :{
+			Meteor.users.update(sid, { $set :{
 					'remarks': sRemark,
 					'mobileNo': sMobileNo,
 					'proficiency': sProficiency,
@@ -126,6 +126,7 @@
 					"userType.trainer": isTrainer
 				}
 			});
+			
 		}
 
 
