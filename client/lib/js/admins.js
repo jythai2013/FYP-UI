@@ -24,9 +24,9 @@ Template.administratorList.helpers({
 });
 
 Template.administratorList.helpers({
-	"checkIsTrainer" : function adminList(e) {
+	"checkIsTrainer" : function adminList(userType) {
 		// console.log(this.userType.trainer);
-		return this.userType.trainer === true;
+		return userType === true;
 	}
 });
 
@@ -34,7 +34,11 @@ Template.viewAdminParticulars.helpers({
 	"checkIsTrainer" : function adminList(e) {
 		console.log("Check : " + this.fullName + ", " + this.userType.trainer);
 		console.log(this.userType.trainer !== undefined);
-		return this.userType.trainer !== undefined;
+		if (this.userType.trainer !== undefined){
+			return "Yes";
+		} else {
+			return "No";
+		}
 	}
 });
 
@@ -60,10 +64,11 @@ Template.addAdminAcctForm.events({
 		//TODO: Validation of input
 		var obj = new Object();
 		var fullName = 	 document.getElementById("addName").value;
-		obj.fullName = 	 fullName;
 		var mNo = document.getElementById("addMobileNo").value;
-		obj.mobileNo = mNo;
 		var email = document.getElementById("addEmail").value;
+		
+		obj.fullName = 	 fullName;
+		obj.mobileNo = mNo;
 		obj.email = email;
 		obj.password = mNo;
 
