@@ -46,13 +46,13 @@
             <table border="0">
               <tr>
                 <td><h3>{{courseCode}} {{grpNum}}</h3></td>
-                <td><a href="trainerClass" class="btn-save">View Class</a></td>
+                <td><a href="trainerClass?cCode={{courseCode}}&grpNum={{grpNum}}" class="btn-save" style="padding: 2.5px 8px; border-radius: 2.5rem;">View Class</a></td>
                 <td><button class="btn-save">Download Classlist</button></td>
               </tr>
             </table>
             Course Description: {{getCourseDesc courseCode}}<br>
-            Class Start Date: {{ startDate}}<br>
-            Class End Date: {{endDate}}<br>
+            Class Start Date: {{getDDMMYYY startDate}}<br>
+            Class End Date: {{getDDMMYYY endDate}}<br>
             Duration: {{startTime}} to {{endTime}}<br>
             Venue: {{venue}}<br>
             Number of students: {{classlist.length}}<br>

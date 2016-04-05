@@ -46,8 +46,10 @@
                     <tr>
                       <td>Assignment</td>
                       <td>
-                        <select id="sendToGroup">
-                          <option name="">Group dropdown</option>
+                        <select  name="courseCode" id="courseCode">
+                          {{#each studentOngoingCourses}}
+                            <option value="{{_id}}">{{courseCode}} {{grpNum}}</option>
+                          {{/each}}
                         </select>
                       </td>
                     </tr>

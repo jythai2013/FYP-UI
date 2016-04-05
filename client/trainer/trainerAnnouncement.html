@@ -25,41 +25,35 @@
           <div class='page-header'>
             <h4>Annoucement Management</h4>
           </div>
+          
           <table class="table table-striped table-bordered" id="dataTables-example">
-            <thead>
-              <tr>
-                <th>Posted Date</th>
-                <th>Title</th>
-                <th>View Details</th>
-                <th>Posted To</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- {{#each trainerOngoingCourses1}}
-                <input type="hidden" id="groupId" value="{_id}">
-                {{storeGroupId}}
+            {{#each trainerOngoingCourses1}}
+              <thead>
                 <tr>
-                  {{#each announcements}}
-                    <td> {{formatDate annouDate}}</td>
-                    <td> {{annouTitle}}</td>
-                    <td> {{annouDetails}}</td>
-                    <td> {{returnStoreGroupId.courseCode}} {{returnStoreGroupId.grpNum}}</td>
-                    <td>
-                      {{#if isAuthor}}
-                        <form name="deleteTrainerAnnou" role="form" method="post">
-                          <input type="hidden" id="groupId" value="{{returnStoreGroupId._id}}">
-                          <input type="hidden" id="annouDate" value="{{annouDate}}">
-                          <input type="hidden" id="annouTitle" value="{{annouTitle}}">
-                          <input type="hidden" id="annouDetails" value="{{annouDetails}}">
-                          <input id="deleteTAnnounButton" type="submit" value="Delete"/>
-                        </form>
-                      {{/if}}
-                    </td>
-                  {{/each}}
+                  <th colspan="4"> Group: {{courseCode}} {{grpNum}}</th>
                 </tr>
-              {{/each}} -->
-            </tbody>
+                <tr>
+                  <th>Posted Date</th>
+                  <th>Title</th>
+                  <th>Announcement Details</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+              {{# each announcement}}
+                <tr>
+                  <td> <input type="hidden" id="annouDate" value="{annouDate}"> {{getDDMMYYY annouDate}}</td>
+                  <td> <input type="hidden" id="annouTitle" value="{annouTitle}"> {{annouTitle}}</td>
+                  <td> <input type="hidden" id="annouDetails" value="{annouDetails}"> {{annouDetails}}</td>
+                  <td>
+                    {{#if isAuthor}}      
+                      <input id="deleteTAnnounButton" type="submit" value="Delete"/>
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/each}}
+              </tbody>
+            {{/each}}
           </table>
         </div>
       </div>

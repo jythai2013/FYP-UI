@@ -13,14 +13,7 @@ Template.addAnnouncement.events({
 		obj.annouAuthor= createdBy;
 
 		console.log("clicked AddAnnounment >> announcement.js");
-		///
-		var annouList = [];
-
-		if(Groups.findOne({_id: group}).announcement != undefined) annouList = Groups.announcement;		
-	    annouList.push(obj)
-	    ///
-	    console.log("List : " + annouList);
-		Meteor.call("insertAnnouncement", group, annouList);
+		Meteor.call("insertAnnouncement", group, obj);
 	}
 });
 

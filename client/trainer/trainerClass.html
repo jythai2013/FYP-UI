@@ -10,7 +10,7 @@
         </li>
         <li class='launcher'>
           <i class='icon-file-text-alt'></i>
-          <a href="#">Announcements</a>
+          <a href="announcement">Announcements</a>
         </li>
         <li class='active launcher'>
           <i class='icon-table'></i>
@@ -26,8 +26,8 @@
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>
         <li class='title'>Classlist</li>
-        <li><a href="#">Module (IS101)</a></li>
-        <li class='active'><a href="#">G1</a></li>
+        <li><a href="#">{{courseDetails.courseCode}}</a></li>
+        <li class='active'><a href="#">{{courseDetails.grpNum}}</a></li>
       </ul>
     </section>
     <!-- Content -->
@@ -36,14 +36,13 @@
         <div class='panel-heading'>
           Students Information
           <div class='panel-tools'>
-            <div class='badge'>n Students</div>
+            <div class='badge'>{{courseDetails.classlist.length}} Students</div>
           </div>
         </div>
         <table class='table'>
           <thead>
             <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Full Name</th>
               <th>Email</th>
               <th class='actions'>
                 Actions
@@ -51,56 +50,88 @@
             </tr>
           </thead>
           <tbody>
-            <tr class='danger'>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td class='action'>
-                <a class='btn btn-success' data-toggle='tooltip' href='#' title='Zoom'>
-                  <i class='icon-bar-chart'></i>
-                </a>
-                <a class='btn btn-info' href='#'>
-                  <i class='icon-edit'></i>
-                </a>
-                <a class='btn btn-danger' href='#'>
-                  <i class='icon-trash'></i>
-                </a>
-              </td>
-            </tr>
-            <tr class='disabled'>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td class='action'>
-                <a class='btn btn-success' data-toggle='tooltip' href='#' title='Zoom'>
-                  <i class='icon-bar-chart'></i>
-                </a>
-                <a class='btn btn-info' href='#'>
-                  <i class='icon-edit'></i>
-                </a>
-                <a class='btn btn-danger' href='#'>
-                  <i class='icon-trash'></i>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td class='action'>
-                <a class='btn btn-success' data-toggle='tooltip' href='#' title='Zoom'>
-                  <i class='icon-bar-chart'></i>
-                </a>
-                <a class='btn btn-info' href='#'>
-                  <i class='icon-edit'></i>
-                </a>
-                <a class='btn btn-danger' href='#'>
-                  <i class='icon-trash'></i>
-                </a>
-              </td>
-            </tr>
+            {{#each getStudentDetails courseDetails.classlist}}
+              <tr>
+                <td>{{fullName}}</td>
+                <td>{{email}}</td>
+                <td class='action'>
+                  <a class='btn btn-success' data-toggle='tooltip' href='#' title='Grades'>
+                    <i class='icon-bar-chart'></i>
+                  </a>
+                  <a class='btn btn-info' href='#' title='Attendence'>
+                    <i class='icon-edit'></i>
+                  </a>
+                </td>
+              </tr>
+            {{/each}}
           </tbody>
         </table>
+      </div>
+      <div class='panel panel-default grid'>
+        <div class='panel-heading'>
+          Course Materials
+        </div>
+        {{> tcCourseMaterials}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="tcCourseMaterials">
+  <div class="table-responsive">
+    <table id="dataTables-example" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th colspan="2"> Course Materials</th>
+          <th> Download File</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each uploads}}
+          <tr> 
+            <td colspan="2"> File Name </td>
+            <td>
+              <!-- <a href="{{url download = true}}" class="button btn admin-btn">Download</a> -->
+              <a href="#" class="button btn admin-btn">Download</a>
+            </td>
+          </tr> 
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>
+
+
+<template name="tcViewStudentGrade">
+<div class="modal fade" id="fmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Student's Grade</h4>
+        </div>
+        <div class="modal-body">
+          <div id="faciBook" class="tab-pane fade in fade">  
+            <form id="facMgmtFormy" class="form-vertical" role="form" action = "facilityResult">
+              <div class="row">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Name here?</label>
+                  <div class="col-sm-4">
+                    Maybe a table here
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                Maybe a graph here?
+              </div>
+              <!-- To make the white background cover all fields -->
+              <div class="clearfix"></div> 
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>

@@ -36,6 +36,7 @@ Template.topbar.events(
 Template.trainerIndex.events(
 
   'click #sign-out': () ->
+    Session.set('trainerClass', false)
     Meteor.logout((err) ->
       if err?
         # !TODO: I should add a section for dismissable and timeout notifications... or maybe Growl-style notifications
