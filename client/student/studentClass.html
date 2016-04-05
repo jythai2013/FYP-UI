@@ -27,17 +27,22 @@
         <div class='panel-heading'>
           Announcements
         </div>
-        <table class='table'>
+        <table class="table table-striped" id="dataTables-example">
           {{#each studentOngoingCourses}}
-            <tr colspan="3">
-              <th>{{courseCode}} {{grpNum}}</th>
+            <tr>
+              <th>Posted Date</th>
+              <th>Title</th>
+              <th>Announcement Details</th>
             </tr>
-            {{#each announcements}}
-              <tr>
-                <td> {{formatDate annouDate}}</td>
-                <td> {{annouTitle}}</td>
-                <td> {{annouDetails}}</td>
-              </tr>
+            <tr style="background-color: #2c3e50; color:white;">
+              <td colspan="3">{{courseCode}} {{grpNum}}</td>
+            </tr>
+          {{#each announcement}}
+            <tr>
+              <td width="20%"> {{formatDate annouDate}}</td>
+              <td width="30%"> {{annouTitle}}</td>
+              <td width="50%"> {{annouDetails}}</td>
+            </tr>
             {{/each}}
           {{/each}}
         </table>
@@ -47,7 +52,7 @@
         <table class='table'>
           <thead>
             <tr>
-              <th>Module Code</th>
+              <th>Module</th>
               <th>Module Name</th>
               <th>Course Materials</th>
               <th class='actions'>
@@ -56,13 +61,11 @@
             </tr>
           </thead>
           <tbody>
-            {{#each studentOngoingCourses}}
-              <option value="{{_id}}">{{courseCode}} {{grpNum}}</option>
-            {{/each}}
-
+          {{#each studentOngoingCourses}}
             <tr>
-              <td>IS101</td>
-              <td>Managing People</td>
+              <!-- <td>{{courseCode}} {{grpNum}}</td> -->
+              <td>{{courseCode}}</td>
+              <!-- <td>{{courseName}}</td> -->
               <td class='action'>
                 <a class="button btn admin-btn" href="/student/courseMaterials?group=is101" title="View Materials">
                   <i class='fa fa-book'> View Materials</i>
@@ -77,6 +80,7 @@
                 </a>
               </td>
             </tr>
+          {{/each}}
           </tbody>
         </table>        
       </div>
