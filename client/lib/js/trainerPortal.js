@@ -73,7 +73,7 @@ Template.addAnnouncement.events({
 		console.log("clicked AddAnnounment >> announcement.js");
 
 	    ///
-	    console.log("List : " obj);
+	    console.log("List : " + obj);
 		Meteor.call("insertAnnouncement", group, obj);
 	}
 });
@@ -111,7 +111,7 @@ Template.editAnnouncement.events({
 		// 	}
   //   	}
 	    ///
-	    console.log("List : " obj);
+	    console.log("List : " + obj);
 		//Meteor.call("editAnnouncement", group, obj);
 	}
 });
@@ -120,7 +120,7 @@ Template.trainerAnnouncment.events({
 	"click #deleteTAnnounButton" : function deleteTAnnounEventHandler(e) {
 		var groupId = document.getElementById("groupId").value;
 		var removeId = document.getElementById("announId").value;
-		console.log(">>> Delete Announ" removeId);
+		console.log(">>> Delete Announ" + removeId);
 		Meteor.call("deleteAnnouncement", groupId, removeId);
 	}
 });

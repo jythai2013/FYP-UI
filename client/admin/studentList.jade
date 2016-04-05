@@ -179,7 +179,7 @@ template(name="viewParticularsForm")
                     td 
                       select.form-control(id="nationality", name="nationality", style="color:black")
                         option(value="#{nationality}") #{nationality}
-                        option(disabled)──────────
+                          option(disabled)──────────
                         +nationalityList
                   tr
                     td Highest Qualification
@@ -187,7 +187,7 @@ template(name="viewParticularsForm")
                       .form-group
                         select.form-control(id='qualification', style="color:black")
                           option(value="#{qualification}") #{qualification}
-                          option(disabled)──────────
+                            option(disabled)──────────
                           option(value="0") PSLE
                           option(value="1") O/N'Level
                           option(value="2") A'Level

@@ -38,26 +38,25 @@ Template.displayAnnouncements.helpers({
 		return Meteor.user()._id == this.annouAuthor;
 	},
 
-	"groupAnnouncements" : function listGroupAnnouncementsEventHandler(e) 
-	    console.log("here in class announcement");
+	"groupAnnouncements" : function listGroupAnnouncementsEventHandler(e) {
  		//extracting from url        
-        var courseGrp =  window.location.href;
-        var positionFirstEqual = courseGrp.indexOf('=');
-        //problem starts here
-        //extracting course
-        var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);    
-        var positionOfAND = courseGrp.indexOf('&');
-        var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+        // var courseGrp =  window.location.href;
+        // var positionFirstEqual = courseGrp.indexOf('=');
+        // //problem starts here
+        // //extracting course
+        // var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);    
+        // var positionOfAND = courseGrp.indexOf('&');
+        // var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
 
-        //extracting grpNum
-        var grpNumStr=courseGrp.substr(positionOfAND-1);
-        var positionSecondEqual = currentCourseGrp.indexOf('=');
-        var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+        // //extracting grpNum
+        // var grpNumStr=courseGrp.substr(positionOfAND-1);
+        // var positionSecondEqual = currentCourseGrp.indexOf('=');
+        // var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
 
-        var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
-        var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).announcement;
-        a = a.sort(a.annouDate);
-        return a;
+        // var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
+        // var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).announcement;
+        // a = a.sort(a.annouDate);
+        // return a;
     }
 
 });
@@ -77,7 +76,7 @@ Template.displayAnnouncements.events({
 		var grpNumStr=courseGrp.substr(positionOfAND-1);
 		var positionSecondEqual = currentCourseGrp.indexOf('=');
 		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-		console.log(currentGrpNum "grpNum");
+		console.log(currentGrpNum + " grpNum");
 
 		var groupId = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id;
 
@@ -128,7 +127,6 @@ Template.trainerAnnouncment.events({
         //TODO: Validation of input
         var obj = new Object();
         var title = document.getElementById("aTitle").value;
-        console.log(">>>>>TITLEEEEEEEE: " title);
         obj.annouTitle= title;
         obj.annouDetails= document.getElementById("annouDetails").value;
         obj.annouDate= new Date();
