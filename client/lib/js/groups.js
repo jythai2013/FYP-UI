@@ -656,3 +656,44 @@ Template.addStudent.events({
 		 Session.set('studentTimes', noOfTimes);
 	}
 });
+
+
+
+Template.gradesStudent.helpers({
+
+    "studentsGrades" : function (e) {
+    	console.log(this);
+        var currentCourseCode = Session.get('currentCourseCode');
+        var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
+    	Meteor.users.findOne({_id:this._id}).grades[currentCourseID];
+        
+        // //var currentCourse = getParameterByName("cCode");
+        // if(currentCourse.length<=0)return Groups.find({});
+
+        // var size = Groups.find({courseCode:currentCourse}).count();
+        // return Groups.find({courseCode:currentCourse});
+    }
+});
+
+
+
+Template.gradesStudent.events({
+
+	"click #passStudentButton" : function(e) {
+		e.preventDefault();
+		console.log(this);
+        var currentCourseCode = Session.get('currentCourseCode');
+        var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
+    	var grades = Meteor.users.findOne({_id:this._id}).grades[currentCourseID];
+   //      var studentTimes = Session.get('studentTimes');
+
+   //      // noOfTimes = _.reject(salesInput, function(x) {
+   //      //     return x.salesId == salesId;
+   //      // });
+
+		 
+		 // if(isNaN(studentTimes)) noOfTimes = 1;
+		 // var noOfTimes = studentTimes-1;
+		 // Session.set('studentTimes', noOfTimes);
+	}
+});

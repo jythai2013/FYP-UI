@@ -77,7 +77,9 @@ template(name="group")
                           input(type="button", value="Paid", id="paidStudentFromClass") 
 
                       td 
-                        input(type="button", value="Assessment", id="assessStudentFromClass")
+                        input(type="button", value="Assessment", id="assessStudentFromClass", data-toggle="modal", data-target="#gradesStudent")
+                        +gradesStudent
+                        
                       td 
                         input(type="button", value="Remove Student", id="removeStudentFromClass")
                  
@@ -315,6 +317,30 @@ template(name="addFeedback")
           // /.table-responsive
         .modal-footer
           button#addFeedbackClassButton.btn.btn-save(type="button", data-dismiss="modal") Add 
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+
+template(name="gradesStudent")
+  #gradesStudent.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Student Grades
+        .modal-body
+            tr
+              th Component  
+              th(colspan="2") Score
+            each studentsGrades
+              tr 
+                td Feedback Name
+                td(colspan="2")   
+              
+          // /.table-responsive
+        .modal-footer
+          button#failStudentButton.btn.btn-save(type="button", data-dismiss="modal") Uncompleted 
+          button#passStudentButton.btn.btn-save(type="button", data-dismiss="modal") Completed 
       // /.modal-content
     // /.modal-dialog
   // /.modal

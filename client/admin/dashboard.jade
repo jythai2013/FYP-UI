@@ -20,21 +20,6 @@ template(name="dashboard")
           .panel-heading
             i.fa.fa-list.fa-fw
             | Today's Class Schedule
-            .pull-right
-              .btn-group
-                button.btn.btn-default.btn-xs.dropdown-toggle(type="button", data-toggle="dropdown")
-                  | Actions
-                  span.caret
-                ul.dropdown-menu.pull-right(role="menu")
-                  li
-                    a(href="#") Action
-                  li
-                    a(href="#") Another action
-                  li
-                    a(href="#") Something else here
-                  li.divider
-                  li
-                    a(href="#") Separated link
           .panel-heading
             .panel-body
               .row
@@ -42,63 +27,3 @@ template(name="dashboard")
                  .row
                    #dashboardCalendar
 
-      .col-lg-4
-        .panel.panel-default
-          .panel-heading
-            i.fa.fa-bell.fa-fw
-            | Daily To-Do List
-          // /.panel-heading
-          .panel-body
-            .list-group
-              a.list-group-item(href="#")
-                i.fa.fa-comment.fa-fw
-                | Run Daily Schedule Trigger
-                button.btn.admin-btn.btn-snpull-right(data-toggle="modal", data-target="#myModal")
-                        | Schedule Trigger
-              a.list-group-item(href="#")
-                i.fa.fa-money.fa-fw
-                | Check for payments
-                //span.pull-right.text-muted.small
-                  //em 12 minutes ago
-              a.list-group-item(href="#")
-                i.fa.fa-envelope.fa-fw
-                | Message Sent
-                span.pull-right.text-muted.small
-                  em 27 minutes ago
-              a.list-group-item(href="#")
-                i.fa.fa-tasks.fa-fw
-                | New Task
-                span.pull-right.text-muted.small
-                  em 43 minutes ago
-              a.list-group-item(href="#")
-                i.fa.fa-upload.fa-fw
-                | Server Rebooted
-                span.pull-right.text-muted.small
-                  em 11:32 AM
-              a.list-group-item(href="#")
-                i.fa.fa-bolt.fa-fw
-                | Server Crashed!
-                span.pull-right.text-muted.small
-                  em 11:13 AM
-              a.list-group-item(href="#")
-                i.fa.fa-warning.fa-fw
-                | Server Not Responding
-                span.pull-right.text-muted.small
-                  em 10:57 AM
-              a.list-group-item(href="#")
-                i.fa.fa-shopping-cart.fa-fw
-                | New Order Placed
-                span.pull-right.text-muted.small
-                  em 9:49 AM
-              a.list-group-item(href="#")
-                i.fa.fa-money.fa-fw
-                | Payment Received
-                span.pull-right.text-muted.small
-                  em Yesterday
-            // /.list-group
-            a.btn.btn-default.btn-block(href="#") View All Alerts
-          // /.panel-body
-        // /.panel
-      // /.col-lg-4
-    // /.row
-  // /#page-wrapper

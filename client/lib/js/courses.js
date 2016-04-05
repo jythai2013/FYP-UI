@@ -145,10 +145,10 @@ Template.course.helpers({
 		var componentsArr = new Array();
 		for(var x = 0, l = a.length; x < l;  x++){
 			var obj = new Object();
-			obj.componentName = a[x].componentName;
+			obj.componentName = a[x].component;
 			obj.weightage = a[x].weightage;
 
-			componentssArr.push(obj);
+			componentsArr.push(obj);
     	}
 
     	componentsArr.forEach(function(entry) {
@@ -477,7 +477,32 @@ Template.addComponents.helpers({
 			fakeArray.push("a")
 		}
     return fakeArray;
-	},	
+	},
+	"componentCourse" : function (e) {
+		var currentCourse=Session.get("currentCourseCode");
+		//console.log(currentCourse + "Code");
+
+		//var size = Courses.find({courseCode:currentCourse}).count();
+		var size = Courses.findOne({courseCode:currentCourse});
+		console.log(size);
+		var a =  Courses.findOne({courseCode:currentCourse}).components;
+
+		var componentsArr = new Array();
+		for(var x = 0, l = a.length; x < l;  x++){
+			var obj = new Object();
+			obj.componentName = a[x].component;
+			obj.weightage = a[x].weightage;
+
+			componentsArr.push(obj);
+    	}
+
+    	componentsArr.forEach(function(entry) {
+   			console.log(entry + " full name");
+
+		});
+
+		return componentsArr;
+	}
 });
 
 
@@ -508,8 +533,33 @@ Template.addComponents.events({
 	"click #editComponentsButton" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
-		 console.log("to do");
-		// Meteor.call("editComponents", courseID, components);
+
+		var courseCode=Session.get("currentCourseCode");
+		 console.log(courseCode);
+		var components = new Array();
+		var courseComponents = document.getElementsByName("components");
+		var componentWeightage = document.getElementsByName("weightage");
+
+
+		var courseComponentsArr = new Array();
+		for(var x = 0, l = courseComponents.length; x < l;  x++){
+			courseComponentsArr.push(courseComponents[x].value);
+    	}
+
+		var componentWeightageArr = new Array();
+		for(var x = 0, l = componentWeightage.length; x < l;  x++){
+			componentWeightageArr.push(componentWeightage[x].value);
+    	}
+
+		for(i = 0; i < courseComponents.length; i++){
+			var obj = new Object();
+			obj.component = courseComponentsArr[i];
+		 console.log(courseComponentsArr[i]);
+			obj.weightage = componentWeightageArr[i];
+		 console.log(componentWeightageArr[i]);
+			components.push(obj)
+		}
+		Meteor.call("editComponents", courseCode, components);
 	}
 });
 
