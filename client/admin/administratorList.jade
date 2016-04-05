@@ -30,16 +30,17 @@ template(name="administratorList")
                       td  
                         a.btn.admin-btn.bt-sn(data-target="#viewAdminDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                         +viewAdminParticulars
-                      td No.
+                      td 
+                        if checkIsTrainer
+                          | Yes
+                        else
+                          | No
                       td
                         a.btn.admin-btn.bt-sn(data-target="#goDeleteAdmin#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                         +deleteAdminForm 
-            //h4 Legend:
-            //h6 AccessType 1 = Accounts, 2 = Courses, 3 = Classes, 4 = Facilities
-
 
 template(name="addAdminAcctForm")
-  div.modal(id="addAdminAcct#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="addAdminAcct" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -54,23 +55,23 @@ template(name="addAdminAcctForm")
                   th Enter Full Name
                   td(colspan="3")
                     .form-group
-                      input.form-control(type="text", id="sName")
+                      input.form-control(type="text", id="addName")
                 tr
                   td Email
                   td
-                    input.form-control(type='text', id='email')
+                    input.form-control(type='text', id='addEmail')
                   td MobileNo
                   td 
-                    input.form-control(type='text', id='mobileNo')
+                    input.form-control(type='text', id='addMobileNo')
                 tr
                   td 
                     | Assign
                     | Trainer Rights
                   td(colspan="3")
-                    input(type="radio", name="isTrainer", id="isTrainer", value="No", checked="")
+                    input(type="radio", name="addIsTrainer", id="addIsTrainer", value="false", checked="")
                     | No
                     br
-                    input(type="radio", name="isTrainer", id="isTrainer", value="Yes")
+                    input(type="radio", name="addIsTrainer", id="addIsTrainer", value="true")
                     | Yes, Create Trainer Account
 
             // /.table-responsive
@@ -101,11 +102,17 @@ template(name="viewAdminParticulars")
                 tr
                   td Mobile No
                   td 
-                    input.form-control(type="text", id="mobileNo", value="#{mobileNo}")
-                    input.form-control(type="hidden", id="accessType", value="#{accessType}")
+                    input.form-control(type="text", id="#{_id}_editMobileNo", value="#{mobileNo}")
                 tr
-                  td Access Rights
-                  td Admin Portal
+                  td Trainer Access Rights
+                  td 
+                    select.form-control(id="#{_id}_editIsTrainer", name="editIsTrainer", style="color:black")
+                        if checkIsTrainer
+                          option(value="true") Yes
+                          option(value="false") No
+                        else
+                          option(value="false") No
+                          option(value="true") Yes
         .modal-footer
           button#editAdminAccountButton.btn.btn-save(type="button", data-dismiss="modal") Update
 

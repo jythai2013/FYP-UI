@@ -27,13 +27,14 @@
 		user.nokName = options.nokName;
 		user.nokReln = options.nokReln;
 		user.nokTel = options.nokTel;
+
+		user.creationDate = option.createdDate;
 	// 	}
 		return user;
 	});
 
 
 	Meteor.methods({ 
-
 		'deleteUsers2': function deleteUsers(_id){
 	        console.log("Method: deleteUsers2 (users.js)");
 					var allGroups = Groups.find({}).fetch();
@@ -63,7 +64,7 @@
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ mobileNo);
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ nationality);
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ proficiency);
-			//		Meteor.call("editTrainerAccount", this._id, mobileNo, nationality, proficiency);
+
 			Meteor.users.update({'_id': _id}, { $set:{
 					'mobileNo': mobileNo,
 					'nationality': nationality, 
@@ -80,7 +81,6 @@
 			console.log(obj);
 			var options = obj;
 			console.log("Sys: Participant Account Creating.");
-			// var userId = Accounts.createUser(options);
 			var user_id = Accounts.createUser(options);
 			console.log("user._id: " + user_id);
 			console.log("Sys: Participant Account Created.");
@@ -110,31 +110,20 @@
 		},
 
 
-		'createAdminAccount': function createAdminAccount(sEmail, sName, sMobileNo, sAccessType, isTrainer){
-			console.log(">> Start: CreateAdminAccount")
-			console.log(">>" + isTrainer);
-			// if isTrainer
-			// 	var userTypeObj = {admin: true, trainer: true};
-			// else
-				var userTypeObj = {admin: true};
-
-			var options = {
-				email: sEmail,
-				password: sMobileNo,
-				fullName: sName,
-				mobileNo: sMobileNo,
-				accessType: sAccessType,
-				userType: userTypeObj
-			};
-			Accounts.createUser(options);
-			console.log(options);
+		'createAdminAccount': function createAdminAccount(obj){
+			console.log(">> Start: CreateLearnerAccount");
+			console.log("Fetch: " + obj);
+			var user_id = Accounts.createUser(obj);
+			console.log(">> ID Created: " + user_id);
 		},
 
-		'editAdminAccount': function editAdminAccount(_id, sMobileNo){
-			Accounts.update(_id, {
-				$set: {
-					mobileNo: sMobileNo,
-					accessType: sAccessType
+		'editAdminAccount': function editAdminAccount(_id, sMobileNo, isTrainer){
+			console.log("Update: editAdminAccount >> " + _id);
+			console.log(sMobileNo + " " + isTrainer);
+			Meteor.users.update(_id, {
+				$set:{
+					"mobileNo": sMobileNo,
+					"userType.trainer": isTrainer
 				}
 			});
 		}
