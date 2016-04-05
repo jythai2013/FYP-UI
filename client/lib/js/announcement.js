@@ -19,7 +19,7 @@ Template.addAnnouncement.events({
 		if(Groups.findOne({_id: group}).announcement != undefined) annouList = Groups.announcement;		
 	    annouList.push(obj)
 	    ///
-	    console.log("List : " annouList);
+	    console.log("List : " + annouList);
 		Meteor.call("insertAnnouncement", group, annouList);
 	}
 });

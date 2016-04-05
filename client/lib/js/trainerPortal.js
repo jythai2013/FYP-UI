@@ -32,7 +32,6 @@
 Template.addAnnouncement.helpers({
 	"trainerOngoingCourses1" : function findTrainerOngoingCourses2(e) {
 		var a = getTrainerOngoingCourse();
-        console.log("TrainerAnnouncement: " a.length);
         return a;
 	}
 });
