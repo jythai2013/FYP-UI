@@ -166,9 +166,10 @@ template(name="displayAnnouncements")
             td {{formatDate annouDate}}
             td {{authorName annouAuthor}}
             if isAuthor
-              form(name="deleteAdminAnnou", role="form", method="post")
-                td 
-                  input#deleteAAnnounButton(type="submit",value="Delete")
+              td 
+                button#deleteAAnnounButton.btn.admin-btn.bt-sn(type="button") Delete
+            else
+              td
 
   // /.table-responsive
 

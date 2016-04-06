@@ -6,10 +6,17 @@
         STERLING Training Hub
       </a>
       <ul class='nav navbar-nav pull-right'>
-        <li style="white-space: nowrap;">
-          <table>
-            <tr><td><strong>{{displayTrainerName}}</strong> . <a href="/" id="sign-out" style="color:#0d4530">Sign out</a></td></tr>
-          </table>
+        <li class='dropdown user'>
+          <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+            <i class='icon-user'></i>
+            <strong>{{test}}</strong>
+            <b class='caret'></b>
+          </a>
+          <ul class='dropdown-menu-trainer'>
+            <li>
+              <a href="/" id="sign-out">Sign out</a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>

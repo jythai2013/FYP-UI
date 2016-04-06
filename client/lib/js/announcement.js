@@ -12,6 +12,21 @@ Template.addAnnouncement.events({
 		obj.annouDate= new Date();
 		obj.annouAuthor= createdBy;
 
+		var courseGrp =  Router.current().url;
+		var positionFirstEqual = courseGrp.indexOf('=');
+		//extracting course
+		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
+		var positionOfAND = courseGrp.indexOf('&');
+		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+
+		//extracting grpNum
+		var grpNumStr=courseGrp.substr(positionOfAND-1);
+		var positionSecondEqual = currentCourseGrp.indexOf('=');
+		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+		console.log(currentGrpNum + "grpNum");
+
+		var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
+
 		console.log("clicked AddAnnounment >> announcement.js");
 		Meteor.call("insertAnnouncement", group, obj);
 	}
@@ -27,7 +42,7 @@ Template.displayAnnouncements.helpers({
 	'isAuthor' : function isAAuthor(createdBy) {
 		//console.log("isAuthor? (>>announcement.js)");
 		var check = Meteor.user()._id == this.annouAuthor;
-		//console.log(Meteor.user()._id " equals " this.annouAuthor " is " check);
+		console.log("isAuthor >>> " + Meteor.user()._id + " equals " + this.annouAuthor + " is " + check);
 		return Meteor.user()._id == this.annouAuthor;
 	},
 
@@ -39,11 +54,35 @@ Template.displayAnnouncements.helpers({
 
 });
 
+Template.trainerAnnouncment.helpers({
+    "trainerOngoingCourses1" : function findTrainerAnnouncement(e) {
+        var a = getTrainerOngoingCourse();
+        return a;
+    },
+
+   	'getDDMMYYY': function getTADDMMYYY(e) {
+     	return getDDMMYYY(e);
+     },
+
+    'isAuthor' : function isTAuthor(createdBy) {
+		//console.log("isAuthor? (>>announcement.js)");
+		var check = Meteor.user()._id == this.annouAuthor;
+		console.log("isAuthor >>> " + Meteor.user()._id + " equals " + this.annouAuthor + " is " + check);
+		return Meteor.user()._id == this.annouAuthor;
+	}
+ });
 
 Template.displayAnnouncements.events({
 	"click #deleteAAnnounButton" : function deleteAAnnounEventHandler(e) {
-		var courseGrp =  Router.current().urlf;
+		var array = this;
+		console.log("(deleteAAnnounButton-annou.js) before: " + array);
+		// console.log("before: " + array.length);
+		console.log(">>>>>> " + array.announTitle);
+		// array.pop([array.announTitle,annouDetails,createdOn,createdBy]);
+		// console.log("after: " + array.length);
+		console.log("deleteAAnnounButton >>> " + Meteor.user()._id + " equals " + this.annouAuthor + " is " + check);
 		
+		var courseGrp =  Router.current().url;
 		var positionFirstEqual = courseGrp.indexOf('=');
 		//extracting course
 		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
@@ -54,30 +93,30 @@ Template.displayAnnouncements.events({
 		var grpNumStr=courseGrp.substr(positionOfAND-1);
 		var positionSecondEqual = currentCourseGrp.indexOf('=');
 		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-		console.log(currentGrpNum + " grpNum");
+		console.log(currentGrpNum + "grpNum");
 
-		var groupId = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id;
-
-		var announTitle = this. announTitle
-		var annouDetails = this.annouDetails;
-		var createdBy = this.annouAuthor;
-		var createdOn = this.annouDate;
-		var array = Groups.findOne({_id: groupId}).announcement;
-		array.pop([announTitle,annouDetails,createdOn,createdBy]);
-		Meteor.call("editAnnouncement", groupId, array);
+		var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
+		console.log("GroupId " + group._id);
+		// Meteor.call("editAnnouncement", groupId, array);
 	}
 });
 
 Template.trainerAnnouncment.events({
 	"click #deleteTAnnounButton" : function deleteAAnnounEventHandler(e) {
-		var groupId = document.getElementById("groupId").value;
-		var announTitle = document.getElementById("announTitle").value;
-		var annouDetails = document.getElementById("announDetails").value;
-		var createdBy = Meteor.user()._id;
-		var createdOn = document.getElementById("annouDate").value;
-		var array = Groups.findOne({_id: groupId}).announcement;
-		array.pop([announTitle,annouDetails,createdOn,createdBy]);
-		Meteor.call("editAnnouncement", groupId, array);
+		// var groupId = document.getElementById("groupId").value;
+		// var announTitle = document.getElementById("announTitle").value;
+		// var annouDetails = document.getElementById("announDetails").value;
+		// var createdBy = Meteor.user()._id;
+		// var createdOn = document.getElementById("annouDate").value;
+		// var array = Groups.findOne({_id: groupId}).announcement;
+		// array.pop([announTitle,annouDetails,createdOn,createdBy]);
+		// Meteor.call("editAnnouncement", groupId, array);
+		var announTitle = this. announTitle
+		var annouDetails = this.annouDetails;
+		var createdBy = this.annouAuthor;
+		var createdOn = this.annouDate;
+		console.log("deleteTAnnoun >>> " + announTitle + ", " + annouDetails + ", " + createdBy + ", " + createdOn);
+		// var array = Groups.findOne({_id: groupId}).announcement;
 	}
 });
 
@@ -89,7 +128,7 @@ Template.trainerAnnouncment.events({
         // return false;
         // }
         //extracting from url        
-        var courseGrp =  window.location.href;
+        var courseGrp =  Router.current().url;
         var positionFirstEqual = courseGrp.indexOf('=');
         //problem starts here
         //extracting course

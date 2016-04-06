@@ -1,6 +1,6 @@
 template(name="loginLayout")
   style.
-    h1 {
+    h1,h3 {
       text-align: center;
       color: #ddd;
       text-shadow: 0px 2px 3px #666;
@@ -28,18 +28,16 @@ template(name="loginLayout")
       margin-right: -50%;
       transform: translate(-50%, -50%)
     }
-    a{
-      text-align: middle;
-    }
 
   .container.alignMiddle
-    h1 Sterling Training Hub
+    h1 Sterling 
+    h3 Training Hub
     +yield
 
 template(name="loginModal")
   if isLoggedIn
     .alert.alert-success
-      | Redirecting to Admin Dashboard
+      | Redirecting you to User's Portal
   else
     +login
 
@@ -55,7 +53,7 @@ template(name="login")
         .login-panel.panel.panel-default
           .panel-heading
             a.close(href="/website") &#215;
-            h3.panel-title Sterling Portal Login
+            h2.panel-title Sterling Portal Login
               span.i.fa.fa-sign-in.fa-fw
           .panel-body
             form#sign-up-form(role="form")
@@ -76,7 +74,7 @@ template(name="login")
                     | #{signUpSuccessMessage}
 
                 input#login-button.admin-btn.form-control(type="submit", value="LOGIN")
-            .row
-              .col-sm-12.col-xs-12
-                a(href='resetPassword', class='button', style="text-align:center;") FORGOT PASSWORD?
+                a(href='resetPassword') 
+                  p(style="text-align:center; margin:0 0;") Forget Password
+
                 

@@ -15,8 +15,8 @@ Meteor.methods({
 
 	'editAnnouncement': function editAnnouncement(gId, announList){
 		console.log("announcement.js >> editAnnouncement (Server)");
-		console.log("update: "+gId);
-		Groups.update({_id:gId},{$set:{announcement:announList}});
+		console.log("(editAnnouncementupdate) "+gId+" >>> To: "+announList.length);
+		// Groups.update({_id:gId},{$set:{announcement:announList}});
 		console.log(">> updated");
 	},
 
