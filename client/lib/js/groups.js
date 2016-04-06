@@ -370,7 +370,7 @@ Template.addClass.events({
 		}
 		console.log("here4");
 		console.log(obj);
-		// Meteor.call("createGroup",obj);
+		Meteor.call("createGroup",obj);
 		console.log("here4again");
 		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();
@@ -693,6 +693,8 @@ Template.gradesStudent.events({
         var currentCourseCode = Session.get('currentCourseCode');
         var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
     	var grades = Meteor.users.findOne({_id:this._id}).grades[currentCourseID];
+
+	    // Meteor.call("passStudent", studentID, group._id, paymentStatus);
    //      var studentTimes = Session.get('studentTimes');
 
    //      // noOfTimes = _.reject(salesInput, function(x) {
