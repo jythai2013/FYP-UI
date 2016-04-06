@@ -156,6 +156,16 @@ Template.course.helpers({
 		return componentsArr;
 		
 	},
+	"trainersOwnClass" : function(e) {
+		console.log(this);
+		var trainersClasses = new Array();
+		// for
+		var obj = new Object();
+		obj.classesTaught = this.classesTaught;
+
+		return trainersClasses;
+		
+	},
 	"gotNoClass" : function(e) {
 		console.log(this);
 		var currentCourse=Session.get("currentCourseCode");

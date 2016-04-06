@@ -50,6 +50,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
  		theCourse = Courses.findOne({courseCode:thisGroup.courseCode});
  		if(theCourse.genre == latestFinishedCourseGenre){
  		//if(thisGroup.genre == latestFinishedCourseGenre){
+			//TODO: Check if the recommended course (theCourse) has prequisites met
  			potentialCoursesFromGenre.push(theCourse);
  		}
  	});
@@ -67,6 +68,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
  	groupsThatHaventStarted.forEach(function(thisGroup, ind, arr){
  		theCourse = Courses.findOne({courseCode:thisGroup.courseCode});
  		if(theCourse.prerequisite.indexOf(latestFinishedCourseCode) > -1){
+			//TODO: Check if the recommended course (theCourse) has prequisites met
  			potentialCoursesFromPrerequisite.push(thisGroup);
  		}
  	});
@@ -79,7 +81,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 	
  	//classmates
  	//recEngine
-	var recEngineWorks = true;
+	var recEngineWorks = !true;
 	if(recEngineWorks){
 		var potentialCoursesFromRecEngine;
 		recEngine.suggest(studentId, numberOfCoursesToRecommend, function(err,res) {
@@ -161,7 +163,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
  	console.log(finalResult);	
 	
 	//TODO: email the student
-	var trySendMail = !true;
+	var trySendMail = true;
 	if(trySendMail){
 		details = {};
 		details.to = Meteor.users.findOne({_id:studentId});
@@ -181,6 +183,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
  	array.sort(function(x,y){
  		return x.classlist.length < y.classlist.length;
  	});
+	if(array.length < number) number = array.length;
  	for(i = 0; i < number; i++){
  		if(array[i].classlist.length < array[i].maxNumberOfPeopleAllowed) //TODO:
  		result.push(array[i]);
