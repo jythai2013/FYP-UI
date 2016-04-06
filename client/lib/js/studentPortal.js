@@ -1,13 +1,32 @@
  function getStudentOngoingCourse(e) {
-    console.log("trainerPortal.js - trainerOngoingCourses >>>");
+    // console.log("studentPortal.js - trainerOngoingCourses >>>");
     var tId = Meteor.user()._id;
     var coursesEnrolled = Groups.find({classlist: {$in : [ tId ]}});
-    console.log("getStudentOngoingCourse Return: " + coursesEnrolled.length);
+    // console.log("getStudentOngoingCourse Return: "+ coursesEnrolled);
     return coursesEnrolled;
  } 
 
  function getDDMMYYY(date) {
     return moment(date).format("DD-MM-YYYY");
+ }
+
+ function getFromUrl(a) {
+    var courseGrp =  Router.current().url;
+	var positionFirstEqual = courseGrp.indexOf('=');
+	//extracting course
+	var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
+	var positionOfAND = courseGrp.indexOf('&');
+	var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+
+	//extracting grpNum
+	var grpNumStr=courseGrp.substr(positionOfAND-1);
+	var positionSecondEqual = currentCourseGrp.indexOf('=');
+	var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+	console.log(currentGrpNum + "grpNum");
+
+	var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
+	console.log("GroupId " + group._id);
+	return group;
  }
 
  Template.studentUpload.helpers({
@@ -49,5 +68,36 @@ Template.studentClass.helpers({
 		// maybe need filter for ongoing courses only
 		console.log(coursesEnrolled);
 		return coursesEnrolled;
+	},
+
+	"getCourseName" : function findTrainerOngoingCourses(cCode) {
+		return Courses.findOne({"courseCode": cCode}).courseName;
+	}
+});
+
+Template.studentGrades.helpers({
+	"getUrl" : function sgGetUrl(){
+		var group = getFromUrl();
+		console.log(">>>studentGrades : " + group);
+		return group;
+		// Session.set('trainerClass', group);
+	}
+});
+
+Template.studentAttendence.helpers({
+	"getUrl" : function saGetUrl(){
+		var group = getFromUrl();
+		console.log(">>>studentAttendence : " + group);
+		// Session.set('trainerClass', group);
+		return group;
+	}
+});
+
+Template.studentCourseMaterial.helpers({
+	"getUrl" : function scGetUrl(){
+		var group = getFromUrl();
+		console.log(">>>studentCourseMaterial : " + group);
+		// Session.set('trainerClass', group);
+		return group;
 	}
 });
