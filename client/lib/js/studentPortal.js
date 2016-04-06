@@ -81,7 +81,14 @@ Template.studentGrades.helpers({
 		console.log(">>>studentGrades : " + group);
 		return group;
 		// Session.set('trainerClass', group);
+	},
+
+	"getGrade" : function sgGetUrl(courseId){
+		// var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
+    	Meteor.users.findOne({_id:this._id}).grades[courseId];
 	}
+
+
 });
 
 Template.studentAttendence.helpers({

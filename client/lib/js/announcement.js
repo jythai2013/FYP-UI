@@ -32,25 +32,9 @@ Template.displayAnnouncements.helpers({
 	},
 
 	"groupAnnouncements" : function listGroupAnnouncementsEventHandler(e) {
- 		//extracting from url        
-        var courseGrp =  window.location.href;
-        var positionFirstEqual = courseGrp.indexOf('=');
-        //problem starts here
-        //extracting course
-        var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);    
-        var positionOfAND = courseGrp.indexOf('&');
-        var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-
-        //extracting grpNum
-        var grpNumStr=courseGrp.substr(positionOfAND-1);
-        var positionSecondEqual = currentCourseGrp.indexOf('=');
-        var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-
-        console.log("courseCode: " + currentCourse +", grpNum:" +currentGrpNum);
-        var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).announcement;
-        // a = a.sort(a.annouDate);
-        console.log("aaaa >>>" + a);
-        return a;
+		// from idk where
+		var aList = this.announcement;
+		return aList;
     }
 
 });
@@ -58,7 +42,7 @@ Template.displayAnnouncements.helpers({
 
 Template.displayAnnouncements.events({
 	"click #deleteAAnnounButton" : function deleteAAnnounEventHandler(e) {
-		var courseGrp =  window.location.href;
+		var courseGrp =  Router.current().urlf;
 		
 		var positionFirstEqual = courseGrp.indexOf('=');
 		//extracting course

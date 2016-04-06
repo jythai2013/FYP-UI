@@ -78,38 +78,6 @@ Template.trainerUploads.events({
 	}
 });
 
-Template.addAnnouncement.events({
-	
-	"click #trainerPostAnnouncement" : function createAnnouncementEventHandler(e) {
-		var title = document.getElementById("announTitle").value;
-		var content = document.getElementById("announDetails").value;
-		var createdBy = Meteor.user()._id/*Session.get("loggedInUser")._id*/;
-		// var courseCode = document.getElementById("courseId").value;
-		var group = document.getElementById("groupId").value;
-
-		var obj = new Object();
-		obj.annouTitle= title;
-		obj.annouDetails= content;
-		obj.annouDate= new Date();
-		obj.annouAuthor= createdBy;
-
-		console.log("clicked AddAnnounment >> announcement.js");
-
-	    ///
-	    console.log("List : " + obj);
-		Meteor.call("insertAnnouncement", group, obj);
-	}
-});
-
-Template.trainerAnnouncment.events({
-	"click #deleteTAnnounButton" : function deleteTAnnounEventHandler(e) {
-		var groupId = document.getElementById("groupId").value;
-		var removeId = document.getElementById("announId").value;
-		console.log(">>> Delete Announ" + removeId);
-		Meteor.call("deleteAnnouncement", groupId, removeId);
-	}
-});
-
  Template.trainerClassList.helpers({
      "test" : function test(e) {
          var tId = Meteor.user()._id;
@@ -141,8 +109,7 @@ Template.trainerAnnouncment.events({
 
 
 Template.trainerIndex.helpers({
-    "displayTrainerName" : function test(e) {
-        console.log("fetch user's name");
+    "displayTrainerName" : function displayTrainerTIName(e) {
         return Meteor.user().fullName;
     }
 });
