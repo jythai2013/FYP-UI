@@ -22,7 +22,8 @@ navRoutes = [
     })
 
   new NavRoute('FormsMgmt', 'fa-group ', {label: "LSP Forms Management"})
-  new NavRoute('formRespo', '', {parentName: 'FormsMgmt', label: "LSP Form Respository"})
+  new NavRoute('formRespo', '', {parentName: 'FormsMgmt', label: "LSP Form Template Respository"})
+  new NavRoute('lspRespo', '', {parentName: 'FormsMgmt', label: "Completed LSP Form Respository"})
   new NavRoute('CFTRespo', '', {parentName: 'FormsMgmt', label: "Course/Facility/ Trainer LSP Form"})
 
   new NavRoute('CourseModule', 'fa-table', {label: "Course Management"})
