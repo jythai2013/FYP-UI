@@ -177,6 +177,7 @@ Template.courseLSPForm.events({
 		myData.ratings														=  this.ratings
 		myData.averageRating											=  this.averageRating
 		myData.additionalComments              		=	 this.additionalComments
+		myData.hours															=  this.hours
 		myData.str																= "The following are the assessment criteria to assist in evaluating the performance of trainers. Scoring: 1-Poor 2-Fair 3-Satisfactory 4-Very Good 5-Excellent. A minimum score of 3 is required.";
 		
 		console.log(myData);
@@ -185,7 +186,127 @@ Template.courseLSPForm.events({
 	}
 });
 
-function genP(options){
+function genP(myData){
+	console.log("genP");
+	console.log(myData);
+	// var columns = [
+  //   {title: "ID", dataKey: "id"},
+  //   {title: "Name", dataKey: "name"}, 
+  //   {title: "Country", dataKey: "country"}
+	// ];
+	var columns = [
+    {title: "t1", key: "c1", dataKey: "c1"},
+    {title: "t2", key: "c2", dataKey: "c2"}, 
+    {title: "t3", key: "c3", dataKey: "c3"},
+    {title: "t4", key: "c4", dataKey: "c4"}
+	];
+	var rows = [
+			{"c1": "Course Code:", 					"c2": myData.courseCode, 				"c3": "Course Name:", 				"c4":myData.courseName},
+			{"c1": "Course Type:", 					"c2": myData.courseType, 				"c3": "Course Genre:",			"c4":myData.courseGenre},
+			{"c1": "Trainer Name(s):", 			"c2": myData.trainerNames, 			"c3": "Learning Objective:", 	"c4":myData.learningObjective},
+			{"c1": "No. Of Hours:", 					"c2": myData.hours, 						"c3": "Facilitator to Learner Ratio:", "c4":myData.facilitatorToLearnerRatio},
+			{"c1": "Total No. of classes:", 	"c2": myData.totalNoOfClasses, 	"c3": "Fees", 								"c4":myData.fees},
+			{"c1": "Assessed by:", 					"c2": myData.assessedBy, 				"c3": "Assessment Date", 		"c4":myData.assessmentDate}
+	];
+	var doc = new jsPDF('p', 'pt');
+	doc.autoTable(columns, rows, {
+			beforePageContent: function(data) {
+				console.log(data);
+					doc.text("Header", 40, 30);
+			},
+				afterPageContent: function(data) {
+				console.log(data);
+					doc.text("Header", 40, 30);
+			},
+			createdCell: function (cell, data) {
+				console.log(cell);
+				console.log(data);
+			},
+			drawHeaderRow: function (row, data) {
+				console.log(row);
+				console.log(data);
+			},
+			drawRow: function (row, data) {
+				console.log(row);
+				console.log(data);
+			},
+			drawHeaderCell: function (cell, data) {
+				console.log(cell);
+				console.log(data);
+			},
+			drawCell: function (cell, data) {
+				console.log(cell);
+				console.log(data);
+			}
+	});
+	console.log("genP 1 END");
+	doc.save('table.pdf');
+	
+	
+	
+	
+	
+	
+	
+	
+	var columns = ["","","",""];
+	var rows = [
+			["Course Code:", 					myData.courseCode, 				"Course Name:", 									myData.courseName								],
+			["Course Type:", 					myData.courseType, 				"Course Genre:",									myData.courseGenre							],
+			["Trainer Name(s):", 			myData.trainerNames, 			"Learning Objective:", 						myData.learningObjective				],
+			["No. Of Hours:", 				myData.hours, 						"Facilitator to Learner Ratio:", 	myData.facilitatorToLearnerRatio],
+			["Total No. of classes:", myData.totalNoOfClasses, 	"Fees", 													myData.fees											],
+			["Assessed by:", 					myData.assessedBy, 				"Assessment Date", 								myData.assessmentDate						]
+	];
+	console.log("next try");
+
+	// Only pt supported (not mm or in)
+	var doc2 = new jsPDF('p', 'pt');
+	doc.autoTable(columns, rows, {
+			beforePageContent: function(data) {
+				console.log(data);
+					doc.text("Header", 40, 30);
+			},
+				afterPageContent: function(data) {
+				console.log(data);
+					doc.text("Header", 40, 30);
+			},
+			createdCell: function (cell, data) {
+				console.log(cell);
+				console.log(data);
+			},
+			drawHeaderRow: function (row, data) {
+				console.log(row);
+				console.log(data);
+			},
+			drawRow: function (row, data) {
+				console.log(row);
+				console.log(data);
+			},
+			drawHeaderCell: function (cell, data) {
+				console.log(cell);
+				console.log(data);
+			},
+			drawCell: function (cell, data) {
+				console.log(cell);
+				console.log(data);
+			}
+	});
+	console.log("genP2 END");
+	doc.save('table.pdf');
+	
+	
+	console.log("NEXT TRY 2");
+	console.log(doc);
+	var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example"));
+	console.log(res);
+	console.log(document.getElementById("dataTables-example"));
+	doc.autoTable(res.columns, res.data, {startY: 60});
+	console.log(doc);
+	console.log("genP3 END");
+}
+
+function genP2(options){
 	
 	console.log(options)
 	if(options.userID == null) options.userID = "123";
