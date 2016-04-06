@@ -82,6 +82,8 @@ template(name="sidebar")
         each navElements
           +navElement
         a.btn.admin-btn.btn-sn(type="button", style="background-color:#424242; margin-top:5%; margin-left: 10px", href="{{pathFor route='Sterling Training Hub'}}") Website
+        if checkIfIsTrainer
+          a.btn.admin-btn.btn-sn(type="button", style="background-color:#424242; margin-top:5%; margin-left: 10px", href="{{pathFor route='Trainer Portal'}}") Trainer
 
 template(name="navElement")
   li

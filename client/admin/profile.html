@@ -12,7 +12,16 @@
                   <!-- edit form column -->
                   <div class="col-md-8">
                     <h3>Personal info</h3>
-                    
+                    {{#if errorUpdateProfileMessage}}
+                      <div class="alert alert-danger">
+                        {{errorUpdateProfileMessage}}
+                      </div>
+                    {{/if}}
+                    {{#if updateProfileSuccessMessage}}
+                      <div class="alert alert-success">
+                        {{updateProfileSuccessMessage}}
+                      </div>
+                    {{/if}}
                     <form class="form-horizontal" role="form">
                       <div class="form-group">
                         <label class="col-lg-3 control-label">Full Name:</label>

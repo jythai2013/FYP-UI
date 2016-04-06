@@ -25,9 +25,10 @@ Template.administratorList.helpers({
 
 Template.administratorList.helpers({
 	"checkIsTrainer1" : function adminList1(userType) {
-		console.log("Check1 : " + this.fullName + ", " + this.userType.trainer);
-		console.log(this.userType.trainer !== undefined);
-		if (this.userType.trainer !== undefined){
+		var isTrainer = this.userType.trainer;
+		console.log("Check1 : " + this.fullName + ", " + isTrainer);
+		console.log(isTrainer !== undefined);
+		if (isTrainer !== undefined){
 			console.log("adminList Yes");
 			return "Yes";
 		} else {
@@ -39,9 +40,22 @@ Template.administratorList.helpers({
 
 Template.viewAdminParticulars.helpers({
 	"checkIsTrainer2" : function adminList2(e) {
+		var isTrainer = this.userType.trainer;
 		console.log("Check2 : " + this.fullName + ", " + this.userType.trainer);
 		console.log(this.userType.trainer !== undefined);
 		if (this.userType.trainer !== undefined){
+			return true;
+		} else {
+			return false;
+		}
+	}
+});
+
+Template.sidebar.helpers({
+	"checkIfIsTrainer" : function adminSidebar(e) {
+		var isTrainer = Meteor.user().userType.trainer;
+		console.log(isTrainer !== undefined);
+		if (isTrainer !== undefined){
 			return true;
 		} else {
 			return false;
@@ -57,15 +71,25 @@ Template.administratorList.helpers({
 
 Template.profilePage.events({
 	"click #editAdminProfileButton" : function editAdminProfileAccount(e) {
-		var aid = this._id;
-		var mobileNo = document.getElementById("acctCell").value;
-		console.log("Check : " + this.fullName + ", " + this.userType.trainer);
-		console.log(this.userType.trainer !== undefined);
-		var isTrainer = true;
-		if (this.userType.trainer === undefined){
-			isTrainer = false;
+		try {
+			var aid = this._id;
+			var mobileNo = document.getElementById("acctCell").value;
+			console.log("Check : " + this.fullName + ", " + this.userType.trainer);
+			console.log(this.userType.trainer !== undefined);
+			var isTrainer = true;
+			if (this.userType.trainer === undefined){
+				isTrainer = false;
+			}
+			Meteor.call("editAdminAccount", aid, mobileNo, isTrainer);
+		} catch (err) {
+			console.log(">>>update profile FAILURE MSG");
+		    Session.set('errorUpdateProfileMessage', 'Update Failed: ' + err.reason);
+		    Meteor.setTimeout(function(){Session.set('updateProfileSuccessMessage', false);}, 2000);
 		}
-		Meteor.call("editAdminAccount", aid, mobileNo, isTrainer);
+		// If run is okay
+		console.log(">>>update profile SUCCESS MSG");
+		Session.set('updateProfileSuccessMessage', 'Your profile has been updated')
+        Meteor.setTimeout(function(){Session.set('updateProfileSuccessMessage', false);}, 2000);
 	}
 });
 
