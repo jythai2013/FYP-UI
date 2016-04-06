@@ -48,8 +48,11 @@
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-			console.log(_id);
-      		Courses.remove(_id);
+      		console.log(_id);
+		    var courseCode = Courses.findOne({_id:_id}).courseCode;
+		    Groups.remove({courseCode:courseCode});
+      		Courses.remove(_id);      
+
       		
 		},
 				
