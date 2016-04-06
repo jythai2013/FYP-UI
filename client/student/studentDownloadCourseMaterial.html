@@ -34,14 +34,22 @@
             <h4>Course Materials: {{getUrl.courseCode}}</h4>
           </div>
           <table class="table">
-            <tr>
-              <th>Title</th>
-              <th>Date of Upload</th>
-              <th>Download File</th>
-            </tr>
-            <tr>
-              <td>Where are the files kept in server?</td>
-            </tr>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Date of Upload</th>
+                <th>Download File</th>
+              </tr>
+            </thead>
+            <tbody>  
+              {{#each uploads}}
+              <tr>            
+                <td>{{name}}</td>
+                <td>{{formatDate uploadedAt}}</td>
+                <td><a href="{{url download = true}}" class="button btn admin-btn">Download</a></td>
+              </tr>
+              {{/each}}
+            </tbody> 
           </table>
         </div>
       </div>

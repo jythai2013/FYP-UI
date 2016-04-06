@@ -3,8 +3,30 @@ template(name="lspRespo")
     .row
       .col-lg-12
         h1.page-header LSP Form Repository
-      // /.col-lg-12
-    // /.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-body
+            h4 Search For LSP Form
+            .table-responsive
+              table#dataTables-example.table.table-bordered
+                tbody
+                  tr
+                    th  Search
+                    td
+                      input#cftLSPFormSearchInput.form-control(type='text')
+                    th  Type of Form
+                    td(style='width: 50%;')
+                      select#typeOfForm
+                        option(value='Course') Course
+                        option(value='Facility') Facility
+                        option(value='Trainer') Trainer
+                        option(value='Review Form') Review
+                        option(value='Feedback Form') Feedback
+                        option(value='Checklist') Checklist
+                        option(value='Others') Others
+            button#filter.btn.btn-save(style='position: static; margin-bottom:1%; margin-left:91%; background: #333; color:#fff')
+              | Search        
     .row
       .col-lg-12
         .panel.panel-default

@@ -1,10 +1,10 @@
  
 Template.trainerUploadAttendance.events({
 	"click #updateAttendance":function updateAttendanceHandler(e, template){
-		group_id = 
-		studentId = 
-		dateI = 
-		attendanceTrueOrFalse = 
+		// group_id = 
+		// studentId = 
+		// dateI = 
+		// attendanceTrueOrFalse = 
 		Meteor.call("editAttendance", group_id, studentId, dateI, attendanceTrueOrFalse)
 	},
 	
@@ -18,9 +18,13 @@ Template.trainerUploadAttendance.events({
 		// var courseCode = $("#courseCode")[0].value
 		// var groupNum = $("#classId")[0].value
 		var theGroup = Groups.findOne({_id:groupId});
+		console.log(theGroup);
+		var groupNum = undefined;
+		var courseCode = undefined;
+		var studentIds = undefined;
 		try{
-			var groupNum = theGroup.grpNum;
-			var courseCode = theGroup.courseCode;
+			groupNum = theGroup.grpNum;
+			courseCode = theGroup.courseCode;
 		}catch(err){
 			console.error(err);
 			alert(err);
@@ -44,18 +48,19 @@ Template.trainerUploadAttendance.events({
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
 		inData.push([null, "Student Name", "Student ID", new Date()])
-		var studentIds = theGroup.classlist;
+		studentIds = theGroup.classlist;
 		var students = new Array();
 		i=0;
 		if(studentIds != undefined){
 			studentIds.forEach(function(studentId, index, arr){
 				var student = Meteor.users.findOne({_id:studentId});
 				students.push(student);
-				inData.push([++i, student.FullName, student._id, true]);
+				inData.push([++i, student.fullName, student._id, true]);
 			});
 		}
 		var inWs_name = "Sheet1";
-		var inExcelName = "test";
+		var inExcelName = "Attendances";
+		console.log(inData);
 		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
 		//console.log("generateExcel");
 	}
