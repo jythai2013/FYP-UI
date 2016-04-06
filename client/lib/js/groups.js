@@ -345,10 +345,13 @@ Template.addClass.events({
 		// }
 
 		var stringSDate = document.getElementById("gNewStartDate").value;
+		console.log(stringSDate);
 		var stringEDate = document.getElementById("gNewEndDate").value;
 
-		var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
-		var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
+		var SDate = new Date(moment(stringSDate,"DD-MM-YYYY").format());
+		console.log(stringSDate);
+		var EDate = new Date(moment(stringEDate,"DD-MM-YYYY").format());
+		// var EDate = stringEDate;
 
 		obj.startDate = SDate;
 		obj.endDate = EDate;
@@ -359,12 +362,15 @@ Template.addClass.events({
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		console.log("What is this? : " + currentCourse);
-		var grpNumI2 = grpNumI1+1;
-		obj.grpNum = "G"+grpNumI2;
-
+		if(grpNumI1 == 99){
+			obj.grpNum = "G1";
+		}else{
+			var grpNumI2 = grpNumI1+1;
+			obj.grpNum = "G"+grpNumI2;
+		}
 		console.log("here4");
 		console.log(obj);
-		Meteor.call("createGroup",obj);
+		// Meteor.call("createGroup",obj);
 		console.log("here4again");
 		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();
@@ -576,8 +582,10 @@ Template.group.events({
 		var positionSecondEqual = currentCourseGrp.indexOf('=');
 		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
 		var groupID = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id
+		var obj = new Object();
+		obj.paid=true;
 
-		Meteor.call("studentPaid", groupID, this.studentID);
+		Meteor.call("studentPaid", groupID, this._id, obj);
 	}
 });
 
