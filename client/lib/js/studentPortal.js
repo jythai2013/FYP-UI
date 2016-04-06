@@ -77,35 +77,31 @@ Template.studentClass.helpers({
 });
 
 Template.studentGrades.helpers({
-	"getUrl" : function sgGetUrl(){
-		var group = getFromUrl();
-		console.log(">>>studentGrades : " + group);
-		return group;
-		// Session.set('trainerClass', group);
-	},
-
-	"getGrade" : function sgGetUrl(courseId){
+	"getGrade" : function sgGetUrl(e){
 		// var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
-		Meteor.users.findOne({_id:this._id}).grades[courseId];
+    	var courseId = this._id;
+    	console.log("studentGrades.js (getGrade) >>> " + courseId);
+    	var gradeObj = Meteor.users.findOne({"_id": Meteor.user()._id}).grades;
+    	console.log("grade >>> " + gradeObj[courseId]);
+    	console.log("grade >>> " + gradeObj[courseId].passStatus);
+    	return gradeObj;
 	}
-
-
 });
 
 Template.studentAttendence.helpers({
 	"getUrl" : function saGetUrl(){
-		var group = getFromUrl();
-		console.log(">>>studentAttendence : " + group);
-		// Session.set('trainerClass', group);
-		return group;
+		var courseId = this._id;
+    	console.log("studentGrades.js (getGrade) >>> " + courseId);
+	// 	// Session.set('trainerClass', group);
+	// 	return group;
 	}
 });
 
 Template.studentCourseMaterial.helpers({
 	"getUrl" : function scGetUrl(){
-		var group = getFromUrl();
-		console.log(">>>studentCourseMaterial : " + group);
-		// Session.set('trainerClass', group);
-		return group;
+		var courseId = this._id;
+    	console.log("studentGrades.js (getGrade) >>> " + courseId);
+	// 	// Session.set('trainerClass', group);
+	// 	return group;
 	}
 });

@@ -53,6 +53,20 @@ Template.administratorList.helpers({
 	}
 });
 
+Template.profilePage.events({
+	"click #editAdminProfileButton" : function editAdminProfileAccount(e) {
+		var aid = this._id;
+		var mobileNo = document.getElementById("acctCell").value;
+		console.log("Check : " + this.fullName + ", " + this.userType.trainer);
+		console.log(this.userType.trainer !== undefined);
+		var isTrainer = true;
+		if (this.userType.trainer === undefined){
+			isTrainer = false;
+		}
+		Meteor.call("editAdminAccount", aid, mobileNo, isTrainer);
+	}
+});
+
 Template.viewAdminParticulars.events({
 	"click #editAdminAccountButton" : function editAdminAccount(e) {
 		var aid = this._id;

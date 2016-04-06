@@ -2,12 +2,11 @@
   console.log("trainerPortal.js - trainerOngoingCourses >>>");
   var tId = Meteor.user()._id;
   var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
-  console.log("getTrainerOngoingCourse Return: " + coursesTaught.length);
   return coursesTaught;
 } 
 
 function getDDMMYYY(date) {
-  return moment(date).format("DD-MM-YYYY");
+  return moment(date).format("DD-MMM-YYYY");
 }
 
 Template.trainerUploads.helpers({
@@ -60,11 +59,6 @@ Template.addAnnouncement.helpers({
   }
 });
 
-Template.trainerAnnouncment.onRendered({
-	'loggedInUserId': function getLoginId(e) {
-		return Meteor.user()._id;/*Session.get("loggedInUser")._id*/
-	}
-});
 
 Template.trainerUploads.onRendered(function(){
 	// console.log($("#courseCode")[0].value);
@@ -80,14 +74,8 @@ Template.trainerUploads.events({
 });
 
 Template.trainerClassList.helpers({
-  "test" : function test(e) {
-    var tId = Meteor.user()._id;
-         // add date factor here
-    return Meteor.user().fullName;
-    },
-
-    'getDDMMYYY': function getCLDDMMYYY(e) {
-      return getDDMMYYY(e);
+  'getDDMMYYY': function getCLDDMMYYY(e) {
+    return getDDMMYYY(e);
   },
 
   "classesCL" : function findTrainerOngoingCoursesCL(e) {
@@ -110,48 +98,49 @@ Template.trainerClassList.helpers({
 
 
 Template.trainerIndex.helpers({
-  "displayTrainerName" : function displayTrainerTIName(e) {
-    return Meteor.user().fullName;
+    "test" : function test2(e) {
+      return Meteor.user().fullName;
   }
 });
 
 Template.trainerClass.onRendered(function(){
-	var courseGrp =  window.location.href;
-	var positionFirstEqual = courseGrp.indexOf('=');
-	//extracting course
-	var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-	var positionOfAND = courseGrp.indexOf('&');
-	var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+  var courseGrp =  Router.current().url;
+  var positionFirstEqual = courseGrp.indexOf('=');
+  //extracting course
+  var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);  
+  var positionOfAND = courseGrp.indexOf('&');
+  var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
 
-	//extracting grpNum
-	var grpNumStr=courseGrp.substr(positionOfAND-1);
-	var positionSecondEqual = currentCourseGrp.indexOf('=');
-	var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-	console.log(currentGrpNum + "grpNum");
+  //extracting grpNum
+  var grpNumStr=courseGrp.substr(positionOfAND-1);
+  var positionSecondEqual = currentCourseGrp.indexOf('=');
+  var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+  console.log(currentGrpNum + "grpNum");
 
-	var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
-	console.log("setupSession : " + group);
-	Session.set('trainerClass', group);
+  var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
+  console.log("setupSession : " + group);
+  Session.set('trainerClass', group);
 });
 
-Template.trainerClass.helpers({
-	"courseDetails" : function tcCourseCode(e) {
-		var groups = Session.get('trainerClass');
-		// console.log(">>>trainerClass : " + groups);
-		return groups;
-	},
 
-	"getStudentDetails" : function tcStudentDetails(cList) {
-		var classList = cList;
-		console.log("getStudentDetails >>>> " + classList);
-		var studentArray = new Array();
-		classList.forEach(function(curr,ind,arr){
-			var student = Meteor.users.findOne({_id:curr});
-			studentArray.push(student);
-			console.log(student.fullName);
-		});
-		return studentArray;
-	}
+Template.trainerClass.helpers({
+  "courseDetails" : function tcCourseCode(e) {
+    var groups = Session.get('trainerClass');
+    console.log(">>>trainerClass : " + groups);
+    return groups;
+  },
+
+  "getStudentDetails" : function tcStudentDetails(cList) {
+    var classList = cList;
+    console.log("getStudentDetails >>>> " + classList);
+    var studentArray = new Array();
+    classList.forEach(function(curr,ind,arr){
+      var student = Meteor.users.findOne({_id:curr});
+      studentArray.push(student);
+      console.log(student.fullName);
+    });
+    return studentArray;
+  }
 });
 
 
