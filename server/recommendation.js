@@ -3,6 +3,7 @@ Meteor.methods({
 	"recommend":function(studentId, groupId){
 			
 		var r = studentFinishedCourseRecommender(studentId, groupId);
+		console.log(r);
 		Session.set("recommendedCourses", r);
 		return r;
 	},
@@ -186,3 +187,8 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
  	}
  	return result;
  }
+
+function recommendStudentsByCourse(courseId){
+	var theCourse = Courses.findOne({_id:courseId});
+	var preReqs =  theCourse.prerequisite;
+}

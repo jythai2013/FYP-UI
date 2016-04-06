@@ -10,10 +10,13 @@ scheduleRecommender = function addTask(id, details) {
 			// console.log(details);
 			studentId = details.studentId;
 			groupId = details.groupId;
-			studentFinishedCourseRecommender(studentId, groupId)
+			console.log("start");
+			var a = studentFinishedCourseRecommender(studentId, groupId)
+			console.log(a);
 			FutureTasks.remove(id);
 			SyncedCron.remove(id);
-				return id;
+			console.log("end");
+			return id;
 		}
 	});
 };
