@@ -52,11 +52,11 @@ Template.trainerUploadGrades.events({
 			studentIds.forEach(function(studentId, index, arr){
 				var student = Meteor.users.findOne({_id:studentId});
 				students.push(student);
-				inData.push([++i, student.FullName, student._id, "marks"]);
+				inData.push([++i, student.fullName, student._id, "marks"]);
 			});
 		}
 		var inWs_name = "Sheet1";
-		var inExcelName = "test";
+		var inExcelName = "Grades";
 		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
 		//console.log("generateExcel");
 	}
@@ -171,7 +171,8 @@ function processExcelFile(workbook){
 	var cellOf_StudentID  	= 'C';
 	
 	while(cellIsFilled(workbook, cellOf_StudentID + currentLineNumber)){
-	var currentOfTheRest = startOfTheRest;
+		console.log(cellOf_StudentName + currentLineNumber);
+		var currentOfTheRest = startOfTheRest;
 		var StudentName = worksheet[cellOf_StudentName + currentLineNumber].v;
 		var StudentID	  = worksheet[cellOf_StudentID + currentLineNumber].v;
 		var grades 		  = new Object();
