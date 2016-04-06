@@ -1,62 +1,63 @@
  function getTrainerOngoingCourse(e) {
-    console.log("trainerPortal.js - trainerOngoingCourses >>>");
-    var tId = Meteor.user()._id;
-    var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
-    console.log("getTrainerOngoingCourse Return: " + coursesTaught.length);
-    return coursesTaught;
- } 
+  console.log("trainerPortal.js - trainerOngoingCourses >>>");
+  var tId = Meteor.user()._id;
+  var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
+  console.log("getTrainerOngoingCourse Return: " + coursesTaught.length);
+  return coursesTaught;
+} 
 
- function getDDMMYYY(date) {
-    return moment(date).format("DD-MM-YYYY");
- }
+function getDDMMYYY(date) {
+  return moment(date).format("DD-MM-YYYY");
+}
 
- Template.trainerUploads.helpers({
-    "trainerOngoingCourses" : function findTrainerUploads(e) {
-        var a = getTrainerOngoingCourse();
-        return a;
-    },
+Template.trainerUploads.helpers({
+  "trainerOngoingCourses" : function findTrainerUploads(e) {
+    var a = getTrainerOngoingCourse();
+    return a;
+  }
+});
+Template.tcCourseMaterials.helpers({  
+  uploads:function(){
+    var a = Files.find({type: "course"});
+    var fileList = Materials.find({type:"groups"});
+    var fileList2 = Materials.find({type: "course"});
+    console.log(fileList);
+    var a = new Array();
 
-    uploads:function(){
-	    var a = Files.find({type: "course"});
-	    var fileList = Materials.find({type:"groups"});
-	    var fileList2 = Materials.find({type: "course"});
-	    console.log(fileList);
-	    var a = new Array();
+    fileList.forEach(function(item, index){
+      console.log(item.fileName);
+      a.push(Files.findOne(item.fileName));
+      console.log(item);
+    });
 
-	    fileList.forEach(function(item, index){
-	      console.log(item.fileName);
-	      a.push(Files.findOne(item.fileName));
-	      console.log(item);
-	    });
+    fileList2.forEach(function(item, index){
+      console.log(item.fileName);
+      a.push(Files.findOne(item.fileName));
+      console.log(item);
+    });
 
-	    fileList2.forEach(function(item, index){
-	      console.log(item.fileName);
-	      a.push(Files.findOne(item.fileName));
-	      console.log(item);
-	    });
+    console.log(a);
+    return a;
+  }
+});
 
-	    console.log(a);
-	    return a;
-	}
- });
+Template.trainerAnnouncment.helpers({
+  "trainerOngoingCourses1" : function findTrainerAnnouncement(e) {
+    var a = getTrainerOngoingCourse();
+    console.log("HI trainerAnnouncment >>>");
+    return a;
+  },
 
- Template.trainerAnnouncment.helpers({
-    "trainerOngoingCourses1" : function findTrainerAnnouncement(e) {
-        var a = getTrainerOngoingCourse();
-        console.log("HI trainerAnnouncment >>>");
-        return a;
-    },
-
-   	'getDDMMYYY': function getTADDMMYYY(e) {
-     	return getDDMMYYY(e);
-     },
- });
+  'getDDMMYYY': function getTADDMMYYY(e) {
+    return getDDMMYYY(e);
+  },
+});
 
 Template.addAnnouncement.helpers({
 	"trainerOngoingCourses1" : function findTrainerAddAnnoun(e) {
 		var a = getTrainerOngoingCourse();
-        return a;
-	}
+    return a;
+  }
 });
 
 Template.trainerAnnouncment.onRendered({
@@ -78,40 +79,40 @@ Template.trainerUploads.events({
 	}
 });
 
- Template.trainerClassList.helpers({
-     "test" : function test(e) {
-         var tId = Meteor.user()._id;
+Template.trainerClassList.helpers({
+  "test" : function test(e) {
+    var tId = Meteor.user()._id;
          // add date factor here
-         return Meteor.user().fullName;
-     },
+    return Meteor.user().fullName;
+    },
 
-   	'getDDMMYYY': function getCLDDMMYYY(e) {
-     	return getDDMMYYY(e);
-     },
- 
-     "classesCL" : function findTrainerOngoingCoursesCL(e) {
-        var tId = Meteor.user()._id;
-        // add date factor here
-        return Groups.find({courseTrainers: {trainerId: tId}}).count();
-     },
- 
-     "getCourseDesc" : function findDescCL(cName) {
-     	console.log("trainerPortal.js, (getCorseDesc) " + cName);
-     	console.log(Courses.findOne({"courseCode": cName}));
-     	var desc = Courses.findOne({"courseCode": cName}).courseDescription;
-        return desc;
-     },
- 
-     "trainerOngoingCourses" : function findTrainerOngoingCoursesCL(e) {
-         return getTrainerOngoingCourse();
-       }
- });
+    'getDDMMYYY': function getCLDDMMYYY(e) {
+      return getDDMMYYY(e);
+  },
+
+  "classesCL" : function findTrainerOngoingCoursesCL(e) {
+    var tId = Meteor.user()._id;
+    // add date factor here
+    return Groups.find({courseTrainers: {trainerId: tId}}).count();
+  },
+
+  "getCourseDesc" : function findDescCL(cName) {
+    console.log("trainerPortal.js, (getCorseDesc) " + cName);
+    console.log(Courses.findOne({"courseCode": cName}));
+    var desc = Courses.findOne({"courseCode": cName}).courseDescription;
+    return desc;
+  },
+
+  "trainerOngoingCourses" : function findTrainerOngoingCoursesCL(e) {
+    return getTrainerOngoingCourse();
+  }
+});
 
 
 Template.trainerIndex.helpers({
-    "displayTrainerName" : function displayTrainerTIName(e) {
-        return Meteor.user().fullName;
-    }
+  "displayTrainerName" : function displayTrainerTIName(e) {
+    return Meteor.user().fullName;
+  }
 });
 
 Template.trainerClass.onRendered(function(){

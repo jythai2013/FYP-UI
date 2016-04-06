@@ -53,15 +53,24 @@
       		
 		},
 				
-		'removeTrainer': function removeTrainer(id, removeCurrentTrainersArr){
+		'removeTrainer': function removeTrainer(code, trainerID){
 			// if(Meteor.user.userType != "admin"){
 				// return false; //TODO: output error message in client
 			// }
-			console.log(removeCurrentTrainersArr);
+			console.log(">> IN SERVER");
+			
+			console.log(fbId);
+      		Courses.update({courseCode: code},
 
-			removeCurrentTrainersArr.forEach(function(trainer) {
-   				Courses.remove({_id:id, courseTrainers: trainer});
-			});
+      			{ $pull: { courseTrainers: {trainerID:trainerID} } }
+
+
+      		);
+		console.log("Question with _id: " + fbId + " has been removed");
+
+			// removeCurrentTrainersArr.forEach(function(trainer) {
+   // 				Courses.remove({_id:id, courseTrainers: trainer});
+			// });
       		
 		},
 				

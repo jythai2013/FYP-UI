@@ -1,10 +1,8 @@
-template(name="formRespo")
+template(name="lspRespo")
   #page-wrapper
     .row
       .col-lg-12
         h1.page-header LSP Form Repository
-      // /.col-lg-12
-    // /.row
     .row
       .col-lg-12
         .panel.panel-default
@@ -28,7 +26,7 @@ template(name="formRespo")
                         option(value='Checklist') Checklist
                         option(value='Others') Others
             button#filter.btn.btn-save(style='position: static; margin-bottom:1%; margin-left:91%; background: #333; color:#fff')
-              | Search
+              | Search        
     .row
       .col-lg-12
         .panel.panel-default
@@ -37,7 +35,7 @@ template(name="formRespo")
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | LSP Form
-            +addLSPFormForm
+            +addNewLSPFormForm
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -59,15 +57,15 @@ template(name="formRespo")
                       td #{version}
 
 
-template(name="addLSPFormForm")
-  #addLSPForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+template(name="addNewLSPFormForm")
+  #addNewLSPForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Add New Trainer
+          h4#myModalLabel.modal-title Add New LSP Form
         .modal-body
-          form(role="form", id="insert-addLSPForm", action="#", method="post")
+          form(role="form", id="insert-addNewLSPForm", action="#", method="post")
           .table-responsive
             table#dataTables-example.table(style="background:#333")
               tbody

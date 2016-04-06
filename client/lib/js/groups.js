@@ -353,9 +353,10 @@ Template.addClass.events({
 		obj.startDate = SDate;
 		obj.endDate = EDate;
 		obj.venue = document.getElementById("gVenue").value;
-		var trainId = document.getElementsByName("gTrainers").value;
-
-		obj.courseTrainers = {trainerId: trainId};
+		var trainId = document.getElementById("gTrainers").value;
+		console.log(trainId);
+		// obj.courseTrainers = {trainerId: trainId};
+		obj.courseTrainers = trainId;
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		console.log("What is this? : " + currentCourse);
@@ -391,14 +392,14 @@ Template.addClass.events({
 	}
 });
 
-
+//global template
 Template.registerHelper('formatDate', function(date){
-	return moment(date).format("DD-MM-YYYY HH:mm:ss");
+	return moment(date).format("Do MMM YYYY HH:mm");
 
 });
 
 Template.registerHelper('formatDateee', function(date){
-	return moment(date).format("DD-MM-YYYY");
+	return moment(date).format("Do MMM YYYY");
 
 });
 

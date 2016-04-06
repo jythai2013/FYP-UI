@@ -53,7 +53,7 @@ Meteor.methods({
 		var numberOfDaysToAdd = 3;
 		// console.log("6");
 		//tDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
-		var groupToBlast = Groups.findOne({grpNum:groupNum});
+		var groupToBlast = Groups.findOne({courseCode:cCode, grpNum:groupNum});
 		// console.log("7");
 
 
@@ -69,7 +69,7 @@ Meteor.methods({
 			return false;
 		}
 		groupToBlast.classlist.forEach(function(entry){
-			student = entry.studentID;
+			student = Meteor.users.findOne({_id:entry});
 			toEmail = student.email[0];
 			details = {to:toEmail, from:"asdf154dev@gmail.com", subject:subject, text:text, date:tDate} //to, from, subject, text
 			Meteor.call("scheduleMail", details)

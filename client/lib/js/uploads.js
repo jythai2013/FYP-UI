@@ -38,9 +38,6 @@ Template.course.events({
     var sessionId = document.getElementById("cUploadSession").value;
     console.log(sessionId);
     var files = document.getElementById("myFileInput").files;
-    // var fileZero = (files[0]);
-    // var fileObj = new FS.File(files[0]);
-    // Files.insert(fileZero);
 		
 		
 		console.log(Files);
@@ -51,9 +48,7 @@ Template.course.events({
       } else {
         var userId = Meteor.userId();
 				fileObjId = fileObja._id;
-				// console.log(fileObj);
-				// console.log(Files);
-				// console.log(fileObjId = fileObj._id);
+
       }
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
     });
@@ -77,10 +72,7 @@ Template.formRespo.helpers({
       a.push(Files.findOne(item.fileName));
       console.log(item);
     });
-    // for(i = 0; i < fileList.fetch().length; i++){
-    //   a += Files.findOne(fileList[i]);
-    //   console.log(a);
-    // }
+
     console.log(a);
     return a;
   }
@@ -122,9 +114,7 @@ Template.addLSPFormForm.events({
       } else {
         var userId = Meteor.userId();
         fileObjId = fileObja._id;
-        // console.log(fileObj);
-        // console.log(Files);
-        // console.log(fileObjId = fileObj._id);
+
       }
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
     });
@@ -153,9 +143,6 @@ Template.trainerUploads.events({
     var sessionId = groupList[0].grpNum;
     console.log(sessionId);
     var files = document.getElementById("attfileName").files;
-    // var fileZero = (files[0]);
-    // var fileObj = new FS.File(files[0]);
-    // Files.insert(fileZero);
     
     
     console.log(Files);
@@ -164,8 +151,6 @@ Template.trainerUploads.events({
         // handle error
         console.log(err);
       } else {
-        // var userId = Meteor.userId();
-        // fileObjId = fileObja._id;
         console.log(fileObj);
         // console.log(Files);
         // console.log(fileObjId = fileObj._id);
@@ -178,5 +163,71 @@ Template.trainerUploads.events({
 		console.log("before call");
     Meteor.call("createMaterial",type, courseId, sessionId, fileObjIdI);
 		console.log("!before call");
+  }
+});
+
+Template.lspRespo.helpers({
+  counter: function () {
+    return Session.get("counter");
+  },
+  upload:function(){
+    var fileList = Materials.find({type:"completedLSP"});
+    console.log(fileList);
+    var a = new Array();
+
+    fileList.forEach(function(item, index){
+      console.log(item.fileName);
+      a.push(Files.findOne(item.fileName));
+      console.log(item);
+    });
+    // for(i = 0; i < fileList.fetch().length; i++){
+    //   a += Files.findOne(fileList[i]);
+    //   console.log(a);
+    // }
+    console.log(a);
+    return a;
+  }
+});
+
+Template.addNewLSPFormForm.events({
+
+'click .addFormButton':function(event, template){
+    var typeI = "completedLSP";
+    var courseId = document.getElementById("formName").value;
+    console.log(courseId);
+    var sessionId = document.getElementById("categoryName").value;
+    console.log(sessionId);
+    var files = document.getElementById("myFileInput").files;
+
+    console.log(files);
+    var fileObjId = new FS.File(files[0]);
+    fileObjId.category = sessionId;
+    var fName = fileObjId.name();
+    console.log(fName);
+    var a = Files.find({"original.name": fName}).fetch();
+    if(a == null || a.length == 0)
+    {
+      var version = 1; 
+      fileObjId.version = version;
+    } else {
+      var version = a.length + 1;
+      fileObjId.version = version;
+    } 
+
+    Files.insert(fileObjId, function (err, fileObj) {
+      if (err){
+        // handle error
+        console.log(err);
+      } else {
+        var userId = Meteor.userId();
+        fileObjId = fileObja._id;
+        // console.log(fileObj);
+        // console.log(Files);
+        // console.log(fileObjId = fileObj._id);
+      }
+      // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+    });
+    fileObjIdI = fileObjId._id;
+      Meteor.call("createMaterial", typeI,courseId, sessionId,  fileObjIdI);  
   }
 });
