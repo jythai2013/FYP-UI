@@ -49,33 +49,38 @@ template(name="course")
                       +editCourseForm
             p.breakH4
             h4 Class Management
+                button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addTrainer", style="margin-top: -1%; margin-left: 5px; right: 6%; background: #333; color:#fff")
+                    i.fa.fa-plus
+                    | Trainer(s) 
+                +addTrainer
+                | 
+                button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                    i.fa.fa-plus
+                    | Class 
+                +addClass
             .table-responsive
               table#dataTables-example.table.table-bordered.table-hover
-                tbody
+                thead
                   tr
-                    th Trainer
-                    td 
-                      each trainerList
-                        | {{.}}, 
-                    td 
-                      input(type="button", value="Add Trainer(s)", data-toggle="modal", data-target="#addTrainer", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
-                      +addTrainer
-                  tr 
-                    th Classes
-                    td(style="word-break: break-word")
-                      each groupsCourse
-                        a(href="class/?cCode=#{courseCode}&cgrpNum=#{grpNum}") #{grpNum}
-                        | ,
-                    td(width="50px")
-                      button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
-                        i.fa.fa-plus
-                        | Class 
-                      +addClass
+                    th Trainer name
+                    th Classes Taught
+                    th Remarks
+                tbody
+                  each trainerList
+                    tr
+                      td 
+                        | #{trainerName}
+                      td 
+                        if gotNoClass
+                          | There is no class allocated
+                        else
+                          a(href="class/?cCode=#{courseCode}&cgrpNum=#{classesTaught}") #{classesTaught}
+                          | ,
+                      td 
+                        if gotNoClass
+                          input(type="button", value="Remove Trainer", data-toggle="modal", data-id='#{trainerID}',data-target="#removeTrainer#{trainerID}", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
+                        +removeTrainer
                     
-              //button.btn.btn-sn.pull-right(data-toggle="modal", data-target="#addClass", style="margin-top: -1%; right: 6%; background: #333; color:#fff")
-                        //i.fa.fa-plus
-                        //| Class 
-              //+addClass
             // /.table-responsive
             p.breakH4
             h4 Course Materials
@@ -206,26 +211,9 @@ template(name="addClass")
                   th Trainers
                   td
                     .form-group.input-group
-                      select(name="gTrainers", style="color: black")
+                      select(id="gTrainers", style="color: black")
                         each courseTrainers2
                           option(value="#{_id}") #{fullName}
-                  td 
-                    button#addMoreTrainersToClass.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                      i.fa.fa-plus  
-
-            each noOfTrainers
-              tr 
-                th   
-                td 
-                  .form-group()
-                    select(name="gTrainers", style="color: black; width: 100%")
-                      each courseTrainers2
-                        option(value="#{_id}") #{fullName} 
-                td 
-                  button#addMoreTrainersToClass.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                    i.fa.fa-plus
-                  button#removeTrainersFromClass.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
-                    i.fa.fa-minus 
                     
           // /.table-responsive
         .modal-footer
@@ -372,28 +360,21 @@ template(name="removeClass")
 
 
 template(name="removeTrainer")
-  #removeTrainer.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id = "removeTrainer#{trainerID}",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Remove Trainers
+          h4#myModalLabel.modal-title Remove Trainer
         .modal-body
           form(name="removeClassForm", role="form", id="insert-removeClassForm", action="facilityResult", method="post")
-          p Remove the following trainer(s)a
-            //.table-responsive
-              //table#dataTables-example.table.table-bordered.table-hover
-                //tbody
-                  //tr 
-                    //th Classes
-                    //td
-          .form-group
-            label 
-              each trainer2
-               .checkbox
-                 label
-                   input(type="checkbox", name="currentTrainers", value="#{_id} ")
-                   | #{fullName}     
+          Are you sure you want to remove the following trainer
+            .table-responsive
+              table#dataTables-example.table(style="background:#333")
+                tbody
+                  tr 
+                    td Name
+                    td #{trainerName}     
                     
           // /.table-responsive
         .modal-footer

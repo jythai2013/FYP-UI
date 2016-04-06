@@ -101,30 +101,31 @@ Template.course.onRendered(function(e){
 Template.course.helpers({
 
 	"trainerList" : function(e) {
-		// var url =  window.location.href;
-		// var positionFirstEqual = url.indexOf('=');	
-		// var currentCourseEsc=url.substring(positionFirstEqual+1);
-    	// console.log(currentCourseEsc+ " currnt course code escaped");
 		var currentCourse=Session.get("currentCourseCode");
-		//console.log(currentCourse + "Code");
-
-		//var size = Courses.find({courseCode:currentCourse}).count();
 		var size = Courses.findOne({courseCode:currentCourse});
 		console.log(size);
 		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
 
 		var trainersArr = new Array();
 		for(var x = 0, l = a.length; x < l;  x++){
+			var obj = new Object();
 			var entry = a[x].trainerID;
+			obj.trainerID = entry;
 			var trainer = Meteor.users.findOne({_id:entry});
-    		var fullName = trainer.fullName;
-			trainersArr.push(fullName);
+    		obj.trainerName = trainer.fullName;
+
+    		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":entry}).fetch();
+    		
+
+    		for(var i = 0, k = classTaught.length; i < k;  i++){
+    			var classesTrainer = classTaught[i];
+    			obj.courseCode = currentCourse;
+    			obj.classesTaught = classesTrainer.grpNum;
+    			console.log(obj.classesTaught);
+    		}
+			trainersArr.push(obj);
     	}
 
-    	trainersArr.forEach(function(entry) {
-   			console.log(entry + " full name");
-
-		});
 
 		return trainersArr;
 		
@@ -135,9 +136,6 @@ Template.course.helpers({
 		// var currentCourseEsc=url.substring(positionFirstEqual+1);
     	// console.log(currentCourseEsc+ " currnt course code escaped");
 		var currentCourse=Session.get("currentCourseCode");
-		//console.log(currentCourse + "Code");
-
-		//var size = Courses.find({courseCode:currentCourse}).count();
 		var size = Courses.findOne({courseCode:currentCourse});
 		console.log(size);
 		var a =  Courses.findOne({courseCode:currentCourse}).components;
@@ -157,6 +155,18 @@ Template.course.helpers({
 		});
 
 		return componentsArr;
+		
+	},
+	"gotNoClass" : function(e) {
+		console.log(this);
+		var currentCourse=Session.get("currentCourseCode");
+		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
+    	if(classTaught.length == 0 ){
+			return true
+    	}else {
+    		return false;
+    	}
+		
 		
 	}
 });
@@ -370,37 +380,40 @@ Template.deleteCourse.events({
 
 Template.removeTrainer.events({
 	"click #removeTrainerButton" : function removeTrainerEventHandler(e) {
-		var removeCurrentTrainers = document.getElementsByName("currentTrainers");
-    	console.log(removeCurrentTrainers.length+ " SIZE")
+		console.log(this);
+		// this.trainerID
+		var currentCourse=Session.get("currentCourseCode");
+		// var removeCurrentTrainers = document.getElementsByName("currentTrainers");
+  //   	console.log(removeCurrentTrainers.length+ " SIZE")
 
-		var removeCurrentTrainersArr =  new Array();;
-		for(var x = 0, l = removeCurrentTrainers.length; x < l;  x++){
-			if (removeCurrentTrainers[x].checked){
-				var trainerName = removeCurrentTrainers[x].value;
-				console.log(trainerName);
+		// var removeCurrentTrainersArr =  new Array();;
+		// for(var x = 0, l = removeCurrentTrainers.length; x < l;  x++){
+		// 	if (removeCurrentTrainers[x].checked){
+		// 		var trainerName = removeCurrentTrainers[x].value;
+		// 		console.log(trainerName);
 				
-				removeCurrentTrainersArr.push(trainerName);
-				//removeCurrentTrainersArr[removeCurrentTrainersArr.length] = groupID;
-				//Meteor.call("deleteGroup", groupID);
-			}
-    	}
-    	console.log(removeCurrentTrainersArr.length+ " ARR SIZE")
+		// 		removeCurrentTrainersArr.push(trainerName);
+		// 		//removeCurrentTrainersArr[removeCurrentTrainersArr.length] = groupID;
+		// 		//Meteor.call("deleteGroup", groupID);
+		// 	}
+  //   	}
+  //   	console.log(removeCurrentTrainersArr.length+ " ARR SIZE")
 
-		//extract course
+		// //extract course
 		
-		var url =  window.location.href;
-		var positionFirstEqual = url.indexOf('=');	
-		var currentCourseEsc=url.substring(positionFirstEqual+1);
-    	console.log(currentCourseEsc+ " currnt course code escaped");
-		var currentCourse=unescape(currentCourseEsc);
-		var groupID = Groups.findOne({courseCode:currentCourse, grpNum:grpNumber})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
+		// var url =  window.location.href;
+		// var positionFirstEqual = url.indexOf('=');	
+		// var currentCourseEsc=url.substring(positionFirstEqual+1);
+  //   	console.log(currentCourseEsc+ " currnt course code escaped");
+		// var currentCourse=unescape(currentCourseEsc);
+		// var groupID = Groups.findOne({courseCode:currentCourse, grpNum:grpNumber})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
 
 
-    	removeCurrentTrainersArr.forEach(function(entry) {
-   			console.log(entry);
-		});
+  //   	removeCurrentTrainersArr.forEach(function(entry) {
+  //  			console.log(entry);
+		// });
 
-		Meteor.call("removeTrainer", courseID, removeCurrentTrainersArr);
+		Meteor.call("removeTrainer", currentCourse, this.trainerID);
 	}
 });
 
@@ -466,7 +479,7 @@ Template.addTrainer.events({
 });
 
 Template.addComponents.onRendered(function(){
-	Session.set("componentsTimes", 0);
+	Session.set("componentsTimes", 1);
 });
 
 Template.addComponents.helpers({
