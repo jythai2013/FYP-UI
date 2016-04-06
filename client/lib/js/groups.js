@@ -391,14 +391,14 @@ Template.addClass.events({
 	}
 });
 
-
+//global template
 Template.registerHelper('formatDate', function(date){
-	return moment(date).format("DD-MM-YYYY HH:mm:ss");
+	return moment(date).format("Do MMM YYYY HH:mm");
 
 });
 
 Template.registerHelper('formatDateee', function(date){
-	return moment(date).format("DD-MM-YYYY");
+	return moment(date).format("Do MMM YYYY");
 
 });
 
