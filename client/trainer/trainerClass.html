@@ -82,17 +82,17 @@
     <table id="dataTables-example" class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th colspan="2"> Course Materials</th>
+          <th colspan="2">Course Materials</th>
           <th> Download File</th>
         </tr>
       </thead>
       <tbody>
         {{#each uploads}}
           <tr> 
-            <td colspan="2"> File Name </td>
+            <td colspan="2">{{name}}</td>
             <td>
               <!-- <a href="{{url download = true}}" class="button btn admin-btn">Download</a> -->
-              <a href="#" class="button btn admin-btn">Download</a>
+              <a href="{{url download = true}}" class="button btn admin-btn">Download</a>
             </td>
           </tr> 
         {{/each}}
