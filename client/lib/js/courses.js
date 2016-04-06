@@ -159,10 +159,13 @@ Template.course.helpers({
 	"trainersOwnClass" : function(e) {
 		console.log(this);
 		var trainersClasses = new Array();
-		// for
-		var obj = new Object();
-		obj.classesTaught = this.classesTaught;
-
+		var currentCourse=Session.get("currentCourseCode");
+		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
+		for (var x = 0, l = classTaught.length; x < l;  x++){
+			var obj = new Object();
+			obj.classesTaught = this.classesTaught;
+			trainersClasses.push(obj);
+		}
 		return trainersClasses;
 		
 	},
