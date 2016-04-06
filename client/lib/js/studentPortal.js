@@ -4,15 +4,15 @@
     var coursesEnrolled = Groups.find({classlist: {$in : [ tId ]}});
     // console.log("getStudentOngoingCourse Return: "+ coursesEnrolled);
     return coursesEnrolled;
- } 
+  } 
 
- function getDDMMYYY(date) {
-    return moment(date).format("DD-MM-YYYY");
- }
+  function getDDMMYYY(date) {
+  	return moment(date).format("DD-MM-YYYY");
+  }
 
- function getFromUrl(a) {
-    var courseGrp =  Router.current().url;
-	var positionFirstEqual = courseGrp.indexOf('=');
+  function getFromUrl(a) {
+  	var courseGrp =  Router.current().url;
+  	var positionFirstEqual = courseGrp.indexOf('=');
 	//extracting course
 	var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
 	var positionOfAND = courseGrp.indexOf('&');
@@ -27,38 +27,39 @@
 	var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
 	console.log("GroupId " + group._id);
 	return group;
- }
+}
 
- Template.studentUpload.helpers({
-    "studentOngoingCourses" : function findTrainerUploads(e) {
-        var a = getStudentOngoingCourse();
-        console.log("studentOngoingCourses >>> "+a);
-        return a;
-    },
+Template.studentUpload.helpers({
+	"studentOngoingCourses" : function findTrainerUploads(e) {
+		var a = getStudentOngoingCourse();
+		console.log("studentOngoingCourses >>> "+a);
+		return a;
+	},
+});
+Template.studentCourseMaterial.helpers({
+	uploads:function(){
+		var a = Files.find({type: "course"});
+		var fileList = Materials.find({type:"groups"});
+		var fileList2 = Materials.find({type: "course"});
+		console.log(fileList);
+		var a = new Array();
 
-    uploads:function(){
-	    var a = Files.find({type: "course"});
-	    var fileList = Materials.find({type:"groups"});
-	    var fileList2 = Materials.find({type: "course"});
-	    console.log(fileList);
-	    var a = new Array();
+		fileList.forEach(function(item, index){
+			console.log(item.fileName);
+			a.push(Files.findOne(item.fileName));
+			console.log(item);
+		});
 
-	    fileList.forEach(function(item, index){
-	      console.log(item.fileName);
-	      a.push(Files.findOne(item.fileName));
-	      console.log(item);
-	    });
+		fileList2.forEach(function(item, index){
+			console.log(item.fileName);
+			a.push(Files.findOne(item.fileName));
+			console.log(item);
+		});
 
-	    fileList2.forEach(function(item, index){
-	      console.log(item.fileName);
-	      a.push(Files.findOne(item.fileName));
-	      console.log(item);
-	    });
-
-	    console.log(a);
-	    return a;
+		console.log(a);
+		return a;
 	}
- });
+});
 
 //student/studentClass.html
 Template.studentClass.helpers({
@@ -85,7 +86,7 @@ Template.studentGrades.helpers({
 
 	"getGrade" : function sgGetUrl(courseId){
 		// var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
-    	Meteor.users.findOne({_id:this._id}).grades[courseId];
+		Meteor.users.findOne({_id:this._id}).grades[courseId];
 	}
 
 
