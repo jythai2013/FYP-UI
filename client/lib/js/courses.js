@@ -145,7 +145,6 @@ Template.course.helpers({
 			var obj = new Object();
 			obj.componentName = a[x].component;
 			obj.weightage = a[x].weightage;
-
 			componentsArr.push(obj);
     	}
 
@@ -383,36 +382,6 @@ Template.removeTrainer.events({
 		console.log(this);
 		// this.trainerID
 		var currentCourse=Session.get("currentCourseCode");
-		// var removeCurrentTrainers = document.getElementsByName("currentTrainers");
-  //   	console.log(removeCurrentTrainers.length+ " SIZE")
-
-		// var removeCurrentTrainersArr =  new Array();;
-		// for(var x = 0, l = removeCurrentTrainers.length; x < l;  x++){
-		// 	if (removeCurrentTrainers[x].checked){
-		// 		var trainerName = removeCurrentTrainers[x].value;
-		// 		console.log(trainerName);
-				
-		// 		removeCurrentTrainersArr.push(trainerName);
-		// 		//removeCurrentTrainersArr[removeCurrentTrainersArr.length] = groupID;
-		// 		//Meteor.call("deleteGroup", groupID);
-		// 	}
-  //   	}
-  //   	console.log(removeCurrentTrainersArr.length+ " ARR SIZE")
-
-		// //extract course
-		
-		// var url =  window.location.href;
-		// var positionFirstEqual = url.indexOf('=');	
-		// var currentCourseEsc=url.substring(positionFirstEqual+1);
-  //   	console.log(currentCourseEsc+ " currnt course code escaped");
-		// var currentCourse=unescape(currentCourseEsc);
-		// var groupID = Groups.findOne({courseCode:currentCourse, grpNum:grpNumber})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
-
-
-  //   	removeCurrentTrainersArr.forEach(function(entry) {
-  //  			console.log(entry);
-		// });
-
 		Meteor.call("removeTrainer", currentCourse, this.trainerID);
 	}
 });
@@ -577,6 +546,16 @@ Template.addComponents.events({
 });
 
 
+
+Template.course.events({
+	"click #removeComponentButton" : function (e) {
+		console.log(this);
+
+		// this.trainerID
+		var currentCourse=Session.get("currentCourseCode");
+		Meteor.call("removeComponent", currentCourse, this.componentName);
+	}
+});
 
 
 // WEBSITE

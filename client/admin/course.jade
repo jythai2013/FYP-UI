@@ -128,11 +128,14 @@ template(name="course")
                   tr
                     th(colspan="2") Components
                     th Weightage
+                    th Remarks
                 tbody
                   each courseComponents                   
                     tr 
                       td(colspan="2") #{componentName}
                       td #{weightage} 
+                      td 
+                        input(type="button", value="Remove Component", id="removeComponentButton")
 
 
 

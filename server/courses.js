@@ -58,19 +58,23 @@
 				// return false; //TODO: output error message in client
 			// }
 			console.log(">> IN SERVER");
-			
-			console.log(fbId);
       		Courses.update({courseCode: code},
 
       			{ $pull: { courseTrainers: {trainerID:trainerID} } }
-
-
       		);
-		console.log("Question with _id: " + fbId + " has been removed");
+      		
+		},
+				
+		'removeComponent': function removeComponent(code, editComponents){
+			// if(Meteor.user.userType != "admin"){
+				// return false; //TODO: output error message in client
+			// }
+			console.log(">> IN SERVER");
+      		Courses.update({courseCode: code},
 
-			// removeCurrentTrainersArr.forEach(function(trainer) {
-   // 				Courses.remove({_id:id, courseTrainers: trainer});
-			// });
+      			{ $pull: { components: {component:editComponents} }}
+      			
+      		);
       		
 		},
 				

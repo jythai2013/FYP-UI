@@ -355,8 +355,7 @@ Template.addClass.events({
 		obj.venue = document.getElementById("gVenue").value;
 		var trainId = document.getElementById("gTrainers").value;
 		console.log(trainId);
-		// obj.courseTrainers = {trainerId: trainId};
-		obj.courseTrainers = trainId;
+		obj.courseTrainers = {trainerId: trainId};
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		console.log("What is this? : " + currentCourse);
