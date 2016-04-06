@@ -31,7 +31,7 @@ template(name="administratorList")
                         a.btn.admin-btn.bt-sn(data-target="#viewAdminDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                         +viewAdminParticulars
                       td 
-                        {{checkIsTrainer}}
+                        #{checkIsTrainer}
                       td
                         a.btn.admin-btn.bt-sn(data-target="#goDeleteAdmin#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                         +deleteAdminForm 

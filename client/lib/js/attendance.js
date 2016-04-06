@@ -186,7 +186,9 @@ function processExcelFile(workbook){
 			// console.log(currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0));
 			// console.log(dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]);
 			// console.log(attendances[dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]]);
-			attendances[new Date(dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)])] = worksheet[currentOfTheRest + currentLineNumber].v
+			var dateObj = new Date(dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]);
+			dateObj.setDate(dateObj.getDate()-1);
+			attendances[dateObj] = worksheet[currentOfTheRest + currentLineNumber].v
 			// console.log(attendances);
 			// console.log(currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0));
 			// console.log(dates[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]);
