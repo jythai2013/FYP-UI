@@ -24,25 +24,27 @@ Template.administratorList.helpers({
 });
 
 Template.administratorList.helpers({
-	"checkIsTrainer" : function adminList(userType) {
-		console.log("Check : " + this.fullName + ", " + this.userType.trainer);
+	"checkIsTrainer1" : function adminList1(userType) {
+		console.log("Check1 : " + this.fullName + ", " + this.userType.trainer);
 		console.log(this.userType.trainer !== undefined);
 		if (this.userType.trainer !== undefined){
+			console.log("adminList Yes");
 			return "Yes";
 		} else {
+			console.log("adminList No");
 			return "No";
 		}
 	}
 });
 
 Template.viewAdminParticulars.helpers({
-	"checkIsTrainer" : function adminList(e) {
-		console.log("Check : " + this.fullName + ", " + this.userType.trainer);
+	"checkIsTrainer2" : function adminList2(e) {
+		console.log("Check2 : " + this.fullName + ", " + this.userType.trainer);
 		console.log(this.userType.trainer !== undefined);
 		if (this.userType.trainer !== undefined){
-			return "Yes";
+			return true;
 		} else {
-			return "No";
+			return false;
 		}
 	}
 });
