@@ -9,6 +9,27 @@ template(name="administratorList")
       .col-lg-12
         .panel.panel-default
           .panel-body
+            if errorAdminParticularsMessage
+              .alert.alert-danger
+                | #{errorAdminParticularsMessage}
+            if updateAdminParticularsSuccessMessage
+              .alert.alert-success
+                | #{updateAdminParticularsSuccessMessage}
+            if errorAdminDeleteMessage
+              .alert.alert-danger
+                | #{errorAdminDeleteMessage}
+            if updateAdminDeleteSuccessMessage
+              .alert.alert-success
+                | #{updateAdminDeleteSuccessMessage}
+            if errorAdminAddMessage
+              .alert.alert-danger
+                | #{errorAdminAddMessage}
+            if updateAdminAddSuccessMessage
+              .alert.alert-success
+                | #{updateAdminAddSuccessMessage}
+
+            +superAdminSetting
+
             h4 Administrator List Management
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addAdminAcct" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                 i.fa.fa-plus
@@ -52,11 +73,11 @@ template(name="addAdminAcctForm")
                   th Enter Full Name
                   td(colspan="3")
                     .form-group
-                      input.form-control(type="text", id="addName")
+                      input.form-control(type="text", id="addFullName")
                 tr
                   td Email
                   td
-                    input.form-control(type='text', id='addEmail')
+                    input.form-control(type='text', id='addAccountEmail')
                   td MobileNo
                   td 
                     input.form-control(type='text', id='addMobileNo')
@@ -127,8 +148,9 @@ template(name="deleteAdminForm")
             table#dataTables-example.table(style="background:#333")
               tbody  
                 tr
-                  td(colspan="2") Are you sure you want to delete: 
-                  b #{fullName}
+                  td Are you sure you want to delete administrator? 
+                  td 
+                    b(style="text-transform: uppercase;") #{fullName}
                 tr
                   td Mobile No:
                   td #{mobileNo}
@@ -138,3 +160,51 @@ template(name="deleteAdminForm")
       // /.modal-content
     // /.modal-dialog
   // /.modal
+
+template(name="superAdminSetting")
+  h4 Super Administrator Management
+    button.btn.btn.btn-sm(data-toggle="modal", data-target="#addSuperAdminForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+      i.fa.fa-plus
+      | SuperAdmin
+  +addSuperAdmin
+  form(name="", role="form", action="#", method="post")
+  .table-responsive
+    table#dataTables-example.table.table-striped.table-bordered
+      thead
+        tr
+          th Name
+          th Drop Super Admin Rights?
+      tbody  
+        tr 
+          td Name
+          td Drop Super Admin Rights?
+
+
+template(name="addSuperAdmin")
+  div.modal(id="addSuperAdminForm" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
+          h4#myModalLabel.modal-title Add Super Administrator
+        .modal-body
+          form(role="form", id="insert-addAdminForm", action="#", method="post")
+          .table-responsive
+            table.table(style="background:#333")
+              tbody
+                tr
+                  th Enter Full Name
+                  td(colspan="3")
+                    .form-group
+                      input.form-control(type="text", id="addName")
+                tr
+                  td Email
+                  td
+                    input.form-control(type='text', id='addEmail')
+
+            // /.table-responsive
+        .modal-footer
+          button#addAdminAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Super Admin
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal      
