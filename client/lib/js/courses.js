@@ -7,6 +7,11 @@ Template.facility.onRendered(function(){
 	Session.set("facilitySearchCaps", null);
 });
 
+
+/*SEARCH START*/
+/*SEARCH START*/
+/*SEARCH START*/
+/*SEARCH START*/
 Template.courseList.helpers({
 
   "courses" : function listFacilityEventHandler(e) {
@@ -32,7 +37,7 @@ Template.courseList.helpers({
 					console.log(e);
 					console.log(e.courseType.toLowerCase().indexOf(cType.toLowerCase()));
 				}
-				return (e.courseType.toLowerCase().indexOf(cType.toLowerCase()));
+				return (e.courseType.toLowerCase().indexOf(cType.toLowerCase())>-1);
 			});
 		}
 		if(verbose){
@@ -47,10 +52,26 @@ Template.courseList.events({
 		// console.log(e);
 		var cCode = document.getElementById("cSearchCode").value;
 		var cType = document.getElementById("courseSearchType").value;
+		console.log(cType);
 		Session.set("courseSearchCode", cCode);
 		Session.set("courseSearchType", cType);
+	},
+	
+	"keydown #cSearchCode" : function doSearch(e){
+		// console.log(e);
+		setTimeout(function(){			
+			var cCode = document.getElementById("cSearchCode").value;
+			var cType = document.getElementById("courseSearchType").value;
+			console.log(cType);
+			Session.set("courseSearchCode", cCode);
+			Session.set("courseSearchType", cType);
+		}, 2)
 	}
 });
+/*SEARCH END*/
+/*SEARCH END*/
+/*SEARCH END*/
+/*SEARCH END*/
 
 Template.viewCourseForm.helpers({
 
