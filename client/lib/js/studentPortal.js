@@ -30,6 +30,20 @@
 }
 
 Template.studentUpload.helpers({
+	"countMyEnrolled" : function countMyEnrolled(e) {
+		var tId = Meteor.user()._id;
+		var a = Groups.find({classlist: {$in : [ tId ]}}).count();
+		var b = (a !== 0);
+		console.log(b);
+		return b;
+	},
+
+	"getCourseName" : function findTrainerOngoingCourses(cCode) {
+		return Courses.findOne({"courseCode": cCode}).courseName;
+	}
+});
+
+Template.studentUpload.helpers({
 	"studentOngoingCourses" : function findTrainerUploads(e) {
 		var a = getStudentOngoingCourse();
 		console.log("studentOngoingCourses >>> "+a);
@@ -80,11 +94,15 @@ Template.studentGrades.helpers({
 	"getGrade" : function sgGetUrl(e){
 		// var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
     	var courseId = this._id;
-    	console.log("studentGrades.js (getGrade) >>> " + courseId);
-    	var gradeObj = Meteor.users.findOne({"_id": Meteor.user()._id}).grades;
-    	console.log("grade >>> " + gradeObj[courseId]);
-    	console.log("grade >>> " + gradeObj[courseId].passStatus);
-    	return gradeObj;
+    	console.log("studentGrades.js (getGradeFor) >>> " + courseId);
+    	var gradeObj = Meteor.users.findOne({"_id": Meteor.user()._id}).grades[courseId];
+    	console.log(gradeObj);
+    	console.log("grade >>> " + gradeObj);
+
+    	result = [];
+    	for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
+    	console.log("grade >>> " + result);
+    	return result;
 	}
 });
 

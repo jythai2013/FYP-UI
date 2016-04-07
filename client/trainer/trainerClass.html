@@ -26,8 +26,8 @@
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>
         <li class='title'>Classlist</li>
-        <li><a href="#">{{courseDetails.courseCode}}</a></li>
-        <li class='active'><a href="#">{{courseDetails.grpNum}}</a></li>
+        <li><a href="#">{{courseCode}}</a></li>
+        <li class='active'><a href="#">{{grpNum}}</a></li>
       </ul>
     </section>
     <!-- Content -->
@@ -36,7 +36,7 @@
         <div class='panel-heading'>
           Students Information
           <div class='panel-tools'>
-            <div class='badge'>{{courseDetails.classlist.length}} Students</div>
+            <div class='badge'>{{classlist.length}} Students</div>
           </div>
         </div>
         <table class='table'>
@@ -50,18 +50,21 @@
             </tr>
           </thead>
           <tbody>
-            {{#each getStudentDetails courseDetails.classlist}}
+            {{#each getStudentDetails classlist}}
               <tr>
-                <td>{{fullName}}</td>
+                <td>{{fullName}} {{../_id}}</td>
                 <td>{{email}}</td>
                 <td class='action'>
-                  <a class='btn btn-success' data-toggle='tooltip' href='#' title='Grades'>
-                    <i class='icon-bar-chart'></i>
-                  </a>
-                  <a class='btn btn-info' href='#' title='Attendence'>
-                    <i class='icon-edit'></i>
-                  </a>
+                  <button class='btn btn-success' data-toggle="modal" data-target="#viewGrade{{_id}}" data-id="{{_id}}" title='Grades'><i class='icon-bar-chart'></i></button>
+                {{> tcViewStudentGrade retrieveCId="asd"}}
+                  <!-- <a class='btn btn-info' href='#' title='Attendence'> -->
+                  <button class='btn btn-success' data-toggle="modal" data-target="#viewAttendence{{_id}}" data-id="{{_id}}" title='Attendence'><i class='fa fa-calendar-check-o'></i></button>
+                {{> tcViewStudentAttendence}}
                 </td>
+              </tr>
+            {{else}}
+              <tr>
+                <td colspan="3">No Students Enrolled At The Moment</td>
               </tr>
             {{/each}}
           </tbody>
@@ -104,31 +107,43 @@
 
 
 <template name="tcViewStudentGrade">
-<div class="modal fade" id="fmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+  <div class="modal" id="viewGrade{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Student's Grade</h4>
         </div>
         <div class="modal-body">
-          <div id="faciBook" class="tab-pane fade in fade">  
-            <form id="facMgmtFormy" class="form-vertical" role="form" action = "facilityResult">
-              <div class="row">
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">Name here?</label>
-                  <div class="col-sm-4">
-                    Maybe a table here
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                Maybe a graph here?
-              </div>
-              <!-- To make the white background cover all fields -->
-              <div class="clearfix"></div> 
-            </form>
-          </div>
+          Print Course ID: {{retrieveCId}}
+          Print Student ID: {{_id}}
+          <table>
+            <!-- {{#each studentGradeDetails}}
+              <tr>
+                <td>a</td>
+              </tr>
+            {{/each}} -->
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="tcViewStudentAttendence">
+  <div class="modal" id="viewAttendence{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Student's Grade</h4>
+        </div>
+        <div class="modal-body">
+          Test Test :)
+          Print data_id : {{_id}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
