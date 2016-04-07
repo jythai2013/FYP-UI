@@ -91,12 +91,15 @@ template(name="course")
                   tr
                     th(colspan="2") Course Materials
                     th Download File
+                    th Delete
                 tbody
                   each uploads                   
                     tr 
                       td(colspan="2") #{name}
                       td
-                        a(href="{{url download = true}}", class="button btn admin-btn") Download 
+                        a(href="{{url download = true}}", class="button btn admin-btn") Download
+                      td
+                        a(href="{{url download = true}}", class="button btn admin-btn") Delete 
                 tfoot        
                     tr
                       td(colspan="4")
