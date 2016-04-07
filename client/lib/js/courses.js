@@ -184,7 +184,7 @@ Template.course.helpers({
 		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
 		for (var x = 0, l = classTaught.length; x < l;  x++){
 			var obj = new Object();
-			obj.classesTaught = this.classesTaught;
+			obj.classesTaught = classTaught[x].grpNum;
 			trainersClasses.push(obj);
 		}
 		return trainersClasses;
