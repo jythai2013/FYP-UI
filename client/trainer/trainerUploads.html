@@ -1,27 +1,7 @@
 <template name="trainerUploads">
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
-    <section id='sidebar'>
-      <i class='icon-align-justify icon-large' id='toggle'></i>
-      <ul id='dock'>
-        <li class='launcher'>
-          <i class='icon-dashboard'></i>
-          <a href="trainer">Dashboard</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="announcement">Announcements</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-table'></i>
-          <a href="trainerClasslist">Classlist</a>
-        </li>
-        <li class='active launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="trainerUploads">Uploads</a>
-        </li>
-      </ul>
-    </section>
+    {{> trainerSidebar}}
     <!-- Tools -->
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>
@@ -30,8 +10,6 @@
         <li class='active'><a href="#">Document Uploads</a></li>
       </ul>
     </section>
-
-
 
     <!-- Content -->
     <div id='content'>
@@ -56,10 +34,6 @@
               </th>
             </tr>
           </table>
-
-
-
-
           <div class='page-header'>
             <h4>Attendence Upload</h4>
           </div>
@@ -72,7 +46,7 @@
               <div class='panel-body'>
                 <table class='table table-bordered'>
                   <tbody>
-                    <!--<tr>
+                    <tr>
                       <th style="width:30%">File Name</th>
                       <td><input name="attendFileName" id="attFileName"/></td>
                     </tr>
@@ -87,11 +61,11 @@
                     <tr>
                       <td>File (Attendence)</td>
                       <td><input type="file" id="attfileName"/></td>
-                    </tr>-->
+                    </tr>
                     <tr>
                       <td colspan="2">
                         {{>trainerUploadAttendance}}
-												<input type="file" id="inputExcelElementAttendance">
+                        <input type="file" id="inputExcelElementAttendance">
                       </td>
                     </tr>
                   </tbody>
@@ -99,9 +73,6 @@
               </div>
             </div>
           </form>
-
-
-
 
           <div class='page-header'>
             <h4>Course Material Upload</h4>
@@ -133,9 +104,6 @@
               </div>
             </div>
           </form>
-
-
-
 
           <div class='page-header'>
             <h4>Student Grades Upload</h4>
@@ -177,10 +145,6 @@
               </div>
             </div>
           </form>
-
-
-
-
         </div>
       </div>
     </div>

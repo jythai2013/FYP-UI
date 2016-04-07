@@ -12,23 +12,19 @@ Template.addAnnouncement.events({
 		obj.annouDate= new Date();
 		obj.annouAuthor= createdBy;
 
-		var courseGrp =  Router.current().url;
-		var positionFirstEqual = courseGrp.indexOf('=');
-		//extracting course
-		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-		var positionOfAND = courseGrp.indexOf('&');
-		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-
-		//extracting grpNum
-		var grpNumStr=courseGrp.substr(positionOfAND-1);
-		var positionSecondEqual = currentCourseGrp.indexOf('=');
-		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-		console.log(currentGrpNum + "grpNum");
-
-		var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
-
 		console.log("clicked AddAnnounment >> announcement.js");
-		Meteor.call("insertAnnouncement", group, obj);
+		Meteor.call("insertAnnouncement", group, obj, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>add announcement SUCCESS MSG");
+				Session.set('addTAnnouncementSuccessMessage', 'Announcement has been posted')
+		        Meteor.setTimeout(function(){Session.set('addTAnnouncementSuccessMessage', false);}, 5000);
+			} else {
+				console.log(">>>update announcement FAILURE MSG");
+			    Session.set('erroraddTAnnouncementMessage', 'Add Announcement Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('erroraddTAnnouncementMessage', false);}, 5000);
+			}
+		});
 	}
 });
 
@@ -67,7 +63,7 @@ Template.trainerAnnouncment.helpers({
     'isAuthor' : function isTAuthor(createdBy) {
 		//console.log("isAuthor? (>>announcement.js)");
 		var check = Meteor.user()._id == this.annouAuthor;
-		console.log("isAuthor >>> " + Meteor.user()._id + " equals " + this.annouAuthor + " is " + check);
+		// console.log("isAuthor >>> " + Meteor.user()._id + " equals " + this.annouAuthor + " is " + check);
 		return Meteor.user()._id == this.annouAuthor;
 	}
  });
@@ -102,21 +98,19 @@ Template.displayAnnouncements.events({
 });
 
 Template.trainerAnnouncment.events({
-	"click #deleteTAnnounButton" : function deleteAAnnounEventHandler(e) {
-		// var groupId = document.getElementById("groupId").value;
-		// var announTitle = document.getElementById("announTitle").value;
-		// var annouDetails = document.getElementById("announDetails").value;
-		// var createdBy = Meteor.user()._id;
-		// var createdOn = document.getElementById("annouDate").value;
-		// var array = Groups.findOne({_id: groupId}).announcement;
-		// array.pop([announTitle,annouDetails,createdOn,createdBy]);
-		// Meteor.call("editAnnouncement", groupId, array);
-		var announTitle = this. announTitle
-		var annouDetails = this.annouDetails;
-		var createdBy = this.annouAuthor;
-		var createdOn = this.annouDate;
-		console.log("deleteTAnnoun >>> " + announTitle + ", " + annouDetails + ", " + createdBy + ", " + createdOn);
-		// var array = Groups.findOne({_id: groupId}).announcement;
+	"click #deleteTAnnounButton" : function deleteTAnnounEventHandler(e) {
+		var announTitle1 = this.annouTitle
+		var annouDetails1 = this.annouDetails;
+		var createdBy1 = this.annouAuthor;
+		var createdOn1 = this.annouDate;
+
+		var groupId = document.getElementById("groupId").value;
+
+		console.log("deleteTAnnoun >>> ("+ groupId +")" + announTitle1 + ", " + annouDetails1 + ", " + createdBy1 + ", " + createdOn1);
+		var array = Groups.findOne({_id: groupId}).announcement;
+		var index = array.indexOf([announTitle1,annouDetails1,createdOn1,createdBy1]);
+		array.splice(index, 1);
+		Meteor.call("editAnnouncement", groupId, array);
 	}
 });
 

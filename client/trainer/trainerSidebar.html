@@ -3,21 +3,21 @@
       <i class='icon-align-justify icon-large' id='toggle'></i>
       <ul id='dock'>
 
-        <li class='launcher'>
+        <li class='{{checkisActive "trainer"}} launcher'>
           <i class='icon-dashboard'></i>
-          <a href="trainer">Dashboard</a>
+          <a href="{{pathFor route='Trainer Portal'}}">Dashboard</a>
         </li>
-        <li class= 'active launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="announcement">Announcements</a>
+        <li class= '{{checkisActive "announcement"}} launcher'>
+          <i class='fa fa-bell-o'></i>
+          <a href="{{pathFor route='Announcements - Trainer Portal'}}">Announcements</a>
         </li>
-        <li class='launcher'>
+        <li class='{{checkisActive "classlist"}} launcher'>
           <i class='icon-table'></i>
-          <a href="trainerClasslist">Classlist</a>
+          <a href="{{pathFor route='Classlist - Trainer Portal'}}">Classlist</a>
         </li>
-        <li class='launcher'>
+        <li class='{{checkisActive "uploads"}} launcher'>
           <i class='icon-file-text-alt'></i>
-          <a href="trainerUploads">Uploads</a>
+          <a href="{{pathFor route='Upload - Trainer Portal'}}">Uploads</a>
         </li>
 <!--         <li class='launcher dropdown hover'>
           <i class='icon-flag'></i>

@@ -1,32 +1,11 @@
 <template name="trainerClassList">
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
-    <section id='sidebar'>
-      <i class='icon-align-justify icon-large' id='toggle'></i>
-      <ul id='dock'>
-        <li class='launcher'>
-          <i class='icon-dashboard'></i>
-          <a href="trainer">Dashboard</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="announcement">Announcements</a>
-        </li>
-        <li class='active launcher'>
-          <i class='icon-table'></i>
-          <a href="trainerClasslist">Classlist</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="trainerUploads">Uploads</a>
-        </li>
-      </ul>
-    </section>
+    {{> trainerSidebar}}
     <!-- Tools -->
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>
         <li class='title'>Sterling</li>
-        <li><a href="#">Dashboard</a></li>
         <li class='active'><a href="#">ClassList</a></li>
       </ul>
     </section>
@@ -34,7 +13,7 @@
     <div id='content'>
       <div class='panel panel-default'>
         <div class='panel-heading'>
-          <i class='icon-beer icon-large'></i>
+          <i class="fa fa-book"></i>
           Class Management
         </div>
         <div class='panel-body'>
@@ -42,21 +21,39 @@
             <h4>Active ClassList: {{classesCL}}</h4>
           </div>
           {{#each trainerOngoingCourses}}
-            <table border="0">
+            <table class="table-responsive" border="0">
               <tr>
                 <td><h3>{{courseCode}} {{grpNum}}</h3></td>
-                <td><a href="trainerClass?cCode={{courseCode}}&grpNum={{grpNum}}" class="btn-save" style="padding: 2.5px 8px; border-radius: 2.5rem;">View Class</a></td>
-                <td><button class="btn-save">Download Classlist</button></td>
+                <td style="padding-left:10px; padding-top: 5px"><a href="{{pathFor route='Class - Trainer Portal'}}?cCode={{courseCode}}&grpNum={{grpNum}}" class="btn-save" style="padding: 2.5px 8px; border-radius: 2.5rem;">View Class</a></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <table class="table-responsive" border="0">
+                    <tr>
+                      <th>Course Description: </th>
+                      <td>{{getCourseDesc courseCode}}</td>
+                    </tr>
+                    <tr>
+                      <th>Dates: </th>
+                      <td>{{formatDateee startDate}}   -   {{formatDateee endDate}}</td>
+                    </tr>
+                    <tr>
+                      <th>Duration: </th>
+                      <td>{{startTime}}   -   {{endTime}}</td>
+                    </tr>
+                    <tr>
+                      <th>Venue: </th>
+                      <td>{{venue}}</td>
+                    </tr>
+                    <tr>
+                      <th> Number of students: </th>
+                      <td>{{classlist.length}}</td>
+                    </tr>
+                  </table>
+                </td>
               </tr>
             </table>
-            Course Description: {{getCourseDesc courseCode}}<br>
-            Class Start Date: {{getDDMMYYY startDate}}<br>
-            Class End Date: {{getDDMMYYY endDate}}<br>
-            Duration: {{startTime}} to {{endTime}}<br>
-            Venue: {{venue}}<br>
-            Number of students: {{classlist.length}}<br>
           {{/each}}
-
         </div>
       </div>
     </div>

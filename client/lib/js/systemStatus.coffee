@@ -37,4 +37,13 @@ Template.studentUpload.helpers(
     return Session.get('studentUploadSuccessMessage') 
 )
 
+#TRAINER > ANNOUNCEMENT
+Template.addAnnouncement.helpers(
+  erroraddTAnnouncementMessage: () ->
+    return Session.get('erroraddTAnnouncementMessage')
+
+  addTAnnouncementSuccessMessage: () ->
+    return Session.get('addTAnnouncementSuccessMessage') 
+)
+
 

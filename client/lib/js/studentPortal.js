@@ -44,7 +44,7 @@ Template.studentUpload.helpers({
 });
 
 Template.studentUpload.helpers({
-	"studentOngoingCourses" : function findTrainerUploads(e) {
+	"studentOngoingCourses" : function findStudentUploads(e) {
 		var a = getStudentOngoingCourse();
 		console.log("studentOngoingCourses >>> "+a);
 		return a;

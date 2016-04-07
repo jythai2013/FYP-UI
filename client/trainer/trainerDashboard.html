@@ -1,27 +1,7 @@
 <template name="trainerDashboard">
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
-    <section id='sidebar'>
-      <i class='icon-align-justify icon-large' id='toggle'></i>
-      <ul id='dock'>
-        <li class='active launcher'>
-          <i class='icon-dashboard'></i>
-          <a href="trainer">Dashboard</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="announcement">Announcements</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-table'></i>
-          <a href="trainerClasslist">Classlist</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="trainerUploads">Uploads</a>
-        </li>
-      </ul>
-    </section>
+    {{> trainerSidebar}}
     <!-- Tools -->
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>

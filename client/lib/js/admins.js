@@ -87,7 +87,7 @@ Template.profilePage.events({
 			} else {
 				console.log(">>>update profile FAILURE MSG");
 			    Session.set('errorUpdateProfileMessage', 'Update Failed: ' + err.reason);
-			    Meteor.setTimeout(function(){Session.set('updateProfileSuccessMessage', false);}, 2000);
+			    Meteor.setTimeout(function(){Session.set('errorUpdateProfileMessage', false);}, 2000);
 			}
 		});
 	}

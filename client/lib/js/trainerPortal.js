@@ -3,11 +3,21 @@
   var tId = Meteor.user()._id;
   var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
   return coursesTaught;
-} 
-
-function getDDMMYYY(date) {
-  return moment(date).format("DD-MMM-YYYY");
 }
+
+//Sidebar
+Template.trainerSidebar.helpers({
+  //set active
+  'checkisActive': function trainerUrl(headerName){
+    var url =  Router.current().url;
+    var isActive = url.endsWith(headerName);
+    if (isActive){
+      return "active";
+    } else {
+      return "";
+    }
+  }
+});
 
 Template.trainerClass.helpers({
   'storeAttributeValue': function storeAttributeValue(value){
@@ -54,13 +64,23 @@ Template.tcCourseMaterials.helpers({
 Template.trainerAnnouncment.helpers({
   "trainerOngoingCourses1" : function findTrainerAnnouncement(e) {
     var a = getTrainerOngoingCourse();
-    console.log("HI trainerAnnouncment >>>");
+    // console.log("HI trainerAnnouncment >>>");
     return a;
   },
 
-  'getDDMMYYY': function getTADDMMYYY(e) {
-    return getDDMMYYY(e);
-  },
+  'authorName': function getTAAuthorName(authorId) {
+    return Meteor.users.findOne({_id: authorId}).fullName;
+  }
+});
+
+UI.registerHelper('addIndex', function(thatArray) {
+  if (thatArray && thatArray.length) {
+    $.each(thatArray, function (position, thatObject) {
+      thatObject.index = position;
+      thatArray[position] = thatObject;
+    });
+    return thatArray;
+  }
 });
 
 Template.addAnnouncement.helpers({
@@ -85,10 +105,6 @@ Template.trainerUploads.events({
 });
 
 Template.trainerClassList.helpers({
-  'getDDMMYYY': function getCLDDMMYYY(e) {
-    return getDDMMYYY(e);
-  },
-
   "classesCL" : function findTrainerOngoingCoursesCL(e) {
     var tId = Meteor.user()._id;
     // add date factor here

@@ -79,8 +79,7 @@ Template.formRespo.helpers({
 });
 
 Template.addLSPFormForm.events({
-
-'click .addFormButton':function(event, template){
+  'click .addFormButton':function(event, template){
     var typeI = "formLSP";
     var courseId = document.getElementById("formName").value;
     console.log(courseId);

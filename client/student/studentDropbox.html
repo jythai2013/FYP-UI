@@ -27,7 +27,7 @@
     <div id='content'>
       <div class='panel panel-default'>
         <div class='panel-heading'>
-          <i class='icon-beer icon-large'></i>
+          <i class='icon-table'></i>
           Assignments Dropbox
         </div>
         <div class='panel-body'>
@@ -35,55 +35,48 @@
             <h4>Assignments Dropbox</h4>
           </div>
           <form name="attendenceForm" action="#" method="post">
-            <div class='panel panel-default grid'>
-              <div class='panel-heading'>
-                <i class='icon-table icon-large'></i>
-                Upload your Assignments
+            {{#if errorStudentUploadMessage}}
+              <div class="alert alert-danger">
+                {{errorStudentUploadMessage}}
               </div>
-              <div class='panel-body'>
-                {{#if errorStudentUploadMessage}}
-                  <div class="alert alert-danger">
-                    {{errorStudentUploadMessage}}
-                  </div>
-                {{/if}}
-                {{#if studentUploadSuccessMessage}}
-                  <div class="alert alert-success">
-                    {{studentUploadSuccessMessage}}
-                  </div>
-                {{/if}}
-                <table class='table table-bordered'>
-                  <tbody>
-                    <tr>
-                      <td>Course</td>
-                      <td>
-                        {{#if countMyEnrolled}}
-                          <select class="form-control" name="courseCode" id="courseCode">
-                            {{#each studentOngoingCourses}}
-                              <option value="{{_id}}">({{courseCode}}) {{getCourseName courseCode}} - {{grpNum}}</option>
-                            {{/each}}
-                          </select>
-                        {{else}}
-                          Sorry, you have no enrolled courses
-                        {{/if}}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>File</td>
-                      <td><input type="file" id="attfileName"/></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2">
-                        {{#if countMyEnrolled}}
-                          <button class="button btn admin-btn" id="submitAssignment">Submit Assignment</button>
-                        {{else}}
-                          <button class="button btn admin-btn" id="submitAssignment" disabled="disabled">Submit Assignment</button>
-                        {{/if}}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            {{/if}}
+            {{#if studentUploadSuccessMessage}}
+              <div class="alert alert-success">
+                {{studentUploadSuccessMessage}}
               </div>
-            </div>
+            {{/if}}
+            <table class='table table-bordered'>
+              <tbody>
+                <tr>
+                  <th>Course</th>
+                  <td>
+                    {{#if countMyEnrolled}}
+                      <select class="form-control" name="courseCode" id="courseCode">
+                        {{#each studentOngoingCourses}}
+                          <option value="{{_id}}">({{courseCode}}) {{getCourseName courseCode}} - {{grpNum}}</option>
+                        {{/each}}
+                      </select>
+                    {{else}}
+                      Sorry, you have no enrolled courses
+                    {{/if}}
+                  </td>
+                </tr>
+                <tr>
+                  <th>File</th>
+                  <td><input type="file" id="attfileName"/></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    {{#if countMyEnrolled}}
+                      <button class="button btn admin-btn" id="submitAssignment">Submit Assignment</button>
+                    {{else}}
+                      <button class="button btn admin-btn" id="submitAssignment" disabled="disabled">Submit Assignment</button>
+                    {{/if}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </form>
         </div>
       </div>

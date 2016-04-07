@@ -30,7 +30,3 @@ Template.studentDetails.helpers({
 	}
 });
 
-Template.studentDetails.onRendered(function(){
-	return false;
-});
-
