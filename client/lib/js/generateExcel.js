@@ -48,7 +48,9 @@ function s2ab(s) {
 	return buf;
 }
 
-
+generateExcel = function(inData, inWs_name, inExcelName){
+	Meteor.call("generateExcel", inData, inWs_name, inExcelName);
+}
 
 Meteor.methods({
 	"generateExcel":function(inData, inWs_name, inExcelName){

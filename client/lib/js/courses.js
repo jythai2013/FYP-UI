@@ -22,26 +22,26 @@ Template.courseList.helpers({
 		if(cCode != null && cCode != undefined && cCode.length > 0){
 			v = v.filter(function(e){
 				if(verbose){
-					console.log(e);
-					console.log(e.courseCode.toLowerCase().indexOf(cCode.toLowerCase())>-1);
+					//console.log(e);
+					//console.log(e.courseCode.toLowerCase().indexOf(cCode.toLowerCase())>-1);
 				}
 				return (e.courseCode.toLowerCase().indexOf(cCode.toLowerCase())>-1);
 			});
 		}
 		if(verbose){
-			console.log(cType);
+			//console.log(cType);
 		}
 		if(cType != null && cType != undefined && cType.length > 0){
 			v = v.filter(function(e){
 				if(verbose){
-					console.log(e);
-					console.log(e.courseType.toLowerCase().indexOf(cType.toLowerCase()));
+					//console.log(e);
+					//console.log(e.courseType.toLowerCase().indexOf(cType.toLowerCase()));
 				}
 				return (e.courseType.toLowerCase().indexOf(cType.toLowerCase())>-1);
 			});
 		}
 		if(verbose){
-			console.log(v);
+			//console.log(v);
 		}
 		return v;
   }
@@ -52,7 +52,7 @@ Template.courseList.events({
 		// console.log(e);
 		var cCode = document.getElementById("cSearchCode").value;
 		var cType = document.getElementById("courseSearchType").value;
-		console.log(cType);
+		//console.log(cType);
 		Session.set("courseSearchCode", cCode);
 		Session.set("courseSearchType", cType);
 	},
@@ -62,7 +62,7 @@ Template.courseList.events({
 		setTimeout(function(){			
 			var cCode = document.getElementById("cSearchCode").value;
 			var cType = document.getElementById("courseSearchType").value;
-			console.log(cType);
+			//console.log(cType);
 			Session.set("courseSearchCode", cCode);
 			Session.set("courseSearchType", cType);
 		}, 2)
@@ -113,7 +113,7 @@ Template.course.onRendered(function(e){
 	var url =  window.location.href;
 	var positionFirstEqual = url.indexOf('=');	
 	var currentCourseEsc=url.substring(positionFirstEqual+1);
-	console.log(currentCourseEsc+ " currnt course code escaped");
+	//console.log(currentCourseEsc+ " currnt course code escaped");
 	var currentCourse=unescape(currentCourseEsc);
 	Session.set("currentCourseCode", currentCourse);
 	$('#cNewPrereq').select2();
@@ -124,7 +124,7 @@ Template.course.helpers({
 	"trainerList" : function(e) {
 		var currentCourse=Session.get("currentCourseCode");
 		var size = Courses.findOne({courseCode:currentCourse});
-		console.log(size);
+		//console.log(size);
 		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
 
 		var trainersArr = new Array();
@@ -142,7 +142,7 @@ Template.course.helpers({
     			var classesTrainer = classTaught[i];
     			obj.courseCode = currentCourse;
     			obj.classesTaught = classesTrainer.grpNum;
-    			console.log(obj.classesTaught);
+    			//console.log(obj.classesTaught);
     		}
 			trainersArr.push(obj);
     	}
@@ -158,22 +158,24 @@ Template.course.helpers({
     	// console.log(currentCourseEsc+ " currnt course code escaped");
 		var currentCourse=Session.get("currentCourseCode");
 		var size = Courses.findOne({courseCode:currentCourse});
-		console.log(size);
+		//console.log(size);
 		var a =  Courses.findOne({courseCode:currentCourse}).components;
 
 		var componentsArr = new Array();
-		for(var x = 0, l = a.length; x < l;  x++){
-			var obj = new Object();
-			obj.componentName = a[x].component;
-			obj.weightage = a[x].weightage;
-			componentsArr.push(obj);
-    	}
+		if(a != undefined){
+			for(var x = 0, l = a.length; x < l;  x++){
+				var obj = new Object();
+				obj.componentName = a[x].component;
+				obj.weightage = a[x].weightage;
+				componentsArr.push(obj);
+				}
 
-    	componentsArr.forEach(function(entry) {
-   			console.log(entry + " full name");
+				componentsArr.forEach(function(entry) {
+					//console.log(entry + " full name");
 
-		});
-
+			});
+		}
+		
 		return componentsArr;
 		
 	},
@@ -182,16 +184,19 @@ Template.course.helpers({
 		var trainersClasses = new Array();
 		var currentCourse=Session.get("currentCourseCode");
 		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
+		console.log(classTaught);
 		for (var x = 0, l = classTaught.length; x < l;  x++){
 			var obj = new Object();
-			obj.classesTaught = this.classesTaught;
+			console.log(this);
+			obj.classesTaught = classTaught[x].grpNum;
 			trainersClasses.push(obj);
 		}
+		console.log(trainersClasses);
 		return trainersClasses;
 		
 	},
 	"gotNoClass" : function(e) {
-		console.log(this);
+		//console.log(this);
 		var currentCourse=Session.get("currentCourseCode");
 		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
     	if(classTaught.length == 0 ){
@@ -210,13 +215,13 @@ Template.addClass.helpers({
 		var url =  window.location.href;
 		var positionFirstEqual = url.indexOf('=');	
 		var currentCourseEsc=url.substring(positionFirstEqual+1);
-    	console.log(currentCourseEsc+ " currnt course code escaped");
+    	//console.log(currentCourseEsc+ " currnt course code escaped");
 		var currentCourse=unescape(currentCourseEsc);
 		//console.log(currentCourse + "Code");
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
 		var theCourse = Courses.findOne({courseCode:currentCourse});
-		console.log(theCourse);
+		//console.log(theCourse);
 		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
 
 		var trainersArr = new Array();
@@ -227,7 +232,7 @@ Template.addClass.helpers({
     	}
 
     	trainersArr.forEach(function(entry) {
-   			console.log(entry + " full name");
+   			//console.log(entry + " full name");
 
 		});
 
@@ -244,7 +249,7 @@ Template.removeTrainer.helpers({
 		var url =  window.location.href;
 		var positionFirstEqual = url.indexOf('=');	
 		var currentCourseEsc=url.substring(positionFirstEqual+1);
-    	console.log(currentCourseEsc+ " currnt course code escaped");
+    	//console.log(currentCourseEsc+ " currnt course code escaped");
 		var currentCourse=unescape(currentCourseEsc);
 		//console.log(currentCourse + "Code");
 
@@ -260,7 +265,7 @@ Template.removeTrainer.helpers({
 			fakeArray.push(Meteor.users.findOne({_id:courseTrainersID[i].trainerID}) );
 		}
 		//console.log(courseTrainersID);
-		console.log(fakeArray);
+		//console.log(fakeArray);
 		return fakeArray;
 	}
 });
@@ -284,7 +289,7 @@ Template.courseList.events({
 		// return false;
 		// }
 		Session.set('currentCourseCode', this.courseCode);
-		console.log(this.courseCode + " after settting in session");
+		//console.log(this.courseCode + " after settting in session");
 		  //modal.find('.modal-title').text('New message to ' + recipient)
 		  //modal.find('.modal-body input').val(recipient)
 	}
@@ -301,7 +306,7 @@ Template.addCourseForm.events({
 		//TODO: Validation of input
 		var cName = document.getElementById("cNewName").value;
 		var cCode = document.getElementById("cNewCode").value;
-		console.log( cCode +" cCode");
+		//console.log( cCode +" cCode");
 		var cFee = document.getElementById("cNewFee").value;
 		var cNoOfHours = document.getElementById("cNewNoOfHours").value;
 		var cDescription = document.getElementById("cNewDesc").value;
@@ -311,22 +316,22 @@ Template.addCourseForm.events({
 
 
 		var cPrereq = document.getElementsByName("cNewPrereq");
-		console.log(cPrereq +" adding PREREQ");
+		//console.log(cPrereq +" adding PREREQ");
 		var addPrereqArr = new Array();
 		for(var x = 0, l = cPrereq.length; x < l;  x++){
-   			console.log(cPrereq[x] + "cPrereq line 236");
+   			//console.log(cPrereq[x] + "cPrereq line 236");
 			
 			addPrereqArr.push(cPrereq[x].value);
     	}
 
     	addPrereqArr.forEach(function(entry) {
-   			console.log(entry + "cPrereq");
+   			//console.log(entry + "cPrereq");
 		});
 
 
 		var cGenre = document.getElementById("cNewGenre").value;
 
-		console.log("here8");
+		//console.log("here8");
 		Meteor.call("createCourse", cName, cCode, cFee, cNoOfHours, cDescription, cType, cFLR, addPrereqArr, cGenre);
 		var temp = Session.get("courseSearchCode");
 		Session.set("courseSearchCode", "123");
@@ -367,19 +372,19 @@ Template.editCourseForm.events({
 		// if(Meteor.user.userType != "admin"){
 		// return false;
 		// }
-		console.log("editting");
+		//console.log("editting");
 
 		//TODO: Validation of input
 		
 		var url =  window.location.href;
 		var positionFirstEqual = url.indexOf('=');	
 		var currentCourse=url.substring(positionFirstEqual+1);
-		console.log(currentCourse);
+		//console.log(currentCourse);
 		var _id = Courses.findOne({courseCode:currentCourse})._id;
-		console.log(_id);
+		//console.log(_id);
 
 		var cCode = document.getElementById("cCCode").value;
-		console.log(cCode);
+		//console.log(cCode);
 		var cName = document.getElementById("cCName").value;
 		var cDesc = document.getElementById("cCDesc").value;
 		var cHours = document.getElementById("cCHour").value;
@@ -390,7 +395,7 @@ Template.editCourseForm.events({
 		//var cTrainers = document.getElementById("cCTrainers").value;
 
 		
-		console.log("here8");
+		//console.log("here8");
 		Meteor.call("editCourse", _id, cCode, cName, cDesc, cHours, cFees, cFLR, cGenre, cType);
 		var newURL =url.substring(0, positionFirstEqual+1); ;
 		window.location.assign(newURL +cCode);
@@ -401,8 +406,8 @@ Template.editCourseForm.events({
 
 Template.deleteCourse.events({
 	"click #deleteCourseButton" : function deleteCourseEventHandler(e) {
-		console.log(this._id);
-		console.log(this.courseCode);
+		//console.log(this._id);
+		//console.log(this.courseCode);
 		var grouspID = Groups.find({courseCode:this.courseCode}).fetch();
 		Meteor.call("deleteCourse", this._id);
 		groupsID.forEach(function(entry) {
@@ -413,7 +418,7 @@ Template.deleteCourse.events({
 
 Template.removeTrainer.events({
 	"click #removeTrainerButton" : function removeTrainerEventHandler(e) {
-		console.log(this);
+		//console.log(this);
 		// this.trainerID
 		var currentCourse=Session.get("currentCourseCode");
 		Meteor.call("removeTrainer", currentCourse, this.trainerID);
@@ -424,33 +429,33 @@ Template.addTrainer.events({
 	"click #addTrainerButton" : function addTrainerEventHandler() {
 		//var addTrainers = document.getElementsById("newTrainersC").value;
 		var addTrainers = document.getElementsByName("newTrainersC");
-		console.log(addTrainers +" adding trainers");
+		//console.log(addTrainers +" adding trainers");
 		var addTrainersArr = new Array();
 		for(var x = 0, l = addTrainers.length; x < l;  x++){
-   			console.log(addTrainers[x] + "addTrainers line 236");
+   			//console.log(addTrainers[x] + "addTrainers line 236");
 			
 			addTrainersArr.push(addTrainers[x].value);
     	}
 
     	addTrainersArr.forEach(function(entry) {
-   			console.log(entry + "addTrainers");
+   			//console.log(entry + "addTrainers");
 		});
 
-    	console.log(addTrainers.length+ " SIZE");
+    	//console.log(addTrainers.length+ " SIZE");
 
     	//extract course
 		var url =  window.location.href;
 		var positionFirstEqual = url.indexOf('=');	
 		var currentCourseEsc=url.substring(positionFirstEqual+1);
-    	console.log(currentCourseEsc+ " currnt course code escaped");
+    	//console.log(currentCourseEsc+ " currnt course code escaped");
 		var currentCourse=unescape(currentCourseEsc);
 
 		var meep = Courses.findOne({courseCode:currentCourse}); //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
-    	console.log(meep+ " courseID")
+    	//console.log(meep+ " courseID")
 		var courseID = Courses.findOne({courseCode:currentCourse})._id; //TODO: the find returns a cursor, not a Group object. so you cant ._id it. need to iterate such as by fetch()[0] or use findOne
 		
-    	console.log(courseID+ " courseID")
-    	console.log(addTrainersArr.length+ " SIZE")
+    	//console.log(courseID+ " courseID")
+    	//console.log(addTrainersArr.length+ " SIZE")
 		Meteor.call("addTrainer", courseID, addTrainersArr);
 	},
 
@@ -500,22 +505,25 @@ Template.addComponents.helpers({
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
 		var size = Courses.findOne({courseCode:currentCourse});
-		console.log(size);
+		//console.log(size);
 		var a =  Courses.findOne({courseCode:currentCourse}).components;
 
 		var componentsArr = new Array();
-		for(var x = 0, l = a.length; x < l;  x++){
-			var obj = new Object();
-			obj.componentName = a[x].component;
-			obj.weightage = a[x].weightage;
+		
+		if(a != undefined){
+			for(var x = 0, l = a.length; x < l;  x++){
+				var obj = new Object();
+				obj.componentName = a[x].component;
+				obj.weightage = a[x].weightage;
 
-			componentsArr.push(obj);
-    	}
+				componentsArr.push(obj);
+				}
 
-    	componentsArr.forEach(function(entry) {
-   			console.log(entry + " full name");
+				componentsArr.forEach(function(entry) {
+					//console.log(entry + " full name");
 
-		});
+			});
+		}
 
 		return componentsArr;
 	}
@@ -583,7 +591,7 @@ Template.addComponents.events({
 
 Template.course.events({
 	"click #removeComponentButton" : function (e) {
-		console.log(this);
+		//console.log(this);
 
 		// this.trainerID
 		var currentCourse=Session.get("currentCourseCode");
@@ -595,7 +603,7 @@ Template.course.events({
 // WEBSITE
 Template.courses.helpers({
 	"retrieveAllCourse" : function retrieveAllCourse() {
-		console.log(">> Courses Helper");
+		//console.log(">> Courses Helper");
 		return Courses.find({});
 	}
 });

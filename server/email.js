@@ -92,12 +92,12 @@ function sendMail(details) {
 
 	// // this.unblock();
 
-	// Email.send({
-	// 	to: to,
-	// 	from: from,
-	// 	subject: subject,
-	// 	text: text
-	// });
+	Email.send({
+		to: to,
+		from: from,
+		subject: subject,
+		text: text
+	});
 	
 	console.log("Email Sent")
 	FutureTasks.remove(details._id);

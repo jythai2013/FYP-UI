@@ -137,17 +137,17 @@ template(name="addFacilityForm")
                   th Facility Name  
                   td 
                     .form-group
-                      input.form-control(type="text", id="cNewName") 
+                      input.form-control(type="text", id="cNewName", name="inputName") 
                 tr
                   th Facility Capacity
                   td 
                     .form-group
-                      input.form-control(type="text", id="cNewCapacity") 
+                      input.form-control(type="text", id="cNewCapacity", name="inputCapacity") 
                 tr
                   th Description
                   td 
                     .form-group
-                      input.form-control(type="text", id="cNewDesc")
+                      input.form-control(type="text", id="cNewDesc", name="inputDesc")
             // /.table-responsive
           .modal-footer
             button#addFacilityButton.btn.btn-save(type="button", data-dismiss="modal") Add Facility

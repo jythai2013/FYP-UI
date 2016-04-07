@@ -34,8 +34,22 @@ Template.trainerUploadGrades.events({
 			alert("Invalid course and/or group selected!");
 			return false;
 		}
+		
+		var theCourse = Courses.find({courseCode:theGroup.courseCode});
+		console.log(theCourse);
+		var components = theCourse.components;
+		console.log(components);
+		var componentNames = [];
+		components.forEach(function(a,b,c){
+			componentNames.push(a.component);
+		});
+		categoryArray = [null, "Student Name", "Student ID"];
+		console.log(componentNames);
+		categoryArray.concat(componentNames);
+		console.log(categoryArray);
+		
 		// var inData = "";
-		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
+		//foreach student in the class list, push [studentId, studentName, true] into the data array
 		var inData = []; 
 		inData.push([null,"Sterling Training Hub", null, null])
 		inData.push([null, null, null, null])
@@ -43,8 +57,8 @@ Template.trainerUploadGrades.events({
 		inData.push([null, "Course Code", courseCode, null])
 		inData.push([null, "GroupID", theGroup._id, null])
 		inData.push([null, null, null, null])
-		inData.push([null, null, null, null])
-		inData.push([null, "Student Name", "Student ID", "Assignment 1"])
+		inData.push([null, null, "Max Marks:"])
+		inData.push(categoryArray)
 		var studentIds = theGroup.classlist
 		var students = new Array();
 		i=0;
@@ -55,9 +69,12 @@ Template.trainerUploadGrades.events({
 				inData.push([++i, student.fullName, student._id, "marks"]);
 			});
 		}
+		
 		var inWs_name = "Sheet1";
 		var inExcelName = "Grades";
-		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
+		console.log(inData);
+		generateExcel(inData, inWs_name, inExcelName);
+		// Meteor.call("generateExcel", inData, inWs_name, inExcelName);
 		//console.log("generateExcel");
 	}
 	
@@ -176,6 +193,7 @@ function processExcelFile(workbook){
 		var StudentName = worksheet[cellOf_StudentName + currentLineNumber].v;
 		var StudentID	  = worksheet[cellOf_StudentID + currentLineNumber].v;
 		var grades 		  = new Object();
+		var maxMarks = worksheet[currentOfTheRest + (categoriesNamesLineNumber-1)].v
 		while(cellIsFilled(workbook, currentOfTheRest + currentLineNumber)){
 			// console.log(currentOfTheRest);
 			// console.log(currentLineNumber);
@@ -183,7 +201,7 @@ function processExcelFile(workbook){
 			// console.log(currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0));
 			// console.log(categories[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]);
 			// console.log(grades[categories[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]]);
-			grades[categories[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]] = worksheet[currentOfTheRest + currentLineNumber].v
+			grades[categories[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]] = worksheet[currentOfTheRest + currentLineNumber].v + "/" +maxMarks;
 			// console.log(grades);
 			// console.log(currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0));
 			// console.log(categories[currentOfTheRest.charCodeAt(0)-startOfTheRest.charCodeAt(0)]);

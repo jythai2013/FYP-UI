@@ -61,7 +61,8 @@ Template.trainerUploadAttendance.events({
 		var inWs_name = "Sheet1";
 		var inExcelName = "Attendances";
 		console.log(inData);
-		Meteor.call("generateExcel", inData, inWs_name, inExcelName);
+		generateExcel(inData, inWs_name, inExcelName);
+		// Meteor.call("generateExcel", inData, inWs_name, inExcelName);
 		//console.log("generateExcel");
 	}
 	

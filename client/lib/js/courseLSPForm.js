@@ -13,21 +13,20 @@ function getParameterByName(name, url) {
 
 Template.courseLSPForm.onRendered(function(){
 	var cLSP = getParameterByName("cLSP");
-	var cLSP2 = "";
 	//console.log(cLSP);
-	if(cLSP.length > 0) {
+	if(cLSP != null && cLSP.length > 0) {
 		Session.set("currentCourseIDLSPForm2", cLSP);
-		cLSP2 = cLSP;
 	}
 	var lspid = getParameterByName("LSPformID");
 	Session.set("currentLSPIdLSPForm2", lspid);
 	var theLSP = LSPSurvey.findOne({_id:lspid});
+	console.log(theLSP);
 	if(theLSP != undefined){
+		console.log(theLSP);
 		cLSP = theLSP.courseId;
 		console.log(cLSP);
-		if(cLSP.length > 0) {
+		if(cLSP != null && cLSP.length > 0) {
 			Session.set("currentCourseIDLSPForm2", cLSP);
-			cLSP2 = cLSP;
 		}
 	}
 	
@@ -61,6 +60,7 @@ Template.courseLSPForm.onRendered(function(){
 Template.courseLSPRatings.helpers({
 	"averageRating":function(){
 		console.log(this);
+		Session.set("theLSPSurveyForTheCourse", this);
 		var sum = 0;
 		var num = 0;
 		for(i=0;i<this.options.length;i++){
@@ -204,18 +204,27 @@ Template.courseLSPForm.events({
 		myData.hours															=  this.courseNoOfHours
 		myData.facilitatorToLearnerRatio  		   	=	 this.courseFLR
 		
-		myData.questions													=	 this.questions
-		myData.ratings														=  this.ratings
-		myData.averageRating											=  this.averageRating
-		myData.additionalComments              		=	 this.additionalComments
-		myData.str																= "The following are the assessment criteria to assist in evaluating the performance of trainers. Scoring: 1-Poor 2-Fair 3-Satisfactory 4-Very Good 5-Excellent. A minimum score of 3 is required.";
-		
-		//console.log(myData);
+		console.log(myData);
 		
 		genP(myData);
 		//TODO: update the mongo. discard everything else, save the ratings
-		
-		//LSPSurvey.update({_id:this._id}, );
+		LSP = Session.get("theLSPSurveyForTheCourse");
+		var sum = 0;
+		var num = 0;
+		for(i=0;i<this.options.length;i++){
+			num += LSP.options[i];
+			sum += LSP.options[i]*(i+1);
+		}
+		//console.log("sum = " + sum);
+		//console.log("num = " + num);
+		var avg = sum/num;
+		if (isNaN(avg)) avg = "0";
+		var rounded = Math.round(avg);
+		LSP.options.forEach(function(val,ind,arr){
+			val=0;
+			if(ind==rounded) val = 1;
+		});
+		Meteor.call("updateLSPForMattThing", LSP, this._id)
 	}
 });
 

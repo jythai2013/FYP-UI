@@ -5,6 +5,25 @@ Template.facility.onRendered(function(){
 	Session.set("facilitySearchEqua", null);
 	Session.set("facilitySearchMore", null);
 	Session.set("facilitySearchCaps", null);
+	$('#insert-addFacilityForm').validate({
+        rules: {
+            inputCapacity: {
+                required: true,
+                number: true
+            },
+            inputName: {
+                required: true,
+                minlength: 4
+            },
+            inputDesc: {
+                required: true,
+                minlength: 6
+            }
+        },
+        messages: {
+            // custom error messages go here
+        }
+    });
 });
 
 Template.facility.helpers({
