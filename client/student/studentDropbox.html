@@ -32,7 +32,7 @@
         </div>
         <div class='panel-body'>
           <div class='page-header'>
-            <h4>Pending Assignments</h4>
+            <h4>Assignments Dropbox</h4>
           </div>
           <form name="attendenceForm" action="#" method="post">
             <div class='panel panel-default grid'>
@@ -41,16 +41,30 @@
                 Upload your Assignments
               </div>
               <div class='panel-body'>
+                {{#if errorStudentUploadMessage}}
+                  <div class="alert alert-danger">
+                    {{errorStudentUploadMessage}}
+                  </div>
+                {{/if}}
+                {{#if studentUploadSuccessMessage}}
+                  <div class="alert alert-success">
+                    {{studentUploadSuccessMessage}}
+                  </div>
+                {{/if}}
                 <table class='table table-bordered'>
                   <tbody>
                     <tr>
-                      <td>Assignment</td>
+                      <td>Course</td>
                       <td>
-                        <select  name="courseCode" id="courseCode">
-                          {{#each studentOngoingCourses}}
-                            <option value="{{_id}}">{{courseCode}} {{grpNum}}</option>
-                          {{/each}}
-                        </select>
+                        {{#if countMyEnrolled}}
+                          <select class="form-control" name="courseCode" id="courseCode">
+                            {{#each studentOngoingCourses}}
+                              <option value="{{_id}}">({{courseCode}}) {{getCourseName courseCode}} - {{grpNum}}</option>
+                            {{/each}}
+                          </select>
+                        {{else}}
+                          Sorry, you have no enrolled courses
+                        {{/if}}
                       </td>
                     </tr>
                     <tr>
@@ -59,7 +73,11 @@
                     </tr>
                     <tr>
                       <td colspan="2">
-                        <button class="button btn admin-btn" id="submitAssignment">Submit Assignment</button>
+                        {{#if countMyEnrolled}}
+                          <button class="button btn admin-btn" id="submitAssignment">Submit Assignment</button>
+                        {{else}}
+                          <button class="button btn admin-btn" id="submitAssignment" disabled="disabled">Submit Assignment</button>
+                        {{/if}}
                       </td>
                     </tr>
                   </tbody>

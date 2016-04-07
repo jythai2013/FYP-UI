@@ -124,6 +124,65 @@ Template.addLSPFormForm.events({
   }
 });
 
+Template.studentUpload.events({
+
+  'click #submitAssignment':function(event, template){
+    try {
+
+      event.preventDefault();
+      var type = "groups";
+
+      var e = document.getElementById("courseCode");
+      var courseIdI = e.options[e.selectedIndex].value;
+      var groupList = Groups.find({_id: courseIdI}).fetch();
+
+
+
+      var courseId = groupList[0].courseCode;
+
+      console.log(courseId);
+      var sessionId = groupList[0].grpNum;
+      console.log(sessionId);
+      var files = document.getElementById("attfileName").files;
+      
+      
+      console.log(Files);
+      var fileObjId = Files.insert(files[0], function (err, fileObj) {
+        if (err){
+          // handle error
+          console.log(err);
+        } else {
+          console.log(fileObj);
+          // console.log(Files);
+          // console.log(fileObjId = fileObj._id);
+        }
+        // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+      });
+      
+      console.log("bbbefore call");
+      fileObjIdI = fileObjId._id;
+      console.log("before call");
+      Meteor.call("createMaterial",type, courseId, sessionId, fileObjIdI, function (err, result) {
+        document.getElementById("attfileName").value = "";
+        if (!err) {
+          // If run is okay
+          console.log(">>>upload assingment SUCCESS MSG");
+          Session.set('studentUploadSuccessMessage', 'Your file has been uploaded')
+          Meteor.setTimeout(function(){Session.set('studentUploadSuccessMessage', false);}, 4000);
+        } else {
+          console.log(">>>update profile FAILURE MSG");
+          Session.set('errorStudentUploadMessage', 'Upload Failed: ' + err.reason);
+          Meteor.setTimeout(function(){Session.set('errorStudentUploadMessage', false);}, 4000);
+        }
+      });
+      console.log("!before call");
+    } catch (e){
+      console.log(">>>update profile FAILURE MSG");
+      Session.set('errorStudentUploadMessage', 'Upload Failed: ' + e);
+      Meteor.setTimeout(function(){Session.set('errorStudentUploadMessage', false);}, 4000);
+    }
+  }
+});
 
 Template.trainerUploads.events({
 

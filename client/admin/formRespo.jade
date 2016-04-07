@@ -2,14 +2,14 @@ template(name="formRespo")
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header LSP Form Repository
+        h1.page-header LSP Form Template Repository
       // /.col-lg-12
     // /.row
     .row
       .col-lg-12
         .panel.panel-default
           .panel-body
-            h4 Search For LSP Form
+            h4 Search For LSP Template
             .table-responsive
               table#dataTables-example.table.table-bordered
                 tbody
@@ -34,10 +34,10 @@ template(name="formRespo")
         .panel.panel-default
           .panel-body
             h4 LSP Form
-              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addLSPTemplateForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
-                        | LSP Form
-            +addLSPFormForm
+                        | LSP Template
+            +addLSPTemplateForm
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -59,13 +59,13 @@ template(name="formRespo")
                       td #{version}
 
 
-template(name="addLSPFormForm")
-  #addLSPForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+template(name="addLSPTemplateForm")
+  #addLSPTemplateForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
-          h4#myModalLabel.modal-title Add New Trainer
+          h4#myModalLabel.modal-title Add New LSP Template
         .modal-body
           form(role="form", id="insert-addLSPForm", action="#", method="post")
           .table-responsive
@@ -76,7 +76,7 @@ template(name="addLSPFormForm")
                   td 
                     .form-group
                       //- input.form-control(type="text", id="categoryName")
-                      select(id="categoryName")
+                      select(id="categoryName", style="color: black")
                         option(value="") Select Option
                         option(value="Review Form") Review Form
                         option(value="Feedback Form") Feedback Form

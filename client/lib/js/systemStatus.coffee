@@ -1,3 +1,4 @@
+#ADMIN > PROFILE
 Template.profilePage.helpers(
   errorUpdateProfileMessage: () ->
     return Session.get('errorUpdateProfileMessage')
@@ -6,6 +7,7 @@ Template.profilePage.helpers(
     return Session.get('updateProfileSuccessMessage')	
 )
 
+#ADMIN > ADMINISTRATOR LIST
 Template.administratorList.helpers(
   errorAdminParticularsMessage: () ->
     return Session.get('errorAdminParticularsMessage')
@@ -24,6 +26,15 @@ Template.administratorList.helpers(
 
   updateAdminAddSuccessMessage: () ->
     return Session.get('updateAdminAddSuccessMessage')	
+)
+
+#STUDENT > DROPBOX
+Template.studentUpload.helpers(
+  errorStudentUploadMessage: () ->
+    return Session.get('errorStudentUploadMessage')
+
+  studentUploadSuccessMessage: () ->
+    return Session.get('studentUploadSuccessMessage') 
 )
 
 

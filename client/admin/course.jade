@@ -169,37 +169,37 @@ template(name="addClass")
                 tr  
                   th Days
                   td 
-                    .form-group
-                      label.checkbox-inline
+                    .form-group(style="font-size: 18px")
+                      label.checkbox-inline 
                         input(type="checkbox", value="Monday", name="day")
-                        | Monday
+                        | Mon
                   td
-                    .form-group
+                    .form-group(style="font-size: 18px")
                       label.checkbox-inline
                         input(type="checkbox", value="Tuesday", name="day")
-                        | Tuesday
+                        | Tues
                   td
-                    .form-group
+                    .form-group(style="font-size: 18px")
                       label.checkbox-inline
                         input(type="checkbox", value="Wednesday", name="day")
-                        | Wednesday
+                        | Wed
                 tr
                   th  
                   td
-                    .form-group
+                    .form-group(style="font-size: 18px")
                       label.checkbox-inline
                         input(type="checkbox", value="Thursday", name="day")
-                        | Thursday
+                        | Thurs
                   td
-                    .form-group
+                    .form-group(style="font-size: 18px")
                       label.checkbox-inline
                         input(type="checkbox", value="Friday", name="day")
-                       | Friday
+                       | Fri
                   td
-                    .form-group
+                    .form-group(style="font-size: 18px")
                       label.checkbox-inline
                         input(type="checkbox", value="Saturday", name="day")
-                        | Saturday
+                        | Sat
                
                 tr
                   th Duration (Date)
@@ -209,14 +209,14 @@ template(name="addClass")
                     input(type="date", id="gNewEndDate", style="color:black; width: 40%")
                 tr
                   th Venue
-                  td 
+                  td(colspan="3") 
                     .form-group
                       select(name="type", id="gVenue", style="color: black")
                         each facilitiesList
                           option(value="#{fac}") #{fac}
                 tr  
                   th Trainers
-                  td
+                  td(colspan="3")
                     .form-group.input-group
                       select(id="gTrainers", style="color: black")
                         each courseTrainers2

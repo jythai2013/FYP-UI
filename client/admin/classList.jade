@@ -84,58 +84,58 @@ template(name="addClassForm")
               tbody
                 tr
                   th Course Code
-                  td(colspan="3") #{courseCode}
+                  td(colspan="3") 
                     .form-group
                       select(name="courseCode", id="classListCourseCode", style="color: black")
                         each cCourse
-                          option(value="#{_id}") #{courseName} 
+                          option(value="#{_id}") #{courseCode} 
                 tr
                   th Session Timing  
                   td(colspan="3") 
-                    input(type="time", id="classListNewStartTime", style="width:40%; color:black") 
+                    input(type="time", id="classListNewStartTime", style="width:38%; color:black") 
                     | TO 
-                    input(type="time", id="classListNewEndTime", style="width:40%; color:black")
+                    input(type="time", id="classListNewEndTime", style="width:38%; color:black")
                 tr  
                   th Days
                   td 
-                    .form-group
+                    .form-group(style="font-size: 17px")
                       label.checkbox-inline
                         input(type="checkbox", value="Monday", name="classListDay")
-                        | Monday
+                        | Mon
                   td
-                    .form-group
+                    .form-group(style="font-size: 17px")
                       label.checkbox-inline
                         input(type="checkbox", value="Tuesday", name="classListDay")
-                        | Tuesday
+                        | Tues
                   td
-                    .form-group
+                    .form-group(style="font-size: 17px")
                       label.checkbox-inline
                         input(type="checkbox", value="Wednesday", name="classListDay")
-                        | Wednesday
+                        | Wed
                 tr
                   th  
                   td
-                    .form-group
+                    .form-group(style="font-size: 17px")
                       label.checkbox-inline
                         input(type="checkbox", value="Thursday", name="classListDay")
                         | Thursday
                   td
-                    .form-group
+                    .form-group(style="font-size: 17px")
                       label.checkbox-inline
                         input(type="checkbox", value="Friday", name="classListDay")
-                       | Friday
+                       | Fri
                   td
-                    .form-group
+                    .form-group(style="font-size: 17px")
                       label.checkbox-inline
                         input(type="checkbox", value="Saturday", name="classListDay")
-                        | Saturday
+                        | Sat
                
                 tr
                   th Duration (Date)
                   td(colspan="3")
-                    input(type="date", id="classListNewStartDate", placeholder="dd/mm/yyyy", style="color:black; width: 40%")
+                    input(type="date", id="classListNewStartDate", placeholder="dd/mm/yyyy", style="color:black; width: 38%")
                     | TO
-                    input(type="date", id="classListNewEndDate", placeholder="dd/mm/yyyy", style="color:black; width: 40%")
+                    input(type="date", id="classListNewEndDate", placeholder="dd/mm/yyyy", style="color:black; width: 38%")
                 tr
                   th Venue
                   td 

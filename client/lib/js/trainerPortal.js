@@ -9,6 +9,17 @@ function getDDMMYYY(date) {
   return moment(date).format("DD-MMM-YYYY");
 }
 
+Template.trainerClass.helpers({
+  'storeAttributeValue': function storeAttributeValue(value){
+    var retrieveValue = {
+      indexValue: value
+    }
+  }
+});
+// Handlebars.registerHelper('storeAttributeValue', function(value){
+//     this.index = value;
+// });
+
 Template.trainerUploads.helpers({
   "trainerOngoingCourses" : function findTrainerUploads(e) {
     var a = getTrainerOngoingCourse();
@@ -24,9 +35,9 @@ Template.tcCourseMaterials.helpers({
     var a = new Array();
 
     fileList.forEach(function(item, index){
-      console.log(item.fileName);
+      // console.log(item.fileName);
       a.push(Files.findOne(item.fileName));
-      console.log(item);
+      // console.log(item);
     });
 
     fileList2.forEach(function(item, index){
@@ -124,22 +135,36 @@ Template.trainerClass.onRendered(function(){
 
 
 Template.trainerClass.helpers({
-  "courseDetails" : function tcCourseCode(e) {
-    var groups = Session.get('trainerClass');
-    console.log(">>>trainerClass : " + groups);
-    return groups;
-  },
-
   "getStudentDetails" : function tcStudentDetails(cList) {
     var classList = cList;
-    console.log("getStudentDetails >>>> " + classList);
-    var studentArray = new Array();
-    classList.forEach(function(curr,ind,arr){
-      var student = Meteor.users.findOne({_id:curr});
-      studentArray.push(student);
-      console.log(student.fullName);
-    });
-    return studentArray;
+    if(classList !== undefined){  
+      console.log("getStudentDetails >>>> " + classList);
+      var studentArray = new Array();
+      classList.forEach(function(curr,ind,arr){
+        var student = Meteor.users.findOne({_id:curr});
+        studentArray.push(student);
+        // console.log(student.fullName);
+      });
+      return studentArray;
+    } else {
+      return false;
+    }
+  }
+});
+
+Template.tcViewStudentGrade.helpers({
+  "studentGradeDetails" : function sgradeStudentDetails(cList) {
+    var studId = this._id;
+    // var courseId = this.courseId;
+    // console.log(courseId);
+    var gradeObj = Meteor.users.findOne({_id: studId}).grades;
+      // console.log("grade >>> " + gradeObj[courseId]);
+      // console.log("grade >>> " + gradeObj[courseId].passStatus);
+    if (gradeObj !== undefined){
+      return gradeObj;
+    } else {
+      return new Array();
+    }
   }
 });
 
