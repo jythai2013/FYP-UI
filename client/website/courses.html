@@ -30,27 +30,19 @@
             </div>
 	        <!-- Portfolio Section -->
 			<div class="row">
-<!-- 	            <div class="col-lg-12">
-	                <h2 class="page-header">WDA Courses</h2>
-	            </div> -->
-
-	            <div class="col-md-4 col-sm-6">
-	            	<a href="/website/courseDetails/CGM01v3">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://i.imgur.com/a8b7WaW.jpg" height="700px" width="450px" alt="CGM01v3">
-	                </a>
-	            </div>
 	            {{#each retrieveAllCourse}}
-		            <div class="col-md-4 col-sm-6" id="courseBG">
-		                <table style="height:100%; width:100%; color:gray; font-size: 150%">
+		            <div class="col-md-4 col-sm-6" id="{{whatColor courseType}}" style="border-radius: 25px;">
+		                <table style="height:100%; width:100%; color:black; font-size: 150%">
 		                	<tr>
-		                		<td>{{courseCode}} - {{courseName}}</td>
+		                		<td rowspan="2" wistyle="font-size: xx-large" width="30%">{{courseCode}}</td>
+		                		<td>{{courseName}}</td>
 		                	</tr>
 		                	<tr>
-		                		<td>{{courseType}}</td>
+		                		<td>{{courseType}} Courses</td>
 		                	</tr>
 		                	<tr>
-		                		<td>
-		                			<a class="btn admin-btn" href="/website/courseDetail?cCode={{_id}}">View More Details</a>
+		                		<td colspan="2">
+		                			<a class="btn admin-btn" href="/website/courseDetail?cCode={{courseCode}}">View More Details</a>
 		                		</td>
 		                	</tr>
 		                </table>

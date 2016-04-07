@@ -10,6 +10,33 @@ function getRadioValue(theRadioGroup)
     }
 }
 
+// Website//////////////////////////////////////////////////////////////////////
+Template.courses.helpers({
+	'whatColor': function whatColor(type) {
+		console.log(type);
+		if(type === "WSQ"){
+			return "coursePP";
+		} else if (type=="LSP"){
+			return "courseBB";
+		} else {
+			return "courseGG";
+		}
+	}
+});
+
+Template.websiteCourseDetailsForm1.helpers({
+	'whatColor': function whatColor(type) {
+		console.log(type);
+		if(type === "WSQ"){
+			return "coursePP";
+		} else if (type=="LSP"){
+			return "courseBB";
+		} else {
+			return "courseGG";
+		}
+	}
+});
+
 // ADMIN ///////////////////////////////////////////////////////////////////////
 Template.topbar.helpers({
 	'displayUserName': function retrieveAdminName(e) {
