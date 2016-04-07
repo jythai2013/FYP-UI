@@ -32,10 +32,10 @@ template(name="lspRespo")
         .panel.panel-default
           .panel-body
             h4 LSP Form
-              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
+              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addNewLSPForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
                         | LSP Form
-            +addNewLSPFormForm
+              +addNewLSPFormForm
 
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -74,7 +74,7 @@ template(name="addNewLSPFormForm")
                   td 
                     .form-group
                       //- input.form-control(type="text", id="categoryName")
-                      select(id="categoryName")
+                      select(id="categoryName", style="color: black")
                         option(value="") Select Option
                         option(value="Review Form") Review Form
                         option(value="Feedback Form") Feedback Form
