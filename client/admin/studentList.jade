@@ -206,18 +206,16 @@ template(name="viewParticularsForm")
                         input.form-control(type='text', id='nokName', value="#{nokName}")
                     td Relationship
                     td
-                      
-                        input.form-control(type='text', id='nokReln', value="#{nokReln}")
-                        .form-group
-                      select.form-group(id='nokReln', style="color:black")
-                        option(value="#{nokReln}") #{nokReln}
-                        option(disabled) ────────── 
-                        option(value="Employer") Employer
-                        option(value="Spouse") Spouse
-                        option(value="Family") Family
-                        option(value="Others") Co-worker
-                        option(value="Relative") Relative
-                        option(value="Friend") Friend
+                    .form-group
+                        select.form-group(id='nokReln', style="color:black")
+                          option(value="#{nokReln}") #{nokReln}
+                          option(disabled) ────────── 
+                          option(value="Employer") Employer
+                          option(value="Spouse") Spouse
+                          option(value="Family") Family
+                          option(value="Others") Co-worker
+                          option(value="Relative") Relative
+                          option(value="Friend") Friend
                   tr
                     td NOK Contact
                     td

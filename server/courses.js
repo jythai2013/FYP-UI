@@ -81,12 +81,12 @@
       		
 		},
 				
-		'addTrainer': function addTrainer(_id, addTrainersArr){
+		'addTrainer': function addTrainer(courseID, addTrainersArr){
 			// if(Meteor.user.userType != "admin"){
-				// return false; //TODO: output error message in client
+			// 	return false; //TODO: output error message in client
 			// }
 			
-			var theCourse = Courses.findOne({_id:_id});
+			var theCourse = Courses.findOne({_id:courseID});
 			if(!Array.isArray(theCourse.courseTrainers)){
 				var emptyArray = new Array();
 				Courses.update({_id:_id},{$set:{courseTrainers:emptyArray}})

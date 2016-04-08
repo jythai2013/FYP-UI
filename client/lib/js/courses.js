@@ -115,22 +115,34 @@ Template.course.onRendered(function(e){
 	var currentCourseEsc=url.substring(positionFirstEqual+1);
 	// console.log(currentCourseEsc+ " currnt course code escaped");
 	var currentCourse=unescape(currentCourseEsc);
+
 	Session.set("currentCourseCode", currentCourse);
 	$('#cNewPrereq').select2();
 });
 
 Template.course.helpers({
 
-	"trainerList" : function(e) {
+	"trainerListing" : function(e) {
 		var currentCourse=Session.get("currentCourseCode");
+
+		if(currentCourse== undefined){
+
+			var url =  window.location.href;
+			var positionFirstEqual = url.indexOf('=');	
+			var currentCourseEsc=url.substring(positionFirstEqual+1);
+
+		}
+
+
+		console.log(currentCourse);
 		var theCourse = Courses.findOne({courseCode:currentCourse});
-		// console.log(size);
+		console.log(theCourse.courseTrainers);
 		
 
 		var trainersArr = new Array();
 		if(theCourse != undefined && theCourse.courseTrainers != undefined){
-			for(var x = 0, l = a.length; x < l;  x++){
 				var a =  theCourse.courseTrainers;
+			for(var x = 0, l = a.length; x < l;  x++){
 				var obj = new Object();
 				var entry = a[x].trainerID;
 				obj.trainerID = entry;
@@ -421,6 +433,11 @@ Template.removeTrainer.events({
 		var currentCourse=Session.get("currentCourseCode");
 		Meteor.call("removeTrainer", currentCourse, this.trainerID);
 	}
+});
+
+Template.addTrainer.onRendered(function(){
+  // var currentfb = getParameterByName("fbid");
+  Session.set('trainerTimes', 1);
 });
 
 Template.addTrainer.events({
