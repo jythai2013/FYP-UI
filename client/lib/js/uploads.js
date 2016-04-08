@@ -9,22 +9,22 @@ Template.course.helpers({
     var a = Files.find({type: "course"});
     var fileList = Materials.find({type:"groups"});
     var fileList2 = Materials.find({type: "course"});
-    console.log(fileList);
+    // console.log(fileList);
     var a = new Array();
 
     fileList.forEach(function(item, index){
-      console.log(item.fileName);
+      // console.log(item.fileName);
       a.push(Files.findOne(item.fileName));
-      console.log(item);
+      // console.log(item);
     });
 
     fileList2.forEach(function(item, index){
       console.log(item.fileName);
       a.push(Files.findOne(item.fileName));
-      console.log(item);
+      // console.log(item);
     });
 
-    console.log(a);
+    // console.log(a);
     return a;
   }
 });

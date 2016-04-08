@@ -113,7 +113,7 @@ Template.course.onRendered(function(e){
 	var url =  window.location.href;
 	var positionFirstEqual = url.indexOf('=');	
 	var currentCourseEsc=url.substring(positionFirstEqual+1);
-	console.log(currentCourseEsc+ " currnt course code escaped");
+	// console.log(currentCourseEsc+ " currnt course code escaped");
 	var currentCourse=unescape(currentCourseEsc);
 	Session.set("currentCourseCode", currentCourse);
 	$('#cNewPrereq').select2();
@@ -123,33 +123,36 @@ Template.course.helpers({
 
 	"trainerList" : function(e) {
 		var currentCourse=Session.get("currentCourseCode");
-		var size = Courses.findOne({courseCode:currentCourse});
-		console.log(size);
-		var a =  Courses.findOne({courseCode:currentCourse}).courseTrainers;
+		var theCourse = Courses.findOne({courseCode:currentCourse});
+		// console.log(size);
+		
 
 		var trainersArr = new Array();
-		for(var x = 0, l = a.length; x < l;  x++){
-			var obj = new Object();
-			var entry = a[x].trainerID;
-			obj.trainerID = entry;
-			var trainer = Meteor.users.findOne({_id:entry});
-    		obj.trainerName = trainer.fullName;
+		if(theCourse != undefined && theCourse.courseTrainers != undefined){
+			for(var x = 0, l = a.length; x < l;  x++){
+				var a =  theCourse.courseTrainers;
+				var obj = new Object();
+				var entry = a[x].trainerID;
+				obj.trainerID = entry;
+				var trainer = Meteor.users.findOne({_id:entry});
+					obj.trainerName = trainer.fullName;
 
-    		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":entry}).fetch();
-    		
+					var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":entry}).fetch();
+					
 
-    		for(var i = 0, k = classTaught.length; i < k;  i++){
-    			var classesTrainer = classTaught[i];
-    			obj.courseCode = currentCourse;
-    			obj.classesTaught = classesTrainer.grpNum;
-    			console.log(obj.classesTaught);
-    		}
-			trainersArr.push(obj);
-    	}
+					for(var i = 0, k = classTaught.length; i < k;  i++){
+						var classesTrainer = classTaught[i];
+						obj.courseCode = currentCourse;
+						obj.classesTaught = classesTrainer.grpNum;
+						console.log(obj);
+					}
+				trainersArr.push(obj);
+			}
+			console.log(trainersArr)
+		}
 
 
 		return trainersArr;
-		
 	},
 	"courseComponents" : function(e) {
 		// var url =  window.location.href;
@@ -157,12 +160,13 @@ Template.course.helpers({
 		// var currentCourseEsc=url.substring(positionFirstEqual+1);
     	// console.log(currentCourseEsc+ " currnt course code escaped");
 		var currentCourse=Session.get("currentCourseCode");
-		var size = Courses.findOne({courseCode:currentCourse});
-		console.log(size);
-		var a =  Courses.findOne({courseCode:currentCourse}).components;
+		var theCourse = Courses.findOne({courseCode:currentCourse});
+		// console.log(theCourse);
 
 		var componentsArr = new Array();
-		for(var x = 0, l = a.length; x < l;  x++){
+		if(theCourse != undefined && theCourse.components != undefined){
+			var a =  theCourse.components;
+			for(var x = 0, l = a.length; x < l;  x++){
 			var obj = new Object();
 			obj.componentName = a[x].component;
 			obj.weightage = a[x].weightage;
@@ -171,14 +175,13 @@ Template.course.helpers({
 
     	componentsArr.forEach(function(entry) {
    			console.log(entry + " full name");
-
-		});
-
+			});
+		}
 		return componentsArr;
 		
 	},
 	"trainersOwnClass" : function(e) {
-		console.log(this);
+		// console.log(this);
 		var trainersClasses = new Array();
 		var currentCourse=Session.get("currentCourseCode");
 		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
@@ -191,7 +194,7 @@ Template.course.helpers({
 		
 	},
 	"gotNoClass" : function(e) {
-		console.log(this);
+		// console.log(this);
 		var currentCourse=Session.get("currentCourseCode");
 		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
     	if(classTaught.length == 0 ){
@@ -499,12 +502,12 @@ Template.addComponents.helpers({
 		//console.log(currentCourse + "Code");
 
 		//var size = Courses.find({courseCode:currentCourse}).count();
-		var size = Courses.findOne({courseCode:currentCourse});
-		console.log(size);
-		var a =  Courses.findOne({courseCode:currentCourse}).components;
+		var theCourse = Courses.findOne({courseCode:currentCourse});
+		// console.log(theCourse);
 
 		var componentsArr = new Array();
-		for(var x = 0, l = a.length; x < l;  x++){
+		if(theCourse != undefined && theCourse.components != undefined){
+			for(var x = 0, l = a.length; x < l;  x++){
 			var obj = new Object();
 			obj.componentName = a[x].component;
 			obj.weightage = a[x].weightage;
@@ -514,8 +517,8 @@ Template.addComponents.helpers({
 
     	componentsArr.forEach(function(entry) {
    			console.log(entry + " full name");
-
-		});
+			});
+		}
 
 		return componentsArr;
 	}

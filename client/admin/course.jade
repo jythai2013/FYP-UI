@@ -75,7 +75,7 @@ template(name="course")
                           | There is no class allocated
                         else
                           each trainersOwnClass
-                            a(href="class/?cCode=#{courseCode}&cgrpNum=#{classesTaught}") #{classesTaught}
+                            a(href="class/?cCode=#{courseCode}&cgrpNum=#{classesTaught}") #{classesTaught} #{trainerName}
                             | ,
                       td 
                         if gotNoClass
