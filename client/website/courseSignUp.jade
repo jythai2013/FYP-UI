@@ -43,35 +43,50 @@ template(name="courseInfoIndvSignup")
 								th 
 									label COURSE ID
 								td
-									input#disabledInput.form-control(type="hidden", name="cId" value="is101", disabled="")
-									| CGM01V3
+									input#disabledInput.form-control(type="hidden", name="cId" value="#{courseCode}", disabled="")
+									| #{courseCode}
 							tr
 								th 
 									label COURSE NAME
 								td
-									input#disabledInput.form-control(type="hidden", name="cName" value="WPA Course 1", disabled="")
-									| WSQ CERTIFICATE IN GENERIC MANUFACTURING
+									input#disabledInput.form-control(type="hidden", name="cName" value="#{courseName}", disabled="")
+									| #{courseName}
 							tr
 								th  
-									label START DATE
-								td  1st January 2016
+									label Description
+								td  #{courseDescription}
+							tr
+								th  
+									label Prerequisite
+								td  Nil
 							tr
 								th 
-									label END DATE
-								td 31st July 2016
+									label Cost
+								td #{courseFee}
 			
 
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group
-				label.col-sm-2.control-label Session
-				.col-sm-6
-					label.radio
-						input#group(type="radio", name="group", value="Class 1", checked="")
-						| Class 1 (Wednesdays, 13:00 to 15:00)
-					label.radio
-						input#group(type="radio", name="group", value="Class 2")
-						| Class 2 (Wednesdays, 15:30 to 17:00)
+				table
+					tr
+						td
+							label.control-label Available Session
+					
+				each getClassesAvailable
+					tr
+						td
+						td
+							label.radio
+								input#group(type="radio", name="group", value="#{_id}")
+								| #{grpNum} (Every Wednesdays, #{startTime} to #{startTime}). 
+								br. 
+								Course Duration: {{formatDateee startDate}} to {{formatDateee endDate}}
+				else
+					tr
+						td
+						td
+							| No sessions opened
 
 template(name="PersonalParticular")
 	.row
@@ -98,6 +113,9 @@ template(name="PersonalParticular")
 					label.radio-inline
 						input#pgender(type="radio", name="gender", value="female")
 						| Female
+				label.col-sm-2.control-label Mobile Number
+				.col-sm-4
+					input#mobileNo.form-control(type="text", name="mobile")
 
 	.row
 		.col-lg-10.col-lg-offset-1
@@ -131,32 +149,7 @@ template(name="PersonalParticular")
 				label.col-sm-2.control-label Nationality
 				.col-sm-4
 					select#pnationality.form-control(name="nationality")
-						option(value="Singapore")  Singapore
-						option(value="China") China
-						option(value="India") India
-						option(value="Indonesia")  Indonesia
-						option(value="Vietnam")  Vietnam
-	.row
-		.col-lg-10.col-lg-offset-1
-			.form-group
-				label.col-sm-2.control-label Postal Code
-				.col-sm-4
-					input#ppostalCode.form-control(type="text", name="postalCode", placeholder="Postal Code")
-				.col-sm-2
-				label.col-sm-2.control-label Residence No. 
-				.col-sm-2
-					input#presNo.form-control(type="text", name="resNo", placeholder="Home")
-
-	.row
-		.col-lg-10.col-lg-offset-1
-			.form-group
-				label.col-sm-2.control-label Residential Address
-				.col-sm-6
-					input#pAdd.form-control(type="text", name="pAddr" placeholder="Block Name, Street Name, Unit No.")
-				label.col-sm-2.control-label Mobile No. 
-				.col-sm-2
-					input#pmobNo.form-control(type="text", name="mobNo", placeholder="Mobile")
-
+						+nationalityList
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group
@@ -166,17 +159,6 @@ template(name="PersonalParticular")
 				label.col-sm-2.control-label Office No. 
 				.col-sm-2
 					input#poffNo.form-control(type="text", name="offNo", placeholder="Office")
-
-	.row
-		.col-lg-10.col-lg-offset-1
-			.form-group
-				label.col-sm-2.control-label Proficiency In
-				.col-sm-4
-					select.form-control(name="language" id="planguage")
-						option(value="english")  Engish
-						option(value="chinese")  Mandarine
-						option(value="tamil") Tamil
-						option(value="others") Others
 
 template(name="QualificationDetails")
 	.row
@@ -205,10 +187,10 @@ template(name="EmergencyContact")
 			.form-group.has-warning
 				label.col-sm-2.control-label Name
 				.col-sm-4
-					input.form-control(type="text", id="NOKName", name="NOKName", placeholder="Next of Kin Name")
+					input.form-control(type="text", id="nokName", name="NOKName", placeholder="Next of Kin Name")
 				label.col-sm-2.control-label Relationship
 				.col-sm-4
-					Select#NOKrelationship.form-control(type="text", name="NOKrelatioship")
+					Select#nokRelationship.form-control(type="text", name="NOKrelatioship")
 						option(value="Employer") Employer
 						option(value="Family") Family
 						option(value="Friend") Friend
@@ -221,7 +203,7 @@ template(name="EmergencyContact")
 			.form-group.has-warning
 				label.col-sm-2.control-label Telephone No.
 				.col-sm-4
-					input.form-control(type="text", id="NOKTel", name="NOKTel", placeholder="Their Contact Number")
+					input.form-control(type="text", id="nokTel", name="NOKTel", placeholder="Their Contact Number")
 
 template(name="alertEmailForm")
 	#alertEmail.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
