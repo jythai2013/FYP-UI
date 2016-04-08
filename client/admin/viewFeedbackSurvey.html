@@ -7,11 +7,11 @@
                 <div class="subtemplate-wrapper"> 
                     <h3>  
                         
-                        {{viewFeedbackDetails.feedbackTitle}}
+                        {{viewFeedbackDetails2.feedbackTitle}}
 
                     </h3>
 
-                    Feedback Type: {{viewFeedbackDetails.feedbackType}}
+                    Feedback Type: {{viewFeedbackDetails2.feedbackType}}
                 
                 </div>
             </div>
@@ -19,7 +19,7 @@
         <div class='fb-main'>
             <div class="fb-response-fields ui-sortable">
                 <div class="fb-field-wrapper response-field-file"> </div>
-                    {{#each viewFeedbackQns1}}
+                    {{#each viewFeedbackQns3}}
 
                         {{> viewSurveyQn feedbackDetails = this}}
                     {{/each}}

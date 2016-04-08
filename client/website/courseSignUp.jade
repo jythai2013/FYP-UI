@@ -43,28 +43,32 @@ template(name="courseInfoIndvSignup")
 								th 
 									label COURSE ID
 								td
-									input#disabledInput.form-control(type="hidden", name="cId" value="is101", disabled="")
-									| CGM01V3
+									input#disabledInput.form-control(type="hidden", name="cId" value="#{courseCode}", disabled="")
+									| #{courseCode}
 							tr
 								th 
 									label COURSE NAME
 								td
-									input#disabledInput.form-control(type="hidden", name="cName" value="WPA Course 1", disabled="")
-									| WSQ CERTIFICATE IN GENERIC MANUFACTURING
+									input#disabledInput.form-control(type="hidden", name="cName" value="#{courseName}", disabled="")
+									| #{courseName}
 							tr
 								th  
-									label START DATE
-								td  1st January 2016
+									label Description
+								td  #{courseDescription}
+							tr
+								th  
+									label Prerequisite
+								td  -
 							tr
 								th 
-									label END DATE
-								td 31st July 2016
+									label Cost
+								td #{courseFee}
 			
 
 	.row
 		.col-lg-10.col-lg-offset-1
 			.form-group
-				label.col-sm-2.control-label Session
+				label.col-sm-2.control-label Available Session
 				.col-sm-6
 					label.radio
 						input#group(type="radio", name="group", value="Class 1", checked="")

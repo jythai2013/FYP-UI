@@ -9,30 +9,6 @@ template(name="formRespo")
       .col-lg-12
         .panel.panel-default
           .panel-body
-            h4 Search For LSP Template
-            .table-responsive
-              table#dataTables-example.table.table-bordered
-                tbody
-                  tr
-                    th  Search
-                    td
-                      input#cftLSPFormSearchInput.form-control(type='text')
-                    th  Type of Form
-                    td(style='width: 50%;')
-                      select#typeOfForm
-                        option(value='Course') Course
-                        option(value='Facility') Facility
-                        option(value='Trainer') Trainer
-                        option(value='Review Form') Review
-                        option(value='Feedback Form') Feedback
-                        option(value='Checklist') Checklist
-                        option(value='Others') Others
-            button#filter.btn.btn-save(style='position: static; margin-bottom:1%; margin-left:91%; background: #333; color:#fff')
-              | Search
-    .row
-      .col-lg-12
-        .panel.panel-default
-          .panel-body
             h4 LSP Form
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addLSPTemplateForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
@@ -53,7 +29,7 @@ template(name="formRespo")
                     tr
                       td #{name}
                       td #{category}
-                      td #{uploadedAt}
+                      td {{formatDate uploadedAt}}
                       td(width="50px") 
                         a(href="{{url download = true}}", class="button btn admin-btn") Download
                       td #{version}
@@ -75,7 +51,6 @@ template(name="addLSPTemplateForm")
                   th Category
                   td 
                     .form-group
-                      //- input.form-control(type="text", id="categoryName")
                       select(id="categoryName", style="color: black")
                         option(value="") Select Option
                         option(value="Review Form") Review Form

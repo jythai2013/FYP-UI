@@ -45,7 +45,7 @@ Meteor.methods({
 		
 	},
 	
-	"createFeedbackResults":function(fbTemplateID, groupID, classCFTType, optionsArray){
+	"createFeedbackResults":function(fbTemplateID, groupID, classCFTType, dateCreated, optionsArray){
 		console.log("in server");
 		// for 
 
@@ -53,6 +53,7 @@ Meteor.methods({
 		FeedbackAnswers.insert({
 			feedbackTemplateID: fbTemplateID,
 			groupID: groupID,
+			dateCreated: dateCreated,
 			assessedOn: classCFTType,
 			options: optionsArray
 		});

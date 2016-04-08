@@ -40,6 +40,25 @@ Template.doFeedbackSurvey.onRendered(function(){
   Session.set('currentDoingfb', currentfb);
 });
 
+Template.radioCreate.onRendered(function(){
+  Session.set('radioFields', 0);
+});
+
+Template.checkBoxesCreate.onRendered(function(){
+  Session.set('checkboxFieldsEd', 0);
+});
+
+Template.radioCreateInline.onRendered(function(){
+  Session.set('radioInlineFieldsEd', 0);
+});
+
+Template.viewQn.onRendered(function(){
+  Session.set('dropdownFieldsEdView', 0);
+  Session.set('radioInlineFieldsEdView', 0);
+  Session.set('checkboxFieldsEdView', 0);
+  Session.set('radioFieldsEdView', 0);
+});
+
 Template.addFeedback.onRendered(function(){
 	// console.log($("input")[0]);
 	// console.log($("input"));
@@ -123,7 +142,7 @@ Template.addFeedback.helpers({
 Template.viewQn.helpers({
 	"editAddDropdownFields": function() {
 		var fakeArray = new Array();
-		for(i = 0; i < Session.get('dropdownFieldsEd'); i++){
+		for(i = 0; i < Session.get('dropdownFieldsEdView'); i++){
 			fakeArray.push("a")
 		}
     return fakeArray;
@@ -131,7 +150,7 @@ Template.viewQn.helpers({
 
 	"editAddRadioInlineFields": function() {
 		var fakeArray = new Array();
-		for(i = 0; i < Session.get('radioInlineFieldsEd'); i++){
+		for(i = 0; i < Session.get('radioInlineFieldsEdView'); i++){
 			fakeArray.push("a")
 		}
     return fakeArray;
@@ -139,7 +158,7 @@ Template.viewQn.helpers({
 
 	"editAddCheckboxFields": function() {
 		var fakeArray = new Array();
-		for(i = 0; i < Session.get('checkboxFieldsEd'); i++){
+		for(i = 0; i < Session.get('checkboxFieldsEdView'); i++){
 			fakeArray.push("a")
 		}
     return fakeArray;
@@ -147,7 +166,7 @@ Template.viewQn.helpers({
 
 	"editAddRadioFields": function() {
 		var fakeArray = new Array();
-		for(i = 0; i < Session.get('radioFieldsEd'); i++){
+		for(i = 0; i < Session.get('radioFieldsEdView'); i++){
 			fakeArray.push("a")
 		}
     return fakeArray;
@@ -212,8 +231,8 @@ Template.createQn.helpers({
 });
 
 Template.viewQn.helpers({
-	"sessionQnID": function() {
-		return Session.get('sessionQnID');
+	"sessionQnIDView": function() {
+		return Session.get('sessionQnIDEd');
 	}	
 });
 
@@ -377,7 +396,8 @@ Template.viewQn.events({
 		// var qnNum =  qnSize+1;
 
 		var qnID =  this.feedbackDetails.qnID;
-		var question = document.getElementById("qnQn").value;
+		var question = document.getElementById("textQn").value;
+		console.log(question);
 		var LSPQnID = "not yet";
 		 var qnType = this.feedbackDetails.qnType;
 		 var optionsForQn =  new Array();
@@ -397,7 +417,7 @@ Template.viewQn.events({
 		}
 		//var hello=Feedback.find ({ _id:fbId}, {qnOptions:{qnID: qnId}});
 		
-		Session.set('sessionQnID', null);
+		Session.set('sessionQnIDEd', null);
 		console.log("Hello");
 		Meteor.call("editQuestion", fbId, qnID, question, qnType, LSPQnID, optionsForQn);
 	},
@@ -407,7 +427,7 @@ Template.viewQn.events({
 		 console.log(this);
 		 console.log(this.feedbackDetails);
 		 console.log(this.feedbackDetails.qnID);
-		 Session.set("sessionQnID", this.feedbackDetails.qnID);
+		 Session.set("sessionQnIDEd", this.feedbackDetails.qnID);
 	},
 
 	"click #deleteQnEd" : function(e) {
@@ -430,89 +450,95 @@ Template.viewQn.events({
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var noOfRadioFields = Session.get('radioFieldsEd');
+		 var noOfRadioFields = Session.get('radioFieldsEdView');
 		 if(isNaN(noOfRadioFields)) noOfRadioFields = 0;
 		 if(noOfRadioFields<0) noOfRadioFields = 0;
 		 var noOfRadioFields = noOfRadioFields+1;
 		 console.log("noOfRadioFields " + noOfRadioFields);
-		 Session.set('radioFieldsEd', noOfRadioFields);
+		 Session.set('radioFieldsEdView', noOfRadioFields);
 	},
 	"click #removeRadioFieldEd" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var noOfRadioFields = Session.get('radioFieldsEd');
+		 var noOfRadioFields = Session.get('radioFieldsEdView');
+		 console.log(noOfRadioFields);
 		 if(isNaN(noOfRadioFields)) noOfRadioFields = 1;
 		 if(noOfRadioFields<0) noOfRadioFields = 1;
 		 var noOfRadioFields = noOfRadioFields-1;
+		 if(noOfRadioFields<0) noOfRadioFields = 0;
 		 console.log("noOfRadioFields " + noOfRadioFields);
-		 Session.set('radioFieldsEd', noOfRadioFields);
+		 Session.set('radioFieldsEdView', noOfRadioFields);
 	},
 	"click #addRadioInlineEd" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var radioInlineFieldsEd = Session.get('radioInlineFieldsEd');
-		 var noOfRadioFields = radioInlineFieldsEd+1;
-		 if(isNaN(radioInlineFieldsEd)) noOfRadioFields = 1;
-		 console.log("radioInlineFieldsEd " + radioInlineFieldsEd);
+		 var radioInlineFieldsEdView = Session.get('radioInlineFieldsEdView');
+		 var noOfRadioFields = radioInlineFieldsEdView+1;
+		 if(isNaN(radioInlineFieldsEdView)) noOfRadioFields = 1;
+		 console.log("radioInlineFieldsEdView " + radioInlineFieldsEdView);
 		 console.log("noOfRadioFields " + noOfRadioFields);
-		 Session.set('radioInlineFieldsEd', noOfRadioFields);
+		 Session.set('radioInlineFieldsEdView', noOfRadioFields);
 	},
 	"click #removeRadioInlineFieldEd" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var radioInlineFieldsEd = Session.get('radioInlineFieldsEd');
-		 if(isNaN(radioInlineFieldsEd)) noOfRadioFields = 1;
-		 var noOfRadioFields = radioInlineFieldsEd-1;
-		 console.log("radioInlineFieldsEd " + radioInlineFieldsEd);
+		 var radioInlineFieldsEdView = Session.get('radioInlineFieldsEdView');
+		 if(isNaN(radioInlineFieldsEdView)) noOfRadioFields = 1;
+		 if(noOfRadioFields<0) noOfRadioFields = 1;
+		 var noOfRadioFields = radioInlineFieldsEdView-1;
+		 if(noOfRadioFields<0) noOfRadioFields = 0;
+		 console.log("radioInlineFieldsEdView " + radioInlineFieldsEdView);
 		 console.log("noOfRadioFields " + noOfRadioFields);
-		 Session.set('radioInlineFieldsEd', noOfRadioFields);
+		 Session.set('radioInlineFieldsEdView', noOfRadioFields);
 	},
 	"click #addCheckboxesEd" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var checkboxFieldsEd = Session.get('checkboxFieldsEd');
-		 var noOfRadioFields = checkboxFieldsEd+1;
-		 if(isNaN(checkboxFieldsEd)) noOfRadioFields = 1;
-		 console.log("checkboxFieldsEd " + checkboxFieldsEd);
+		 var checkboxFieldsEdView = Session.get('checkboxFieldsEdView');
+		 var noOfRadioFields = checkboxFieldsEdView+1;
+		 if(isNaN(checkboxFieldsEdView)) noOfRadioFields = 1;
+		 console.log("checkboxFieldsEdView " + checkboxFieldsEdView);
 		 console.log("noOfRadioFields " + noOfRadioFields);
-		 Session.set('checkboxFieldsEd', noOfRadioFields);
+		 Session.set('checkboxFieldsEdView', noOfRadioFields);
 	},
 	"click #removeCheckboxFieldEd" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var checkboxFieldsEd = Session.get('checkboxFieldsEd');
-		 if(isNaN(checkboxFieldsEd)) noOfRadioFields = 1;
-		 var noOfRadioFields = checkboxFieldsEd-1;
-		 console.log("checkboxFieldsEd " + checkboxFieldsEd);
+		 var checkboxFieldsEdView = Session.get('checkboxFieldsEdView');
+		 if(isNaN(checkboxFieldsEdView)) noOfRadioFields = 1;
+		 var noOfRadioFields = checkboxFieldsEdView-1;
+		 if(noOfRadioFields<0) noOfRadioFields = 0;
+		 console.log("checkboxFieldsEdView " + checkboxFieldsEdView);
 		 console.log("noOfRadioFields " + noOfRadioFields);
-		 Session.set('checkboxFieldsEd', noOfRadioFields);
+		 Session.set('checkboxFieldsEdView', noOfRadioFields);
 	},
 	"click #addDropdownEd" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var dropdownFieldsEd = Session.get('dropdownFieldsEd');
-		 var noOfRadioFields = dropdownFieldsEd+1;
-		 if(isNaN(dropdownFieldsEd)) noOfRadioFields = 1;
-		 console.log("dropdownFieldsEd " + dropdownFieldsEd);
+		 var dropdownFieldsEdView = Session.get('dropdownFieldsEdView');
+		 var noOfRadioFields = dropdownFieldsEdView+1;
+		 if(isNaN(dropdownFieldsEdView)) noOfRadioFields = 1;
+		 console.log("dropdownFieldsEdView " + dropdownFieldsEdView);
 		 console.log("noOfRadioFields " + noOfRadioFields);
-		 Session.set('dropdownFieldsEd', noOfRadioFields);
+		 Session.set('dropdownFieldsEdView', noOfRadioFields);
 	},
 	"click #removeDropdownFieldEd" : function(e) {
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 
-		 var dropdownFieldsEd = Session.get('dropdownFieldsEd');
-		 if(isNaN(dropdownFieldsEd)) noOfRadioFields = 1;
-		 var noOfRadioFields = dropdownFieldsEd-1;
-		 console.log("dropdownFieldsEd " + dropdownFieldsEd);
+		 var dropdownFieldsEdView = Session.get('dropdownFieldsEdView');
+		 if(isNaN(dropdownFieldsEdView)) noOfRadioFields = 1;
+		 var noOfRadioFields = dropdownFieldsEdView-1;
+		 if(noOfRadioFields<0) noOfRadioFields = 0;
+		 console.log("dropdownFieldsEdView " + dropdownFieldsEdView);
 		 console.log("noOfRadioFields " + noOfRadioFields);
-		 Session.set('dropdownFieldsEd', noOfRadioFields);
+		 Session.set('dropdownFieldsEdView', noOfRadioFields);
 	}
 
 });
@@ -672,7 +698,10 @@ Template.createQn.events({
 	"click #removeField" : function(e) {
 		e.preventDefault();
         var fields = Session.get('fields');
-
+		 if(isNaN(fields)) fields = 1;
+		 if(fields<0) fields = 1;
+		 var fields = fields-1;
+		 if(fields<0) fields = 0;
         // noOfTimes = _.reject(salesInput, function(x) {
         //     return x.salesId == salesId;
         // });
@@ -713,6 +742,7 @@ Template.addFeedback.events({
 
 		var thisFeedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
 		console.log(feedbackTemplate);
+		var today = new Date();
 
 		var fakeArray2 = new Array();
 		console.log(thisFeedbackQnOptions.length);
@@ -739,7 +769,14 @@ Template.addFeedback.events({
 			}
 			console.log (fakeArray2);
 
-		Meteor.call("createFeedbackResults", feedbackTemplate, this._id, classCFTType,fakeArray2);
+		Meteor.call("createFeedbackResults", feedbackTemplate, this._id, classCFTType, today, fakeArray2);
+
+
+		//TODO: Email all the students in this class with the link to do the feedback.
+		// link is /CourseModule/doFeedbackSurvey?fbid=(feedbackAns._id)&studID=(student's ID from class list)
+		var feedbackAnsID = FeedbackAnswers.findOne({groupID:this._id, dateCreated: today, feedbackTemplateID: feedbackTemplate})._id;
+
+
 	}
 
 });
@@ -758,6 +795,27 @@ Template.doFeedbackSurvey.helpers({
 	},
 
 	"viewFeedbackQns2": function() {
+		var fbId = Session.get("currentDoingfb");
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
+		console.log(feedbackTemplate);
+		var feedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;
+		 return feedbackQnOptions;
+	}
+
+});
+
+Template.viewFeedbackSurvey.helpers({
+
+	"viewFeedbackDetails2": function() {
+		var fbId=Session.get("currentDoingfb");
+		var feedbackTemplateID = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
+
+		var feedbackTitle = Feedback.findOne({_id:feedbackTemplateID});
+    		console.log(feedbackTitle);
+    	return feedbackTitle;
+	},
+
+	"viewFeedbackQns3": function() {
 		var fbId = Session.get("currentDoingfb");
 		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
 		console.log(feedbackTemplate);
