@@ -180,10 +180,20 @@ Template.trainerLSPForm.events({
 });
 
 function genP(myData){
-	var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example"))
-	doc.autoTable(res.columns, res.data, {startY: 0});
-	var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example2"))
-	doc.autoTable(res.columns, res.data, {startY: 300});
+	var doc = new jsPDF('p', 'pt');
+	var res1 = doc.autoTableHtmlToJson(document.getElementById("dataTables-example"))
+	doc.autoTable(res1.columns, res1.data, {startY: 0});
+	if(document.getElementById("dataTables-example2").rows.length > 1){
+		var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example2"))
+		setTimeout(function(){
+			doc.autoTable(res.columns, res.data, {startY: 300});
+			doc.save('TrainerLSP.pdf');
+			console.log("genP 1 END");
+		},5);
+	} else{
+			doc.save('TrainerLSP.pdf');
+			console.log("genP 1 END");
+	}
 }
 
 function genP2(myData){
