@@ -82,6 +82,13 @@ Template.course.onRendered(function(){
   	Session.set('currentCourseCode', currentCourse);
 });
 
+
+
+Template.addTrainer.onRendered(function(){
+  // var currentfb = getParameterByName("fbid");
+  Session.set('trainerTimes', 1);
+});
+
 Template.viewCourseForm.helpers({
 
 	"currentCourseCode" : function listCourseEventHandler(e) {
@@ -219,6 +226,7 @@ Template.course.helpers({
 		for (var x = 0, l = classTaught.length; x < l;  x++){
 			var obj = new Object();
 			obj.classesTaught = classTaught[x].grpNum;
+			obj.courseCode = currentCourse;
 			trainersClasses.push(obj);
 		}
 		return trainersClasses;
@@ -456,11 +464,6 @@ Template.removeTrainer.events({
 		var currentCourse=Session.get("currentCourseCode");
 		Meteor.call("removeTrainer", currentCourse, this.trainerID);
 	}
-});
-
-Template.addTrainer.onRendered(function(){
-  // var currentfb = getParameterByName("fbid");
-  Session.set('trainerTimes', 1);
 });
 
 Template.addTrainer.events({

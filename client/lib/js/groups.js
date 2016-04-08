@@ -114,8 +114,10 @@ Template.group.helpers({
 				console.log(this.courseTrainers);
 				console.log(trainersList.trainerId);
 		var trainerID = trainersList.trainerId;
-		var trainerArray = Meteor.users.findOne({_id:trainerID}).fullName;
-		console.log(trainerArray);
+		var trainerArray = Meteor.users.findOne({_id:trainerID}).fullName ;
+		var trainerStr = trainerArray + " ";
+		console.log(trainerStr);
+
 		// var trainersArray = new Array();
 		
 		// 	for(var x = 0, l = trainersList.length; x < l;  x++){
@@ -124,7 +126,7 @@ Template.group.helpers({
 		// 		console.log(trainer);
 		// 		trainersArray.push(trainer);
 		// 	}
-		return trainersArray;
+		return trainerStr;
 	},
 	'courseNoOfHours' : function(){
 		
