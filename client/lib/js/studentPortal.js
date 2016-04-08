@@ -1,15 +1,3 @@
- function getStudentOngoingCourse(e) {
-    // console.log("studentPortal.js - trainerOngoingCourses >>>");
-    var tId = Meteor.user()._id;
-    var coursesEnrolled = Groups.find({classlist: {$in : [ tId ]}});
-    // console.log("getStudentOngoingCourse Return: "+ coursesEnrolled);
-    return coursesEnrolled;
-  } 
-
-  function getDDMMYYY(date) {
-  	return moment(date).format("DD-MM-YYYY");
-  }
-
   function getFromUrl(a) {
   	var courseGrp =  Router.current().url;
   	var positionFirstEqual = courseGrp.indexOf('=');
@@ -34,21 +22,35 @@ Template.studentUpload.helpers({
 		var tId = Meteor.user()._id;
 		var a = Groups.find({classlist: {$in : [ tId ]}}).count();
 		var b = (a !== 0);
-		console.log(b);
+		// console.log(b);
 		return b;
 	},
 
-	"getCourseName" : function findTrainerOngoingCourses(cCode) {
-		return Courses.findOne({"courseCode": cCode}).courseName;
+	"getCourseName" : function findStudentOngoingCourses3(cCode) {
+		var a = Courses.findOne({"courseCode": cCode});
+		if (a  === undefined){
+			return "";
+		} else {
+			return a.courseName;
+		}
 	}
 });
 
 Template.studentUpload.helpers({
 	"studentOngoingCourses" : function findStudentUploads(e) {
-		var a = getStudentOngoingCourse();
-		console.log("studentOngoingCourses >>> "+a);
-		return a;
-	},
+		var tId = Meteor.user()._id;
+	    var todayDate = new Date();
+	    // // maybe need filter for ongoing courses only
+	    var coursesEnrolled = Groups.find({classlist: {$in : [tId]}}).fetch();
+	    // console.log("getStudentOngoingCourse Return: " + coursesEnrolled);
+	    var array = [];
+	    for (var j = 0; j < coursesEnrolled.length; j ++){
+	    	// console.log(coursesEnrolled[j]);
+	    	array.push(coursesEnrolled[j]);
+	    }
+	    console.log(typeof array);
+	    return array;
+	}
 });
 Template.studentCourseMaterial.helpers({
 	uploads:function(){
@@ -77,16 +79,28 @@ Template.studentCourseMaterial.helpers({
 
 //student/studentClass.html
 Template.studentClass.helpers({
-	"studentOngoingCourses" : function findTrainerOngoingCourses(e) {
-		console.log("studentPortal.js - studentOngoingCourses >>>");
-		var coursesEnrolled = getStudentOngoingCourse();
-		// maybe need filter for ongoing courses only
-		console.log(coursesEnrolled);
-		return coursesEnrolled;
+	"studentOngoingCourses" : function findStudentOngoingCourses1(e) {
+		var tId = Meteor.user()._id;
+	    var todayDate = new Date();
+	    // // maybe need filter for ongoing courses only
+	    var coursesEnrolled = Groups.find({classlist: {$in : [tId]}}).fetch();
+	    // console.log("getStudentOngoingCourse Return: " + coursesEnrolled);
+	    var array = [];
+	    for (var j = 0; j < coursesEnrolled.length; j ++){
+	    	// console.log(coursesEnrolled[j]);
+	    	array.push(coursesEnrolled[j]);
+	    }
+	    console.log(typeof array);
+	    return array;
 	},
 
-	"getCourseName" : function findTrainerOngoingCourses(cCode) {
-		return Courses.findOne({"courseCode": cCode}).courseName;
+	"getCourseName" : function findStudentOngoingCourses2(cCode) {
+		var a = Courses.findOne({"courseCode": cCode});
+		if (a === undefined){
+			return "";
+		} else {
+			return a.courseName;
+		}
 	}
 });
 
