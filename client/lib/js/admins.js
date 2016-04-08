@@ -37,6 +37,22 @@ Template.websiteCourseDetailsForm1.helpers({
 	}
 });
 
+Template.courseInfoIndvSignup.helpers({
+	'getClassesAvailable': function getClassesAvailable1(e) {
+		var groups = Groups.find({courseCode: this.courseCode});
+		console.log("retrieve #ofGroups:" + groups.length);
+		return groups;
+	}
+});
+
+Template.websiteCourseDetails1.helpers({
+	'getClassesAvailable': function getClassesAvailable1(e) {
+		var groups = Groups.find({courseCode: this.courseCode});
+		console.log("retrieve #ofGroups:" + groups.length);
+		return groups;
+	}
+});
+
 // ADMIN ///////////////////////////////////////////////////////////////////////
 Template.topbar.helpers({
 	'displayUserName': function retrieveAdminName(e) {

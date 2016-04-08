@@ -1,3 +1,15 @@
+function getRadioValue(theRadioGroup)
+{
+    var elements = document.getElementsByName(theRadioGroup);
+    for (var i = 0, l = elements.length; i < l; i++)
+    {
+        if (elements[i].checked)
+        {
+            return elements[i].value;
+        }
+    }
+}
+
 // STUDENT ///////////////////////////////////////////////////////////////////////
 Template.studentIndex.helpers({
 	"displayStudentName" : function displayTrainerName(e) {
@@ -84,7 +96,13 @@ Template.addStudentAcctForm.events({
 		//TODO: Validation of input		
 		var obj = new Object();
 		obj.fullName = 		document.getElementById("sName").value;
-		obj.gender = 				document.getElementById("gender").value;
+		var isGender = getRadioValue("gender");
+		var gender = "male";
+		
+		if (isGender !== "male") {
+			gender="female";
+		}
+		obj.gender = gender;
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
 		obj.email = 				document.getElementById("email").value;
@@ -111,23 +129,33 @@ Template.registerForCourse.events({
 
 		//TODO: Validation of input		
 		var obj = new Object();
-		obj.fullName = 		document.getElementById("sName").value;
-		obj.gender = 			template.find('input:radio[name=gender]:checked');
-		obj.dateOfBirth = 					document.getElementById("dob").value;
-		obj.mobileNo = 			document.getElementById("mobileNo").value;
-		obj.email = 				document.getElementById("email").value;
-		obj.userIDType = 				document.getElementById("userIDType").value;
-		obj.userID = 					document.getElementById("userID").value;
-		obj.nationality = 	document.getElementById("nationality").value;
-		obj.postalCode = 					document.getElementById("code").value;
-		obj.resAddr= 				document.getElementById("resAddr").value;
-		obj.highestQualification = document.getElementById("qualification").value;
-		obj.proficiency = 				document.getElementById("language").value;
+		var fName = 		document.getElementById("pfirstName").value;
+		var lName = 		document.getElementById("plastName").value;
+		obj.fullName = fName + " " + lName;
+		var isGender = getRadioValue("pgender");
+		var gender = "male";
+		
+		if (isGender !== "male") {
+			gender="female";
+		}
+		var mNo = document.getElementById("mobileNo").value;
+		obj.gender = gender;
+		obj.dateOfBirth = 					document.getElementById("pDOB").value;
+		obj.mobileNo = mNo;
+		obj.email = 				document.getElementById("pemail").value;
+		obj.userIDType = 				document.getElementById("pidType").value;
+		obj.userID = 					document.getElementById("pIDNum").value;
+		obj.nationality = 	document.getElementById("pnationality").value;
+		obj.highestQualification = document.getElementById("pqualificationLevel").value;
+		// obj.proficiency = 				document.getElementById("planguage").value;
 		obj.nokName = 			document.getElementById("nokName").value;		
-		obj.nokReln = 			document.getElementById("nokReln").value;		
+		obj.nokReln = 			document.getElementById("nokRelationship").value;		
 		obj.nokTel = 				document.getElementById("nokTel").value;		
-		obj.password = 			obj.mobileNo;
-		obj.remarks = 			"Online Registration";
+		obj.company = 				document.getElementById("pcompName").value;		
+		obj.officeNo = 				document.getElementById("poffNo").value;		
+		obj.password = mNo;
+		var grpId = document.getElementById("group").value;
+		obj.remarks = 			"Online Registration for " + grpId;
 		obj.userType = {learner:true};
 
 		console.log("Loading: " + obj);
