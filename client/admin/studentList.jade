@@ -126,7 +126,7 @@ template(name="addStudentAcctForm")
                   td Relationship
                   td
                     .form-group
-                      select(id='nokReln', style="color:black")
+                      select.form-control(id='nokReln', style="color:black")
                         option(value="Employer") Employer
                         option(value="Spouse") Spouse
                         option(value="Family") Family
@@ -193,6 +193,12 @@ template(name="viewParticularsForm")
                           option(value="2") A'Level
                           option(value="3") Diploma
                           option(value="4") Degree
+                  tr
+                    td Proficiency
+                    td 
+                      .form-group
+                        textarea.form-control(type='text', id='proficiency')
+                          | #{proficiency}
                   tr
                     td NOK Name
                     td 

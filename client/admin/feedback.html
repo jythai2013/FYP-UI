@@ -20,12 +20,7 @@
 
                     </h3>
 
-                    Feedback Type:
-                    <select id="editFeedbackType">
-                      <option value="Course">Course</option>
-                      <option value="Trainer">Trainer</option>
-                      <option value="Facility">Facility</option>
-                    </select>
+                    Feedback Type: {{feedbackType}}
 
 
 
@@ -59,7 +54,7 @@
 <!--{{#each feedbackQns feedbackDetails = "y"}}-->
     <div class="fb-field-wrapper response-field-text">
         <div class="subtemplate-wrapper">
-            {{#if equals feedbackDetails.qnID sessionQnID}}
+            {{#if equals feedbackDetails.qnID sessionQnIDView}}
                 <label> 
                     <input  type="text" id="textQn" value="{{feedbackDetails.feedbackQn}}">
                 </label>
@@ -73,8 +68,8 @@
                         <textarea disabled type="text" id="paratextQn" value="Their answer"> </textarea>
                     </label>
                 {{/if}}  
-                {{#if equals feedbackDetails.qnType 'radioButtons'}}
 
+                {{#if equals feedbackDetails.qnType 'radioButtons'}}
                     {{#each feedbackDetails.options}} 
                         <input type="radio" id="radioButQn"> <input type="text" name="qnOptionsEd" value="{{this}}">
                         <a class = "fa fa-times-circle" id="removeRadioFieldEd"></a> <br>
@@ -86,11 +81,9 @@
                     {{/each}}         
                 
                     <a id="addRadioEd">Add item</a>
-
-
                 {{/if}}   
+
                 {{#if equals feedbackDetails.qnType 'radioButtonsInline'}}
-                
                     {{#each feedbackDetails.options}}  
                         <label class="radio-inline">
                           <input type="radio" id="optradio"><input type="text" name="qnOptionsEd" value="{{this}} ">
@@ -104,7 +97,9 @@
                         </label>
                         <a class = "fa fa-times-circle" id="removeRadioInlineFieldEd"></a> 
                     {{/each}} 
+                    <a id="addRadioEd">Add item</a>
                 {{/if}}  
+
                 {{#if equals feedbackDetails.qnType 'checkboxes'}}
 
                     {{#each feedbackDetails.options}} 
@@ -116,10 +111,9 @@
                         <input type="checkbox"> <input type="text" name="qnOptionsEd">
                         <a class = "fa fa-times-circle" id="removeCheckboxField"></a> <br>
                     {{/each}}         
-
-                    <a id="addCheckboxes">Add item</a>
-
+                    <a id="addCheckboxesEd">Add item</a>
                 {{/if}}  
+
                 {{#if equals feedbackDetails.qnType 'dropdown'}}
                     {{#each feedbackDetails.options}} 
                         <input type="text" name="qnOptionsEd" value="Type here">
@@ -321,13 +315,13 @@
         <label class="fb-option">
 
             <label class="radio-inline">
-              <input type="radio" id="optradio"><input type="text" name="qnOptions" value="Option 1">
+              <input type="radio" id="optradio"><input type="text" name="qnOptions" value="">
             </label>
             <a class = "fa fa-times-circle" id="removeRadioInlineField"></a> 
 
             {{#each addRadioInlineFields}} 
                 <label class="radio-inline">
-                  <input type="radio" id="optradio"><input type="text" name="qnOptions" value="Option 3">
+                  <input type="radio" id="optradio"><input type="text" name="qnOptions" value="">
                 </label>
                 <a class = "fa fa-times-circle" id="removeRadioInlineField"></a> 
             {{/each}}    

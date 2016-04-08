@@ -38,21 +38,21 @@ Template.course.events({
     var sessionId = document.getElementById("cUploadSession").value;
     console.log(sessionId);
     var files = document.getElementById("myFileInput").files;
-		
-		
-		console.log(Files);
+    
+    
+    console.log(Files);
     var fileObjId = Files.insert(files[0], function (err, fileObj) {
       if (err){
         // handle error
-				console.log(err);
+        console.log(err);
       } else {
         var userId = Meteor.userId();
-				fileObjId = fileObja._id;
+        fileObjId = fileObja._id;
 
       }
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
     });
-		
+    
     fileObjIdI = fileObjId._id;
     Meteor.call("createMaterial",type, courseId, sessionId, fileObjIdI);
   }
@@ -78,10 +78,10 @@ Template.formRespo.helpers({
   }
 });
 
-Template.addLSPFormForm.events({
+Template.addLSPTemplateForm.events({
   'click .addFormButton':function(event, template){
     var typeI = "formLSP";
-    var courseId = document.getElementById("formName").value;
+    var courseId = "placeholder"
     console.log(courseId);
     var sessionId = document.getElementById("categoryName").value;
     console.log(sessionId);
@@ -108,9 +108,9 @@ Template.addLSPFormForm.events({
 
     Files.insert(fileObjId, function (err, fileObj) {
       if (err){
-        // handle error
-        console.log(err);
+        toastr.error("Upload failed, please try again ...");
       } else {
+        toastr.success('Upload succeeded!');
         var userId = Meteor.userId();
         fileObjId = fileObja._id;
 
@@ -206,21 +206,18 @@ Template.trainerUploads.events({
     console.log(Files);
     var fileObjId = Files.insert(files[0], function (err, fileObj) {
       if (err){
-        // handle error
-        console.log(err);
+        toastr.error("Upload failed, please try again ...");
       } else {
-        console.log(fileObj);
-        // console.log(Files);
-        // console.log(fileObjId = fileObj._id);
+        toastr.success('Upload succeeded!');
       }
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
     });
     
-		console.log("bbbefore call");
+    console.log("bbbefore call");
     fileObjIdI = fileObjId._id;
-		console.log("before call");
+    console.log("before call");
     Meteor.call("createMaterial",type, courseId, sessionId, fileObjIdI);
-		console.log("!before call");
+    console.log("!before call");
   }
 });
 
@@ -251,7 +248,7 @@ Template.addNewLSPFormForm.events({
 
 'click .addFormButton':function(event, template){
     var typeI = "completedLSP";
-    var courseId = document.getElementById("formName").value;
+    var courseId = "placeholder";
     console.log(courseId);
     var sessionId = document.getElementById("categoryName").value;
     console.log(sessionId);
@@ -274,9 +271,9 @@ Template.addNewLSPFormForm.events({
 
     Files.insert(fileObjId, function (err, fileObj) {
       if (err){
-        // handle error
-        console.log(err);
+        toastr.error("Upload failed, please try again ...");
       } else {
+        toastr.success('Upload succeeded!');
         var userId = Meteor.userId();
         fileObjId = fileObja._id;
         // console.log(fileObj);

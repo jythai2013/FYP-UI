@@ -31,7 +31,12 @@ Template.feedbackQnMgmt.onRendered(function(){
 });
 
 Template.viewFeedbackSurvey.onRendered(function(){
-  var currentfb = getParameterByName("fbid");
+
+		var url =  window.location.href;
+		
+		var positionFirstEqual = url.indexOf('=');
+		//extracting course
+		var currentfb=courseGrp.substr(positionFirstEqual+1);
   Session.set('currentViewingfb', currentfb);
 });
 
@@ -106,27 +111,6 @@ Template.feedbackQnMgmt.helpers({
 	}
 });
 
-
-Template.viewFeedbackSurvey.helpers({
-
-	"viewFeedbackDetails": function() {
-		var fbId=Session.get("currentViewingfb");
-
-		var feedbackTitle = Feedback.findOne({_id:fbId});
-    		console.log(feedbackTitle);
-    	return feedbackTitle;
-	},
-
-	"viewFeedbackQns1": function() {
-		var fbId = Session.get("currentViewingfb");
-		console.log(fbId);
-		//console.log(fbId);
-		//var fbId=Session.set('currentfb', currentfb);
-		var feedbackQnOptions = Feedback.findOne({_id:fbId}).qnOptions;
-		// var feedbackQnOptions = Feedback.findOne({_id:fbId});
-		 return feedbackQnOptions;
-	}
-});
 
 Template.addFeedback.helpers({
 
@@ -666,15 +650,6 @@ Template.createQn.events({
 		 //var name = template.$(event.target).data('modal-template');
 		 e.preventDefault();
 		 
-
-
-
-
-		 //call save method
-
-
-
-
 		 
 		 var fields = Session.get('fields');
 		 var noOfFields = fields+1;
@@ -790,7 +765,6 @@ Template.addFeedback.events({
 			Details.text = "http://localhost:3000/CourseModule/doFeedbackSurvey?fbidAns="+feedbackAnsID+"&studID="+studentId;
 			Meteor.call ("scheduleMail", details);
 		});
-
 	}
 
 });

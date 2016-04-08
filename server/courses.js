@@ -86,14 +86,14 @@
 			// 	return false; //TODO: output error message in client
 			// }
 			
-			var theCourse = Courses.findOne({_id:courseID});
-			if(!Array.isArray(theCourse.courseTrainers)){
-				var emptyArray = new Array();
-				Courses.update({_id:_id},{$set:{courseTrainers:emptyArray}})
-			}
-
+			// var theCourse = Courses.findOne({_id:courseID});
+			// if(!Array.isArray(theCourse.courseTrainers)){
+			// 	var emptyArray = new Array();
+			// 	Courses.update({_id:_id},{$set:{courseTrainers:emptyArray}})
+			// }
       		addTrainersArr.forEach(function(trainer) {
-   				Courses.update(_id, {
+			console.log(trainer);
+				Courses.update(courseID, {
 	        		$push: {
 	          			courseTrainers: {
 	          				trainerID: trainer
@@ -101,7 +101,12 @@
 	        		}
 	        		
 	        	});
+   				
 			});
+			console.log(">> IN SERVER");
+
+
+			
 		},
 		
 		'createCourse': function createCourse(cName, cCode, cFee, cNoOfHours, cDescription, cType, cFLR, cPrereq, cGenre){
