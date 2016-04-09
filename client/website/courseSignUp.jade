@@ -19,6 +19,17 @@ template(name="registerForCourse")
 				h1.page-header Course Enrollment Form
 		form(role="form")
 		+courseInfoIndvSignup
+		.row
+			.col-lg-10.col-lg-offset-1
+				if errorWebsiteSignUpMessage
+					.alert.alert-danger
+						| #{errorWebsiteSignUpMessage}
+				if checkSignupSuccess
+					div.alert.alert-success
+						| Your application is being been processessed. 
+						br.
+						| Please check your email for a confirmation email. Details will be emailed to you in 1-3 working days
+						button.btn.btn-save(type="button", data-dismiss="modal", onclick="window.location.href='/website'") I'll check my email
 		+PersonalParticular	
 		p
 		+QualificationDetails
@@ -30,7 +41,6 @@ template(name="registerForCourse")
 				p.templateLineBreak
 				button#submitSignUpButton.btn.pull-right.admin-btn(data-toggle="modal", data-target="#alertEmail", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Enroll Me Now
 				a.btn.pull-right.admin-btn(onclick="window.history.back()") Back
-			+alertEmailForm
 
 template(name="courseInfoIndvSignup")
 	.row
@@ -62,20 +72,24 @@ template(name="courseInfoIndvSignup")
 							tr
 								th 
 									label Cost
-								td #{courseFee}
+								td 
+									| $#{courseFees}
 			
 
 	.row
 		.col-lg-10.col-lg-offset-1
-			.form-group
-				label.col-sm-2.control-label Available Session
-				.col-sm-6
-					label.radio
-						input#group(type="radio", name="group", value="Class 1", checked="")
-						| Class 1 (Wednesdays, 13:00 to 15:00)
-					label.radio
-						input#group(type="radio", name="group", value="Class 2")
-						| Class 2 (Wednesdays, 15:30 to 17:00)
+			label.control-label Available Session
+				table(cellpadding="5")
+					each getClassesAvailable
+						tr
+							td
+								label.radio
+									input#group(type="radio", name="group", value="#{courseCode} #{grpNum}")
+									| #{grpNum} - (Every Wednesdays, #{startTime} to #{endTime}), From {{formatDateee startDate}} to {{formatDateee endDate}}
+					else
+						tr
+							th
+								| No Sessions Opened
 
 template(name="PersonalParticular")
 	.row
@@ -102,6 +116,9 @@ template(name="PersonalParticular")
 					label.radio-inline
 						input#pgender(type="radio", name="gender", value="female")
 						| Female
+				label.col-sm-2.control-label Mobile No. 
+				.col-sm-4
+					input#pmobNo.form-control(type="text", name="mobNo", placeholder="Mobile")
 
 	.row
 		.col-lg-10.col-lg-offset-1
@@ -135,31 +152,7 @@ template(name="PersonalParticular")
 				label.col-sm-2.control-label Nationality
 				.col-sm-4
 					select#pnationality.form-control(name="nationality")
-						option(value="Singapore")  Singapore
-						option(value="China") China
-						option(value="India") India
-						option(value="Indonesia")  Indonesia
-						option(value="Vietnam")  Vietnam
-	.row
-		.col-lg-10.col-lg-offset-1
-			.form-group
-				label.col-sm-2.control-label Postal Code
-				.col-sm-4
-					input#ppostalCode.form-control(type="text", name="postalCode", placeholder="Postal Code")
-				.col-sm-2
-				label.col-sm-2.control-label Residence No. 
-				.col-sm-2
-					input#presNo.form-control(type="text", name="resNo", placeholder="Home")
-
-	.row
-		.col-lg-10.col-lg-offset-1
-			.form-group
-				label.col-sm-2.control-label Residential Address
-				.col-sm-6
-					input#pAdd.form-control(type="text", name="pAddr" placeholder="Block Name, Street Name, Unit No.")
-				label.col-sm-2.control-label Mobile No. 
-				.col-sm-2
-					input#pmobNo.form-control(type="text", name="mobNo", placeholder="Mobile")
+						+nationalityList	
 
 	.row
 		.col-lg-10.col-lg-offset-1
@@ -170,17 +163,6 @@ template(name="PersonalParticular")
 				label.col-sm-2.control-label Office No. 
 				.col-sm-2
 					input#poffNo.form-control(type="text", name="offNo", placeholder="Office")
-
-	.row
-		.col-lg-10.col-lg-offset-1
-			.form-group
-				label.col-sm-2.control-label Proficiency In
-				.col-sm-4
-					select.form-control(name="language" id="planguage")
-						option(value="english")  Engish
-						option(value="chinese")  Mandarine
-						option(value="tamil") Tamil
-						option(value="others") Others
 
 template(name="QualificationDetails")
 	.row
@@ -209,10 +191,10 @@ template(name="EmergencyContact")
 			.form-group.has-warning
 				label.col-sm-2.control-label Name
 				.col-sm-4
-					input.form-control(type="text", id="NOKName", name="NOKName", placeholder="Next of Kin Name")
+					input.form-control(type="text", id="nokName", name="NOKName", placeholder="Next of Kin Name")
 				label.col-sm-2.control-label Relationship
 				.col-sm-4
-					Select#NOKrelationship.form-control(type="text", name="NOKrelatioship")
+					Select#nokRelationship.form-control(type="text", name="nokRelationship")
 						option(value="Employer") Employer
 						option(value="Family") Family
 						option(value="Friend") Friend
@@ -225,7 +207,7 @@ template(name="EmergencyContact")
 			.form-group.has-warning
 				label.col-sm-2.control-label Telephone No.
 				.col-sm-4
-					input.form-control(type="text", id="NOKTel", name="NOKTel", placeholder="Their Contact Number")
+					input.form-control(type="text", id="nokTel", name="nokTel", placeholder="Their Contact Number")
 
 template(name="alertEmailForm")
 	#alertEmail.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark

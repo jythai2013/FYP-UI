@@ -154,7 +154,9 @@ Template.registerForCourse.events({
 	 		obj.company = 				document.getElementById("pcompName").value;		
 	 		obj.officeNo = 				document.getElementById("poffNo").value;		
 	 		obj.password = mNo;
+	 		// var grpId = getRadioValue("group");
 	 		var grpId = document.getElementById("group").value;
+
 	 		obj.remarks = 			"Online Registration for " + grpId;
 			obj.userType = {learner:true};
 
