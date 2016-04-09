@@ -30,7 +30,7 @@ function feedbackData(question){
 // CASS's
 Template.displayFeedbackResults.onRendered(function drawingChart() { //create one template for each graph
     //clear the contents of the div, in the event this function is called more than once.
-    $('#displayFeedbackChart').empty();
+    $('#{_id}_displayFeedbackChart').empty();
 
      var url =  window.location.href;
         
@@ -42,7 +42,7 @@ Template.displayFeedbackResults.onRendered(function drawingChart() { //create on
         var feedbackTemplate = FeedbackAnswers.findOne({_id:fbidAns}).feedbackTemplateID;
 
 
-    for(i = 0; i < numQns.length; i++){
+    for(i = numQns.length; i < 0; i++){
         var obj = new Object();
         console.log(numQns[i]);
         obj.numQn = numQns[i];
