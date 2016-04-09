@@ -32,7 +32,8 @@
           <tbody>
             {{#each getStudentDetails classlist}}
               <tr>
-                <td>{{fullName}} {{../_id}}</td>
+                <!-- <td>{{fullName}} {{../_id}}</td> -->
+                <td>{{fullName}}</td>
                 <td>{{email}}</td>
                 <td class='action'>
                   <button class='btn btn-success' data-toggle="modal" data-target="#viewGrade{{_id}}" data-id="{{_id}}" title='Grades'><i class='icon-bar-chart'></i></button>
