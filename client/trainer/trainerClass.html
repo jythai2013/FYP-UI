@@ -55,6 +55,11 @@
           Course Materials
         </div>
         {{> tcCourseMaterials}}
+
+        <div class='panel-heading'>
+          Student Uploaded Assignments
+        </div>
+        {{> tAssignmentMaterials}}
       </div>
     </div>
   </div>
@@ -85,6 +90,30 @@
   </div>
 </template>
 
+<template name="tAssignmentMaterials">
+  <div class="table-responsive">
+    <table id="dataTables-example" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Assignment</th>
+          <th>Date of Upload</th>
+          <th>Download File</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each assignments}}
+          <tr> 
+            <td colspan="2">{{name}}</td>
+            <td>{{formatDate uploadedAt}}</td>
+            <td>
+              <a href="{{url download = true}}" class="button btn admin-btn">Download</a>
+            </td>
+          </tr> 
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>
 
 <template name="tcViewStudentGrade">
   <div class="modal" id="viewGrade{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

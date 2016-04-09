@@ -84,7 +84,7 @@ template(name="courseInfoIndvSignup")
 						tr
 							td
 								label.radio
-									input#group(type="radio", name="group", value="#{courseCode} #{grpNum}")
+									input#groupUserSignup(type="radio", name="groupUserSignup", value="#{courseCode} #{grpNum}")
 									| #{grpNum} - (Every Wednesdays, #{startTime} to #{endTime}), From {{formatDateee startDate}} to {{formatDateee endDate}}
 					else
 						tr

@@ -1,22 +1,3 @@
-  function getFromUrl(a) {
-  	var courseGrp =  Router.current().url;
-  	var positionFirstEqual = courseGrp.indexOf('=');
-	//extracting course
-	var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-	var positionOfAND = courseGrp.indexOf('&');
-	var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-
-	//extracting grpNum
-	var grpNumStr=courseGrp.substr(positionOfAND-1);
-	var positionSecondEqual = currentCourseGrp.indexOf('=');
-	var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-	console.log(currentGrpNum + "grpNum");
-
-	var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
-	console.log("GroupId " + group._id);
-	return group;
-}
-
 Template.studentUpload.helpers({
 	"countMyEnrolled" : function countMyEnrolled(e) {
 		var tId = Meteor.user()._id;
@@ -52,11 +33,11 @@ Template.studentUpload.helpers({
 	    return array;
 	}
 });
+
 Template.studentCourseMaterial.helpers({
 	uploads:function(){
 		var a = Files.find({type: "course"});
-		var fileList = Materials.find({type:"groups"});
-		var fileList2 = Materials.find({type: "course"});
+		var fileList = Materials.find({course: this.courseCode});
 		console.log(fileList);
 		var a = new Array();
 
@@ -65,13 +46,6 @@ Template.studentCourseMaterial.helpers({
 			a.push(Files.findOne(item.fileName));
 			console.log(item);
 		});
-
-		fileList2.forEach(function(item, index){
-			console.log(item.fileName);
-			a.push(Files.findOne(item.fileName));
-			console.log(item);
-		});
-
 		console.log(a);
 		return a;
 	}
@@ -122,15 +96,6 @@ Template.studentGrades.helpers({
 
 Template.studentAttendence.helpers({
 	"getUrl" : function saGetUrl(){
-		var courseId = this._id;
-    	console.log("studentGrades.js (getGrade) >>> " + courseId);
-	// 	// Session.set('trainerClass', group);
-	// 	return group;
-	}
-});
-
-Template.studentCourseMaterial.helpers({
-	"getUrl" : function scGetUrl(){
 		var courseId = this._id;
     	console.log("studentGrades.js (getGrade) >>> " + courseId);
 	// 	// Session.set('trainerClass', group);

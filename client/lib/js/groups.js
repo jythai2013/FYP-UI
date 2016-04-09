@@ -47,11 +47,11 @@ Template.addClassForm.events({
 		var stringSDate = document.getElementById("classListNewStartDate").value;
 		var stringEDate = document.getElementById("classListNewEndDate").value;
 
-		var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
-		var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
+		// var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
+		// var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
 
-		obj.startDate = SDate;
-		obj.endDate = EDate;
+		obj.startDate = stringSDate;
+		obj.endDate = stringEdate;
 		obj.venue = document.getElementById("classListVenue").value;
 		var trainId = document.getElementById("classListTrainers").value;
 		obj.courseTrainers = {trainerId: trainId};
@@ -350,13 +350,13 @@ Template.addClass.events({
 		console.log(stringSDate);
 		var stringEDate = document.getElementById("gNewEndDate").value;
 
-		var SDate = new Date(moment(stringSDate,"DD-MM-YYYY").format());
-		console.log(stringSDate);
-		var EDate = new Date(moment(stringEDate,"DD-MM-YYYY").format());
-		// var EDate = stringEDate;
+		// var SDate = new Date(moment(stringSDate,"DD-MM-YYYY").format());
+		// console.log(stringSDate);
+		// var EDate = new Date(moment(stringEDate,"DD-MM-YYYY").format());
+		// // var EDate = stringEDate;
 
-		obj.startDate = SDate;
-		obj.endDate = EDate;
+		obj.startDate = stringSDate;
+		obj.endDate = stringEDate;
 		obj.venue = document.getElementById("gVenue").value;
 		var trainId = document.getElementById("gTrainers").value;
 		console.log(trainId);
@@ -486,12 +486,12 @@ Template.addClassForm.events({
 		var stringSDate = document.getElementById("classListNewStartDate").value;
 		var stringEDate = document.getElementById("classListNewEndDate").value;
 
-		var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
-		var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
+		// var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
+		// var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
 
 
-		obj.startDate = document.SDate;
-		obj.endDate = document.EDate;
+		obj.startDate = stringSDate;
+		obj.endDate = stringEDate;
 		obj.venue = document.getElementById("classListVenue").value;
 		var trainId = document.getElementById("classListTrainers").value;
 		obj.courseTrainers = {trainerId: trainId};

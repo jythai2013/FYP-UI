@@ -124,6 +124,14 @@ Template.addStudentAcctForm.events({
 Template.registerForCourse.events({
 	"click #submitSignUpButton" : function createStudentEventHandler(e, template) {
 		console.log("Sys: Collect Student Information");
+		// var grpId = getRadioValue("groupUserSignup");
+		// console.log("a : " + grpId);
+		// console.log("1231");
+		// var gender = getRadioValue("pgender");
+
+		// console.log("b : " + gender);
+		// console.log("asds");
+
 		try {
 
 			//TODO: Validation of input		
@@ -154,7 +162,7 @@ Template.registerForCourse.events({
 	 		obj.company = 				document.getElementById("pcompName").value;		
 	 		obj.officeNo = 				document.getElementById("poffNo").value;		
 	 		obj.password = mNo;
-	 		// var grpId = getRadioValue("group");
+	 		// var grpId = getRadioValue("groupUserSignup");
 	 		var grpId = document.getElementById("group").value;
 
 	 		obj.remarks = 			"Online Registration for " + grpId;

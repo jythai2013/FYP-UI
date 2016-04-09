@@ -34,6 +34,15 @@ Template.trainerUploads.helpers({
   "trainerOngoingCourses" : function findTrainerUploads(e) {
     var a = getTrainerOngoingCourse();
     return a;
+  },
+
+  "getCourseName" : function retrieveCourseNameTU(cCode) {
+    var a = Courses.findOne({"courseCode": cCode});
+    if (a  === undefined){
+      return "";
+    } else {
+      return a.courseName;
+    }
   }
 });
 Template.tcCourseMaterials.helpers({  

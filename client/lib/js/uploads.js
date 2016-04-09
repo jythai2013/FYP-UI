@@ -5,10 +5,10 @@ Template.course.helpers({
   counter: function () {
     return Session.get("counter");
   },
-  uploads:function(){
+ uploads:function(){
     var a = Files.find({type: "course"});
-    var fileList = Materials.find({type:"groups"});
-    var fileList2 = Materials.find({type: "course"});
+    var fileList = Materials.find({course: this.courseCode});
+    // var fileList2 = Materials.find({type: "course"});
     // console.log(fileList);
     var a = new Array();
 
@@ -18,11 +18,11 @@ Template.course.helpers({
       // console.log(item);
     });
 
-    fileList2.forEach(function(item, index){
-      console.log(item.fileName);
-      a.push(Files.findOne(item.fileName));
-      // console.log(item);
-    });
+    // fileList2.forEach(function(item, index){
+    //   console.log(item.fileName);
+    //   a.push(Files.findOne(item.fileName));
+    //   // console.log(item);
+    // });
 
     // console.log(a);
     return a;
@@ -129,9 +129,10 @@ Template.studentUpload.events({
     try {
 
       event.preventDefault();
-      var type = "groups";
 
+      //var e is the group unique ID string
       var e = document.getElementById("courseCode");
+      var type = e;
       var courseIdI = e.options[e.selectedIndex].value;
       var groupList = Groups.find({_id: courseIdI}).fetch();
 
@@ -140,7 +141,7 @@ Template.studentUpload.events({
       var courseId = groupList[0].courseCode;
 
       console.log(courseId);
-      var sessionId = groupList[0].grpNum;
+      var sessionId = Meteor.user()._id;
       console.log(sessionId);
       var files = document.getElementById("attfileName").files;
       
