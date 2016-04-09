@@ -87,7 +87,7 @@
 			return user_id;
 		},
 		
-		'editLearnerAccount': function editLearnerAccount(sid, sRemark, sMobileNo, sProficiency, qualification, snokName, snokTel, snokReln){
+		'editLearnerAccount': function editLearnerAccount(sid, sRemark, sMobileNo, qualification, snokName, snokTel, snokReln, userIdName){
 			console.log(">>> EditLearnerAccount (server, createAccounts.js)");
 			console.log("dataRem-"+ sRemark);
 			console.log("dataMoNo-"+ sMobileNo);
@@ -99,11 +99,11 @@
 			Meteor.users.update(sid, { $set :{
 					'remarks': sRemark,
 					'mobileNo': sMobileNo,
-					'proficiency': sProficiency,
 					'highestQualification': qualification,
 					'nokName': snokName,
 					'nokTel': snokTel,
-					'nokReln': snokReln
+					'nokReln': snokReln,
+					'userIDType': userIdName
 				}	
 			});
 			console.log(">>> for " + sid);

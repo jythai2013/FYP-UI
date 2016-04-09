@@ -163,9 +163,6 @@ template(name="viewParticularsForm")
                   tr
                     td Name
                     td #{fullName}
-                    td ID Number
-                    td 
-                      #{userID}
                   tr
                     td Email
                     td 
@@ -174,6 +171,18 @@ template(name="viewParticularsForm")
                     td Mobile Number
                     td 
                       input#mobileNo.form-control(type='text', value="#{mobileNo}")
+                  tr
+                    td ID Type
+                    td 
+                      select.form-control(id="#{_id}_userIDType", name="userIDType", style="color:black")
+                        option(value="#{userIDType}") #{userIDType}
+                          option(disabled) ──────────
+                          option(value="NRIC") NRIC
+                          option(value="FIN") FIN
+                          option(value="PASSPORT NO") Passport No
+                    td ID Number
+                    td
+                      input.form-control(type='text', value="#{userID}", id='userID')
                   tr
                     td Nationality
                     td 
@@ -188,11 +197,12 @@ template(name="viewParticularsForm")
                         select.form-control(id='qualification', style="color:black")
                           option(value="#{qualification}") #{qualification}
                           option(disabled) ──────────
-                          option(value="0") PSLE
-                          option(value="1") O/N'Level
-                          option(value="2") A'Level
-                          option(value="3") Diploma
-                          option(value="4") Degree
+                          option(value="WPA") WPA
+                          option(value="PSLE") PSLE
+                          option(value="Secondary") O/N'Level
+                          option(value="A Level") A'Level
+                          option(value="Diplmoa") Diploma
+                          option(value="Degree") Degree
                   tr
                     td NOK Name
                     td 
@@ -200,16 +210,16 @@ template(name="viewParticularsForm")
                         input.form-control(type='text', id='nokName', value="#{nokName}")
                     td Relationship
                     td
-                    .form-group
-                        select.form-group(id='nokReln', style="color:black")
-                          option(value="#{nokReln}") #{nokReln}
-                          option(disabled) ────────── 
-                          option(value="Employer") Employer
-                          option(value="Spouse") Spouse
-                          option(value="Family") Family
-                          option(value="Others") Co-worker
-                          option(value="Relative") Relative
-                          option(value="Friend") Friend
+                      .form-group
+                          select.form-group(id='nokReln', style="color:black")
+                            option(value="#{nokReln}") #{nokReln}
+                            option(disabled) ────────── 
+                            option(value="Employer") Employer
+                            option(value="Spouse") Spouse
+                            option(value="Family") Family
+                            option(value="Others") Co-worker
+                            option(value="Relative") Relative
+                            option(value="Friend") Friend
                   tr
                     td NOK Contact
                     td

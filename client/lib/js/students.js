@@ -190,6 +190,7 @@ Template.viewParticularsForm.events({
 		//var nationality = document.getElementById("remarks").value;
 		var sMobileNo 		= $("#"+this._id+" #mobileNo")[0].value;
 		var qualification = $("#"+this._id+" #qualification")[0].value;
+		var userID = $("#"+this._id+" #userID")[0].value;
 		
 		// var scompName = document.getElementById("compName").value;
 		// var scompOfficeNo = document.getElementById("compOfficeNo").value;		
@@ -200,14 +201,13 @@ Template.viewParticularsForm.events({
 
 			console.log("Remarks-"+ sRemark);
 			console.log("MobileNo-"+ sMobileNo);
-			console.log("proficiency-"+ sProficiency);
 			console.log("qualitifation-"+ qualification);
 			console.log("name-"+ snokName);
 			console.log("tel-"+ snokTel);
 			console.log("reln-"+ snokReln);
 		
 		// sRemark, sMobileNo, sProficiency, qualification, snokName, snokTel, snokReln
-		Meteor.call("editLearnerAccount", this._id, sRemark, sMobileNo, sProficiency, qualification, snokName, snokTel, snokReln);
+		Meteor.call("editLearnerAccount", this._id, sRemark, sMobileNo, qualification, snokName, snokTel, snokReln, userID);
 		console.log(">> Completed");
 	}
 });
