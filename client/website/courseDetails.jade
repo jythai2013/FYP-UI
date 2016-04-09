@@ -13,30 +13,36 @@ template(name="websiteCourseDetails1")
 		body {
 			font-size: 16px;
 		}
-	#sectionPageWrapper(style="height: 100vh")
+		html {
+			background-color:#333333;
+		}
+	#sectionPageWrapper(style="margin-top:40px")
 		.row
 			.col-lg-10.col-lg-offset-1
 				h1.page-header Course Information
 		+websiteCourseDetailsForm1
 		.row
 			.col-lg-10.col-lg-offset-1
-				.form-group
-					label.col-sm-2.control-label Session Timings
-					.col-sm-6
-						| Class 1 (Wednesdays, 13:00 to 15:00)
-						.br
-						| Class 2 (Wednesdays, 15:30 to 17:00)
+				label.control-label Available Session
+				table(cellpadding="5")
+					each getClassesAvailable
+						tr
+							th(valign="top" style="margin-bottom: 5px;")
+								| #{grpNum} - 
+							td
+								| (Every Wednesdays, #{startTime} to #{endTime}), From {{formatDateee startDate}} to {{formatDateee endDate}}
+					else
+						tr
+							td
+							td
+								| No Sessions Opened
 
 		.row
 			.col-lg-10.col-lg-offset-1
+				h3 Description:
 				p #{courseDescription}
 				.br
-				p Weightage and Assignments:
-				ul
-					li Assembly and Test (40%)
-					li Practical (40%)
-					li Theory (20%)
-
+				
 		.row
 			.col-lg-10.col-lg-offset-1
 				p.templateLineBreak
@@ -49,20 +55,31 @@ template(name="websiteCourseDetailsForm1")
 			.form-group
 				.col-lg-5
 					.pull-left
-					img(src="http://i.imgur.com/a8b7WaW.jpg" height="320px" width="450px" alt="CGM01v3")
+					div(style="height:320px; width:450px; border-radius: 25px;" id="{{whatColor courseType}}")
+						table(style="height:320px; width:450px; color:black; font-size: 150%;")
+							tr
+								td(rowspan="2" style="width=30%; font-size: xx-large;")
+									| #{courseCode}
+								td
+									| #{courseName}
+							tr
+								td
+									| #{courseType} Courses
+
 				.col-lg-6.col-lg-offset-1
 					input#disabledInput.form-control(type="hidden", name="cId" value="is101", disabled="")
 					input#disabledInput.form-control(type="hidden", name="cName" value="WPA Course 1", disabled="")
 					.pull-left
-						h3. #{courseCode}
-						h3. #{courseName}
-						.br #{courseType}
 						.br(style="margin-bottom: 20px")
-						label Lesson Schedule 
-						.br From 1st January 2016 to 31st July 2016
+						label Total No. of Hours before Completion
+						.br #{courseNoOfHours}
 						.br
-						label No. of Sessions 
-						.br 30
+						label Genre 
+						.br #{genre}
+						label Student to Teacher Ratio 
+						.br #{courseFLR}
+						label Fees 
+						.br $#{courseFees}
 
 
 

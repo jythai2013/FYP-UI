@@ -46,4 +46,10 @@ Template.addAnnouncement.helpers(
     return Session.get('addTAnnouncementSuccessMessage') 
 )
 
+#WEBSITE > Signup
+Template.registerForCourse.helpers(
+  errorWebsiteSignUpMessage: () ->
+    return Session.get('errorWebsiteSignUpMessage')
+)
+
 

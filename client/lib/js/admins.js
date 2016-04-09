@@ -1,7 +1,7 @@
 function getRadioValue(theRadioGroup)
 {
     var elements = document.getElementsByName(theRadioGroup);
-    for (var i = 0, l = elements.length; i < l; i++)
+    for (var i = 0, l = elements.length; i < l; i)
     {
         if (elements[i].checked)
         {
@@ -36,6 +36,41 @@ Template.websiteCourseDetailsForm1.helpers({
 		}
 	}
 });
+
+Template.courseInfoIndvSignup.helpers({
+ 	'getClassesAvailable': function getClassesAvailable1(e) {
+ 		var groups = Groups.find({courseCode: this.courseCode}).fetch();
+ 		console.log("retrieve #ofGroups:" + groups.length);
+ 		return groups;
+ 	}
+ });
+ 
+ Template.websiteCourseDetails1.helpers({
+ 	'getClassesAvailable': function getClassesAvailable1(e) {
+ 		var groups = Groups.find({courseCode: this.courseCode}).fetch();
+ 		console.log("retrieve #ofGroups:" + groups.length);
+ 		return groups;
+ 	}
+ });
+
+ Template.websiteCourseDetails1.helpers({
+ 	'retrievePrereq': function getWebsitePreReq(e) {
+ 		
+ 	}
+ }); 
+
+Template.registerForCourse.helpers({
+	'checkSignupSuccess': function checkSignupSuccess(e) {
+ 		console.log(Session.get('displayAlertWebsite'));
+ 		if (Session.get('displayAlertWebsite') !== undefined){
+ 			Session.set('displayAlertWebsite',false);
+ 			return true;
+ 		} else {
+ 			return false;
+ 		}
+	}
+});
+ 
 
 // ADMIN ///////////////////////////////////////////////////////////////////////
 Template.topbar.helpers({
@@ -98,7 +133,7 @@ Template.profilePage.events({
 	"click #editAdminProfileButton" : function editAdminProfileAccount(e) {
 		var aid = this._id;
 		var mobileNo = document.getElementById("acctCell").value;
-		console.log("Check : " + this.fullName + ", " + this.userType.trainer);
+		// console.log("Check : " + this.fullName + ", " + this.userType.trainer);
 		console.log(this.userType.trainer !== undefined);
 		var isTrainer = true;
 		if (this.userType.trainer === undefined){
@@ -125,7 +160,7 @@ Template.viewAdminParticulars.events({
 		var aid = this._id;
 		var mobileNo = document.getElementById(aid+"_editMobileNo").value;
 		var isTrainer = document.getElementById(aid+"_editIsTrainer").value;
-		console.log(aid + " " +mobileNo + " " + isTrainer);
+		console.log(aid + " " + mobileNo + " " + isTrainer);
 		Meteor.call("editAdminAccount", aid, mobileNo, isTrainer, function (err, result) {
       		if (!err) {
 				// If run is okay
