@@ -13,6 +13,9 @@ template(name="registerForCourse")
 		body {
 			font-size: 16px;
 		}
+		html{
+			background-color: #333333;
+		}
 	#sectionPageWrapper
 		.row
 			.col-lg-10.col-lg-offset-1
@@ -24,56 +27,70 @@ template(name="registerForCourse")
 				if errorWebsiteSignUpMessage
 					.alert.alert-danger
 						| #{errorWebsiteSignUpMessage}
-				if checkSignupSuccess
+				if equals true checkSignupSuccess
 					div.alert.alert-success
 						| Your application is being been processessed. 
 						br.
 						| Please check your email for a confirmation email. Details will be emailed to you in 1-3 working days
 						button.btn.btn-save(type="button", data-dismiss="modal", onclick="window.location.href='/website'") I'll check my email
-		+PersonalParticular	
-		p
-		+QualificationDetails
-		p
-		+EmergencyContact
+		if countGroups
+			+PersonalParticular	
+			p
+			+QualificationDetails
+			p
+			+EmergencyContact
 
-		.row
-			.col-lg-10.col-lg-offset-1
-				p.templateLineBreak
-				button#submitSignUpButton.btn.pull-right.admin-btn(data-toggle="modal", data-target="#alertEmail", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Enroll Me Now
-				a.btn.pull-right.admin-btn(onclick="window.history.back()") Back
+			.row
+				.col-lg-10.col-lg-offset-1
+					p.templateLineBreak
+					if countGroups
+						button#submitSignUpButton.btn.pull-right.admin-btn(data-toggle="modal", data-target="#alertEmail", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Enroll Me Now
+					else
+						button#submitSignUpButton.btn.pull-right.admin-btn(data-toggle="modal", data-target="#alertEmail", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;", disabled="disabled") Enroll Me Now
+					a.btn.pull-right.admin-btn(onclick="window.history.back()") Back
+		else
+			.row
+				.col-lg-10.col-lg-offset-1.col-sm-10
+					.alert.alert-danger
+						| Sorry, invalid course code
 
 template(name="courseInfoIndvSignup")
 	.row
 		.col-lg-10.col-lg-offset-1.col-sm-10
 			.panel.panel-primary
-				.table-responsive
-					table.table(style="background-color: black;")
-						tbody
-							tr
-								th 
-									label COURSE ID
+				table.table(style="background-color: black;")
+					tbody
+						tr
+							th 
+								label COURSE CODE
+							td
+								input#disabledInput.form-control(type="hidden", name="cId" value="#{courseCode}", disabled="")
+								| #{courseCode}
+						tr
+							th 
+								label COURSE NAME
+							td
+								input#disabledInput.form-control(type="hidden", name="cName" value="#{courseName}", disabled="")
+								| #{courseName}
+						tr
+							th  
+								label Description
+							td  #{courseDescription}
+						tr
+							th  
+								label Prerequisite
+							if equals prerequisite.[0] ""
+								td Nil
+							else
 								td
-									input#disabledInput.form-control(type="hidden", name="cId" value="#{courseCode}", disabled="")
-									| #{courseCode}
-							tr
-								th 
-									label COURSE NAME
-								td
-									input#disabledInput.form-control(type="hidden", name="cName" value="#{courseName}", disabled="")
-									| #{courseName}
-							tr
-								th  
-									label Description
-								td  #{courseDescription}
-							tr
-								th  
-									label Prerequisite
-								td  -
-							tr
-								th 
-									label Cost
-								td 
-									| $#{courseFees}
+									each retrievePrereq
+										| #{key}
+										.br
+						tr
+							th 
+								label Cost
+							td 
+								| $#{courseFees}
 			
 
 	.row
@@ -85,7 +102,7 @@ template(name="courseInfoIndvSignup")
 							td
 								label.radio
 									input#groupUserSignup(type="radio", name="groupUserSignup", value="#{courseCode} #{grpNum}")
-									| #{grpNum} - (Every Wednesdays, #{startTime} to #{endTime}), From {{formatDateee startDate}} to {{formatDateee endDate}}
+									| #{grpNum} - (Every #{retrieveDays}, #{startTime} to #{endTime}), From {{formatDateee startDate}} to {{formatDateee endDate}}
 					else
 						tr
 							th

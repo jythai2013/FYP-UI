@@ -2,16 +2,12 @@
 	<section id='sidebar'>
       <ul id='dock' style="margin-top:60px;">
         <li class='{{checkisActive "trainer"}} launcher'>
-          <i class='icon-dashboard'></i>
-          <a href="{{pathFor route='Trainer Portal'}}">Dashboard</a>
+          <i class='icon-table'></i>
+          <a href="{{pathFor route='Classlist - Trainer Portal'}}">Classes</a>
         </li>
         <li class= '{{checkisActive "announcement"}} launcher'>
           <i class='fa fa-bell-o'></i>
           <a href="{{pathFor route='Announcements - Trainer Portal'}}">Announcements</a>
-        </li>
-        <li class='{{checkisActive "classlist"}} launcher'>
-          <i class='icon-table'></i>
-          <a href="{{pathFor route='Classlist - Trainer Portal'}}">Classes</a>
         </li>
         <li class='{{checkisActive "uploads"}} launcher'>
           <i class='icon-file-text-alt'></i>

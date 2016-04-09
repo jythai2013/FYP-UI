@@ -30,7 +30,7 @@ template(name="websiteCourseDetails1")
 							th(valign="top" style="margin-bottom: 5px;")
 								| #{grpNum} - 
 							td
-								| (Every Wednesdays, #{startTime} to #{endTime}), From {{formatDateee startDate}} to {{formatDateee endDate}}
+								| (Every #{retrieveDays}, #{startTime} to #{endTime}), From {{formatDateee startDate}} to {{formatDateee endDate}}
 					else
 						tr
 							td
@@ -46,7 +46,10 @@ template(name="websiteCourseDetails1")
 		.row
 			.col-lg-10.col-lg-offset-1
 				p.templateLineBreak
-				a.btn.pull-right.admin-btn(href="/website/courseSignup?cCode=#{courseCode}", type="button", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Sign Up Now
+				if equals 0 getClassesAvailable
+					a.btn.pull-right.admin-btn(href="/website/courseSignup?cCode=#{courseCode}", type="button", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;", disabled="disabled") Sign Up Now
+				else
+					a.btn.pull-right.admin-btn(href="/website/courseSignup?cCode=#{courseCode}", type="button", style="margin-left:10px; margin-bottom: 30px; margin-right: 5px;") Sign Up Now
 				a.btn.pull-right.admin-btn(onclick="window.history.back()") Back
 
 template(name="websiteCourseDetailsForm1")
@@ -73,6 +76,16 @@ template(name="websiteCourseDetailsForm1")
 						.br(style="margin-bottom: 20px")
 						label Total No. of Hours before Completion
 						.br #{courseNoOfHours}
+						.br
+						label Pre-requisite
+						.br 
+						if equals prerequisite.[0] ""
+							td Nil
+						else
+							tr
+								each retrievePrereq
+									| #{key}
+									.br
 						.br
 						label Genre 
 						.br #{genre}

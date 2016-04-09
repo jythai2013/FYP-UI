@@ -1,15 +1,3 @@
-function getRadioValue(theRadioGroup)
- {
-     var elements = document.getElementsByName(theRadioGroup);
-     for (var i = 0, l = elements.length; i < l; i)
-     {
-         if (elements[i].checked)
-         {
-             return elements[i].value;
-         }
-     }
- }
-
 // STUDENT ///////////////////////////////////////////////////////////////////////
 Template.studentIndex.helpers({
 	"displayStudentName" : function displayTrainerName(e) {
@@ -124,14 +112,9 @@ Template.addStudentAcctForm.events({
 Template.registerForCourse.events({
 	"click #submitSignUpButton" : function createStudentEventHandler(e, template) {
 		console.log("Sys: Collect Student Information");
-		// var grpId = getRadioValue("groupUserSignup");
-		// console.log("a : " + grpId);
-		// console.log("1231");
-		// var gender = getRadioValue("pgender");
-
-		// console.log("b : " + gender);
-		// console.log("asds");
-
+		Session.set('errorWebsiteSignUpMessage', false);
+		delete Session.keys['displayAlertWebsite'];
+		
 		try {
 
 			//TODO: Validation of input		
@@ -141,11 +124,7 @@ Template.registerForCourse.events({
 	 		var fullName = fName + " " + lName;
 	 		obj.fullName = fullName;
 
-	 		var isGender = getRadioValue("pgender");
-	 		var gender = "male";	
-	 		if (isGender !== "male") {
-	 			gender="female";
-	 		}
+	 		var gender= $(template.find('input:radio[id=pgender]:checked')).val();
 	 		var mNo = document.getElementById("pmobNo").value;
 	 		obj.gender = gender;
 	 		obj.dateOfBirth = 					document.getElementById("pDOB").value;
@@ -162,8 +141,7 @@ Template.registerForCourse.events({
 	 		obj.company = 				document.getElementById("pcompName").value;		
 	 		obj.officeNo = 				document.getElementById("poffNo").value;		
 	 		obj.password = mNo;
-	 		// var grpId = getRadioValue("groupUserSignup");
-	 		var grpId = document.getElementById("group").value;
+	 		var grpId = $(template.find('input:radio[id=groupUserSignup]:checked')).val();
 
 	 		obj.remarks = 			"Online Registration for " + grpId;
 			obj.userType = {learner:true};
@@ -174,10 +152,12 @@ Template.registerForCourse.events({
 	      		if (err) {
 					console.log(">>>Course Signup FAILURE MSG");
 				    Session.set('errorWebsiteSignUpMessage', 'Course Signup Failed: ' + err.reason);
+				    $('html,body').scrollTop(0);
 				    Meteor.setTimeout(function(){Session.set('errorWebsiteSignUpMessage', false);}, 6000);
 				} else {
 					console.log(">>>Course Signup SUCCESS, display alert");
 					Session.set('displayAlertWebsite', true);
+					$('html,body').scrollTop(0);
 				}
 			});
 			console.log("Sys: Student Information Saved");

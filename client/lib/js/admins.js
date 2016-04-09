@@ -24,19 +24,6 @@ Template.courses.helpers({
 	}
 });
 
-Template.websiteCourseDetailsForm1.helpers({
-	'whatColor': function whatColor(type) {
-		console.log(type);
-		if(type === "WSQ"){
-			return "coursePP";
-		} else if (type=="LSP"){
-			return "courseBB";
-		} else {
-			return "courseGG";
-		}
-	}
-});
-
 Template.courseInfoIndvSignup.helpers({
  	'getClassesAvailable': function getClassesAvailable1(e) {
  		var groups = Groups.find({courseCode: this.courseCode}).fetch();
@@ -50,25 +37,92 @@ Template.courseInfoIndvSignup.helpers({
  		var groups = Groups.find({courseCode: this.courseCode}).fetch();
  		console.log("retrieve #ofGroups:" + groups.length);
  		return groups;
+ 	},
+
+ 	'retrieveDays': function getWebsiteDaysCourseDetails(e) {
+ 		var day = this.days;
+ 		var returnDays = "";
+ 		for (i= 0; i < day.length; i++){
+ 			returnDays += day[i];
+ 			if ((i+1) !== day.length){
+ 				returnDays += ",";
+ 			}
+ 		}
+ 		return returnDays;
  	}
  });
 
- Template.websiteCourseDetails1.helpers({
- 	'retrievePrereq': function getWebsitePreReq(e) {
- 		
+  Template.websiteCourseDetailsForm1.helpers({
+ 	'retrievePrereq': function getWebsitePreReqCourseDetails(e) {
+ 		var pReq = this.prerequisite;
+ 		if (pReq !== undefined){
+	 		var array = [];
+	 		for (i= 0; i < pReq.length; i++){
+	 			array.push({key: pReq[i]});
+	 		}
+	 		console.log(array);
+	 		return array;
+	 	}
+ 	},
+
+ 	'whatColor': function whatColor(type) {
+		console.log(type);
+		if(type === "WSQ"){
+			return "coursePP";
+		} else if (type=="LSP"){
+			return "courseBB";
+		} else {
+			return "courseGG";
+		}
+	}
+ }); 
+
+ Template.courseInfoIndvSignup.helpers({
+ 	'retrievePrereq': function getWebsitePreReqCourseSignup(e) {
+ 		var pReq = this.prerequisite;
+ 		if (pReq !== undefined){
+	 		var array = [];
+	 		for (i= 0; i < pReq.length; i++){
+	 			array.push({key: pReq[i]});
+	 		}
+	 		console.log(array);
+	 		return array;
+ 		}
+ 	},
+
+ 	'retrieveDays': function getWebsiteDaysCourseSignup(e) {
+ 		var day = this.days;
+ 		var returnDays = "";
+ 		for (i= 0; i < day.length; i++){
+ 			returnDays += day[i];
+ 			if ((i+1) !== day.length){
+ 				returnDays += ",";
+ 			}
+ 		}
+ 		return returnDays;
  	}
  }); 
 
 Template.registerForCourse.helpers({
 	'checkSignupSuccess': function checkSignupSuccess(e) {
  		console.log(Session.get('displayAlertWebsite'));
- 		if (Session.get('displayAlertWebsite') !== undefined){
- 			Session.set('displayAlertWebsite',false);
+ 		var a = Session.get('displayAlertWebsite');
+ 		delete Session.keys['displayAlertWebsite'];
+ 		if (a!== undefined){
  			return true;
  		} else {
  			return false;
  		}
+	},
+
+	'countGroups': function checkDisplayEntrollmentForm(e) {
+		if (this._id === undefined){
+			return false;
+		} else {
+			return true;
+		}
 	}
+
 });
  
 

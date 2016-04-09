@@ -1,3 +1,16 @@
+// SIDEBAR ONLY
+Template.studentSidebar.helpers({
+  //set active
+  'checkisActive': function studentUrl(hName, tName){
+    if (hName === tName){
+      return "active";
+    } else {
+      return "";
+    }
+  }
+});
+
+// UPLOAD
 Template.studentUpload.helpers({
 	"countMyEnrolled" : function countMyEnrolled(e) {
 		var tId = Meteor.user()._id;
