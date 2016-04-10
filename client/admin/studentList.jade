@@ -178,10 +178,10 @@ template(name="viewParticularsForm")
                     td 
                       select.form-control(id="#{_id}_userIDType", name="userIDType", style="color:black")
                         option(value="#{userIDType}") #{userIDType}
-                          option(disabled) ──────────
-                          option(value="NRIC") NRIC
-                          option(value="FIN") FIN
-                          option(value="PASSPORT NO") Passport No
+                        option(disabled) ──────────
+                        option(value="NRIC") NRIC
+                        option(value="FIN") FIN
+                        option(value="PASSPORT NO") Passport No
                     td ID Number
                     td
                       input.form-control(type='text', value="#{userID}", id='userID')
