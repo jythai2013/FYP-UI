@@ -83,8 +83,10 @@ Template.addStudentAcctForm.events({
 		//TODO: Validation of input		
 		var obj = new Object();
 		obj.fullName = 		document.getElementById("sName").value;
-		var gender = $(template.find('input:radio[id=gender]:checked')).val();
- 		obj.gender = gender;
+		// 	 		var grpId = $(template.find('input:radio[id=groupUserSignup]:checked')).val();
+		// var gender = $(template.find('input:radio[id=gender]:checked')).val();
+ 		console.log("THis gender " + gender);
+ 		obj.gender = "male";
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
 		obj.email = 				document.getElementById("email").value;
