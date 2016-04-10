@@ -216,11 +216,29 @@ template(name="addClass")
                           option(value="#{fac}") #{fac}
                 tr  
                   th Trainers
-                  td(colspan="3")
+                  td
                     .form-group.input-group
-                      select(id="gTrainers", style="color: black")
+                      select(name="newClassTrainers", style="color: black")
                         each courseTrainers2
                           option(value="#{_id}") #{fullName}
+                  td  
+                    button#addMoreTrainersToClass.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                      i.fa.fa-plus 
+                each noOfTrainers
+                  tr 
+                    th 
+                    td
+                      .form-group()
+                        select(name="newClassTrainers", style="color: black; width: 100%")
+                          each courseTrainers3
+                            option(value="#{_id}") #{fullName} 
+                    td  
+                      button#addMoreTrainersToClass.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                        i.fa.fa-plus 
+                
+                      button#removeTrainersFromClass.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                        i.fa.fa-minus
+                             
                     
           // /.table-responsive
         .modal-footer
