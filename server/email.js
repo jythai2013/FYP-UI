@@ -84,22 +84,22 @@ function sendMail(details) {
 	// alert("You are not an admin"); //TODO: make a nice message
 	// return false;
 	// // }
-	// to = details.to;
-	// from = details.from;
-	// subject = details.subject;
-	// text = details.text;
-	// check([to, from, subject, text], [String]);
+	to = details.to;
+	from = details.from;
+	subject = details.subject;
+	text = details.text;
+	check([to, from, subject, text], [String]);
 
 	// // this.unblock();
 
-	// Email.send({
-	// 	to: to,
-	// 	from: from,
-	// 	subject: subject,
-	// 	text: text
-	// });
+	Email.send({
+		to: to,
+		from: from,
+		subject: subject,
+		text: text
+	});
 	
-	console.log("Email Sent")
+	console.log("Email Sent to \n" + to + "\n regarding \n" + subject + "\n containing the text \n" + text)
 	FutureTasks.remove(details._id);
 }
 
