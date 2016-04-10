@@ -236,27 +236,26 @@ Template.tcViewStudentGrade.helpers({
   }
 });
 
+Template.tcViewStudentAttendence.helpers({
+  "studentAttendenceDetails" : function sAttendenceStudentDetails(cList) {
+    var studId = this._id;
+    var url =  Router.current().url;
+    var positionFirstEqual = url.indexOf('=');
+    //problem starts here
+    //extracting course
+    var currentCourseGrp=url.substr(positionFirstEqual+1);    
+    var positionOfAND = url.indexOf('&');
+    var currentCourse=url.substring(positionFirstEqual+1, positionOfAND);
+    //extracting grpNum
+    var grpNumStr=url.substr(positionOfAND+1);
+    var positionSecondEqual = grpNumStr.indexOf('=');
+    var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
+    var grpId = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id;
 
+    // var attendenceObj = Groups.findOne({_id: studId}).grades[grpId];
 
-// // Sidebar
-// Template.trainerSidebar.helpers({
-// 	'isActive' : function(browserN) {
-
-// 		var browserUrl =  window.location.href;
-// 		var positionFirstEqual = browserUrl.indexOf('/');
-// 		var removeDomain=browserUrl.substr(positionFirstEqual+1);
-// 		var positionSecondEqual = removeDomain.indexOf('/');
-// 		console.log("url "browerURL.length);
-// 		console.log("url "positionSecondEqual);
-// 		var browerName=removeDomain.substr(positionSecondEqual+1);
-// 		console.log(browerName " equals "browserN);
-// 		var a = browerName == browserN;
-// 		console.log(a);
-// 		if (browerName === browserN){
-// 			return "active";
-// 		} else {
-// 			return "";
-// 		}
-// 	}
-// });
-// 		
+    // result = [];
+    // for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
+    // return result;
+  }
+});
