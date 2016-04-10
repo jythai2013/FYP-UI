@@ -214,26 +214,25 @@ Template.courseLSPForm.events({
 		
 		genP(myData);
 		//TODO: update the mongo. discard everything else, save the ratings
-		//this is the thing that has .options
-		//var feedbackAnswerObj = FeedbackAnswers.findOne({assessedOn:courseCode});
-		//feedbackAnswerObj.options;
+		var feedbackAnswerObj = FeedbackAnswers.findOne({assessedOn:coursecode});
 		LSP = Session.get("theLSPSurveyForTheCourse");
+		console.log(LSP);
+		LSP["questionsAnswers"] = {};
+		LSP["addtionalComments"] = "";
+		//document.getElementsByName("qnOptions"+a)[2]
+		
 		var sum = 0;
 		var num = 0;
-		for(i=0;i<Session.get("theLSPSurveyForTheCourse").options.length;i++){
-			num += LSP.options[i];
-			sum += LSP.options[i]*i;
-		}
-		//console.log("sum = " + sum);
-		//console.log("num = " + num);
-		var avg = sum/num;
-		if (isNaN(avg)) avg = "0";
-		var rounded = Math.round(avg);
-		LSP.options.forEach(function(val,ind,arr){
-			val=0;
-			if(ind==rounded) val = 1;
-		});
-		Meteor.call("updateLSPForMattThing", LSP, this._id)
+		feedbackAnswerObj.options.forEach(function(question,questionNumber,array){
+			var options = document.getElementsByName("qnOptions"+(questionNumber+1));
+			for(var i = 0; i < options.length; i++){
+				var checked = options[i].checked;
+				if(checked) LSP.questionsAnswers["Qn"+(questionNumber+1)] = options[i].value
+			}
+		})
+		LSP["addtionalComments"] = document.getElementById("courseAddComments").value;
+		console.log(LSP)
+		Meteor.call("updateLSPForMattThing", LSP, LSP._id)
 	}
 });
 
