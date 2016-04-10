@@ -250,7 +250,7 @@ Template.tcViewStudentAttendence.helpers({
     var grpNumStr=url.substr(positionOfAND+1);
     var positionSecondEqual = grpNumStr.indexOf('=');
     var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
-    var grpId = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id;
+    var grpAttendenceObj = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum,}).attendance;
 
     // var attendenceObj = Groups.findOne({_id: studId}).grades[grpId];
 

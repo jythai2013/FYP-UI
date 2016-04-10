@@ -21,7 +21,6 @@ template(name="trainerList")
                   tr
                     th Name
                     th Particulars
-                    th Credentials
                     th Remarks
                 tbody
                   each trainers
@@ -31,47 +30,12 @@ template(name="trainerList")
                         a.btn.admin-btn.bt-sn(data-target="#viewTrainerDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                         +viewTrainerParticulars
                       if isAlsoAdmin
-                        td
-                        td Administrator
+                        td a.btn.admin-btn.bt-sn(data-target="#goDeleteTrainer#{_id}", data-toggle="modal", data-id="#{_id}") Delete
+                          +deleteTrainerForm
                       else
                         td
-                          a.btn.admin-btn.bt-sn(data-target="#viewCV#{_id}", data-toggle="modal", data-id="#{_id}") Edit Credentials
-                          +viewCVForm
-                        td
-                          a.btn.admin-btn.bt-sn(data-target="#goDeleteTrainer#{_id}", data-toggle="modal", data-id="#{_id}") Delete
-                          +deleteTrainerForm 
+                          Administrator 
 
-
-template(name="viewCVForm")
-  div.modal(id="viewCV#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close(type="button", data-dismiss="modal", aria-hidden="true")
-          h4#myModalLabel.modal-title CV Detail
-        .modal-body
-          form(role="form", id="viewDetails", action="facilityResult", method="post")
-          .table-responsive
-            table#dataTables-example.table(style="background:#333")
-              tbody
-                tr
-                  th Name
-                  td
-                    #{fullName}
-                tr
-                  td CV Upload
-                  td IDK HOW :)
-                tr
-                  td Remarks
-                  td 
-                    input.form-control(type='text', id='remarks')
-                    | Remarks
-        .modal-footer
-          button#editTrainerAcct.btn.admin-btn.btn-sn(data-toggle="modal", data-id='#{_courseCode}',data-target="#deleteTrainer")
-             | Save Changes
-      // /.modal-content
-    // /.modal-dialog
-  // /.modal
 
 template(name="viewTrainerParticulars")
   div.modal(id="viewTrainerDetails#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark

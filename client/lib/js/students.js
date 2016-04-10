@@ -57,14 +57,13 @@ Template.studentList.helpers({
 		//var studentMore = Session.get("studentSearchMore");
 		//var studentCaps = Session.get("studentSearchCaps");
 		if(studentName == null || studentName == undefined || studentName.length <= 0){
-			return Meteor.users.find({userType:{"learner":true}});
+			return Meteor.users.find({userType:{learner:true}}).fetch();
 		}
 		var regName = new RegExp(".*"+studentName+".*","i");
-		var v2 = Meteor.users.find({$or:[{"fullName":regName}], userType:{"learner":true}});
+		var v2 = Meteor.users.find({$or:[{"fullName":regName}], userType:{learner:true}}).fetch();
 		if(verbose){
 			console.log(regName);
 			console.log(v2);
-			console.log(v2.fetch());
 		}
 		return v2;
 	}
@@ -84,8 +83,10 @@ Template.addStudentAcctForm.events({
 		//TODO: Validation of input		
 		var obj = new Object();
 		obj.fullName = 		document.getElementById("sName").value;
-		var gender = $(template.find('input:radio[id=gender]:checked')).val();
- 		obj.gender = gender;
+		// 	 		var grpId = $(template.find('input:radio[id=groupUserSignup]:checked')).val();
+		// var gender = $(template.find('input:radio[id=gender]:checked')).val();
+ 		console.log("THis gender " + gender);
+ 		obj.gender = "male";
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
 		obj.email = 				document.getElementById("email").value;
