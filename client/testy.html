@@ -96,8 +96,18 @@
 
 <template name="testyRec">
 	
-	studeId<input type="text" id="htmlnode_studentId">
-	groupId<input type="text" id="htmlnode_groupId">
+	studeId
+	<select id="htmlnode_studentId"><br />
+		{{#each Students}}
+			<option value="{{_id}}">{{fullName}}</option>
+		{{/each}}
+	</select>
+	groupId
+	<select id="htmlnode_groupId"><br />
+		{{#each Groups}}
+			<option value="{{_id}}">{{courseCode}}</option>
+		{{/each}}
+	</select>
 	submit<input type="button" id="htmlnode_btn">
 	
 	<ul>

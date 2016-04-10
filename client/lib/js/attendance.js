@@ -55,7 +55,7 @@ Template.trainerUploadAttendance.events({
 			studentIds.forEach(function(studentId, index, arr){
 				var student = Meteor.users.findOne({_id:studentId});
 				students.push(student);
-				inData.push([++i, student.fullName, student._id, true]);
+				inData.push([++i, student.fullName, student.userID, true]);
 			});
 		}
 		var inWs_name = "Sheet1";

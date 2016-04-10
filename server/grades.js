@@ -5,7 +5,7 @@ Meteor.methods({
 		grades = inObj.grades;
 		console.log(inObj.groupID);
 		
-		var theUser = Meteor.users.findOne({_id:inObj.StudentID});
+		var theUser = Meteor.users.findOne({userID:inObj.StudentID});
 		// console.log(theUser)
 		
 		if(theUser.grades == undefined || theUser.grades == null){ theUser.grades = {}; }
@@ -26,7 +26,7 @@ Meteor.methods({
 		// console.log(inObj.StudentID)
 		// console.log(theUser.grades)
 		
-		Meteor.users.update({_id:inObj.StudentID}, theUser);
+		Meteor.users.update({userID:inObj.StudentID}, theUser);
 		// Meteor.users.update({inObj.StudentID}, {$set: {grades: grades}});
 		
 		//theUser.grades[groupId]["midterms"]

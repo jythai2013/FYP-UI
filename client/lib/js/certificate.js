@@ -302,8 +302,9 @@ Template.certificateStudentList.events({
 		aData.courseStart = thisGroup.startDate;
 		aData.courseEnd   = thisGroup.endDate  ;
 		var students = Session.get("certificateStudentListStudents");
+		console.log(students);
 		students.forEach(function(student){
-			// console.log(this);
+			console.log(this);
 			var myData={};
 			// try{
 			var groupId = thisGroup._id;
@@ -575,5 +576,5 @@ function genP(options){
 	doc.rect(119,240,70,1,'F');	
 	
 	// doc.output("datauri");
-	doc.save('test.pdf');
+	doc.save(options.courseName+" - "+options.fullName + '.pdf');
 }

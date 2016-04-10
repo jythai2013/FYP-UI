@@ -4,6 +4,16 @@ Template.testyRec.helpers({
 	}
 })
 
+Template.testyRec.helpers({
+	"Students":function(){
+		return Meteor.users.find({userType:{learner:true}})
+	},
+	
+	"Groups": function(){
+		return Groups.find({classlist:Session.get("testyRecstudentId")});
+	}
+});
+
 Template.testyRec.events({
 	"click #htmlnode_btn":function(evt){
 		evt.preventDefault();
@@ -21,5 +31,12 @@ Template.testyRec.events({
 		}
 		console.log("2");
 		return Session.get("recommendedCourses");
+	},
+	
+	"change #htmlnode_studentId":function(){
+		console.log("Change");
+		var a = document.getElementById("htmlnode_studentId");
+		var studentId = a.value;
+		Session.set("testyRecstudentId", studentId)
 	}
 })

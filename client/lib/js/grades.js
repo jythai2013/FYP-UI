@@ -52,7 +52,7 @@ Template.trainerUploadGrades.events({
 			studentIds.forEach(function(studentId, index, arr){
 				var student = Meteor.users.findOne({_id:studentId});
 				students.push(student);
-				inData.push([++i, student.fullName, student._id, "marks"]);
+				inData.push([++i, student.fullName, student.userID, "marks"]);
 			});
 		}
 		var inWs_name = "Sheet1";

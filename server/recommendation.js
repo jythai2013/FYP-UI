@@ -15,6 +15,7 @@ Meteor.methods({
 			recEngine.suggest(studentId, numberOfCoursesToRecommend, function(err,res) {
 				if (err) {console.log(err);}
 				else{
+					console.log("18");
 					console.log(res);
 					res.forEach(function(thCourseCode, indexxx, array){
 						var thCourse = Courses.findOne({courseCode:thCourseCode});
@@ -87,6 +88,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 		recEngine.suggest(studentId, numberOfCoursesToRecommend, function(err,res) {
 			if (err) {console.log(err);}
 			else{
+				console.log("91");
 				console.log(res);
 				res.forEach(function(thCourseCode, indexxx, array){
 					var thCourse = Courses.findOne({courseCode:thCourseCode});
@@ -164,6 +166,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 	finalResult = finalResult.filter(function (e, i, arr) {
     return arr.lastIndexOf(e) === i;
 	});
+	console.log("170");
  	console.log(finalResult);	
 	
 	//TODO: email the student
@@ -171,10 +174,11 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 	if(trySendMail){
 		details = {};
 		details.to = Meteor.users.findOne({_id:studentId});
-		details.from = "Matt";
+		details.from = "Sterling Training Hub";
 		details.subject = "Your next course with us!";
-		details.text = "TEXT";
+		details.text = "We have the following courses that you may be interested in:";
 		console.log("The details of the email are:");
+		console.log("");
 		console.log(details);
 		Meteor.call("sendMail", details);
 	}
