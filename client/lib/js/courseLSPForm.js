@@ -23,14 +23,14 @@ Template.courseLSPForm.onRendered(function(){
 	Session.set("currentLSPIdLSPForm2", lspid);
 	var theLSP = LSPSurvey.findOne({assessedOn:Session.get("currentCourseIDLSPForm2")});
 	if(theLSP != undefined){
-		cLSP = theLSP.courseId;
+		Session.set("theLSPSurveyForTheCourse", theLSP);
+		cLSP = theLSP.assessedOn;
 		console.log(cLSP);
 		if(cLSP.length > 0) {
 			Session.set("currentCourseIDLSPForm2", cLSP);
 			cLSP2 = cLSP;
 		}
 	}
-	Session.set("theLSPSurveyForTheCourse", theLSP);
 	
 		var courseId = Session.get("currentCourseIDLSPForm2");
 		var theCourse = Courses.findOne({_id:courseId});
@@ -214,10 +214,13 @@ Template.courseLSPForm.events({
 		
 		genP(myData);
 		//TODO: update the mongo. discard everything else, save the ratings
+		//this is the thing that has .options
+		//var feedbackAnswerObj = FeedbackAnswers.findOne({assessedOn:courseCode});
+		//feedbackAnswerObj.options;
 		LSP = Session.get("theLSPSurveyForTheCourse");
 		var sum = 0;
 		var num = 0;
-		for(i=0;i<this.options.length;i++){
+		for(i=0;i<Session.get("theLSPSurveyForTheCourse").options.length;i++){
 			num += LSP.options[i];
 			sum += LSP.options[i]*i;
 		}

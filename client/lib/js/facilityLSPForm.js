@@ -23,14 +23,14 @@ Template.facilityLSPForm.onRendered(function(){
 	var theLSP = LSPSurvey.findOne({assessedOn:Session.get("currentCourseIDLSPForm2")});
 	console.log(theLSP);
 	if(theLSP != undefined){
+		Session.set("theLSPSurveyForTheFacility", theLSP);
 		console.log(theLSP);
-		fLSP = theLSP.trainerId;
+		fLSP = theLSP.assessedOn;
 		console.log(fLSP);
 		if(fLSP != null && fLSP.length > 0) {
 			Session.set("currentFacilityIDLSPForm2", fLSP);
 		}
 	}
-	Session.set("theLSPSurveyForTheFacility", theLSP);
 });
 
 Template.facilityLSPRatings.helpers({
@@ -157,7 +157,7 @@ Template.facilityLSPForm.events({
 		LSP = Session.get("theLSPSurveyForTheFacility");
 		var sum = 0;
 		var num = 0;
-		for(i=0;i<this.options.length;i++){
+		for(i=0;i<Session.get("theLSPSurveyForTheFacility").options.length;i++){
 			num += LSP.options[i];
 			sum += LSP.options[i]*i;
 		}
