@@ -131,17 +131,11 @@ Template.studentUpload.events({
       event.preventDefault();
 
       //var e is the group unique ID string
-      var e = document.getElementById("courseCode");
-      var type = e;
-      var courseIdI = e.options[e.selectedIndex].value;
-      var groupList = Groups.find({_id: courseIdI}).fetch();
-
-
+      var sessionId = document.getElementById("courseCode").value;
+      var groupList = Groups.find({_id: sessionId}).fetch();
+      var type = "assignment";
 
       var courseId = groupList[0].courseCode;
-
-      console.log(courseId);
-      var sessionId = Meteor.user()._id;
       console.log(sessionId);
       var files = document.getElementById("attfileName").files;
       
@@ -163,7 +157,7 @@ Template.studentUpload.events({
       fileObjIdI = fileObjId._id;
       console.log("before call");
       Meteor.call("createMaterial",type, courseId, sessionId, fileObjIdI, function (err, result) {
-        document.getElementById("attfileName").value = "";
+      document.getElementById("attfileName").value = "";
         if (!err) {
           // If run is okay
           console.log(">>>upload assingment SUCCESS MSG");
