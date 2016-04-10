@@ -87,11 +87,9 @@ template(name="addStudentAcctForm")
                 tr
                   td ID Type
                   td 
-                    .form-group
-                      select.(id="idType", style="color:black")
-                        option(value="nric") NRIC
-                        option(value="fin") FIN
-                        option(value="passport") Passport
+                    select(id="idType", style="color:black")
+                      option(value="0") NRIC
+                      option(value="1") FIN
                   td ID Number
                   td 
                     .form-group
@@ -175,14 +173,13 @@ template(name="viewParticularsForm")
                       input#mobileNo.form-control(type='text', value="#{mobileNo}")
                   tr
                     td ID Type
-                    td
-                      .form-group
-                        select.form-control(id="#{_id}_userIDType", name="userIDType", style="color:black")
-                          option(value="#{userIDType}") #{userIDType}
-                            option(disabled) ──────────
-                            option(value="NRIC") NRIC
-                            option(value="FIN") FIN
-                            option(value="PASSPORT NO") Passport No
+                    td 
+                      select.form-control(id="#{_id}_userIDType", name="userIDType", style="color:black")
+                        option(value="#{userIDType}") #{userIDType}
+                          option(disabled) ──────────
+                          option(value="NRIC") NRIC
+                          option(value="FIN") FIN
+                          option(value="PASSPORT NO") Passport No
                     td ID Number
                     td
                       input.form-control(type='text', value="#{userID}", id='userID')
