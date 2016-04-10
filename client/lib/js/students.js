@@ -84,11 +84,7 @@ Template.addStudentAcctForm.events({
 		//TODO: Validation of input		
 		var obj = new Object();
 		obj.fullName = 		document.getElementById("sName").value;
-		var isGender = getRadioValue("gender");
- 		var gender = "male";
- 		if (isGender !== "male") {
- 			gender="female";
- 		}
+		var gender = $(template.find('input:radio[id=gender]:checked')).val();
  		obj.gender = gender;
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
@@ -102,6 +98,7 @@ Template.addStudentAcctForm.events({
 		obj.nokTel = 				document.getElementById("nokTel").value;		
 		obj.password = 			obj.mobileNo;
 		obj.remarks = 			document.getElementById("remarks").value;
+		obj.creationDate = 	new Date();
 		obj.userType = {learner:true};
 
 		Meteor.call("createLearnerAccount2", obj);
@@ -145,6 +142,7 @@ Template.registerForCourse.events({
 
 	 		obj.remarks = 			"Online Registration for " + grpId;
 			obj.userType = {learner:true};
+			obj.creationDate = 	new Date();
 
 			console.log("Loading: " + obj);
 			// Meteor.call("createLearnerAccount2", obj);
