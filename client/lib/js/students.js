@@ -57,7 +57,7 @@ Template.studentList.helpers({
 		//var studentMore = Session.get("studentSearchMore");
 		//var studentCaps = Session.get("studentSearchCaps");
 		if(studentName == null || studentName == undefined || studentName.length <= 0){
-			return Meteor.users.find({userType:{learner:true}).fetch();
+			return Meteor.users.find({userType:{learner:true}}).fetch();
 		}
 		var regName = new RegExp(".*"+studentName+".*","i");
 		var v2 = Meteor.users.find({$or:[{"fullName":regName}], userType:{learner:true}}).fetch();
