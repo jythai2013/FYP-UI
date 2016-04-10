@@ -37,7 +37,7 @@
                 <td>{{email}}</td>
                 <td class='action'>
                   <button class='btn btn-success' data-toggle="modal" data-target="#viewGrade{{_id}}" data-id="{{_id}}" title='Grades'><i class='icon-bar-chart'></i></button>
-                {{> tcViewStudentGrade retrieveCId="asd"}}
+                {{> tcViewStudentGrade}}
                   <!-- <a class='btn btn-info' href='#' title='Attendence'> -->
                   <button class='btn btn-success' data-toggle="modal" data-target="#viewAttendence{{_id}}" data-id="{{_id}}" title='Attendence'><i class='fa fa-calendar-check-o'></i></button>
                 {{> tcViewStudentAttendence}}
@@ -125,7 +125,6 @@
           <h4 class="modal-title" id="myModalLabel">Student's Grade</h4>
         </div>
         <div class="modal-body">
-          Print Course ID: {{retrieveCId}}
           Print Student ID: {{_id}}
           <table>
             <!-- {{#each studentGradeDetails}}
