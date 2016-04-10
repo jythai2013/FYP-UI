@@ -754,7 +754,6 @@ Template.addFeedback.events({
 		var theGroup = a;
 		var classlist = theGroup.classlist;
 		
-		FeedbackAnswers
 		Details = new object ()
 		Details.subject = "Please take this survey"
 		Details.from = "chimpanzee"
@@ -763,6 +762,7 @@ Template.addFeedback.events({
 			studentId = theStudent._id;
 			Details.to = theStudent.email [0];
 			Details.text = "http://localhost:3000/CourseModule/doFeedbackSurvey?fbidAns="+feedbackAnsID+"&studID="+studentId;
+			console.log("Sending \n" + Details.text + "\n to " + Details.to);
 			Meteor.call ("scheduleMail", details);
 		});
 	}

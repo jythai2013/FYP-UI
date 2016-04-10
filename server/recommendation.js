@@ -81,7 +81,7 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
 	
  	//classmates
  	//recEngine
-	var recEngineWorks = !true;
+	var recEngineWorks = true;
 	if(recEngineWorks){
 		var potentialCoursesFromRecEngine;
 		recEngine.suggest(studentId, numberOfCoursesToRecommend, function(err,res) {
@@ -160,10 +160,14 @@ studentFinishedCourseRecommender = function recommend(studentId, groupId){
  		finalResult.concat(temp)
  	}
 
+	//get Unique values
+	finalResult = finalResult.filter(function (e, i, arr) {
+    return arr.lastIndexOf(e) === i;
+	});
  	console.log(finalResult);	
 	
 	//TODO: email the student
-	var trySendMail = true;
+	var trySendMail = !true;
 	if(trySendMail){
 		details = {};
 		details.to = Meteor.users.findOne({_id:studentId});
