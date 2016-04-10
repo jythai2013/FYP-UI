@@ -32,11 +32,12 @@
           <tbody>
             {{#each getStudentDetails classlist}}
               <tr>
-                <td>{{fullName}} {{../_id}}</td>
+                <!-- <td>{{fullName}} {{../_id}}</td> -->
+                <td>{{fullName}}</td>
                 <td>{{email}}</td>
                 <td class='action'>
                   <button class='btn btn-success' data-toggle="modal" data-target="#viewGrade{{_id}}" data-id="{{_id}}" title='Grades'><i class='icon-bar-chart'></i></button>
-                {{> tcViewStudentGrade retrieveCId="asd"}}
+                {{> tcViewStudentGrade}}
                   <!-- <a class='btn btn-info' href='#' title='Attendence'> -->
                   <button class='btn btn-success' data-toggle="modal" data-target="#viewAttendence{{_id}}" data-id="{{_id}}" title='Attendence'><i class='fa fa-calendar-check-o'></i></button>
                 {{> tcViewStudentAttendence}}
@@ -55,6 +56,11 @@
           Course Materials
         </div>
         {{> tcCourseMaterials}}
+
+        <div class='panel-heading'>
+          Student Uploaded Assignments
+        </div>
+        {{> tAssignmentMaterials}}
       </div>
     </div>
   </div>
@@ -73,7 +79,7 @@
       <tbody>
         {{#each uploads}}
           <tr> 
-            <td colspan="2">{{name}}</td>
+            <td>{{name}}</td>
             <td>{{formatDate uploadedAt}}</td>
             <td>
               <a href="{{url download = true}}" class="button btn admin-btn">Download</a>
@@ -85,6 +91,30 @@
   </div>
 </template>
 
+<template name="tAssignmentMaterials">
+  <div class="table-responsive">
+    <table id="dataTables-example" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Assignment</th>
+          <th>Date of Upload</th>
+          <th>Download File</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each assignments}}
+          <tr> 
+            <td>{{name}}</td>
+            <td>{{formatDate uploadedAt}}</td>
+            <td>
+              <a href="{{url download = true}}" class="button btn admin-btn">Download</a>
+            </td>
+          </tr> 
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>
 
 <template name="tcViewStudentGrade">
   <div class="modal" id="viewGrade{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -95,14 +125,31 @@
           <h4 class="modal-title" id="myModalLabel">Student's Grade</h4>
         </div>
         <div class="modal-body">
-          Print Course ID: {{retrieveCId}}
-          Print Student ID: {{_id}}
-          <table>
-            <!-- {{#each studentGradeDetails}}
+          <strong>Student Name:</strong> {{fullName}}
+          <br>
+          <strong>Course:</strong> {{../courseCode}}
+          <br>
+          <table class="dataTables-example table" style="margin-top: 10px;">
+            <thead>
               <tr>
-                <td>a</td>
+                <th>Components</th>
+                <th>Grades</th>
               </tr>
-            {{/each}} -->
+            </thead>
+            <tbody>
+            {{#each studentGradeDetails}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{value}}</td>
+              </tr>
+            {{else}}
+              <tr>
+                <td colspan="2">
+                  No grades has been posted
+                </td>
+              </tr>
+            {{/each}}
+            </tbody>
           </table>
         </div>
         <div class="modal-footer">

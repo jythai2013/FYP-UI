@@ -1,60 +1,56 @@
- function getStudentOngoingCourse(e) {
-    // console.log("studentPortal.js - trainerOngoingCourses >>>");
-    var tId = Meteor.user()._id;
-    var coursesEnrolled = Groups.find({classlist: {$in : [ tId ]}});
-    // console.log("getStudentOngoingCourse Return: "+ coursesEnrolled);
-    return coursesEnrolled;
-  } 
-
-  function getDDMMYYY(date) {
-  	return moment(date).format("DD-MM-YYYY");
+// SIDEBAR ONLY
+Template.studentSidebar.helpers({
+  //set active
+  'checkisActive': function studentUrl(hName, tName){
+    if (hName === tName){
+      return "active";
+    } else {
+      return "";
+    }
   }
+});
 
-  function getFromUrl(a) {
-  	var courseGrp =  Router.current().url;
-  	var positionFirstEqual = courseGrp.indexOf('=');
-	//extracting course
-	var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-	var positionOfAND = courseGrp.indexOf('&');
-	var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-
-	//extracting grpNum
-	var grpNumStr=courseGrp.substr(positionOfAND-1);
-	var positionSecondEqual = currentCourseGrp.indexOf('=');
-	var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-	console.log(currentGrpNum + "grpNum");
-
-	var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
-	console.log("GroupId " + group._id);
-	return group;
-}
-
+// UPLOAD
 Template.studentUpload.helpers({
 	"countMyEnrolled" : function countMyEnrolled(e) {
 		var tId = Meteor.user()._id;
 		var a = Groups.find({classlist: {$in : [ tId ]}}).count();
 		var b = (a !== 0);
-		console.log(b);
+		// console.log(b);
 		return b;
 	},
 
-	"getCourseName" : function findTrainerOngoingCourses(cCode) {
-		return Courses.findOne({"courseCode": cCode}).courseName;
+	"getCourseName" : function findStudentOngoingCourses3(cCode) {
+		var a = Courses.findOne({"courseCode": cCode});
+		if (a  === undefined){
+			return "";
+		} else {
+			return a.courseName;
+		}
 	}
 });
 
 Template.studentUpload.helpers({
 	"studentOngoingCourses" : function findStudentUploads(e) {
-		var a = getStudentOngoingCourse();
-		console.log("studentOngoingCourses >>> "+a);
-		return a;
-	},
+		var tId = Meteor.user()._id;
+	    var todayDate = new Date();
+	    // // maybe need filter for ongoing courses only
+	    var coursesEnrolled = Groups.find({classlist: {$in : [tId]}}).fetch();
+	    // console.log("getStudentOngoingCourse Return: " + coursesEnrolled);
+	    var array = [];
+	    for (var j = 0; j < coursesEnrolled.length; j ++){
+	    	// console.log(coursesEnrolled[j]);
+	    	array.push(coursesEnrolled[j]);
+	    }
+	    console.log(typeof array);
+	    return array;
+	}
 });
+
 Template.studentCourseMaterial.helpers({
 	uploads:function(){
 		var a = Files.find({type: "course"});
-		var fileList = Materials.find({type:"groups"});
-		var fileList2 = Materials.find({type: "course"});
+		var fileList = Materials.find({course: this.courseCode});
 		console.log(fileList);
 		var a = new Array();
 
@@ -63,13 +59,6 @@ Template.studentCourseMaterial.helpers({
 			a.push(Files.findOne(item.fileName));
 			console.log(item);
 		});
-
-		fileList2.forEach(function(item, index){
-			console.log(item.fileName);
-			a.push(Files.findOne(item.fileName));
-			console.log(item);
-		});
-
 		console.log(a);
 		return a;
 	}
@@ -77,16 +66,28 @@ Template.studentCourseMaterial.helpers({
 
 //student/studentClass.html
 Template.studentClass.helpers({
-	"studentOngoingCourses" : function findTrainerOngoingCourses(e) {
-		console.log("studentPortal.js - studentOngoingCourses >>>");
-		var coursesEnrolled = getStudentOngoingCourse();
-		// maybe need filter for ongoing courses only
-		console.log(coursesEnrolled);
-		return coursesEnrolled;
+	"studentOngoingCourses" : function findStudentOngoingCourses1(e) {
+		var tId = Meteor.user()._id;
+	    var todayDate = new Date();
+	    // // maybe need filter for ongoing courses only
+	    var coursesEnrolled = Groups.find({classlist: {$in : [tId]}}).fetch();
+	    // console.log("getStudentOngoingCourse Return: " + coursesEnrolled);
+	    var array = [];
+	    for (var j = 0; j < coursesEnrolled.length; j ++){
+	    	// console.log(coursesEnrolled[j]);
+	    	array.push(coursesEnrolled[j]);
+	    }
+	    console.log(typeof array);
+	    return array;
 	},
 
-	"getCourseName" : function findTrainerOngoingCourses(cCode) {
-		return Courses.findOne({"courseCode": cCode}).courseName;
+	"getCourseName" : function findStudentOngoingCourses2(cCode) {
+		var a = Courses.findOne({"courseCode": cCode});
+		if (a === undefined){
+			return "";
+		} else {
+			return a.courseName;
+		}
 	}
 });
 
@@ -108,15 +109,6 @@ Template.studentGrades.helpers({
 
 Template.studentAttendence.helpers({
 	"getUrl" : function saGetUrl(){
-		var courseId = this._id;
-    	console.log("studentGrades.js (getGrade) >>> " + courseId);
-	// 	// Session.set('trainerClass', group);
-	// 	return group;
-	}
-});
-
-Template.studentCourseMaterial.helpers({
-	"getUrl" : function scGetUrl(){
 		var courseId = this._id;
     	console.log("studentGrades.js (getGrade) >>> " + courseId);
 	// 	// Session.set('trainerClass', group);

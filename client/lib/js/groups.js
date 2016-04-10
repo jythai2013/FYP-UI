@@ -47,11 +47,11 @@ Template.addClassForm.events({
 		var stringSDate = document.getElementById("classListNewStartDate").value;
 		var stringEDate = document.getElementById("classListNewEndDate").value;
 
-		var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
-		var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
+		// var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
+		// var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
 
-		obj.startDate = SDate;
-		obj.endDate = EDate;
+		obj.startDate = stringSDate;
+		obj.endDate = stringEdate;
 		obj.venue = document.getElementById("classListVenue").value;
 		var trainId = document.getElementById("classListTrainers").value;
 		obj.courseTrainers = {trainerId: trainId};
@@ -109,25 +109,25 @@ Template.group.helpers({
 		});
 		return studentArray;
 	},
+	
 	'classTrainers' : function(){
 		var trainersList = this.courseTrainers;
-				console.log(this.courseTrainers);
-				console.log(trainersList.trainerId);
-		var trainerID = trainersList.trainerId;
-		var trainerArray = Meteor.users.findOne({_id:trainerID}).fullName ;
-		var trainerStr = trainerArray + " ";
-		console.log(trainerStr);
+		console.log(this.courseTrainers);
 
-		// var trainersArray = new Array();
+		var trainerStr = Meteor.users.findOne({_id:trainersList[0]}).fullName;
 		
-		// 	for(var x = 0, l = trainersList.length; x < l;  x++){
-		// 		var entry = trainersList[x].trainerId;
-		// 		var trainer = Meteor.users.findOne({_id:entry});
-		// 		console.log(trainer);
-		// 		trainersArray.push(trainer);
-		// 	}
+		for(var x = 1, l = trainersList.length; x < l;  x++){		
+			var trainerID = trainersList[x];
+			var trainerArray = Meteor.users.findOne({_id:trainerID}).fullName;
+			
+			
+				trainerStr = trainerStr + ", "+ trainerArray;
+			
+		}
+		console.log(trainerStr);
 		return trainerStr;
 	},
+
 	'courseNoOfHours' : function(){
 		
 		
@@ -227,6 +227,21 @@ Template.addClass.helpers({
     },
     "courseTrainers2" : function(e) {
     	var a = this.courseTrainers;
+		var courseTrainerArr = new Array();
+		for(var x = 0, l = a.length; x < l;  x++){
+			var entry = a[x].trainerID;
+			console.log(entry);
+			var trainer = Meteor.users.findOne({_id:entry});
+			courseTrainerArr.push(trainer);
+		}
+		return courseTrainerArr;
+    },
+    "courseTrainers3" : function(e) {
+    	var currentCourse = Session.get("currentCourseCode");
+    	console.log(currentCourse);
+    	var course = Courses.findOne({courseCode:currentCourse});
+    	var a = course.courseTrainers;
+    	console.log(this);
 		var courseTrainerArr = new Array();
 		for(var x = 0, l = a.length; x < l;  x++){
 			var entry = a[x].trainerID;
@@ -350,17 +365,23 @@ Template.addClass.events({
 		console.log(stringSDate);
 		var stringEDate = document.getElementById("gNewEndDate").value;
 
-		var SDate = new Date(moment(stringSDate,"DD-MM-YYYY").format());
-		console.log(stringSDate);
-		var EDate = new Date(moment(stringEDate,"DD-MM-YYYY").format());
-		// var EDate = stringEDate;
+		// var SDate = new Date(moment(stringSDate,"DD-MM-YYYY").format());
+		// console.log(stringSDate);
+		// var EDate = new Date(moment(stringEDate,"DD-MM-YYYY").format());
+		// // var EDate = stringEDate;
 
-		obj.startDate = SDate;
-		obj.endDate = EDate;
+		obj.startDate = stringSDate;
+		obj.endDate = stringEDate;
 		obj.venue = document.getElementById("gVenue").value;
-		var trainId = document.getElementById("gTrainers").value;
+		// var trainId = document.getElementById("newClassTrainers").value;
+		var trainId = document.getElementsByName("newClassTrainers");
 		console.log(trainId);
-		obj.courseTrainers = {trainerId: trainId};
+		var trainers = new Array();
+	    for(var x = 0, l = trainId.length; x < l;  x++){
+	      console.log(trainId[x]);
+	      trainers.push(trainId[x].value);
+		}
+		obj.courseTrainers=trainers;
 
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		console.log("What is this? : " + currentCourse);
@@ -486,12 +507,12 @@ Template.addClassForm.events({
 		var stringSDate = document.getElementById("classListNewStartDate").value;
 		var stringEDate = document.getElementById("classListNewEndDate").value;
 
-		var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
-		var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
+		// var SDate = new Date(moment(stringSDate,"DD/MM/YYYY").format());
+		// var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
 
 
-		obj.startDate = document.SDate;
-		obj.endDate = document.EDate;
+		obj.startDate = stringSDate;
+		obj.endDate = stringEDate;
 		obj.venue = document.getElementById("classListVenue").value;
 		var trainId = document.getElementById("classListTrainers").value;
 		obj.courseTrainers = {trainerId: trainId};

@@ -1,7 +1,7 @@
 function getRadioValue(theRadioGroup)
 {
     var elements = document.getElementsByName(theRadioGroup);
-    for (var i = 0, l = elements.length; i < l; i++)
+    for (var i = 0, l = elements.length; i < l; i)
     {
         if (elements[i].checked)
         {
@@ -24,8 +24,48 @@ Template.courses.helpers({
 	}
 });
 
-Template.websiteCourseDetailsForm1.helpers({
-	'whatColor': function whatColor(type) {
+Template.courseInfoIndvSignup.helpers({
+ 	'getClassesAvailable': function getClassesAvailable1(e) {
+ 		var groups = Groups.find({courseCode: this.courseCode}).fetch();
+ 		console.log("retrieve #ofGroups:" + groups.length);
+ 		return groups;
+ 	}
+ });
+ 
+ Template.websiteCourseDetails1.helpers({
+ 	'getClassesAvailable': function getClassesAvailable1(e) {
+ 		var groups = Groups.find({courseCode: this.courseCode}).fetch();
+ 		console.log("retrieve #ofGroups:" + groups.length);
+ 		return groups;
+ 	},
+
+ 	'retrieveDays': function getWebsiteDaysCourseDetails(e) {
+ 		var day = this.days;
+ 		var returnDays = "";
+ 		for (i= 0; i < day.length; i++){
+ 			returnDays += day[i];
+ 			if ((i+1) !== day.length){
+ 				returnDays += ",";
+ 			}
+ 		}
+ 		return returnDays;
+ 	}
+ });
+
+  Template.websiteCourseDetailsForm1.helpers({
+ 	'retrievePrereq': function getWebsitePreReqCourseDetails(e) {
+ 		var pReq = this.prerequisite;
+ 		if (pReq !== undefined){
+	 		var array = [];
+	 		for (i= 0; i < pReq.length; i++){
+	 			array.push({key: pReq[i]});
+	 		}
+	 		console.log(array);
+	 		return array;
+	 	}
+ 	},
+
+ 	'whatColor': function whatColor(type) {
 		console.log(type);
 		if(type === "WSQ"){
 			return "coursePP";
@@ -35,7 +75,56 @@ Template.websiteCourseDetailsForm1.helpers({
 			return "courseGG";
 		}
 	}
+ }); 
+
+ Template.courseInfoIndvSignup.helpers({
+ 	'retrievePrereq': function getWebsitePreReqCourseSignup(e) {
+ 		var pReq = this.prerequisite;
+ 		if (pReq !== undefined){
+	 		var array = [];
+	 		for (i= 0; i < pReq.length; i++){
+	 			array.push({key: pReq[i]});
+	 		}
+	 		console.log(array);
+	 		return array;
+ 		}
+ 	},
+
+ 	'retrieveDays': function getWebsiteDaysCourseSignup(e) {
+ 		var day = this.days;
+ 		var returnDays = "";
+ 		for (i= 0; i < day.length; i++){
+ 			returnDays += day[i];
+ 			if ((i+1) !== day.length){
+ 				returnDays += ",";
+ 			}
+ 		}
+ 		return returnDays;
+ 	}
+ }); 
+
+Template.registerForCourse.helpers({
+	'checkSignupSuccess': function checkSignupSuccess(e) {
+ 		console.log(Session.get('displayAlertWebsite'));
+ 		var a = Session.get('displayAlertWebsite');
+ 		delete Session.keys['displayAlertWebsite'];
+ 		if (a!== undefined){
+ 			return true;
+ 		} else {
+ 			return false;
+ 		}
+	},
+
+	'countGroups': function checkDisplayEntrollmentForm(e) {
+		if (this._id === undefined){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 });
+ 
 
 // ADMIN ///////////////////////////////////////////////////////////////////////
 Template.topbar.helpers({
@@ -98,7 +187,7 @@ Template.profilePage.events({
 	"click #editAdminProfileButton" : function editAdminProfileAccount(e) {
 		var aid = this._id;
 		var mobileNo = document.getElementById("acctCell").value;
-		console.log("Check : " + this.fullName + ", " + this.userType.trainer);
+		// console.log("Check : " + this.fullName + ", " + this.userType.trainer);
 		console.log(this.userType.trainer !== undefined);
 		var isTrainer = true;
 		if (this.userType.trainer === undefined){
@@ -125,7 +214,7 @@ Template.viewAdminParticulars.events({
 		var aid = this._id;
 		var mobileNo = document.getElementById(aid+"_editMobileNo").value;
 		var isTrainer = document.getElementById(aid+"_editIsTrainer").value;
-		console.log(aid + " " +mobileNo + " " + isTrainer);
+		console.log(aid + " " + mobileNo + " " + isTrainer);
 		Meteor.call("editAdminAccount", aid, mobileNo, isTrainer, function (err, result) {
       		if (!err) {
 				// If run is okay

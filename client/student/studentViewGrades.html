@@ -1,19 +1,8 @@
 <template name="studentGrades">
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
-    <section id='sidebar'>
-      <i class='icon-align-justify icon-large' id='toggle' style="color:#2c3e50"></i>
-      <ul id='dock'>
-        <li class='active launcher'>
-          <i class='icon-table'></i>
-          <a href="/student">Classes</a>
-        </li>
-        <li class='launcher'>     
-          <i class='icon-file-text-alt'></i>
-          <a href="/student/assignmentDropbox">Uploads</a>
-        </li>
-      </ul>
-    </section>
+    {{> studentSidebar highlight="classes"}}
+
     <!-- Tools -->
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>

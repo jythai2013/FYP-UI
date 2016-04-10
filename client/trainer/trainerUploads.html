@@ -24,14 +24,14 @@
           </div>
           <table>
             <tr>
-              <th>Upload To</th>
-              <th>
-                <select  name="courseCode" id="courseCode">
+              <th>Upload Documents To : </th>
+              <td>
+                <select  name="courseCode" id="courseCode" class="form-control">
                   {{#each trainerOngoingCourses}}
-                    <option value="{{_id}}">{{courseCode}} {{grpNum}}</option>
+                    <option value="{{_id}}">{{courseCode}} - {{getCourseName courseCode}} {{grpNum}}</option>
                   {{/each}}
                 </select>
-              </th>
+              </td>
             </tr>
           </table>
           <div class='page-header'>
@@ -47,12 +47,12 @@
                 <table class='table table-bordered'>
                   <tbody>
                     <tr>
-                      <td>File (Attendence)</td>
-                      <td><input type="file" id="attfileName"/></td>
+                      <td>Download Class Excel here</td>
+                      <td>{{>trainerUploadAttendance}}</td>
                     </tr>
                     <tr>
-                      <td colspan="2">
-                        {{>trainerUploadAttendance}}
+                      <td>Upload Attendence</td>
+                      <td>
                         <input type="file" id="inputExcelElementAttendance">
                       </td>
                     </tr>

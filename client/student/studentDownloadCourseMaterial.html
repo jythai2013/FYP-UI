@@ -1,19 +1,7 @@
 <template name="studentCourseMaterial">
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
-    <section id='sidebar'>
-      <i class='icon-align-justify icon-large' id='toggle' style="color:#2c3e50"></i>
-      <ul id='dock'>
-        <li class='launcher'>
-          <i class='icon-table'></i>
-          <a href="/student">Classes</a>
-        </li>
-        <li class='launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="/student/assignmentDropbox">Uploads</a>
-        </li>
-      </ul>
-    </section>
+    {{> studentSidebar highlight="classes"}}
     <!-- Tools -->
     <section id='tools'>
       <ul class='breadcrumb' id='breadcrumb'>
@@ -31,7 +19,7 @@
         </div>
         <div class='panel-body'>
           <div class='page-header'>
-            <h4>Course Materials: {{getUrl.courseCode}}</h4>
+            <h4>Course Materials: {{courseCode}}</h4>
           </div>
           <table class="table">
             <thead>

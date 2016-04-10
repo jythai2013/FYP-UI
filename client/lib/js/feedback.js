@@ -25,6 +25,7 @@ function getParameterByName(name) {
 }
 
 
+
 Template.feedbackQnMgmt.onRendered(function(){
   var currentfb = getParameterByName("fbid");
   Session.set('currentfb', currentfb);
@@ -36,12 +37,21 @@ Template.viewFeedbackSurvey.onRendered(function(){
 		
 		var positionFirstEqual = url.indexOf('=');
 		//extracting course
-		var currentfb=courseGrp.substr(positionFirstEqual+1);
+		var currentfb=url.substr(positionFirstEqual+1);
+		console.log (currentfb);
   Session.set('currentViewingfb', currentfb);
 });
 
 Template.doFeedbackSurvey.onRendered(function(){
-  var currentfb = getParameterByName("fbidAns");
+
+		var url =  window.location.href;
+		
+		var positionFirstEqual = url.indexOf('=');
+		//extracting course
+		var currentCourseGrp=url.substr(positionFirstEqual+1);	
+		var positionOfAND = url.indexOf('&');
+		var currentfb=url.substring(positionFirstEqual+1, positionOfAND);
+  // var currentfb = getParameterByName("fbidAns");
   Session.set('currentDoingfb', currentfb);
 });
 
@@ -795,7 +805,12 @@ Template.doFeedbackSurvey.helpers({
 Template.viewFeedbackSurvey.helpers({
 
 	"viewFeedbackDetails2": function() {
-		var fbId=Session.get("currentDoingfb");
+		var fbId=Session.get("currentViewingfb");
+		// var url =  window.location.href;
+		// var positionEqual = url.indexOf('=');	
+		// var fbId=url.substring(positionEqual+1);
+		// console.log(fbId);
+
 		var feedbackTemplateID = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
 
 		var feedbackTitle = Feedback.findOne({_id:feedbackTemplateID});
@@ -804,7 +819,12 @@ Template.viewFeedbackSurvey.helpers({
 	},
 
 	"viewFeedbackQns3": function() {
-		var fbId = Session.get("currentDoingfb");
+		var fbId = Session.get("currentViewingfb");
+		// var url =  window.location.href;
+		// var positionEqual = url.indexOf('=');	
+		// var fbId=url.substring(positionEqual+1);
+		// console.log(fbId);
+
 		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
 		console.log(feedbackTemplate);
 		var feedbackQnOptions = Feedback.findOne({_id:feedbackTemplate}).qnOptions;

@@ -1,21 +1,26 @@
 <template name="doFeedbackSurvey">
-   <!-- <style>
-        p.panel-templateLineBreak {
+    <style>
+        p.templateLineBreak {
             padding-bottom: 10px;
             margin: 5px;
             border-bottom: 1px solid #eee;
         }
-        body {
-            font-size: 16px;
-        }
+
         .table tbody > tr > td,
         .table tbody > tr > th {
             border-top:0px;
-    </style> -->
-    <div id="page-wrapper" style="min-height: 861px;">
-        <div class='row'>
-            <!--<div class="col-lg-10.col-lg-offset-1.col-sm-10">-->
-            <div class="col-lg-12">
+        }
+        body {
+            font-size: 16px;
+        }
+        html {
+            background-color: #333333;
+        }
+    </style>
+
+    <div id="sectionPageWrapper">
+        <div class='row' style="margin-top: 80px;">
+            <div class="col-lg-10.col-lg-offset-1.col-sm-10">
                 <h1 class="page-header"> Feedback Questions</h1>
                 
                 <div class="subtemplate-wrapper"> 
@@ -30,10 +35,6 @@
                              Save all   
                         </button>
                          {{> saveSurvey}}
-                        
-
-
-
 
                     Feedback Type: {{viewFeedbackDetails1.feedbackType}} <br>
                     Course Name: courseCode <br>
@@ -53,8 +54,7 @@
 
             </div>
         </div>
-        </div>
-    <!-- </div> -->
+     </div>
 </template>
 
 <template name="doSurveyQn">

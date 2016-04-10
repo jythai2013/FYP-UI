@@ -30,6 +30,8 @@ Template.topbar.events(
       if err?
         # !TODO: I should add a section for dismissable and timeout notifications... or maybe Growl-style notifications
         console.log(err)
+      else
+        Session.keys = {}
     )
 )
 

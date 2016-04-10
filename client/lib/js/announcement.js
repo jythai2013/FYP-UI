@@ -56,10 +56,6 @@ Template.trainerAnnouncment.helpers({
         return a;
     },
 
-   	'getDDMMYYY': function getTADDMMYYY(e) {
-     	return getDDMMYYY(e);
-     },
-
     'isAuthor' : function isTAuthor(createdBy) {
 		//console.log("isAuthor? (>>announcement.js)");
 		var check = Meteor.user()._id == this.annouAuthor;

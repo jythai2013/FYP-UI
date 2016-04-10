@@ -165,7 +165,7 @@ Template.course.helpers({
 				var trainer = Meteor.users.findOne({_id:entry});
 					obj.trainerName = trainer.fullName;
 
-					var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":entry}).fetch();
+					var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers":entry}).fetch();
 					
 
 					for(var i = 0, k = classTaught.length; i < k;  i++){
@@ -212,17 +212,17 @@ Template.course.helpers({
 		// console.log(this);
 		var trainersClasses = new Array();
 		var currentCourse=Session.get("currentCourseCode");
-		if(currentCourse== undefined){
-			var str =  window.location.href;
-			var position = str.indexOf('=');
+		// if(currentCourse== undefined){
+		// 	var str =  window.location.href;
+		// 	var position = str.indexOf('=');
 			
-			var currentCourse=str.substr(position+1);
+		// 	var currentCourse=str.substr(position+1);
 
 
-		}
+		// }
 
 		console.log(currentCourse);
-		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
+		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers":this.trainerID}).fetch();
 		for (var x = 0, l = classTaught.length; x < l;  x++){
 			var obj = new Object();
 			obj.classesTaught = classTaught[x].grpNum;
@@ -235,7 +235,7 @@ Template.course.helpers({
 	"gotNoClass" : function(e) {
 		// console.log(this);
 		var currentCourse=Session.get("currentCourseCode");
-		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers.trainerId":this.trainerID}).fetch();
+		var classTaught = Groups.find({courseCode:currentCourse, "courseTrainers":this.trainerID}).fetch();
     	if(classTaught.length == 0 ){
 			return true
     	}else {

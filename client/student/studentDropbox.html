@@ -1,27 +1,7 @@
 <template name="studentUpload">
   <div id='wrapper-trainer'>
     <!-- Sidebar -->
-    <section id='sidebar'>
-      <i class='icon-align-justify icon-large' id='toggle' style="color:#2c3e50"></i>
-      <ul id='dock'>
-        <li class='launcher'>
-          <i class='icon-table'></i>
-          <a href="/student">Classes</a>
-        </li>
-        <li class='active launcher'>
-          <i class='icon-file-text-alt'></i>
-          <a href="/student/assignmentDropbox">Uploads</a>
-        </li>
-      </ul>
-    </section>
-    <!-- Tools -->
-    <section id='tools'>
-      <ul class='breadcrumb' id='breadcrumb'>
-        <li class='title'>Sterling - Student Portal</li>
-        <li><a href="/student">Enrolled Classes</a></li>
-        <li class='active'><a href="#">Assignment Uploads</a></li>
-      </ul>
-    </section>
+    {{> studentSidebar highlight="uploads"}}
 
     <!-- Content -->
     <div id='content'>

@@ -1,13 +1,14 @@
 template(name="mainLayout")
   div.adminBody
     +topbar
-    +container
+    #wrapper
+      +container
 
 template(name="topbar")
   +checkUserLogin
   #wrapper
     // Navigation
-    nav.navbar.navbar-default.navbar-static-top(role="navigation", style="margin-bottom: 0")
+    nav.navbar.navbar-default.navbar-fixed-top(role="navigation", style="margin-bottom: 0")
       .navbar-header
         button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
           span.sr-only Toggle navigation
@@ -74,7 +75,7 @@ template(name="container")
 template(name="sidebar")
   .navbar-default.sidebar(role="navigation")
     .sidebar-nav.navbar-collapse.collapse#nav-main
-      ul#side-menu.nav
+      ul#side-menu.nav(style="overflow-x: hidden; overflow-y: hidden;")
         each navElements
           +navElement
         a.btn.admin-btn.btn-sn(type="button", style="background-color:#424242; margin-top:5%; margin-left: 10px", href="{{pathFor route='Sterling Training Hub'}}") Website

@@ -1,0 +1,14 @@
+<template name="studentSidebar">
+  <section id='sidebar'>
+    <ul id='dock' style="margin-top:60px;">
+      <li class='{{checkisActive "classes" highlight}} launcher'>
+        <i class='icon-table'></i>
+        <a href="/student">Classes</a>
+      </li>
+      <li class='{{checkisActive "uploads" highlight}} launcher'>
+        <i class='icon-file-text-alt'></i>
+        <a href="/student/assignmentDropbox">Uploads</a>
+      </li>
+    </ul>
+  </section>
+</template>
