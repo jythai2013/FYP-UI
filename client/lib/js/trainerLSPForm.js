@@ -189,7 +189,7 @@ function genP(myData){
 	if(document.getElementById("dataTables-example2").rows.length > 1){
 		var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example2"))
 		setTimeout(function(){
-			doc.autoTable(res.columns, res.data, {280});
+			doc.autoTable(res.columns, res.data, {startY: 300});
 			doc.save('TrainerLSP.pdf');
 			console.log("genP 1 END");
 		},5);

@@ -391,7 +391,7 @@ function genP(myData){
 	//res.rows[0][1] = "";
 	console.log(res);
 	setTimeout(function(){
-		doc.autoTable(res.columns, res.data, {280});
+		doc.autoTable(res.columns, res.data, {startY: 300});
 		console.log(res);
 		doc.save('CourseLSP.pdf');
 		console.log("genP 1 END");
