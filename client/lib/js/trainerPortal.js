@@ -45,12 +45,20 @@ Template.trainerUploads.helpers({
     }
   }
 });
+
 Template.tcCourseMaterials.helpers({  
   uploads:function(){
+    var courseGrp =  Router.current().url;
+    var positionFirstEqual = courseGrp.indexOf('=');
+    //extracting course
+    var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);  
+    var positionOfAND = courseGrp.indexOf('&');
+    var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+
     var a = Files.find({type: "course"});
-    var fileList = Materials.find({type:"groups"});
-    var fileList2 = Materials.find({type: "course"});
-    console.log(fileList);
+    var fileList = Materials.find({course: this.courseCode, type: "groups"});
+    // var fileList2 = Materials.find({type: "course"});
+    // console.log(fileList);
     var a = new Array();
 
     fileList.forEach(function(item, index){
@@ -59,16 +67,43 @@ Template.tcCourseMaterials.helpers({
       // console.log(item);
     });
 
-    fileList2.forEach(function(item, index){
-      console.log(item.fileName);
-      a.push(Files.findOne(item.fileName));
-      console.log(item);
-    });
+    // fileList2.forEach(function(item, index){
+    //   console.log(item.fileName);
+    //   a.push(Files.findOne(item.fileName));
+    //   console.log(item);
+    // });
 
     console.log(a);
     return a;
   }
 });
+
+Template.tAssignmentMaterials.helpers({  
+  assignments:function(){
+
+    var a = Files.find({type: "assignment"});
+    var fileList = Materials.find({sessionNo: this.courseCode});
+    // var fileList2 = Materials.find({type: "course"});
+    // console.log(fileList);
+    var a = new Array();
+
+    fileList.forEach(function(item, index){
+      // console.log(item.fileName);
+      a.push(Files.findOne(item.fileName));
+      // console.log(item);
+    });
+
+    // fileList2.forEach(function(item, index){
+    //   console.log(item.fileName);
+    //   a.push(Files.findOne(item.fileName));
+    //   console.log(item);
+    // });
+
+    console.log(a);
+    return a;
+  }
+});
+
 
 Template.trainerAnnouncment.helpers({
   "trainerOngoingCourses1" : function findTrainerAnnouncement(e) {
@@ -180,16 +215,24 @@ Template.trainerClass.helpers({
 Template.tcViewStudentGrade.helpers({
   "studentGradeDetails" : function sgradeStudentDetails(cList) {
     var studId = this._id;
-    // var courseId = this.courseId;
-    // console.log(courseId);
-    var gradeObj = Meteor.users.findOne({_id: studId}).grades;
-      // console.log("grade >>> " + gradeObj[courseId]);
-      // console.log("grade >>> " + gradeObj[courseId].passStatus);
-    if (gradeObj !== undefined){
-      return gradeObj;
-    } else {
-      return new Array();
-    }
+    var url =  Router.current().url;
+    var positionFirstEqual = url.indexOf('=');
+    //problem starts here
+    //extracting course
+    var currentCourseGrp=url.substr(positionFirstEqual+1);    
+    var positionOfAND = url.indexOf('&');
+    var currentCourse=url.substring(positionFirstEqual+1, positionOfAND);
+    //extracting grpNum
+    var grpNumStr=url.substr(positionOfAND+1);
+    var positionSecondEqual = grpNumStr.indexOf('=');
+    var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
+    var grpId = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id;
+
+    var gradeObj = Meteor.users.findOne({_id: studId}).grades[grpId];
+
+    result = [];
+    for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
+    return result;
   }
 });
 
