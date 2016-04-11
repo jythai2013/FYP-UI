@@ -3,7 +3,7 @@ Meteor.methods({
 		// console.log(inObj)
 		studentID = inObj.StudentID;
 		grades = inObj.grades;
-		console.log(inObj.groupID);
+		console.log(inObj.grpNum);
 		
 		var theUser = Meteor.users.findOne({userID:inObj.StudentID});
 		// console.log(theUser)
@@ -21,7 +21,8 @@ Meteor.methods({
 				grades[propertyName] = value;
 			}
 		}
-		theUser.grades[inObj.groupID] = grades;
+		var theGroupId = Groups.findOne({courseCode:courseID, grpNum:inObj.grpNum})._id
+		theUser.grades[theGroupId] = grades;
 		console.log(theUser)
 		// console.log(inObj.StudentID)
 		// console.log(theUser.grades)

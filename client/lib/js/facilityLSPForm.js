@@ -69,9 +69,9 @@ Template.facilityLSPRatings.helpers({
 		var res = "";
 		for(i=0;i<a.length;i++){
 			if(Math.round(avg) == (i+1)){
-				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'" checked="checked">'+i+"</label>";
+				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'" checked="checked">'+(1+i)+"</label>";
 			} else{
-				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'">'+i+"</label>";
+				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'">'+(1+i)+"</label>";
 			}
 		}
 		
@@ -149,6 +149,7 @@ Template.facilityLSPForm.events({
 		myData.Description							=  this.description;
 		myData.AssessedBy  	            =	 Meteor.user().fullName
 		myData.AssessmentDate           =	 new Date();
+		myData.additionalComments       =	 document.getElementById("courseAddComments").value;
 		
 		console.log(myData);
 		
@@ -313,7 +314,6 @@ function genP(myData){
 	//console.log("first Table Done");
 	//console.log(document.getElementById("dataTables-example2").rows.length);
 	if(document.getElementById("dataTables-example2").rows.length > 1){
-		console.log("more than 1");
 		var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example2"))
 		console.log(res);
 		res.columns[2] = "Remarks";
@@ -340,13 +340,18 @@ function genP(myData){
 		//console.log(res);
 		setTimeout(function(){
 			doc.autoTable(res.columns, res.data, {startY: 300});
+			doc.addPage();
+			doc.text(25, 25, "Additional Comments");
+			doc.text(25, 45, myData.additionalComments);
 			//console.log(res);
 			doc.save('FacilityLSP.pdf');
 			console.log("genP 1 END");
 		},5);
 	} else{
-			console.log("less than 1");
-			doc.save('FacilityLSP.pdf');
-			console.log("genP 1 END");
+		doc.addPage();
+		doc.text(25, 25, "Additional Comments");
+		doc.text(25, 45, myData.additionalComments);
+		doc.save('FacilityLSP.pdf');
+		console.log("genP 1 END");
 	}
 }

@@ -85,9 +85,9 @@ Template.facilityLSPRatings.helpers({
 		var res = "";
 		for(i=0;i<a.length;i++){
 			if(Math.round(avg) == (i+1)){
-				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'" checked="checked">'+i+"</label>";
+				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'" checked="checked">'+(1+i)+"</label>";
 			} else{
-				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'">'+i+"</label>";
+				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'">'+(1+i)+"</label>";
 			}
 		}
 		
@@ -154,6 +154,7 @@ Template.trainerLSPForm.events({
 		myData.CorrectiveActionRequired	=	 "No"
 		myData.AssessedBy  	            =	 Meteor.user().fullName
 		myData.AssessmentDate           =	 new Date()
+		myData.additionalComments      	=	 document.getElementById("trainerAddComments").value;
 		if(document.getElementsByName("correctiveAction")[0].checked) {myData.CorrectiveActionRequired = "Yes"} else {myData.CorrectiveActionRequired = "No"};
 		
 		console.log(myData);
@@ -192,11 +193,17 @@ function genP(myData){
 		var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example2"))
 		setTimeout(function(){
 			doc.autoTable(res.columns, res.data, {startY: 300});
+			doc.addPage();
+			doc.text(25, 25, "Additional Comments");
+			doc.text(25, 45, myData.additionalComments);
 			doc.save('TrainerLSP.pdf');
 			console.log("genP 1 END");
 		},5);
 	} else{
-			doc.save('TrainerLSP.pdf');
-			console.log("genP 1 END");
+		doc.addPage();
+		doc.text(25, 25, "Additional Comments");
+		doc.text(25, 45, myData.additionalComments);
+		doc.save('TrainerLSP.pdf');
+		console.log("genP 1 END");
 	}
 }

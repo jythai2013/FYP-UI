@@ -34,6 +34,17 @@ Template.trainerUploadGrades.events({
 			alert("Invalid course and/or group selected!");
 			return false;
 		}
+		
+		var components = [];
+		var aStudentId = theGroup.classlist[0];
+		var aStudent = Meteor.users.findOne({_id:aStudentId});
+		for(var component in aStudent.grades) {
+			console.log(component);
+			components.push(component);
+		}
+		console.log(components);
+		
+		
 		// var inData = "";
 		//TODO: foreach student in the class list, push [studentId, studentName, true] into the data array
 		var inData = []; 
@@ -41,18 +52,25 @@ Template.trainerUploadGrades.events({
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
 		inData.push([null, "Course Code", courseCode, null])
-		inData.push([null, "GroupID", theGroup._id, null])
+		inData.push([null, "Group Number", theGroup.grpNum, null])
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
-		inData.push([null, "Student Name", "Student ID", "Assignment 1"])
+		var headers = [null, "Student Name", "Student ID"].concat(components);
+		inData.push(headers)
 		var studentIds = theGroup.classlist
 		var students = new Array();
 		i=0;
 		if(studentIds != undefined){
 			studentIds.forEach(function(studentId, index, arr){
+				var componentsGrades = "";
+				for(var component in components) {
+					console.log(component);
+					var theStudent = studentId;
+					componentsGrades.push(theStudent[theGroup._id][component])
+				}
 				var student = Meteor.users.findOne({_id:studentId});
 				students.push(student);
-				inData.push([++i, student.fullName, student.userID, "marks"]);
+				inData.push([++i, student.fullName, student.userID].concat(componentsGrades));
 			});
 		}
 		var inWs_name = "Sheet1";
@@ -149,10 +167,10 @@ function processExcelFile(workbook){
 	// var desired_value = desired_cell.v;
 	
 	var cellOf_CourseID	= 'C4';
-	var cellOf_GroupID 	= 'C5';
+	var cellOf_grpNum 	= 'C5';
 	var CourseID	= worksheet[cellOf_CourseID].v;
-	var GroupID 	= worksheet[cellOf_GroupID].v;
-	console.log(GroupID);
+	var grpNum 	= worksheet[cellOf_grpNum].v;
+	console.log(grpNum);
 	var startingLineNumber	= 9;
 	var currentLineNumber		= startingLineNumber;
 	
@@ -199,8 +217,8 @@ function processExcelFile(workbook){
 		debugObj.StudentName	= StudentName	;
 		debugObj.StudentID		= StudentID	  ;
 		debugObj.grades	      = grades	    ;
-		debugObj.courseID     = CourseID	    ;
-		debugObj.groupID      = GroupID	    ;
+		debugObj.courseID     = CourseID	  ;
+		debugObj.grpNum       = grpNum	    ;
 		console.log(debugObj);
 		
 		

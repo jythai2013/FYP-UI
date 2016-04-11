@@ -95,9 +95,9 @@ Template.courseLSPRatings.helpers({
 		var res = "";
 		for(i=0;i<a.length;i++){
 			if(Math.round(avg) == (i+1)){
-				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'" checked="checked">'+i+"</label>";
+				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'" checked="checked">'+(1+i)+"</label>";
 			} else{
-				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'">'+i+"</label>";
+				res += '<label class="radio-inline"><input type="radio" id="optradio" name="qnOptions'+this.qnID+'" value="'+i+'">'+(1+i)+"</label>";
 			}
 		}
 		
@@ -207,7 +207,7 @@ Template.courseLSPForm.events({
 		myData.questions													=	 this.questions
 		myData.ratings														=  this.ratings
 		myData.averageRating											=  this.averageRating
-		myData.additionalComments              		=	 this.additionalComments
+		myData.additionalComments              		=	 document.getElementById("courseAddComments").value;
 		myData.str																= "The following are the assessment criteria to assist in evaluating the performance of trainers. Scoring: 1-Poor 2-Fair 3-Satisfactory 4-Very Good 5-Excellent. A minimum score of 3 is required.";
 		
 		//console.log(myData);
@@ -368,34 +368,45 @@ function genP(myData){
 			//}
 	});
 	
-	var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example2"))
-	console.log(res);
-	res.columns[2] = "Remarks";
-	res.data.forEach(function(val,ind,arr){
-		strAvg = val[2];
-		//console.log(strAvg);
-		//trimmedAvg = strAvg.trim();
-		//console.log(trimmedAvg);
-		//avg = trimmedAvg.eval();
-		//console.log(avg);
-		rounded = parseInt(strAvg);
-		console.log(rounded);
-		val[1] = rounded;
-		val[2] = "";
-		rows[ind][1] = rounded;
-		rows[ind][2] = "";
-	})
-	//res.data[0][2] = "";
-	//res.rows[0][2] = "";
-	//res.data[0].splice(2,1);
-	//res.rows[0].splice(2,1);
-	//res.data[0][1] = "";
-	//res.rows[0][1] = "";
-	console.log(res);
-	setTimeout(function(){
-		doc.autoTable(res.columns, res.data, {startY: 300});
+	if(document.getElementById("dataTables-example2").rows.length > 1){
+		var res = doc.autoTableHtmlToJson(document.getElementById("dataTables-example2"))
 		console.log(res);
-		doc.save('CourseLSP.pdf');
+		res.columns[2] = "Remarks";
+		res.data.forEach(function(val,ind,arr){
+			strAvg = val[2];
+			//console.log(strAvg);
+			//trimmedAvg = strAvg.trim();
+			//console.log(trimmedAvg);
+			//avg = trimmedAvg.eval();
+			//console.log(avg);
+			rounded = parseInt(strAvg);
+			console.log(rounded);
+			val[1] = rounded;
+			val[2] = "";
+			rows[ind][1] = rounded;
+			rows[ind][2] = "";
+		})
+		//res.data[0][2] = "";
+		//res.rows[0][2] = "";
+		//res.data[0].splice(2,1);
+		//res.rows[0].splice(2,1);
+		//res.data[0][1] = "";
+		//res.rows[0][1] = "";
+		console.log(res);
+		setTimeout(function(){
+			doc.autoTable(res.columns, res.data, {startY: 300});
+			doc.addPage();
+			doc.text(25, 25, "Additional Comments");
+			doc.text(25, 45, myData.additionalComments);
+			console.log(res);
+			doc.save('CourseLSP.pdf');
+			console.log("genP 1 END");
+		},5);
+	} else{
+		doc.addPage();
+		doc.text(25, 25, "Additional Comments");
+		doc.text(25, 45, myData.additionalComments);
+		doc.save('TrainerLSP.pdf');
 		console.log("genP 1 END");
-	},5);
+	}
 }

@@ -37,7 +37,9 @@ Meteor.methods({
 		var attendances = inObj.attendance;
 		var studentId = inObj.StudentId;
 		var dates = inObj.dates;
-		var theGroup = Groups.findOne(groupId);
+		var courseCode = inObj.courseCode;
+		var grpNum = inObj.grpNum
+		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:grpNum});
 		//console.log("");
 		//console.log("");
 		//console.log("");

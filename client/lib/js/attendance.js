@@ -44,7 +44,7 @@ Template.trainerUploadAttendance.events({
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
 		inData.push([null, "Course Code", courseCode, null])
-		inData.push([null, "GroupID", theGroup._id, null])
+		inData.push([null, "Group Number", theGroup.grpNum, null])
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
 		inData.push([null, "Student Name", "Student ID", new Date()])
@@ -150,9 +150,9 @@ function processExcelFile(workbook){
 	// var desired_value = desired_cell.v;
 	
 	var cellOf_CourseID	= 'C4';
-	var cellOf_GroupID 	= 'C5';
-	var CourseID	= worksheet[cellOf_CourseID].v;
-	var GroupID 	= worksheet[cellOf_GroupID].v;
+	var cellOf_grpNum 	= 'C5';
+	var courseCode	= worksheet[cellOf_CourseID].v;
+	var grpNum 		= worksheet[cellOf_grpNum].v;
 	//console.log(GroupID);
 	
 	var startingLineNumber	= 9;
@@ -204,7 +204,8 @@ function processExcelFile(workbook){
 		debugObj.StudentId		= StudentID	  ;
 		debugObj.attendance	  = attendances	;
 		debugObj.dates	  		= dates				;
-		debugObj.groupId      = GroupID	    ;
+		debugObj.grpNum      	= grpNum	    ;
+		debugObj.courseCode  	= courseCode	    ;
 		console.log(debugObj);
 		
 		
