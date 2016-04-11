@@ -12,55 +12,85 @@
     </section>
     <!-- Content -->
     <div id='content'>
-      <div class='panel panel-default grid'>
-        <div class='panel-heading'>
-          Students Information
-          <div class='panel-tools'>
-            <div class='badge'>{{classlist.length}} Students</div>
+      <div class="panel-group" id="accordion">
+        <div class='panel panel-default grid'>
+          <div class='panel-heading' data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+            <h4 class="panel-title">
+              Classlist
+              <div class='panel-tools'>
+                <div class='badge'>{{classlist.length}} Students</div>
+              </div>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <table class='table table-hover'>
+                <thead>
+                  <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th class='actions'>
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each getStudentDetails classlist}}
+                    <tr>
+                      <!-- <td>{{fullName}} {{../_id}}</td> -->
+                      <td>{{fullName}}</td>
+                      <td>{{email}}</td>
+                      <td class='action'>
+                        <button class='btn btn-success' data-toggle="modal" data-target="#viewGrade{{_id}}" data-id="{{_id}}" title='Grades'><i class='icon-bar-chart'></i></button>
+                      {{> tcViewStudentGrade}}
+                      </td>
+                    </tr>
+                  {{else}}
+                    <tr>
+                      <td colspan="3">No Students Enrolled At The Moment</td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-        <table class='table table-hover'>
-          <thead>
-            <tr>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th class='actions'>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each getStudentDetails classlist}}
-              <tr>
-                <!-- <td>{{fullName}} {{../_id}}</td> -->
-                <td>{{fullName}}</td>
-                <td>{{email}}</td>
-                <td class='action'>
-                  <button class='btn btn-success' data-toggle="modal" data-target="#viewGrade{{_id}}" data-id="{{_id}}" title='Grades'><i class='icon-bar-chart'></i></button>
-                {{> tcViewStudentGrade}}
-                  <!-- <a class='btn btn-info' href='#' title='Attendence'> -->
-      <!--             <button class='btn btn-success' data-toggle="modal" data-target="#viewAttendence{{_id}}" data-id="{{_id}}" title='Attendence'><i class='fa fa-calendar-check-o'></i></button>
-                {{> tcViewStudentAttendence}} -->
-                </td>
-              </tr>
-            {{else}}
-              <tr>
-                <td colspan="3">No Students Enrolled At The Moment</td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-      <div class='panel panel-default grid'>
-        <div class='panel-heading'>
-          Course Materials
+        <div class="panel panel-default grid">
+          <div class='panel-heading' data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+            <h4 class="panel-title">
+              Attendence
+            </h4>
+          </div>
+          <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{> tcAttendence}}
+            </div>
+          </div>
         </div>
-        {{> tcCourseMaterials}}
-
-        <div class='panel-heading'>
-          Student Uploaded Assignments
+        <div class="panel panel-default grid">
+          <div class='panel-heading' data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+            <h4 class="panel-title">
+              Course Materials
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{> tcCourseMaterials}}
+            </div>
+          </div>
         </div>
-        {{> tAssignmentMaterials}}
+        <div class="panel panel-default">
+          <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+            <h4 class="panel-title">
+              Student Uploaded Assignments
+            </h4>
+          </div>
+          <div id="collapse4" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{> tAssignmentMaterials}}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -160,22 +190,28 @@
   </div>
 </template>
 
-<template name="tcViewStudentAttendence">
-  <div class="modal" id="viewAttendence{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Student's Grade</h4>
-        </div>
-        <div class="modal-body">
-          Test Test :)
-          Print data_id : {{_id}}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
+<template name="tcAttendence">
+  {{studentAttendenceDetails}}
+  <div class="table-responsive">
+    <table id="dataTables-example" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Class Date</th>
+          <th>Number of Turnup</th>
+          <th>Absentees</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- {{#each uploads}}
+          <tr> 
+            <td>{{name}}</td>
+            <td>{{formatDate uploadedAt}}</td>
+            <td>
+              <a href="{{url download = true}}" class="button btn admin-btn">Download</a>
+            </td>
+          </tr> 
+        {{/each}} -->
+      </tbody>
+    </table>
   </div>
 </template>

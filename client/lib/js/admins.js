@@ -1,3 +1,17 @@
+Template.registerHelper('userHasAccess', function () {
+	var a = Meteor.user();
+    if (a !== undefined) {
+      console.log('Logged in as: ' + Meteor.user().emails[0].address);
+      console.log('isAdmin ' + Meteor.user().userType.admin);
+      console.log('isTrainer ' + Meteor.user().userType.trainer);
+      console.log('isLearner ' + Meteor.user().userType.learner);
+      return true;
+    } else{
+      console.log('isLearner ' + Meteor.user().userType.learner);
+      return false;
+    }
+});
+
 function getRadioValue(theRadioGroup)
 {
     var elements = document.getElementsByName(theRadioGroup);

@@ -1,7 +1,7 @@
  function getTrainerOngoingCourse(e) {
   console.log("trainerPortal.js - trainerOngoingCourses >>>");
   var tId = Meteor.user()._id;
-  var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}});
+  var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}}).fetch();
   return coursesTaught;
 }
 
@@ -236,7 +236,7 @@ Template.tcViewStudentGrade.helpers({
   }
 });
 
-Template.tcViewStudentAttendence.helpers({
+Template.tcAttendence.helpers({
   "studentAttendenceDetails" : function sAttendenceStudentDetails(cList) {
     var studId = this._id;
     var url =  Router.current().url;
@@ -252,6 +252,13 @@ Template.tcViewStudentAttendence.helpers({
     var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
     var grpAttendenceObj = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum,}).attendance;
 
+    console.log(grpAttendenceObj);
+    // grpAttendenceObj.forEach(function(curr,ind,arr){
+    //     console.log("curr");
+    //     console.log(curr);
+    //     console.log("ind");
+    //     console.log(ind);
+    //   });
     // var attendenceObj = Groups.findOne({_id: studId}).grades[grpId];
 
     // result = [];
