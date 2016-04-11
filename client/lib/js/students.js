@@ -1,3 +1,19 @@
+function getRadioVal(form, name) {
+    var val;
+    // get list of radio buttons with specified name
+    var radios = form.elements[name];
+    
+    // loop through list of radio buttons
+    for (var i=0, len=radios.length; i<len; i++) {
+        if ( radios[i].checked ) { // radio checked?
+            val = radios[i].value; // if so, hold its value in val
+            break; // and break out of for loop
+        }
+    }
+    return val; // return value of checked radio or undefined if none checked
+}
+
+
 // STUDENT ///////////////////////////////////////////////////////////////////////
 Template.studentIndex.helpers({
 	"displayStudentName" : function displayTrainerName(e) {
@@ -15,6 +31,7 @@ Template.studentList.onRendered(function(){
 	//Session.set("studentSearchCaps", null);
 });
 
+// ADMIN PORTAL ////////////////////////////////////////////////////////////////
 Template.studentList.events({
 	"click #filter" : function doSearch(e){
 		// console.log(e);
@@ -77,16 +94,12 @@ Template.studentList.helpers({
 });
 
 Template.addStudentAcctForm.events({
-	"click #addStudentAcctButton" : function createStudentEventHandler(e) {
+	"click #addStudentAcctButton" : function createStudentEventHandler(e, template) {
 		console.log("Sys: Collect Student Information");
-
 		//TODO: Validation of input		
 		var obj = new Object();
 		obj.fullName = 		document.getElementById("sName").value;
-		// 	 		var grpId = $(template.find('input:radio[id=groupUserSignup]:checked')).val();
-		// var gender = $(template.find('input:radio[id=gender]:checked')).val();
- 		console.log("THis gender " + gender);
- 		obj.gender = "male";
+ 		obj.gender = $(template.find('input:radio[name=gender_filter]:checked')).val();
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
 		obj.email = 				document.getElementById("email").value;
@@ -179,9 +192,6 @@ Template.deleteStudentForm.events({
 Template.viewParticularsForm.events({
 	"click #editStudAcct" : function viewStudentDetailsEventHandler(e) {
 		console.log("Updating Student Information...");
-		console.log(e);
-		console.log(this);
-
 		//TODO: Validation of input
 		var sRemark = $("#"+this._id+" #remarks")[0].value;
 		//var idNo = document.getElementById("remarks").value;
@@ -198,12 +208,12 @@ Template.viewParticularsForm.events({
 		var snokReln = $("#"+this._id+" #nokReln")[0].value;		
 		var snokTel =  $("#"+this._id+" #nokTel")[0].value;
 
-			console.log("Remarks-"+ sRemark);
-			console.log("MobileNo-"+ sMobileNo);
-			console.log("qualitifation-"+ qualification);
-			console.log("name-"+ snokName);
-			console.log("tel-"+ snokTel);
-			console.log("reln-"+ snokReln);
+			// console.log("Remarks-"+ sRemark);
+			// console.log("MobileNo-"+ sMobileNo);
+			// console.log("qualitifation-"+ qualification);
+			// console.log("name-"+ snokName);
+			// console.log("tel-"+ snokTel);
+			// console.log("reln-"+ snokReln);
 		
 		// sRemark, sMobileNo, sProficiency, qualification, snokName, snokTel, snokReln
 		Meteor.call("editLearnerAccount", this._id, sRemark, sMobileNo, qualification, snokName, snokTel, snokReln, userID);

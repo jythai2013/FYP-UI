@@ -220,15 +220,15 @@ function fromJsonObject (that, object) {
 }
 
 if (Buffer.TYPED_ARRAY_SUPPORT) {
-  Buffer.prototype.__proto__ = Uint8Array.prototype
-  Buffer.__proto__ = Uint8Array
+  Buffer.prototype.prototype = Uint8Array.prototype
+  Buffer.prototype = Uint8Array
 }
 
 function allocate (that, length) {
   if (Buffer.TYPED_ARRAY_SUPPORT) {
     // Return an augmented `Uint8Array` instance, for best performance
     that = Buffer._augment(new Uint8Array(length))
-    that.__proto__ = Buffer.prototype
+    that.prototype = Buffer.prototype
   } else {
     // Fallback: Return an object instance of the Buffer class
     that.length = length

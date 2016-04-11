@@ -91,7 +91,7 @@
 			console.log(">>> EditLearnerAccount (server, createAccounts.js)");
 			console.log("dataRem-"+ sRemark);
 			console.log("dataMoNo-"+ sMobileNo);
-			console.log("datasProf-"+ sProficiency);
+			// console.log("datasProf-"+ sProficiency);
 			console.log("datasQuali-"+ qualification);
 			console.log("datasName-"+ snokName);
 			console.log("datasTel-"+ snokTel);

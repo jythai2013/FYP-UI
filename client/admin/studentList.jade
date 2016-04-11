@@ -51,7 +51,12 @@ template(name="studentList")
                       +viewParticularsForm
                       //td 
                         //a.btn.admin-btn.bt-sn(data-target="#viewStudCourses#{_id}", data-toggle="modal", data-id="#{_id}") Courses
-                      td #{remarks}
+                      td 
+                        | #{remarks}
+                        br.
+                        strong
+                          | Enrolled Classes: 
+                        | X
                       td
                         a.btn.admin-btn.bt-sn(data-target="#deleteStud#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                       +deleteStudentForm
@@ -64,7 +69,7 @@ template(name="addStudentAcctForm")
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
           h4#myModalLabel.modal-title Add New Student
         .modal-body
-          form(name="", role="form", action="#", method="post")
+          form(id="addstudAcct" name="addstudAcct", role="form", action="#", method="post")
             .table-responsive
               table#dataTables-example.table(style="background:#333")
                 tbody  
@@ -75,11 +80,13 @@ template(name="addStudentAcctForm")
                       input.form-control(type="text", id="sName") 
                 tr
                   td Gender
-                  td 
-                    input(type="radio",id="gender",name="gender",value="Male",checked="")
-                    | Male
-                    input(type="radio",id="gender",name="gender",value="Female")
-                    | Female
+                  td
+                    label.radio-inline
+                      input(type="radio", name="gender_filter", value="Male", checked="true")
+                      | Male
+                    label.radio-inline
+                      input(type="radio", name="gender_filter", value="Female")
+                      | Female
                   td Date of Birth
                   td 
                     .form-group
@@ -108,18 +115,26 @@ template(name="addStudentAcctForm")
                   td Nationality
                   td 
                     .form-group
-                      input.form-control(type='text', placeholder="Citizenship", id='nationality')
+                      select.form-control(id='nationality', style="color:black")
+                        +nationalityList
                 tr
                   td Highest Qualification
                   td 
                     .form-group
-                      select.form-control(id='qualification', style="color:black")
-                        option(value="workshop") WPA Certified
+                      select.form-control(id='qualification', style="color:black", onchange="showDiv(this)")
+                        option(value="WPA") WPA Certified
                         option(value="Primary") PSLE
                         option(value="Secondary") O/N'Level
                         option(value="JC") A'Level
                         option(value="Polytechnic") Diploma
                         option(value="University") Degree
+                        option(value="others") Others
+                  td
+                    div#hidden_div(style="display:none;")
+                      WPA Level:
+                  td
+                    div#hidden_div(style="display:none;")
+                      input.form-control(type='text', id='qOthers', placeholder="state level")
                 tr
                   td Emergency Contact Name
                   td 
@@ -142,7 +157,7 @@ template(name="addStudentAcctForm")
                       input.form-control(type='text', id='nokTel')
                 tr
                   td Remarks
-                  td 
+                  td(colspan="3") 
                     .form-group
                       textarea.form-control(type='text', id='remarks', placeholder='Financial Hold/ Term Payment/ etc.', style="max-width: 500px;")
             // /.table-responsive
@@ -152,7 +167,7 @@ template(name="addStudentAcctForm")
 
 template(name="viewParticularsForm")
   div.modal(id="viewParticulars#{_id}" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
-    .modal-dialog
+    .modal-dialog(style="width: 800px")
       .modal-content
         .modal-header
           button.close(type="button", data-dismiss="modal", aria-hidden="true") &#215;
@@ -213,7 +228,7 @@ template(name="viewParticularsForm")
                     td Relationship
                     td
                       .form-group
-                          select.form-group(id='nokReln', style="color:black")
+                          select.form-control(id='nokReln', style="color:black")
                             option(value="#{nokReln}") #{nokReln}
                             option(disabled) ────────── 
                             option(value="Employer") Employer

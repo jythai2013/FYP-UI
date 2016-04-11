@@ -253,12 +253,7 @@ Template.tcAttendence.helpers({
     var grpAttendenceObj = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum,}).attendance;
 
     console.log(grpAttendenceObj);
-    // grpAttendenceObj.forEach(function(curr,ind,arr){
-    //     console.log("curr");
-    //     console.log(curr);
-    //     console.log("ind");
-    //     console.log(ind);
-    //   });
+    console.log(grpAttendenceObj.length);
     // var attendenceObj = Groups.findOne({_id: studId}).grades[grpId];
 
     // result = [];
