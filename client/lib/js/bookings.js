@@ -61,7 +61,7 @@ Template.bookingFacilityForm.events({
     var inputElements = document.getElementsByClassName('messageCheckbox');
     for(var i=0; inputElements[i]; ++i){
       if(inputElements[i].checked){
-           repeatOption.push(inputElements[i].value);
+           repeatOption.push(parseInt(inputElements[i].value));
       }
     }
 
@@ -90,7 +90,9 @@ Template.bookingFacilityForm.events({
     sessionI = document.getElementById("groupId").value;
     dates.forEach(function(details){
       //comment on what this function do for later reference!!!
-      Meteor.call("createBooking2", details.start, details.end, document.getElementById("fac").value, courseI, sessionI, function(err,value){
+      start = new Date(moment(details.start,"DD/MM/YYYY hh:mm a").format())
+      end = new Date(moment(details.end,"DD/MM/YYYY hh:mm a").format())
+      Meteor.call("createBooking2", start, end, document.getElementById("fac").value, courseI, sessionI, function(err,value){
         if (!err){
           $('#fmModal').modal('hide');
         } else {
@@ -314,19 +316,14 @@ function getDatesFromRepeat(){
   console.log("endDateTime is printing:");
   console.log(endinDateTime);
 
-  var timeslot = new Object();
   var result = [];
 	console.log(repeatOptions);
   if(repeatOptions === undefined || repeatOptions.length == 0){
+    var timeslot = {};
     timeslot.start = startDateTime;
     timeslot.end = endinDateTime;
     result.push(timeslot);
   } else {
-    var currentIndex = 0;
-    var weekIndex = 0;
-    var currentIsoDay = moment(startDateTime).isoWeekday();
-    var goNextWeek = false; //if goNextWeek is true, no need to check isoDay anymore
-    // startTime = moment().startDateTimeInput.hour().minute();
     var startTime = {
       hour: moment(startDateTime).hour(),
       minute: moment(startDateTime).minute()
@@ -336,34 +333,33 @@ function getDatesFromRepeat(){
       hour: moment(endinDateTime).hour(),
       minute: moment(endinDateTime).minute()
     }
-
+   
     currentStartDate = moment(startDateTime);
+    currentEndDate = moment(endinDateTime);
 
-		console.log(results);
-    while (moment(result[result.length -1]) != undefined && result.length < InumSessions && moment(result[result.length -1].end).isBefore(endinDateTime)){
-      if (repeatOptions[currentIndex] >= currentIsoDay || goNextWeek)
+    var dayDif = currentEndDate.diff(currentStartDate, 'days');
 
-        DateSlot = moment(currentStartDate).add(weekIndex, "week").isoWeekday(arrOfIsoDay[currentIndex]);
+    var dayAdd = 0;
+    var currentDate;
 
-				console.log(timeslot);
-        timeslot.start = moment(DateSlot).hour(startTime.hour).minute(startTime.minute);
-        timeslot.end = moment(DateSlot).hour(endTime.hour).minute(endTime.minute);  
-        result.push(timeslot);
-        
-        currentIndex +=1;
-        goNextWeek = false;
-        // currentStartDate = startDate;
-      //update currentIndex, weekIndex and goNextWeek when necessary
-      if (currentIndex === arrOfIsoDay.length){
-        goNextWeek = true;
-        currentIndex = 0;
-        weekIndex +=1;
-      } else {
-        currentIndex += 1;
+    while (dayAdd < dayDif) {
+      if (result.length >= InumSessions) {
+        break;
       }
-    }    
+      currentDate = moment(currentStartDate).add(dayAdd, "day");
+
+      currentDateISO = currentDate.isoWeekday();
+      if(repeatOptions.indexOf(currentDateISO) > -1) {
+        var timeslot = {};
+        timeslot.start = moment(currentDate).hour(startTime.hour).minute(startTime.minute);
+        timeslot.end = moment(currentDate).hour(endTime.hour).minute(endTime.minute);     
+        result.push(timeslot);
+      }
+      dayAdd += 1;
+
+    } 
   }
-		return result;
+	return result;
 }
 
 
