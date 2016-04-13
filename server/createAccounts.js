@@ -59,16 +59,18 @@
 			console.log("Sys: Trainer Account Created.");
 		},
 
-		'editTrainerAccount': function editTrainerAccount(_id, mobileNo, nationality, proficiency){
+		'editTrainerAccount': function editTrainerAccount(_id, mobileNo, nationality, proficiency, speciality){
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ _id);
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ mobileNo);
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ nationality);
 			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ proficiency);
+			console.log("EditTrainerAccount (createAccounts.js) >>> for "+ speciality);
 
 			Meteor.users.update(_id, { $set:{
 					'mobileNo': mobileNo,
 					'nationality': nationality, 
-					'proficiency': proficiency
+					'proficiency': proficiency,
+					'speciality': speciality
 				}
 			}, function(error, numAffected){
 				console.log(error);

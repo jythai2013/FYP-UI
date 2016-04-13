@@ -34,6 +34,7 @@ Template.trainerList.helpers({
 	}
 });
 
+
 Template.addTrainerAcctForm.events({
 	"click #addTrainerAcctButton" : function createTrainerEventHandler(event, template) {
 		console.log("Sys: Collect Trainer Information");
@@ -44,42 +45,102 @@ Template.addTrainerAcctForm.events({
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
 		obj.email = 				document.getElementById("email").value;
 		obj.userIDType = 				document.getElementById("trainerType").value;
-
 		obj.userID = 					document.getElementById("idNo").value;
 		console.log(document.getElementById("idNo").value);
 		obj.nationality = 	document.getElementById("addNationality").value;
-		obj.proficiency = 		document.getElementById("proficiency").value;
+		var pSelected = template.findAll("input[name=proficiency][type=checkbox]:checked");
+		var pArray = _.map(pSelected, function(item) {
+		     return item.defaultValue;
+		});
+
+		obj.proficiency = pArray;
 		obj.password = 			obj.mobileNo;
-		var selected = template.findAll("input[type=checkbox]:checked");
+		
+		var selected = template.findAll("input[name=speciality][type=checkbox]:checked");
 		var array = _.map(selected, function(item) {
 		     return item.defaultValue;
 		});
 		obj.speciality = array;
+
 		obj.userType = {trainer:true};
 
-		Meteor.call("createTrainerAccount", obj);
+		Meteor.call("createTrainerAccount", obj, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>update trainer creation SUCCESS MSG");
+				Session.set('updateTrainerAddSuccessMessage', 'Successfully added')
+		        Meteor.setTimeout(function(){Session.set('updateTrainerAddSuccessMessage', false);}, 3000);
+			} else {
+      			console.log(">>>update trainer creation FAILURE MSG");
+			    Session.set('errorTrainerAddMessage', 'Account Creation Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('errorTrainerAddMessage', false);}, 3000);
+			}
+		});
 		console.log("Sys: Trainer Information Saved");
+	}
+});
+
+Template.viewTrainerParticulars.helpers({
+	"isChecked" : function selectSpecialityTrainerList(result) {
+		try {
+			var a = this.speciality.indexOf(result);
+			if (a >= 0){			
+				return true;
+			} else {
+				return false;
+			}
+		} catch (e){
+			// do nothing
+		}
+	},
+
+	"isChecked2" : function selectProficiencyTrainerList(result) {
+		try {
+			var a = this.proficiency.indexOf(result);
+			if (a >= 0){			
+				return true;
+			} else {
+				return false;
+			}
+		} catch (e){
+			// do nothing
+		}
 	}
 });
 
 Template.viewTrainerParticulars.events({
 	"click #editTrainerAcctButton" : function editTrainerEventHandler(event, template) {
 		console.log("Sys: trainers.js >> Collect Trainer Information" + this._id);
-
+		var aid = this._id;
+		console.log("aid : " + aid);
 		//TODO: Validation of input		
-		var mobileNo = 				$("#"+this._id+" #mobileNo")[0].value;
-		var nationality = 		$("#"+this._id+" #nationality")[0].value;
-		var proficiency = 		$("#"+this._id+" #proficiency")[0].value;
-		// var selected = template.findAll("input[type=checkbox]:checked");
-		// var array = _.map(selected, function(item) {
-		//      return item.defaultValue;
-		// });
-		//obj.speciality = array;
+		var mobileNo = document.getElementById(aid+"mobileNo").value;
+		var nationality = document.getElementById(aid+"nationality").value;
 
-		console.log(mobileNo);
-		console.log(nationality);
-		console.log(proficiency);
-		Meteor.call("editTrainerAccount", this._id, mobileNo, nationality, proficiency);
+		var pSelected = template.findAll("input[name="+aid+"proficiency][type=checkbox]:checked");
+		var pArray = _.map(pSelected, function(item) {
+		     return item.defaultValue;
+		});
+		var proficiency = pArray;
+
+		var selected = template.findAll("input[name="+aid+"speciality][type=checkbox]:checked");
+		var array = _.map(selected, function(item) {
+		     return item.defaultValue;
+		});
+		var speciality = array;
+
+		Meteor.call("editTrainerAccount", this._id, mobileNo, nationality, proficiency, speciality, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>update trainer Particulars SUCCESS MSG");
+				Session.set('updateTrainerParticularsSuccessMessage', 'Successfully updated')
+		        Meteor.setTimeout(function(){Session.set('updateTrainerParticularsSuccessMessage', false);}, 3000);
+			} else {
+				console.log(">>>update trainer Particulars FAILURE MSG");
+			    Session.set('errorTrainerParticularsMessage', 'Update Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('errorTrainerParticularsMessage', false);}, 3000);
+			}
+		});
 		console.log("Sys: Trainer Information Updated");
 	}
 });
@@ -87,6 +148,17 @@ Template.viewTrainerParticulars.events({
 Template.deleteTrainerForm.events({
 	"click #deleteTrainerButton" : function deleteTrainerEventHandler(e) {
 		console.log(this._id);
-		Meteor.call("deleteUsers2", this._id);
+		Meteor.call("deleteUsers2", this._id, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>update trainer delete SUCCESS MSG");
+				Session.set('updateTrainerDeleteSuccessMessage', 'Successfully deleted')
+		        Meteor.setTimeout(function(){Session.set('updateTrainerDeleteSuccessMessage', false);}, 3000);
+			} else {
+				console.log(">>>update trainer delete FAILURE MSG");
+			    Session.set('errorTrainerDeleteMessage', 'Delete Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('errorTrainerDeleteMessage', false);}, 3000);
+			}
+		});
 	}
 });

@@ -9,6 +9,25 @@ template(name="trainerList")
       .col-lg-12
         .panel.panel-default
           .panel-body
+            if errorTrainerParticularsMessage
+              .alert.alert-danger
+                | #{errorTrainerParticularsMessage}
+            if updateTrainerParticularsSuccessMessage
+              .alert.alert-success
+                | #{updateTrainerParticularsSuccessMessage}
+            if errorTrainerDeleteMessage
+              .alert.alert-danger
+                | #{errorTrainerDeleteMessage}
+            if updateTrainerDeleteSuccessMessage
+              .alert.alert-success
+                | #{updateTrainerDeleteSuccessMessage}
+            if errorTrainerAddMessage
+              .alert.alert-danger
+                | #{errorTrainerAddMessage}
+            if updateTrainerAddSuccessMessage
+              .alert.alert-success
+                | #{updateTrainerAddSuccessMessage}
+
             h4 Trainer List Management
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addtrainerAcct" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
                         i.fa.fa-plus
@@ -30,11 +49,11 @@ template(name="trainerList")
                         a.btn.admin-btn.bt-sn(data-target="#viewTrainerDetails#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
                         +viewTrainerParticulars
                       if isAlsoAdmin
-                        td a.btn.admin-btn.bt-sn(data-target="#goDeleteTrainer#{_id}", data-toggle="modal", data-id="#{_id}") Delete
-                          +deleteTrainerForm
+                        td Administrator
                       else
                         td
-                          Administrator 
+                          a.btn.admin-btn.bt-sn(data-target="#goDeleteTrainer#{_id}", data-toggle="modal", data-id="#{_id}") Delete
+                          +deleteTrainerForm 
 
 
 template(name="viewTrainerParticulars")
@@ -56,7 +75,7 @@ template(name="viewTrainerParticulars")
                 tr
                   td Nationality
                   td
-                    select.form-control(id="nationality", name="nationality", style="color:black")
+                    select.form-control(id="#{_id}nationality", name="#{_id}nationality", style="color:black")
                       option(value="#{nationality}") 
                         | #{nationality}
                       option(disabled) ──────────
@@ -64,17 +83,69 @@ template(name="viewTrainerParticulars")
                 tr
                   td Mobile
                   td 
-                    input.form-control(type='text', id='mobileNo', value="#{mobileNo}")
+                    input.form-control(type='text', id='#{_id}mobileNo', value="#{mobileNo}")
                 tr
                   td Speciality
                   td(colspan="3")
-                    input.form-control(type='text', id='speciality', value="#{speciality}")
+                    label.checkbox-inline
+                      if isChecked "Engineering"
+                        input(type="checkbox", value="Engineering", name="#{_id}speciality", checked="")
+                        | Engineering
+                      else
+                        input(type="checkbox", value="Engineering", name="#{_id}speciality")
+                        | Engineering
+                    label.checkbox-inline
+                      if isChecked "Leadership"
+                        input(type="checkbox", value="Leadership", name="#{_id}speciality", Leadership)
+                        | Leadership
+                      else
+                        input(type="checkbox", value="Leadership", name="#{_id}speciality")
+                        | Leadership
+                    label.checkbox-inline
+                      if isChecked "Construction"
+                        input(type="checkbox", value="Construction", name="#{_id}speciality", checked="")
+                        | Construction
+                      else
+                        input(type="checkbox", value="Construction", name="#{_id}speciality")
+                        | Construction
+                    label.checkbox-inline
+                      if isChecked "Plumming"
+                        input(type="checkbox", value="Plumming", name="#{_id}speciality", checked="")
+                        | Plumming
+                      else
+                        input(type="checkbox", value="Plumming", name="#{_id}speciality")
+                        | Plumming
                 tr
                   td Proficiency
-                  td 
-                    .form-group
-                      textarea.form-control(type='text',id='proficiency')
-                        | #{proficiency}
+                  td
+                    label.checkbox-inline
+                      if isChecked2 "English"
+                        input(type="checkbox", value="English", name="#{_id}proficiency", checked="")
+                        | English
+                      else
+                        input(type="checkbox", value="English", name="#{_id}proficiency")
+                        | English
+                    label.checkbox-inline
+                      if isChecked2 "Mandarin"
+                        input(type="checkbox", value="Mandarin", name="#{_id}proficiency", checked="")
+                        | Mandarin
+                      else
+                        input(type="checkbox", value="Mandarin", name="#{_id}proficiency")
+                        | Mandarin
+                    label.checkbox-inline
+                      if isChecked2 "Malayu"
+                        input(type="checkbox", value="Malayu", name="#{_id}proficiency", checked="")
+                        | Malayu
+                      else
+                        input(type="checkbox", value="Malayu", name="#{_id}proficiency")
+                        | Malayu
+                    label.checkbox-inline
+                      if isChecked2 "Tamil"
+                        input(type="checkbox", value="Malayu", name="#{_id}proficiency", checked="")
+                        | Tamil
+                      else
+                        input(type="checkbox", value="Malayu", name="#{_id}proficiency")
+                        | Tamil
                 
             // /.table-responsive
         .modal-footer
@@ -127,23 +198,33 @@ template(name="addTrainerAcctForm")
                   td Speciality
                   td(colspan="3")
                     label.checkbox-inline
-                      input(type="checkbox", value="1", name="speciality")
+                      input(type="checkbox", value="Engineering", name="speciality")
                       | Engineering
                     label.checkbox-inline
-                      input(type="checkbox", value="2", name="speciality")
+                      input(type="checkbox", value="Leadership", name="speciality")
                       | Leadership
                     label.checkbox-inline
-                      input(type="checkbox", value="3", name="speciality")
+                      input(type="checkbox", value="Construction", name="speciality")
                       | Construction
                     br
                     label.checkbox-inline
-                      input(type="checkbox", value="4", name="speciality")
+                      input(type="checkbox", value="Plumming", name="speciality")
                       | Plumming
                 tr
                   td Proficiency
-                  td 
-                    .form-group
-                      textarea.form-control(type='text',id='proficiency')
+                  td(colspan="3")
+                    label.checkbox-inline
+                      input(type="checkbox", value="English", name="proficiency")
+                      | English
+                    label.checkbox-inline
+                      input(type="checkbox", value="Mandarin", name="proficiency")
+                      | Mandarin
+                    label.checkbox-inline
+                      input(type="checkbox", value="Malayu", name="proficiency")
+                      | Malayu
+                    label.checkbox-inline
+                      input(type="checkbox", value="Tamil", name="proficiency")
+                      | Tamil
                 
             // /.table-responsive
         .modal-footer

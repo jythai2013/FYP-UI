@@ -13,7 +13,7 @@ Template.administratorList.helpers(
     return Session.get('errorAdminParticularsMessage')
 
   updateAdminParticularsSuccessMessage: () ->
-    return Session.get('updateAdminParticularsSuccessMessage')	
+    return Session.get('updateAdminParticularsSuccessMessage')  
 
   errorAdminDeleteMessage: () ->
     return Session.get('errorAdminDeleteMessage')
@@ -25,7 +25,28 @@ Template.administratorList.helpers(
     return Session.get('errorAdminAddMessage')
 
   updateAdminAddSuccessMessage: () ->
-    return Session.get('updateAdminAddSuccessMessage')	
+    return Session.get('updateAdminAddSuccessMessage')  
+)
+
+#ADMIN > TRAINER LIST
+Template.trainerList.helpers(
+  errorTrainerParticularsMessage: () ->
+    return Session.get('errorTrainerParticularsMessage')
+
+  updateTrainerParticularsSuccessMessage: () ->
+    return Session.get('updateTrainerParticularsSuccessMessage')	
+
+  errorTrainerDeleteMessage: () ->
+    return Session.get('errorTrainerDeleteMessage')
+
+  updateTrainerDeleteSuccessMessage: () ->
+    return Session.get('updateTrainerDeleteSuccessMessage')
+    
+  errorTrainerAddMessage: () ->
+    return Session.get('errorTrainerAddMessage')
+
+  updateTrainerAddSuccessMessage: () ->
+    return Session.get('updateTrainerAddSuccessMessage')	
 )
 
 #STUDENT > DROPBOX
