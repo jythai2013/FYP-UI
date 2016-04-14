@@ -143,7 +143,7 @@ Meteor.methods({
 		 if(theUser.grades == undefined || theUser.grades == null){ theUser.grades = {}; }
 		 if(theUser.paymentStatus == undefined || theUser.paymentStatus == null){ theUser.paymentStatus = {}; }
 		theUser.grades[groupId] = gradesInfo;
-		theUser.paymentStatus[groupId] = gradesInfo;
+		theUser.paymentStatus[groupId] = paymentStatusArr;
 		console.log(theUser)
 		// console.log(inObj.StudentID)
 		// console.log(theUser.grades)
@@ -155,18 +155,42 @@ Meteor.methods({
     },
     
 
-  'studentPaid': function(groupID, studID){
+  'studentPaid': function(groupID, studID, paymentStatusArr){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
       console.log("here");
-      	Meteor.users.update({'_id': studID, "paymentStatus.groupID":groupID}, 
-      		{ $set:{
-					status: "paid"
-				}
-			}
+      	var theUser = Meteor.users.findOne({_id:studID});
+		console.log(theUser);
+		 if(theUser.grades == undefined || theUser.grades == null){ theUser.grades = {}; }
+		 if(theUser.paymentStatus == undefined || theUser.paymentStatus == null){ theUser.paymentStatus = {}; }
+		theUser.paymentStatus[groupID] = paymentStatusArr;
+		console.log(theUser)
+		// console.log(inObj.StudentID)
+		// console.log(theUser.grades)
+		
+		Meteor.users.update({_id:studID}, theUser);
+    },
+    
+    
 
-      	);
+  'passStudent': function(groupID, studID, gradesInfo){
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+
+      	var theUser = Meteor.users.findOne({_id:studID});
+		console.log(theUser);
+		 if(theUser.grades == undefined || theUser.grades == null){ theUser.grades = {}; }
+		 if(theUser.paymentStatus == undefined || theUser.paymentStatus == null){ theUser.paymentStatus = {}; }
+		theUser.grades[groupID] = gradesInfo;
+		console.log(theUser)
+		// console.log(inObj.StudentID)
+		// console.log(theUser.grades)
+		
+		Meteor.users.update({_id:studID}, theUser);
+
+
     },
     
     'deleteGroup': function deleteGroup(removeCurrentGroupsArr){
@@ -207,11 +231,6 @@ Meteor.methods({
         // return false; //TODO: output error message in client
       // }
       console.log("in server delete group")
-      // for (var _id in removeCurrentGroupsIDArr){
-      //   console.log("in for loop delete group")
-      //   console.log(_id+ " _id")
-      
-        // console.log(_id);
       		Groups.update({_id: groupID},
 
       			{ $pull: { 

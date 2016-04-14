@@ -297,8 +297,11 @@ Template.certificateStudentList.helpers({
 			students.push(Meteor.users.findOne({_id:curr}))
 		});
 		
+		students = students.filter(function(astudent){
+				return(astudent.grades[groupId].passStatus)
+		});
 			// console.log(typeof students);
-			// console.log(students);
+		console.log(students);
 		
 		Session.set("certificateStudentListStudents", students)
 		if (verbose) console.log(students);
@@ -328,13 +331,10 @@ Template.certificateStudentList.events({
 		thisGroup.classlist.forEach(function(a,b,c){
 			console.log(a);
 			var theStudent = Meteor.users.findOne({_id:a});
-			var doPassStatus = !true;
-			if(doPassStatus){
-				var passStatus = theStudent.grades[groupId].passStatus
-				if(passStatus != true) {
-					//TODO: error message for those who not yet pass
-						return false;
-				}
+			var passStatus = theStudent.grades[groupId].passStatus
+			if(passStatus != true) {
+				//TODO: error message for those who not yet pass
+					return false;
 			}
 			myData.fullName = theStudent.fullName;
 			myData.userID = theStudent.userID;
@@ -369,13 +369,10 @@ Template.certificateStudentList.events({
 		// try{
 		var groupId = thisGroup._id;
 		var theStudent = Meteor.users.findOne({_id:this._id.toString()});
-		var doPassStatus = !true;
-		if(doPassStatus){
-			var passStatus = theStudent.grades[groupId].passStatus
-			if(passStatus != true) {
-				//TODO: error message for those who not yet pass
-					return false;
-			}
+		var passStatus = theStudent.grades[groupId].passStatus
+		if(passStatus != true) {
+			//TODO: error message for those who not yet pass
+				return false;
 		}
 		myData.fullName = theStudent.fullName;
 		myData.userID = theStudent.userID;

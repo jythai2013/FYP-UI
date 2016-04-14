@@ -51,14 +51,16 @@ Template.addClassForm.events({
 		// var EDate = new Date(moment(stringEDate,"DD/MM/YYYY").format());
 
 		obj.startDate = stringSDate;
-		obj.endDate = stringEdate;
+		obj.endDate = stringEDate;
 		obj.venue = document.getElementById("classListVenue").value;
-		var trainId = document.getElementById("classListTrainers").value;
-		obj.courseTrainers = {trainerId: trainId};
-		// var trainerFirstName = Meteor.users.findOne(trainerID).firstName;
-		// var trainerLastName = Meteor.users.findOne(trainerID).lastName;
-		// var gTrainers = trainerFirstName + " " + trainerLastName;
-
+		var trainId = document.getElementsByName("newClassTrainers");
+		console.log(trainId);
+		var trainers = new Array();
+	    for(var x = 0, l = trainId.length; x < l;  x++){
+	      console.log(trainId[x].value);
+	      trainers.push(trainId[x].value);
+		}
+		obj.courseTrainers=trainers;
 		var grpNumI1 = Groups.find({courseCode:currentCourse}).count();
 		console.log("What is this? : " + currentCourse);
 		var grpNumI2 = grpNumI1+1;
@@ -96,6 +98,25 @@ Template.addClass.onRendered(function(){
 });
 
 Template.group.onRendered(function(){
+  // var currentfb = getParameterByName("fbid");var url =  window.location.href;
+		
+		 var url =  window.location.href;
+		
+		var positionFirstEqual = url.indexOf('=');
+		//extracting course
+		var currentCourseGrp=url.substr(positionFirstEqual+1);	
+		var positionOfAND = url.indexOf('&');
+		var currentCourse=url.substring(positionFirstEqual+1, positionOfAND);
+		//extracting grpNum
+		var grpNumStr=url.substr(positionOfAND-1);
+		var positionSecondEqual = grpNumStr.indexOf('=');
+		var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
+		console.log(currentGrpNum + "grpNum");
+		Session.set("course", currentCourse);
+		Session.set("group", currentGrpNum);
+});
+
+Template.gradesStudent.onRendered(function(){
   // var currentfb = getParameterByName("fbid");var url =  window.location.href;
 		
 		 var url =  window.location.href;
@@ -456,7 +477,7 @@ Template.addClass.events({
 		console.log(trainId);
 		var trainers = new Array();
 	    for(var x = 0, l = trainId.length; x < l;  x++){
-	      console.log(trainId[x]);
+	      console.log(trainId[x].value);
 	      trainers.push(trainId[x].value);
 		}
 		obj.courseTrainers=trainers;
@@ -469,9 +490,7 @@ Template.addClass.events({
 			var grpNumI2 = grpNumI1+1;
 			obj.grpNum = "G"+grpNumI2;
 		}
-		console.log("here4");
-		console.log(obj);
-		Meteor.call("createGroup",obj);
+		// Meteor.call("createGroup",obj);
 		console.log("here4again");
 		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();
@@ -876,15 +895,37 @@ Template.gradesStudent.events({
 
 	"click #passStudentButton" : function(e) {
 		e.preventDefault();
-		console.log(this);
-        var currentCourseCode = Session.get('currentCourseCode');
-        console.log(currentCourseCode);
-        var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
-    	console.log(currentCourseID);
-    	var grades = Meteor.users.findOne({_id:this._id}).grades[currentCourseID];
-    	var grades = Meteor.users.findOne({_id:this._id}).grades;
+		console.log(this._id);
+        var currentCourseCode = Session.get('course');
+        var currentClass = Session.get('group');
+		var currentgroupID = Groups.findOne({courseCode:currentCourseCode, grpNum:currentClass})._id;
+    	console.log(currentgroupID);
+    	var grades = Meteor.users.findOne({_id:this._id}).grades[currentgroupID];
+	    
+	      	grades.passStatus = true;
+	      	Meteor.call("addClassToStudent", this._id, currentgroupID, grades);
+
+    	// var grades = Meteor.users.findOne({_id:this._id}).grades;
     	console.log(grades);
-	    // Meteor.call("passStudent", studentID, group._id, paymentStatus);
+	    // Meteor.call("passStudent", studentID, groupId, gradesInfo);
+   //      var studentTimes = Session.get('studentTimes');
+
+	},
+	"click #failStudentButton" : function(e) {
+		e.preventDefault();
+		console.log(this._id);
+        var currentCourseCode = Session.get('course');
+        var currentClass = Session.get('group');
+		var currentgroupID = Groups.findOne({courseCode:currentCourseCode, grpNum:currentClass})._id;
+    	console.log(currentgroupID);
+    	var grades = Meteor.users.findOne({_id:this._id}).grades[currentgroupID];
+	    
+	      	grades.passStatus = false;
+	      	Meteor.call("addClassToStudent", this._id, currentgroupID, grades);
+
+    	// var grades = Meteor.users.findOne({_id:this._id}).grades;
+    	console.log(grades);
+	    // Meteor.call("passStudent", studentID, groupId, gradesInfo);
    //      var studentTimes = Session.get('studentTimes');
 
 	}
