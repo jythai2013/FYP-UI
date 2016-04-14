@@ -5,7 +5,7 @@ navRoutes = [
   new NavRoute('AccountsMgmt', 'fa-group ', {label: "Accounts Management"})
   new NavRoute('studentList', '', {parentName: 'AccountsMgmt', label: "Student List"})
   new NavRoute('trainerList', '', {parentName: 'AccountsMgmt', label: "Trainer List"})
-  new NavRoute('administratorList', '', {parentName: 'AccountsMgmt', label: "Adminitstrator List"})
+  new NavRoute('administratorList', '', {parentName: 'AccountsMgmt', label: "Administrator List"})
 
   # Certificate
   new NavRoute('groupExcelUpload', 'fa-institution', {label: "Group Signup"})

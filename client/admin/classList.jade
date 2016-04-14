@@ -40,9 +40,9 @@ template(name="classList")
           .panel-body
             h4 Class Details
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addClassForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
-                        i.fa.fa-plus
-                        | Class
-              +addClassForm
+                i.fa.fa-plus
+                | Class
+            +addClassForm
           
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -71,7 +71,7 @@ template(name="classList")
                         +deleteClass 
 
 template(name="addClassForm")
-  #addClassForm.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+   div.modal(id="addClassForm" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -86,7 +86,7 @@ template(name="addClassForm")
                   th Course Code
                   td(colspan="3") 
                     .form-group
-                      select(name="courseCode", id="classListCourseCode", style="color: black")
+                      select.form-control(name="courseCode", id="classListCourseCode", style="color: black")
                         each cCourse
                           option(value="#{_id}") #{courseCode} 
                 tr
@@ -140,14 +140,14 @@ template(name="addClassForm")
                   th Venue
                   td 
                     .form-group
-                      select(name="type", id="classListVenue", style="color: black")
+                      select.form-control(name="type", id="classListVenue", style="color: black")
                         each facilitiesList1
                           option(value="#{fac}") #{fac}
                 tr  
                   th Trainers
                   td
                     .form-group.input-group
-                      select(name="type", id="classListTrainers", style="color: black")
+                      select.form-control(name="type", id="classListTrainers", style="color: black")
                         each courseTrainers1
                           option(value="#{_id}") #{fullName}
                     

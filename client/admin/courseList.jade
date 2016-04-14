@@ -19,7 +19,6 @@ template(name="courseList")
         .panel.panel-default
           .panel-body
             h4 Search courses
-              //+addCourseForm
           
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -46,9 +45,9 @@ template(name="courseList")
           .panel-body
             h4 Course Details
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addCourse" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
-                        i.fa.fa-plus
-                        | Course
-              +addCourseForm
+                i.fa.fa-plus
+                | Course
+            +addCourseForm
           
             .table-responsive
               table#dataTables-example.table.table-striped.table-bordered
@@ -113,7 +112,7 @@ template(name="viewCourseForm")
   // /.modal    
 
 template(name="addCourseForm")
-  #addCourse.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id="addCourse" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
@@ -122,7 +121,7 @@ template(name="addCourseForm")
         .modal-body
           form(role="form", id="insert-addCourseForm", action="facilityResult", method="post")
           .table-responsive
-            table#dataTables-example.table(style="background:#333")
+            table.table(style="background:#333")
               tbody
                 tr
                   th Course Code
@@ -138,7 +137,7 @@ template(name="addCourseForm")
                   th Course Type  
                   td 
                     .form-group()
-                      select(name="type", id="cNewType", style="color: black")
+                      select.form-control(name="type", id="cNewType", style="color: black")
                         option(value="WSQ") WSQ
                         option(value="LSP") LSP
                         option(value="Others") Others
@@ -173,7 +172,7 @@ template(name="addCourseForm")
                     th
                     td
                       .form-group()
-                        select(name="cNewPrereq", style="color: black")
+                        select.form-control(name="cNewPrereq", style="color: black")
                           each exisitingCourse
                             option(value="#{courseCode}") #{courseCode}
                         button#addMoreCourses.btn.btn-sn(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
@@ -184,7 +183,7 @@ template(name="addCourseForm")
                   th(style="white-space: normal; width=30%;") Genre
                   td   
                     .form-group()
-                      select(name="type", id="cNewGenre", style="color: black")
+                      select.form-control(name="type", id="cNewGenre", style="color: black")
                         option(value="Manufacturing") Manufacturing
                         option(value="Construction") Construction
                         option(value="Workplace Health & Safety") Workplace Health & Safety
