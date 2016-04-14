@@ -51,9 +51,9 @@ Template.courseLSPForm.onRendered(function(){
 		var coursecode = theCourse.courseCode;
 		//console.log(coursecode);
 		var theCourses = Groups.find({courseCode:coursecode}).fetch();
-		//console.log (theCourses);
-		// console.log (theCourses.count);
-		var res = theCourses.count;
+		console.log (theCourses);
+		var res = theCourses.length;
+		console.log (res);
 		if(res === undefined) res = 0;
 		//console.log(res);
 		Session.set("countTotalClass", res);
@@ -321,12 +321,13 @@ function genP(myData){
 			//	console.log(data);
 			//		doc.text("Header", 40, 30);
 			//},
-			//afterPageContent: function(data) {
-			//	for(var cell in data.table.headerRow.cells){
-			//		data.table.headerRow.cells[cell].styles.fillColor = 255;
-			//		//console.log(data.table.headerRow.cells[cell]);
-			//	}
-			//},
+			afterPageContent: function(data) {
+				//for(var cell in data.table.headerRow.cells){
+				//	data.table.headerRow.cells[cell].styles.fillColor = 255;
+				//	//console.log(data.table.headerRow.cells[cell]);
+				//}
+				console.log(data);
+			},
 			//createdCell: function (cell, data) {
 			//	console.log(cell);
 			//	console.log(data);

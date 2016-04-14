@@ -191,7 +191,7 @@ template(name="editClassDetails")
                 tr
                   td Venue
                   td(colspan="3") 
-                    input.form-control(id='annouTitle',type='text',value='#{venue}',placeholder='Venue', style="max-width: 500px;")
+                    input.form-control(id='classVenueEd',type='text',value='#{venue}',placeholder='Venue', style="max-width: 500px;")
                 tr
                   td No. of Hours
                   td(colspan="3") 
@@ -199,55 +199,73 @@ template(name="editClassDetails")
                 tr
                   td Timing
                   td(colspan="3") 
-                    input(type="time", id="classListNewStartTime", style="width:40%; color:black", value="#{startTime}") 
+                    input(type="time", id="classNewStartTimeEd", style="width:40%; color:black", value="#{startTime}") 
                     | TO 
-                    input(type="time", id="classListNewEndTime", style="width:40%; color:black", value="#{endTime}")
+                    input(type="time", id="classNewEndTimeEd", style="width:40%; color:black", value="#{endTime}")
                 tr  
                   th Days
                   td 
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Monday", name="classListDay")
+                        input(type="checkbox", value="Monday", name="classDayEd")
                         | Mon
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Tuesday", name="classListDay")
+                        input(type="checkbox", value="Tuesday", name="classDayEd")
                         | Tues
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Wednesday", name="classListDay")
+                        input(type="checkbox", value="Wednesday", name="classDayEd")
                         | Wed
                 tr
                   th  
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Thursday", name="classListDay")
+                        input(type="checkbox", value="Thursday", name="classDayEd")
                         | Thurs
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Friday", name="classListDay")
+                        input(type="checkbox", value="Friday", name="classDayEd")
                        | Fri
                   td
                     .form-group
                       label.checkbox-inline
-                        input(type="checkbox", value="Saturday", name="classListDay")
+                        input(type="checkbox", value="Saturday", name="classDayEd")
                         | Sat
 
                 
                 tr
                   th Duration (Date)
                   td(colspan="3")
-                    input(type="date", id="classListNewStartDate", placeholder="dd/mm/yyyy", style="color:black; width: 40%", value="#{startDate}")
+                    input(type="date", id="classStartDateEd", placeholder="dd/mm/yyyy", style="color:black; width: 40%", value="#{startDate}")
                     | TO
-                    input(type="date", id="classListNewEndDate", placeholder="dd/mm/yyyy", style="color:black; width: 40%")
-                tr
-                  td Trainer(s)
-                  td(colspan="3") 
+                    input(type="date", id="classEndDateEd", placeholder="dd/mm/yyyy", style="color:black; width: 40%",value="#{endDate}")
+                each classTrainersEd
+                  tr
+                    td Trainer(s)
+                    td(colspan="3") 
+                      | #{fullName}
+                      a(id="removeTrainerEd", value="#{_id}", class="fa fa-times-circle") 
                     input.form-control(id='annouTitle',type='text',value='#{classTrainers1}',placeholder='Venue', style="max-width: 450px;")
+                
+                each noTrainersEd
+                  tr 
+                    th 
+                    td
+                      .form-group()
+                        select(name="classTrainersEd", style="color: black; width: 100%")
+                          each addCourseTrainersEd
+                            option(value="#{_id}") #{fullName} 
+                    td  
+                      button#addMoreTrainersToClassEd.btn.btn-sn.pull-right(style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                        i.fa.fa-plus 
+                
+                      button#removeTrainersFromClassEd.btn.btn-sn.pull-right( style="margin-top: -1%; right: 6%; background-color: white; color:#333")
+                        i.fa.fa-minus
            // /.table-responsive
         .modal-footer
           button#editGroupDetailsButton.btn.btn-save(type="button", data-dismiss="modal") Edit

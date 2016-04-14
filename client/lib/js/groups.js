@@ -38,7 +38,7 @@ Template.addClassForm.events({
 		days = Array.prototype.slice.call(days);
 		days2 = new Array();
 		days.forEach(function(curr, ind, arr){
-			if(curr.checked) days2.push(curr.value.toLowerCase());
+			if(curr.checked) days2.push(curr.value);
 		});
 		obj.days = days2;
 		console.log(days);
@@ -95,6 +95,47 @@ Template.addClass.onRendered(function(){
   Session.set('noOfTrainerToaddtoClass', 0);
 });
 
+Template.group.onRendered(function(){
+  // var currentfb = getParameterByName("fbid");var url =  window.location.href;
+		
+		 var url =  window.location.href;
+		
+		var positionFirstEqual = url.indexOf('=');
+		//extracting course
+		var currentCourseGrp=url.substr(positionFirstEqual+1);	
+		var positionOfAND = url.indexOf('&');
+		var currentCourse=url.substring(positionFirstEqual+1, positionOfAND);
+		//extracting grpNum
+		var grpNumStr=url.substr(positionOfAND-1);
+		var positionSecondEqual = grpNumStr.indexOf('=');
+		var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
+		console.log(currentGrpNum + "grpNum");
+		Session.set("course", currentCourse);
+		Session.set("group", currentGrpNum);
+});
+
+Template.editClassDetails.onRendered(function(){
+  // var currentfb = getParameterByName("fbid");var url =  window.location.href;
+		
+		 var url =  window.location.href;
+		
+		var positionFirstEqual = url.indexOf('=');
+		//extracting course
+		var currentCourseGrp=url.substr(positionFirstEqual+1);	
+		var positionOfAND = url.indexOf('&');
+		var currentCourse=url.substring(positionFirstEqual+1, positionOfAND);
+		//extracting grpNum
+		var grpNumStr=url.substr(positionOfAND-1);
+		var positionSecondEqual = grpNumStr.indexOf('=');
+		var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
+		console.log(currentGrpNum + "grpNum");
+		Session.set("course", currentCourse);
+		Session.set("group", currentGrpNum);
+
+
+		Session.set('trainerTimesEditClass', 1);
+});
+
 
 Template.group.helpers({
 	'studentInClass' : function(){
@@ -130,34 +171,28 @@ Template.group.helpers({
 
 	'courseNoOfHours' : function(){
 		
-		
-		var courseGrp =  window.location.href;
-		
-		var positionFirstEqual = courseGrp.indexOf('=');
-		//extracting course
-		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-		var positionOfAND = courseGrp.indexOf('&');
-		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-
+		var currentCourse= Session.get("course");
 
 		return Courses.findOne({courseCode:currentCourse}).courseNoOfHours;
 	},
 
     "noOfDays" : function(e) {
-		var courseGrp =  window.location.href;
+		// var courseGrp =  window.location.href;
 		
-		var positionFirstEqual = courseGrp.indexOf('=');
-		//extracting course
-		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
-		var positionOfAND = courseGrp.indexOf('&');
-		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
+		// var positionFirstEqual = courseGrp.indexOf('=');
+		// //extracting course
+		// var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
+		// var positionOfAND = courseGrp.indexOf('&');
+		// var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
 
-		//extracting grpNum
-		var grpNumStr=courseGrp.substr(positionOfAND-1);
-		var positionSecondEqual = currentCourseGrp.indexOf('=');
-		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-		console.log(currentGrpNum + "grpNum");
-
+		// //extracting grpNum
+		// var grpNumStr=courseGrp.substr(positionOfAND-1);
+		// var positionSecondEqual = currentCourseGrp.indexOf('=');
+		// var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
+		// console.log(currentGrpNum + "grpNum");
+		var currentCourse = Session.get("course");
+		var currentGrpNum=Session.get("group");
+		console.log(currentGrpNum);
 		var size = Groups.find({courseCode:currentCourse,grpNum:currentGrpNum}).count();
 		console.log(size + " to check if grp exists");
 		var a = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum}).days;
@@ -217,6 +252,49 @@ Template.course.helpers({
 
         var size = Groups.find({courseCode:currentCourse}).count();
         return Groups.find({courseCode:currentCourse});
+    }
+});
+
+Template.editClassDetails.helpers({
+
+    "classTrainersEd" : function (e) {
+		var currentCourse = Session.get("course");
+		var currentClass = Session.get("group");
+		var trainersList = Groups.findOne({courseCode:currentCourse, grpNum:currentClass}).courseTrainers;
+		var trainerArray = new Array();
+		// var trainerStr = Meteor.users.findOne({_id:trainersList[0]}).fullName;
+		
+		for(var x = 0, l = trainersList.length; x < l;  x++){		
+			var trainerID = trainersList[x];
+			var trainer = Meteor.users.findOne({_id:trainerID});
+			console.log(trainer);
+			trainerArray.push(trainer);
+			
+		}
+		return trainerArray;
+    },
+    "noTrainersEd" : function (e) {
+		var fakeArray = new Array();
+		for(i = 0; i < Session.get('trainerTimesEditClass'); i++){
+			fakeArray.push("a")
+		}
+    return fakeArray;
+    },
+    "addCourseTrainersEd" : function (e) {
+		var currentCourse = Session.get("course");
+		var trainersList = Courses.findOne({courseCode:currentCourse}).courseTrainers;
+		console.log(trainersList);
+		var trainerArray = new Array();
+		// var trainerStr = Meteor.users.findOne({_id:trainersList[0]}).fullName;
+		
+		for(var x = 0, l = trainersList.length; x < l;  x++){		
+			var trainerID = trainersList[x].trainerID;
+			var trainer = Meteor.users.findOne({_id:trainerID});
+			console.log(trainer);
+			trainerArray.push(trainer);
+			
+		}
+		return trainerArray;
     }
 });
 
@@ -456,10 +534,96 @@ Template.editClassDetails.events({
 		// return false;
 		// }
 		// console.log(this.courseCode);
+		var currentCourse = Session.get("course");
+		var currentClass = Session.get("group");
+		var groupID = Groups.findOne({courseCode:currentCourse, grpNum:currentClass})._id;
+		var obj = new Object();
+		obj.venue = document.getElementById("classVenueEd").value;
+		obj.startTime = document.getElementById("classNewStartTimeEd").value;
+		obj.endTime = document.getElementById("classNewEndTimeEd").value;
+		obj.startDate = document.getElementById("classStartDateEd").value;
+		obj.endDate = document.getElementById("classEndDateEd").value;
+		var days = document.getElementsByName("classDayEd");
+		console.log(days);
+		days = Array.prototype.slice.call(days);
+		// if(days!=undefined || days.length >0){
+		var days2 = new Array();
+		days.forEach(function(curr){
+			if(curr.checked) days2.push(curr.value);
+		});
+		days2.forEach(function(entry){
+			console.log(entry);
 
-		Session.set('currentCourseGroup', this.courseCode);
-		  //modal.find('.modal-title').text('New message to ' + recipient)
-		  //modal.find('.modal-body input').val(recipient)
+		});
+		obj.days=days2;
+
+		var trainersToAdd = document.getElementsByName("classTrainersEd");
+		trainersToAdd = Array.prototype.slice.call(trainersToAdd);
+		trainersToAdd2 = new Array();
+		trainersToAdd.forEach(function(curr){
+			trainersToAdd2.push(curr.value);
+		});
+		var currentTrainers = Groups.findOne({courseCode:currentCourse, grpNum:currentClass}).courseTrainers;
+		console.log (currentTrainers);
+		// currentTrainers.forEach(function(curr){
+		// 	trainersToAdd2.push(curr);
+		// });
+		for(i = 0; i < currentTrainers.length; i++){
+			trainersToAdd2.push(currentTrainers[i])
+		}
+		console.log(trainersToAdd2);
+		obj.courseTrainers = trainersToAdd2;
+		Meteor.call("editGroup", groupID, obj);
+		// Meteor.call("editGroup", groupID, classVenue, startTime, endTime, startDate, endDate, days, trainersToAdd2);
+
+	},
+	"click #removeTrainerEd" : function(e) {
+		e.preventDefault();
+		//TODO: Validation of user
+		// if(Meteor.user.userType != "admin"){
+		// return false;
+		// }
+		
+		var currentCourse = Session.get("course");
+		var currentClass = Session.get("group");
+		var groupID = Groups.findOne({courseCode:currentCourse, grpNum:currentClass})._id;
+		console.log(groupID);
+		var trainerID = this._id;
+		console.log(trainerID);
+		Meteor.call("deleteTrainer",groupID, trainerID);
+	},
+	"click #addMoreTrainersToClassEd" : function(e) {
+		e.preventDefault();
+		//TODO: Validation of user
+		// if(Meteor.user.userType != "admin"){
+		// return false;
+		// }
+		
+		 var courseTimes = Session.get('trainerTimesEditClass');
+		 var noOfCourses = courseTimes+1;
+		 if(isNaN(courseTimes)) noOfCourses = 1;
+		 if(courseTimes==0) noOfCourses = 1;
+		 console.log("courseTimes " + courseTimes);
+		 console.log("noOfCourses " + noOfCourses);
+		 Session.set('trainerTimesEditClass', noOfCourses);
+		
+	},
+	"click #removeTrainersFromClassEd" : function(e) {
+		e.preventDefault();
+		//TODO: Validation of user
+		// if(Meteor.user.userType != "admin"){
+		// return false;
+		// }
+		
+		
+		 e.preventDefault();
+
+		 var courseTimes = Session.get('trainerTimesEditClass');
+		 var noOfCourses = courseTimes-1;
+		 if(isNaN(courseTimes)) noOfCourses = 0;
+		 console.log("courseTimes " + courseTimes);
+		 console.log("noOfCourses " + noOfCourses);
+		 Session.set('trainerTimesEditClass', noOfCourses);
 	}
 });
 
@@ -714,19 +878,14 @@ Template.gradesStudent.events({
 		e.preventDefault();
 		console.log(this);
         var currentCourseCode = Session.get('currentCourseCode');
+        console.log(currentCourseCode);
         var currentCourseID = Courses.findOne({courseCode:currentCourseCode})._id;
+    	console.log(currentCourseID);
     	var grades = Meteor.users.findOne({_id:this._id}).grades[currentCourseID];
-
+    	var grades = Meteor.users.findOne({_id:this._id}).grades;
+    	console.log(grades);
 	    // Meteor.call("passStudent", studentID, group._id, paymentStatus);
    //      var studentTimes = Session.get('studentTimes');
 
-   //      // noOfTimes = _.reject(salesInput, function(x) {
-   //      //     return x.salesId == salesId;
-   //      // });
-
-		 
-		 // if(isNaN(studentTimes)) noOfTimes = 1;
-		 // var noOfTimes = studentTimes-1;
-		 // Session.set('studentTimes', noOfTimes);
 	}
 });

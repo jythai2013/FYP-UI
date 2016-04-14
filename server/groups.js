@@ -78,7 +78,27 @@ Meteor.methods({
 		})
 	},
 
-  'editGroup': function editGroup(_id, courseCodeI, grpNumI, dateTimeSessionI, startDateI,endDateI, studentListI, trainersI, gradesI, paymentDeadlineI, minI, maxI, attendanceI, statusI){
+  // 'editGroup': function editGroup(_id, venueI, startTimeI, endTimeI, startDateI, endDateI, daysI, trainersToAddI){
+  //     // if(Meteor.user.userType != "admin"){
+  //       // return false; //TODO: output error message in client
+  //     // }
+      
+  //     // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
+  //     Groups.update(_id, {
+  //       $set: {
+  //         venue:venueI,
+  //         startDate: startDateI,
+  //         endDate: endDateI,
+  //         startTime: startTimeI,
+  //         endTime:endTimeI,
+  //         days: daysI, 
+  //         courseTrainers:trainersToAddI
+  //       }
+
+  //     });
+  //   },
+
+  'editGroup': function editGroup(_id, object){
       // if(Meteor.user.userType != "admin"){
         // return false; //TODO: output error message in client
       // }
@@ -86,16 +106,16 @@ Meteor.methods({
       // if (typeof cDescriptionI === 'undefined') { cDescriptionI = 'default description'; }
       Groups.update(_id, {
         $set: {
-          courseCode: courseCodeI,
-          grpNum: grpNumI,
-          startDate: startDateI,
-          endDate: endDateI,
-          startTime: startTimeI,
-          endTime:endTimeI,
-          studentList: studentList,
-          paymentDeadline: paymentDeadlineI,
-          status: statusI
+          venue:object.venue,
+          startDate: object.startDate,
+          endDate: object.endDate,
+          startTime: object.startTime,
+          endTime:object.endTime,
+          days: object.days, 
+          courseTrainers: object.courseTrainers
         }
+
+
       });
     },
 
@@ -177,6 +197,29 @@ Meteor.methods({
       
         console.log(_id);
         Groups.remove(_id);
+         
+      // }
+     
+    },
+    
+    'deleteTrainer': function (groupID, trainerID){
+      // if(Meteor.user.userType != "admin"){
+        // return false; //TODO: output error message in client
+      // }
+      console.log("in server delete group")
+      // for (var _id in removeCurrentGroupsIDArr){
+      //   console.log("in for loop delete group")
+      //   console.log(_id+ " _id")
+      
+        // console.log(_id);
+      		Groups.update({_id: groupID},
+
+      			{ $pull: { 
+					courseTrainers: trainerID} 
+      			}
+
+
+      		);
          
       // }
      
