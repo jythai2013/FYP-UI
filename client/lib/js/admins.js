@@ -1,4 +1,4 @@
-Template.registerHelper('userHasAccess', function () {
+Template.registerHelper('userHasAccess', function (portalName) {
 	var a = Meteor.user();
     if (a !== undefined) {
       console.log('Logged in as: ' + Meteor.user().emails[0].address);
@@ -6,6 +6,7 @@ Template.registerHelper('userHasAccess', function () {
       console.log('isTrainer ' + Meteor.user().userType.trainer);
       console.log('isLearner ' + Meteor.user().userType.learner);
       console.log('isSuper ' + Meteor.user().userType.super);
+      console.log('portalName ' + portalName);
       return true;
     } else{
       console.log('isLearner ' + Meteor.user().userType.learner);

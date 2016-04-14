@@ -39,15 +39,14 @@
                 </tr>
               </thead>
               <tbody>
-              {{#each addIndex announcement}}
+              {{#each announcement}}
                 <tr>
-                  <td>{{formatDateee annouDate}} {{index}}</td>
-                  <td>{{annouTitle}}</td>
+                  <td>{{formatDateee annouDate}}</td>
+                  <td>{{annouTitle}} {{../_id}}</td>
                   <td>{{annouDetails}}</td>
                   <td>
                     {{#if isAuthor}}
-                      <button id="deleteTAnnounButton" class="button btn admin-btn" data-target="#goDeleteTAnnoun{{index}}{{../id}}" data-toggle="modal" data-id="{{index}}">Delete</button>
-                      {{> fetchAnnoun grpId=../_id announ=this i=index }}
+                      <a id="deleteTAnnounButton" class="button btn admin-btn">Delete</a>
                     {{else}}
                       <span style="font-size:80%;">By {{authorName annouAuthor}}</span>
                     {{/if}}
@@ -66,16 +65,6 @@
         </div>
       </div>
     </div>
-  </div>
-</template>
-
-<template name="fetchAnnoun">
-  <div id="goDeleteTAnnoun{{index}}{{../id}}">
-    <form action="#" method="post">                
-      <input type="hidden" id="groupId" value="{{grpId}}"/>  
-      <input type="hidden" id="index" value="{{index}}"/>  
-      <input type="hidden" id="annnouObj" value="{{announ}}"/> 
-    </form>
   </div>
 </template>
 

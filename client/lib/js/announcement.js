@@ -90,7 +90,7 @@ Template.displayAnnouncements.events({
 
 		var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
 		var groupId = group._id;
-		
+
 		Meteor.call("editAnnouncement", groupId, obj);
 	}
 });
@@ -102,13 +102,10 @@ Template.trainerAnnouncment.events({
 		var createdBy1 = this.annouAuthor;
 		var createdOn1 = this.annouDate;
 
-		var groupId = document.getElementById("groupId").value;
-
-		console.log("deleteTAnnoun >>> ("+ groupId +")" + announTitle1 + ", " + annouDetails1 + ", " + createdBy1 + ", " + createdOn1);
-		var array = Groups.findOne({_id: groupId}).announcement;
-		var index = array.indexOf([announTitle1,annouDetails1,createdOn1,createdBy1]);
-		array.splice(index, 1);
-		Meteor.call("editAnnouncement", groupId, array);
+		console.log("GROUP>>>");
+		console.log(Template.parentData(1));
+		// var groupId = Template.parentData(2);
+		// Meteor.call("editAnnouncement", groupId, array);
 	}
 });
 
