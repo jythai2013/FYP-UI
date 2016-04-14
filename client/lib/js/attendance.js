@@ -47,7 +47,18 @@ Template.trainerUploadAttendance.events({
 		inData.push([null, "Group Number", theGroup.grpNum, null])
 		inData.push([null, null, null, null])
 		inData.push([null, null, null, null])
-		inData.push([null, "Student Name", "Student ID", new Date()])
+		
+		var dates = [];
+		for(dated in theGroup.attendance){
+			console.log(dated);
+			dates.push(dated);
+		}
+		var now = new Date();
+		var dateObj = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+		dates.push(dateObj.toString());
+		var headers = [null, "Student Name", "Student ID"].concat(dates);
+		inData.push(headers)
+		
 		studentIds = theGroup.classlist;
 		var students = new Array();
 		i=0;
@@ -55,7 +66,12 @@ Template.trainerUploadAttendance.events({
 			studentIds.forEach(function(studentId, index, arr){
 				var student = Meteor.users.findOne({_id:studentId});
 				students.push(student);
-				inData.push([++i, student.fullName, student.userID, true]);
+				
+				var attendances = [];
+				for(dated in theGroup.attendance){
+					attendances.push(theGroup.attendance[dated][student.userID])
+				}
+				inData.push([++i, student.fullName, student.userID].concat(attendances));
 			});
 		}
 		var inWs_name = "Sheet1";
@@ -216,7 +232,7 @@ function processExcelFile(workbook){
 		
 		currentLineNumber += 1;
 	}
-	alert("done");
+	alert("Attendance has been uploaded, verify details in classist. If it is not correct, cry.");
 	// var rootUrl = window.location.href.substring(0, window.location.href.indexOf('/', 10));
 	// console.log(rootUrl);	
 	// window.location.href=rootUrl+"/AccountsMgmt/studentList"
