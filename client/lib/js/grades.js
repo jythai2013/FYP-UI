@@ -62,11 +62,15 @@ Template.trainerUploadGrades.events({
 		i=0;
 		if(studentIds != undefined){
 			studentIds.forEach(function(studentId, index, arr){
-				var componentsGrades = "";
+				var componentsGrades = [];
 				for(var component in components) {
 					console.log(component);
-					var theStudent = studentId;
-					componentsGrades.push(theStudent[theGroup._id][component])
+					var theStudent = Meteor.users.findOne({_id:studentId});
+					console.log(theStudent)
+					if(theStudent.grades[theGroup._id] != undefined)
+						componentsGrades.push(theStudent.grades[theGroup._id][component])
+					else
+						componentsGrades.push("")
 				}
 				var student = Meteor.users.findOne({_id:studentId});
 				students.push(student);

@@ -44,7 +44,7 @@ Meteor.methods({
 		//console.log("");
 		//console.log("");
 		//console.log(inObj);
-		//console.log(groupId);
+		console.log(groupId);
 		//console.log(theGroup);
 		//console.log(attendances);
 		
@@ -53,7 +53,7 @@ Meteor.methods({
 		//if(theGroup.attendance.date == undefined || theGroup.attendance.date == null){ theGroup.attendance.date = {}; }
 		//theGroup.attendance.date[dateD].studentId = attendanceTrueOrFalse;
 		for (var date in attendances) {
-			//console.log(date);
+			console.log(date);
 			//if(attendance[dates[i]] == undefined || attendance[dates[i]] == null) attendance[dates[i]] = {};
 			//
 			//attendance[dates[i]][studentId] = attendances[dates[i]];
@@ -62,25 +62,8 @@ Meteor.methods({
 			
 			if(attendance[date]==undefined) attendance[date]={};
 			attendance[date][studentId]=attendances[date];
-			//console.log(attendance);
+			console.log(attendance);
 		}
-		//attendances.forEach(function(currentValue, index, thisArray){
-		//	if(attendance[currentValue] == undefined || attendance[currentValue] == null) attendance[dates[index]] = {};
-		//	
-		//	attendance[dates[i]][studentId] = attendances[i];
-		//	console.log(attendance);
-		//});
-		//for(i = 0; i < attendances.length; i++){
-		//	if(attendance[attendances[i]] == undefined || attendance[attendances[i]] == null) attendance[dates[i]] = {};
-		//	
-		//	attendance[dates[i]][studentId] = attendances[i];
-		//	console.log(attendance);
-		//}
-		//console.log("");
-		//console.log("");
-		//console.log("");
-		//console.log(attendance);
-		//theGroup.attendance = attendance;
 		console.log(theGroup);
 		
 		Groups.update({_id:groupId},{$set:{attendance:attendance}})

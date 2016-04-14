@@ -49,9 +49,10 @@ Template.doFeedbackSurvey.onRendered(function(){
 		var positionFirstEqual = url.indexOf('=');
 		//extracting course
 		var currentCourseGrp=url.substr(positionFirstEqual+1);	
-		var positionOfAND = url.indexOf('&');
-		var currentfb=url.substring(positionFirstEqual+1, positionOfAND);
+		// var positionOfAND = url.indexOf('&');
+		// var currentfb=url.substring(positionFirstEqual+1, positionOfAND);
   // var currentfb = getParameterByName("fbidAns");
+  var currentfb = currentCourseGrp;
   Session.set('currentDoingfb', currentfb);
 });
 
@@ -78,6 +79,10 @@ Template.addFeedback.onRendered(function(){
 	// console.log($("input")[0]);
 	// console.log($("input"));
 	$("input")[0].focus();
+	
+	
+	var feedbackType = document.getElementById("feedbackSearchType").value;
+	Session.set('classFeedbackType', feedbackType);
 });
 
 Template.createQn.onRendered(function(){
@@ -771,7 +776,7 @@ Template.addFeedback.events({
 			theStudent = Meteor.users.findOne({_id:a});
 			studentId = theStudent._id;
 			Details.to = theStudent.email [0];
-			Details.text = "http://localhost:3000/CourseModule/doFeedbackSurvey?fbidAns="+feedbackAnsID+"&studID="+studentId;
+			Details.text = "http://sterlingtraininghub.com/doFeedbackSurvey?fbidAns="+feedbackAnsID+"&studID="+studentId;
 			console.log("Sending \n" + Details.text + "\n to " + Details.to);
 			Meteor.call ("scheduleMail", details);
 		});
@@ -781,15 +786,49 @@ Template.addFeedback.events({
 
 
 
+
+
 Template.doFeedbackSurvey.helpers({
 
 	"viewFeedbackDetails1": function() {
 		var fbId=Session.get("currentDoingfb");
+		console.log(fbId);
 		var feedbackTemplateID = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
 
 		var feedbackTitle = Feedback.findOne({_id:feedbackTemplateID});
     		console.log(feedbackTitle);
     	return feedbackTitle;
+	},
+
+	"groupDetails": function() {
+		var fbId = Session.get("currentDoingfb");
+		console.log(fbId);
+		var feedbackTemplate = FeedbackAnswers.findOne({_id:fbId}).feedbackTemplateID;
+		var groupID = FeedbackAnswers.findOne({_id:fbId}).groupID;
+		var group = Groups.findOne({_id:groupID});
+		console.log(groupID);
+		console.log(group);
+
+		var obj = new Object();
+		obj.courseCode = group.courseCode;
+		console.log(group.courseCode);
+		var groupTrainers = group.courseTrainers;
+		console.log(groupTrainers);
+		
+		var trainerStr = Meteor.users.findOne({_id:groupTrainers[0]}).fullName;
+		
+		for(var x = 1, l = groupTrainers.length; x < l;  x++){		
+			var trainerID = groupTrainers[x];
+			console.log(trainerID);
+			var trainerArray = Meteor.users.findOne({_id:trainerID}).fullName;
+			trainerStr = trainerStr + ", "+ trainerArray;
+		}
+		console.log(trainerStr);
+		
+		obj.trainerName = trainerStr;
+		obj.startDate = group.startDate;
+		obj.endDate = group.endDate;
+		 return obj;
 	},
 
 	"viewFeedbackQns2": function() {

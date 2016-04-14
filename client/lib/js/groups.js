@@ -490,7 +490,7 @@ Template.addClass.events({
 			var grpNumI2 = grpNumI1+1;
 			obj.grpNum = "G"+grpNumI2;
 		}
-		// Meteor.call("createGroup",obj);
+		Meteor.call("createGroup",obj);
 		console.log("here4again");
 		//TODO: schedule payment reminder checking
 		//console.log(Groups.find({}).fetch();

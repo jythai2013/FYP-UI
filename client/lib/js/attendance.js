@@ -170,6 +170,7 @@ function processExcelFile(workbook){
 	var courseCode	= worksheet[cellOf_CourseID].v;
 	var grpNum 		= worksheet[cellOf_grpNum].v;
 	//console.log(GroupID);
+	var grpId = Groups.findOne({courseCode:courseCode, grpNum:grpNum})._id;
 	
 	var startingLineNumber	= 9;
 	var currentLineNumber		= startingLineNumber;
@@ -181,7 +182,10 @@ function processExcelFile(workbook){
 	while(cellIsFilled(workbook, currentOfTheRest + datesNamesLineNumber)){
 		//console.log(new Date(worksheet[currentOfTheRest + datesNamesLineNumber].v));
 		//console.log(new Date((worksheet[currentOfTheRest + datesNamesLineNumber].v - (25567 + 1))*86400*1000));
-		dates.push(new Date((worksheet[currentOfTheRest + datesNamesLineNumber].v - (25567 + 1))*86400*1000));
+		var excelDate = worksheet[currentOfTheRest + datesNamesLineNumber].v;
+		var dDd = new Date(excelDate);
+		console.log(dDd);
+		dates.push(dDd);
 		currentCharCode = currentOfTheRest.charCodeAt(0);
 		currentOfTheRest = String.fromCharCode(currentCharCode+1)
 	}
@@ -222,6 +226,7 @@ function processExcelFile(workbook){
 		debugObj.dates	  		= dates				;
 		debugObj.grpNum      	= grpNum	    ;
 		debugObj.courseCode  	= courseCode	    ;
+		debugObj.groupId  	= grpId	    ;
 		console.log(debugObj);
 		
 		

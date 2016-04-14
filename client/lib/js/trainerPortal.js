@@ -196,18 +196,22 @@ Template.trainerClass.onRendered(function(){
 
 Template.trainerClass.helpers({
   "getStudentDetails" : function tcStudentDetails(cList) {
-    var classList = cList;
-    if(classList !== undefined){  
-      // console.log("getStudentDetails >>>> " + classList);
-      var studentArray = new Array();
-      classList.forEach(function(curr,ind,arr){
-        var student = Meteor.users.findOne({_id:curr});
-        studentArray.push(student);
-        // console.log(student.fullName);
-      });
-      return studentArray;
-    } else {
-      return false;
+    try {
+      var classList = cList;
+      if(classList !== undefined){  
+        // console.log("getStudentDetails >>>> " + classList);
+        var studentArray = new Array();
+        classList.forEach(function(curr,ind,arr){
+          var student = Meteor.users.findOne({_id:curr});
+          studentArray.push(student);
+          // console.log(student.fullName);
+        });
+        return studentArray;
+      } else {
+        return false;
+      }
+    } catch(e){
+      //do nothing
     }
   }
 });
@@ -232,7 +236,12 @@ Template.tcViewStudentGrade.helpers({
     result = [];
     if(obj !== undefined){
       var gradeObj = obj.grades[grpId];
-      for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
+      for (var key in gradeObj){
+        // key is the passStatus
+        if (key !== "passStatus"){
+          result.push({name:key,value:gradeObj[key]});
+        }
+      }
     }
     return result;
   }
@@ -256,11 +265,21 @@ Template.tcAttendence.helpers({
     result = [];
     if(obj !== undefined){
       var grpAttendenceObj = obj.attendance;
-      console.log("grpAttendenceObj >>> ");
-      console.log(grpAttendenceObj);
-      console.log(grpAttendenceObj.length);
-      // var attendenceObj = Groups.findOne({_id: studId}).grades[grpId];
-      // for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
+      console.log("grpAttendenceObj >>> " + grpAttendenceObj);
+      for (i= 0; i < grpAttendenceObj.length; i++){
+        console.log("b>>>");
+        console.log(grpAttendenceObj[i]);
+        for(x= 0; x < grpAttendenceObj[i].length; x++){
+          console.log("a>>>");
+          console.log(grpAttendenceObj[i][x]);
+        }
+      }
+
+      // for (var key in grpAttendenceObj){
+      //   // result.push({name:key,value:grpAttendenceObj[key]});
+      //   console.log("c>>>");
+      //   console.log({name:key,value:grpAttendenceObj[key]});
+      // }
     }
     return result;
   }

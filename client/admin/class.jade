@@ -77,7 +77,7 @@ template(name="group")
                           input(type="button", value="Paid", id="paidStudentFromClass") 
 
                       td 
-                        input(type="button", value="Assessment", id="assessStudentFromClass", data-toggle="modal", data-target="#gradesStudent")
+                        input(type="button", value="Assessment", id="assessStudentFromClass", data-toggle="modal", data-target="#gradesStudent#{_id}")
                         +gradesStudent
                         
                       td 
@@ -341,7 +341,7 @@ template(name="addFeedback")
   // /.modal
 
 template(name="gradesStudent")
-  #gradesStudent.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
+  div.modal(id = "gradesStudent#{_id}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
     .modal-dialog
       .modal-content
         .modal-header
