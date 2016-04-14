@@ -30,19 +30,22 @@ function feedbackData(question){
 // CASS's
 Template.displayFeedbackResults.onRendered(function drawingChart() { //create one template for each graph
     //clear the contents of the div, in the event this function is called more than once.
-    $('#{_id}_displayFeedbackChart').empty();
-
+    var children = $('#displayFeedbackChart'+ this.qnID );
+    $(children).empty();
+    console.log(this.qnID);
      var url =  window.location.href;
         
     var positionFirstEqual = url.indexOf('=');
     var fbidAns=url.substr(positionFirstEqual+1);    
+    console.log(fbidAns);
+    Session.set("displayFeedback", fbidAns);
 
     var numQns = FeedbackAnswers.findOne({_id:fbidAns}).options;
     console.log(numQns.length);
         var feedbackTemplate = FeedbackAnswers.findOne({_id:fbidAns}).feedbackTemplateID;
 
 
-    for(i = numQns.length; i < 0; i++){
+    for(i = 0; i < numQns.length; i++){
         var obj = new Object();
         console.log(numQns[i]);
         obj.numQn = numQns[i];
@@ -51,14 +54,9 @@ Template.displayFeedbackResults.onRendered(function drawingChart() { //create on
         console.log(Feedback.findOne({_id:feedbackTemplate}).qnOptions[i]);
         var data = feedbackData(obj);
 
+        console.log(numQns[i].qnID);
+     children = 'displayFeedbackChart'+ numQns[i].qnID;
     
-    // var data = [
-    //     { year: '2008', value: 20 },
-    //     { year: '2009', value: 10 },
-    //     { year: '2010', value: 5 },
-    //     { year: '2011', value: 5 },
-    //     { year: '2012', value: 20 }
-    // ];
 
     //example of how to load data from a collection that already contains data in the appropriate format
     //var data = MyCollection.find({}, {fields: { year: 1, value: 1}, {sort: year: 1}}).fetch();
@@ -66,7 +64,7 @@ Template.displayFeedbackResults.onRendered(function drawingChart() { //create on
     if (data) {
         new Morris.Bar({
             // ID of the element in which to draw the chart.
-            element: '#{_id}_displayFeedbackChart', //must be same as line 60
+            element: children, //must be same as line 60
             // Chart data records -- each entry in this array corresponds to a point on
             // the chart.
             data:    data, //reflects line 61
@@ -93,15 +91,16 @@ Template.displayFeedbackResults.helpers({
     "feedbackQns": function() {
 
          var url =  window.location.href;
-        
         var positionFirstEqual = url.indexOf('=');
         var fbidAns=url.substr(positionFirstEqual+1);
+        // var fbidAns=Session.get("displayFeedback");
+        console.log(fbidAns);
         var feedbackAnsOptions = FeedbackAnswers.findOne({_id:fbidAns}).options;    
 
 
         var fakeArray = new Array();
-        for(i = 0; i < feedbackAnsOptions.length; i++){
-            fakeArray.push(feedbackAnsOptions[i].feedbackQn)
+        for(i =0 ; i < feedbackAnsOptions.length; i++){
+            fakeArray.push(feedbackAnsOptions[i])
         }
         return fakeArray;
     }

@@ -38,7 +38,7 @@ Template.displayAnnouncements.helpers({
 	'isAuthor' : function isAAuthor(createdBy) {
 		//console.log("isAuthor? (>>announcement.js)");
 		var check = Meteor.user()._id == this.annouAuthor;
-		console.log("isAuthor >>> " + Meteor.user()._id + " equals " + this.annouAuthor + " is " + check);
+		// console.log("isAuthor >>> " + Meteor.user()._id + " equals " + this.annouAuthor + " is " + check);
 		return Meteor.user()._id == this.annouAuthor;
 	},
 
@@ -66,13 +66,15 @@ Template.trainerAnnouncment.helpers({
 
 Template.displayAnnouncements.events({
 	"click #deleteAAnnounButton" : function deleteAAnnounEventHandler(e) {
-		var array = this;
-		console.log("(deleteAAnnounButton-annou.js) before: " + array);
-		// console.log("before: " + array.length);
-		console.log(">>>>>> " + array.announTitle);
-		// array.pop([array.announTitle,annouDetails,createdOn,createdBy]);
-		// console.log("after: " + array.length);
-		console.log("deleteAAnnounButton >>> " + Meteor.user()._id + " equals " + this.annouAuthor + " is " + check);
+		var a = this.annouTitle;
+		var b = this.annouDetails;
+		var c = this.annouDate;
+		var d = this.annouAuthor;
+		var obj = new Object();
+		obj.annouTitle = a;
+		obj.annouDetails = b;
+		obj.annouDate = c;
+		obj.annouAuthor = d;
 		
 		var courseGrp =  Router.current().url;
 		var positionFirstEqual = courseGrp.indexOf('=');
@@ -80,16 +82,16 @@ Template.displayAnnouncements.events({
 		var currentCourseGrp=courseGrp.substr(positionFirstEqual+1);	
 		var positionOfAND = courseGrp.indexOf('&');
 		var currentCourse=courseGrp.substring(positionFirstEqual+1, positionOfAND);
-
 		//extracting grpNum
 		var grpNumStr=courseGrp.substr(positionOfAND-1);
 		var positionSecondEqual = currentCourseGrp.indexOf('=');
 		var currentGrpNum=currentCourseGrp.substr(positionSecondEqual+1);
-		console.log(currentGrpNum + "grpNum");
+		console.log(currentGrpNum + "grpNum --> " + currentCourse);
 
 		var group = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
-		console.log("GroupId " + group._id);
-		// Meteor.call("editAnnouncement", groupId, array);
+		var groupId = group._id;
+		
+		Meteor.call("editAnnouncement", groupId, obj);
 	}
 });
 

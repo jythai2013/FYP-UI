@@ -8,11 +8,9 @@
 
                     {{#each feedbackQns}}
 
-                        {{this}}
-                   
-
-					
-					      <div id="#{_id}_displayFeedbackChart" style="height: 250px;"></div>
+                        {{this.feedbackQn}}
+                        
+					   <div id="displayFeedbackChart{{this.qnID}}" style="height: 250px;"></div>
 					 {{/each}}      
                 </div>
 

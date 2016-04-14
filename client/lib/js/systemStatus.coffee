@@ -49,6 +49,15 @@ Template.trainerList.helpers(
     return Session.get('updateTrainerAddSuccessMessage')	
 )
 
+#ADMIN > student LIST
+Template.studentList.helpers(
+  errorStudentAddMessage: () ->
+    return Session.get('errorStudentAddMessage')
+
+  updateStudentAddSuccessMessage: () ->
+    return Session.get('updateStudentAddSuccessMessage')  
+)
+
 #STUDENT > DROPBOX
 Template.studentUpload.helpers(
   errorStudentUploadMessage: () ->

@@ -1,7 +1,7 @@
  function getTrainerOngoingCourse(e) {
   console.log("trainerPortal.js - trainerOngoingCourses >>>");
   var tId = Meteor.user()._id;
-  var coursesTaught = Groups.find({courseTrainers: {trainerId: tId}}).fetch();
+  var coursesTaught = Groups.find({courseTrainers: {$in : [tId]}}).fetch();
   return coursesTaught;
 }
 
@@ -152,7 +152,7 @@ Template.trainerClassList.helpers({
   "classesCL" : function findTrainerOngoingCoursesCL(e) {
     var tId = Meteor.user()._id;
     // add date factor here
-    return Groups.find({courseTrainers: {trainerId: tId}}).count();
+    return Groups.find({courseTrainers: {$in : [tId]}}).count();
   },
 
   "getCourseDesc" : function findDescCL(cName) {
@@ -198,7 +198,7 @@ Template.trainerClass.helpers({
   "getStudentDetails" : function tcStudentDetails(cList) {
     var classList = cList;
     if(classList !== undefined){  
-      console.log("getStudentDetails >>>> " + classList);
+      // console.log("getStudentDetails >>>> " + classList);
       var studentArray = new Array();
       classList.forEach(function(curr,ind,arr){
         var student = Meteor.users.findOne({_id:curr});
@@ -228,10 +228,12 @@ Template.tcViewStudentGrade.helpers({
     var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
     var grpId = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum})._id;
 
-    var gradeObj = Meteor.users.findOne({_id: studId}).grades[grpId];
-
+    var obj = Meteor.users.findOne({_id: studId});
     result = [];
-    for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
+    if(obj !== undefined){
+      var gradeObj = obj.grades[grpId];
+      for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
+    }
     return result;
   }
 });
@@ -250,14 +252,16 @@ Template.tcAttendence.helpers({
     var grpNumStr=url.substr(positionOfAND+1);
     var positionSecondEqual = grpNumStr.indexOf('=');
     var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
-    var grpAttendenceObj = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum,}).attendance;
-
-    console.log(grpAttendenceObj);
-    console.log(grpAttendenceObj.length);
-    // var attendenceObj = Groups.findOne({_id: studId}).grades[grpId];
-
-    // result = [];
-    // for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
-    // return result;
+    var obj = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum,});
+    result = [];
+    if(obj !== undefined){
+      var grpAttendenceObj = obj.attendance;
+      console.log("grpAttendenceObj >>> ");
+      console.log(grpAttendenceObj);
+      console.log(grpAttendenceObj.length);
+      // var attendenceObj = Groups.findOne({_id: studId}).grades[grpId];
+      // for (var key in gradeObj) result.push({name:key,value:gradeObj[key]});
+    }
+    return result;
   }
 });

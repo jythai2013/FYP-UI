@@ -202,15 +202,19 @@
         </tr>
       </thead>
       <tbody>
-        <!-- {{#each uploads}}
+        {{#each studentAttendenceDetails}}
           <tr> 
-            <td>{{name}}</td>
-            <td>{{formatDate uploadedAt}}</td>
+            <td>Date</td>
+            <td>Number</td>
             <td>
-              <a href="{{url download = true}}" class="button btn admin-btn">Download</a>
+              Names here
             </td>
           </tr> 
-        {{/each}} -->
+        {{else}}
+          <tr>
+            <td colspan="3"> No Attendence Found</td>
+          </tr>
+        {{/each}}
       </tbody>
     </table>
   </div>

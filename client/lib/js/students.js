@@ -83,6 +83,27 @@ Template.studentList.helpers({
 			console.log(v2);
 		}
 		return v2;
+	},
+
+	"studentEnrollments" : function studentList(evt) {
+		var a = Groups.find({classlist: {$in : [this._id]}}).fetch();
+		var returnString = "";
+		// console.log(this.fullName);
+		// console.log(a);
+		a.forEach(function(grp, index, arr){
+			var courseCode = grp.courseCode;
+			var courseClass = grp.grpNum;
+			if(index === (a.length-1) ){
+				returnString += courseCode+"("+courseClass+") ";
+			} else {
+				returnString += courseCode+"("+courseClass+"), ";
+			}
+		});
+		if (returnString === ""){
+			return "Nil";
+		} else {
+			return returnString;
+		}
 	}
 });
 // End Search ////////////////////////
@@ -103,19 +124,30 @@ Template.addStudentAcctForm.events({
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
 		obj.email = 				document.getElementById("email").value;
-		obj.userIDType = 				document.getElementById("idType").value;
-		obj.userID = 					document.getElementById("idNo").value;
-		obj.nationality = 	document.getElementById("nationality").value;
-		obj.highestQualification = document.getElementById("qualification").value;
-		obj.nokName = 			document.getElementById("nokName").value;		
-		obj.nokReln = 			document.getElementById("nokReln").value;		
-		obj.nokTel = 				document.getElementById("nokTel").value;		
+		obj.userIdType = 	document.getElementById("studidType").value;
+		obj.userId = 	document.getElementById("studidNo").value;
+		obj.nationality = 	document.getElementById("snationality").value;
+		obj.highestQualification = document.getElementById("squalification").value;
+		obj.nokName = 			document.getElementById("snokName").value;		
+		obj.nokReln = 			document.getElementById("snokReln").value;		
+		obj.nokTel = 				document.getElementById("snokTel").value;		
 		obj.password = 			obj.mobileNo;
 		obj.remarks = 			document.getElementById("remarks").value;
 		obj.creationDate = 	new Date();
 		obj.userType = {learner:true};
 
-		Meteor.call("createLearnerAccount2", obj);
+		Meteor.call("createLearnerAccount2", obj, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>update student creation SUCCESS MSG");
+				Session.set('updateStudentAddSuccessMessage', 'Successfully created')
+		        Meteor.setTimeout(function(){Session.set('updateStudentAddSuccessMessage', false);}, 3000);
+			} else {
+      			console.log(">>>update student creation FAILURE MSG");
+			    Session.set('errorStudentAddMessage', 'Account Creation Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('errorStudentAddMessage', false);}, 3000);
+			}
+		});
 		console.log("Sys: Student Information Saved");
 	}
 });
@@ -185,7 +217,18 @@ Template.registerForCourse.events({
 Template.deleteStudentForm.events({
 	"click #deleteStudentButton" : function deleteStudentEventHandler(e) {
 		console.log(this._id);
-		Meteor.call("deleteUsers2", this._id);
+		Meteor.call("deleteUsers2", this._id, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>student delete SUCCESS MSG");
+				Session.set('updateStudentAddSuccessMessage', 'Successfully deleted')
+		        Meteor.setTimeout(function(){Session.set('updateStudentAddSuccessMessage', false);}, 3000);
+			} else {
+      			console.log(">>>student delete FAILURE MSG");
+			    Session.set('errorStudentAddMessage', 'Account Deletion Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('errorStudentAddMessage', false);}, 3000);
+			}
+		});
 	}
 });
 
@@ -193,30 +236,31 @@ Template.viewParticularsForm.events({
 	"click #editStudAcct" : function viewStudentDetailsEventHandler(e) {
 		console.log("Updating Student Information...");
 		//TODO: Validation of input
-		var sRemark = $("#"+this._id+" #remarks")[0].value;
-		//var idNo = document.getElementById("remarks").value;
-		//var email = document.getElementById("remarks").value;
-		//var nationality = document.getElementById("remarks").value;
-		var sMobileNo 		= $("#"+this._id+" #mobileNo")[0].value;
-		var qualification = $("#"+this._id+" #qualification")[0].value;
-		var userID = $("#"+this._id+" #userID")[0].value;
-		
+		var email = document.getElementById(this._id+"_email").value;
+		var sMobileNo = document.getElementById(this._id+"_mobileNo").value;
+		var sRemark = document.getElementById(this._id+"_remarks").value;
+		var userIDType = document.getElementById(this._id+"_userIDType").value;
+		var idNo = document.getElementById(this._id+"_userID").value;
+		var nationality = document.getElementById(this._id+"_nationality").value;
+		var qualification = document.getElementById(this._id+"_qualification").value;		
 		// var scompName = document.getElementById("compName").value;
 		// var scompOfficeNo = document.getElementById("compOfficeNo").value;		
+		var snokName = document.getElementById(this._id+"_nokName").value;		
+		var snokReln = document.getElementById(this._id+"_nokReln").value;		
+		var snokTel =  document.getElementById(this._id+"_nokTel").value;
 		
-		var snokName = $("#"+this._id+" #nokName")[0].value;		
-		var snokReln = $("#"+this._id+" #nokReln")[0].value;		
-		var snokTel =  $("#"+this._id+" #nokTel")[0].value;
-
-			// console.log("Remarks-"+ sRemark);
-			// console.log("MobileNo-"+ sMobileNo);
-			// console.log("qualitifation-"+ qualification);
-			// console.log("name-"+ snokName);
-			// console.log("tel-"+ snokTel);
-			// console.log("reln-"+ snokReln);
-		
-		// sRemark, sMobileNo, sProficiency, qualification, snokName, snokTel, snokReln
-		Meteor.call("editLearnerAccount", this._id, sRemark, sMobileNo, qualification, snokName, snokTel, snokReln, userID);
+		Meteor.call("editLearnerAccount", this._id, email, sRemark, sMobileNo, qualification, nationality, snokName, snokTel, snokReln, userIDType, idNo, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>update student SUCCESS MSG");
+				Session.set('updateStudentAddSuccessMessage', 'Successfully updated')
+		        Meteor.setTimeout(function(){Session.set('updateStudentAddSuccessMessage', false);}, 3000);
+			} else {
+      			console.log(">>>update student FAILURE MSG");
+			    Session.set('errorStudentAddMessage', 'Account Update Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('errorStudentAddMessage', false);}, 3000);
+			}
+		});
 		console.log(">> Completed");
 	}
 });

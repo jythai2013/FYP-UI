@@ -8,6 +8,13 @@ template(name="studentList")
       .col-lg-12
         .panel.panel-default
           .panel-body
+            if errorStudentAddMessage
+              .alert.alert-danger
+                | #{errorStudentAddMessage}
+            if updateStudentAddSuccessMessage
+              .alert.alert-success
+                | #{updateStudentAddSuccessMessage}
+            
             h4 Search For Student
             h5 Total No. of Students: {{getStudentCount}}
             .table-responsive
@@ -39,7 +46,6 @@ template(name="studentList")
                   tr
                     th Name
                     th Particulars
-                    //th Enrollments
                     th Remarks
                     th Delete
                 tbody
@@ -48,18 +54,16 @@ template(name="studentList")
                       td #{fullName}
                       td 
                         a.btn.admin-btn.bt-sn(data-target="#viewParticulars#{_id}", data-toggle="modal", data-id="#{_id}") Particulars
-                      +viewParticularsForm
-                      //td 
-                        //a.btn.admin-btn.bt-sn(data-target="#viewStudCourses#{_id}", data-toggle="modal", data-id="#{_id}") Courses
                       td 
                         | #{remarks}
                         br.
                         strong
                           | Enrolled Classes: 
-                        | X
+                        | #{studentEnrollments}
                       td
                         a.btn.admin-btn.bt-sn(data-target="#deleteStud#{_id}", data-toggle="modal", data-id="#{_id}") Delete
-                      +deleteStudentForm
+                    +deleteStudentForm
+                    +viewParticularsForm
 
 template(name="addStudentAcctForm")
   #addstudAcct.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -95,14 +99,14 @@ template(name="addStudentAcctForm")
                   td ID Type
                   td 
                     .form-group
-                      select.form-control(id="idType", style="color:black")
+                      select.form-control(id='studidType', name="studidType" style="color:black")
                         option(value="NRIC") NRIC
                         option(value="FIN") FIN
                         option(value="Passport") Passport
                   td ID Number
                   td 
                     .form-group
-                      input.form-control(type="text", id="idNo")
+                      input.form-control(type="text", placeholder="eg.S1234567A", id="studidNo")
                 tr
                   td Email
                   td 
@@ -115,13 +119,13 @@ template(name="addStudentAcctForm")
                   td Nationality
                   td 
                     .form-group
-                      select.form-control(id='nationality', style="color:black")
+                      select.form-control(id='snationality', style="color:black")
                         +nationalityList
                 tr
                   td Highest Qualification
                   td 
                     .form-group
-                      select.form-control(id='qualification', style="color:black", onchange="showDiv(this)")
+                      select.form-control(id='squalification', style="color:black")
                         option(value="WPA") WPA Certified
                         option(value="Primary") PSLE
                         option(value="Secondary") O/N'Level
@@ -139,11 +143,11 @@ template(name="addStudentAcctForm")
                   td Emergency Contact Name
                   td 
                     .form-group
-                      input.form-control(type='text',id='nokName')
+                      input.form-control(type='text',id='snokName')
                   td Relationship
                   td
                     .form-group
-                      select.form-control(id='nokReln', style="color:black")
+                      select.form-control(id='snokReln', style="color:black")
                         option(value="Employer") Employer
                         option(value="Spouse") Spouse
                         option(value="Family") Family
@@ -154,7 +158,7 @@ template(name="addStudentAcctForm")
                   td Emergency Contact No.
                   td
                     .form-group
-                      input.form-control(type='text', id='nokTel')
+                      input.form-control(type='text', id='snokTel')
                 tr
                   td Remarks
                   td(colspan="3") 
@@ -180,14 +184,16 @@ template(name="viewParticularsForm")
                   tr
                     td Name
                     td #{fullName}
+                    td D.O.B
+                    td #{dateOfBirth}
                   tr
                     td Email
                     td 
                       .form-group
-                        input.form-control(type='text', value="#{email}", id='email')
+                        input.form-control(type='text', value="#{email}", id='#{_id}_email')
                     td Mobile Number
                     td 
-                      input#mobileNo.form-control(type='text', value="#{mobileNo}")
+                      input.form-control(type='text', id="#{_id}_mobileNo", value="#{mobileNo}")
                   tr
                     td ID Type
                     td 
@@ -199,11 +205,11 @@ template(name="viewParticularsForm")
                         option(value="PASSPORT NO") Passport No
                     td ID Number
                     td
-                      input.form-control(type='text', value="#{userID}", id='userID')
+                      input.form-control(type='text', value="#{userID}", id='#{_id}_userID')
                   tr
                     td Nationality
                     td 
-                      select.form-control(id="nationality", name="nationality", style="color:black")
+                      select.form-control(id="#{_id}_nationality", name="nationality", style="color:black")
                         option(value="#{nationality}") #{nationality}
                         option(disabled) ──────────
                         +nationalityList
@@ -211,8 +217,8 @@ template(name="viewParticularsForm")
                     td Highest Qualification
                     td 
                       .form-group
-                        select.form-control(id='qualification', style="color:black")
-                          option(value="#{qualification}") #{qualification}
+                        select.form-control(id='#{_id}_qualification', style="color:black")
+                          option(value="#{highestQualification}") #{highestQualification}
                           option(disabled) ──────────
                           option(value="WPA") WPA
                           option(value="PSLE") PSLE
@@ -224,11 +230,11 @@ template(name="viewParticularsForm")
                     td NOK Name
                     td 
                       .form-group
-                        input.form-control(type='text', id='nokName', value="#{nokName}")
+                        input.form-control(type='text', id='#{_id}_nokName', value="#{nokName}")
                     td Relationship
                     td
                       .form-group
-                          select.form-control(id='nokReln', style="color:black")
+                          select.form-control(id='#{_id}_nokReln', style="color:black")
                             option(value="#{nokReln}") #{nokReln}
                             option(disabled) ────────── 
                             option(value="Employer") Employer
@@ -241,12 +247,12 @@ template(name="viewParticularsForm")
                     td NOK Contact
                     td
                       .form-group
-                        input.form-control(type='text', id='nokTel', value="#{nokTel}")
+                        input.form-control(type='text', id='#{_id}_nokTel', value="#{nokTel}")
                   tr
                     td Remarks
                     td 
                       .form-group
-                        textarea.form-control(type='text', id='remarks', style="max-width: 500px;")
+                        textarea.form-control(type='text', id='#{_id}_remarks', style="max-width: 500px;")
                           | #{remarks}
         .modal-footer
           button#editStudAcct.btn.btn-save(type="button", data-dismiss="modal") Confirm

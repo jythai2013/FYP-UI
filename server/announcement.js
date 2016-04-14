@@ -1,7 +1,7 @@
 
 Meteor.methods({ 
 	
-	'insertAnnouncement': function insertAnnouncement(gId, announList){
+	'insertAnnouncement': function insertServerAnnouncement(gId, announList){
 		console.log("announcement.js >> insertAnnouncement (Server)");
 		console.log("update: "+gId);
 		Groups.update(gId,{
@@ -13,10 +13,10 @@ Meteor.methods({
 		console.log(">> insertAnnouncement (+1)");
 	},
 
-	'editAnnouncement': function editAnnouncement(gId, announList){
+	'editAnnouncement': function editServerAnnouncement(gId, announListObj){
 		console.log("announcement.js >> editAnnouncement (Server)");
-		console.log("(editAnnouncementupdate) "+gId+" >>> From: "+announList.length);
-		Groups.update({_id:gId}, {$set:{announcement:announList}});
+		console.log("(editAnnouncementupdate) "+gId+" >>> From: "+announListObj);
+		Groups.update({_id:gId}, {$pull:{announcement:announListObj}});
 		console.log(">> updated");
 	}
 });
