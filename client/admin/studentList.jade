@@ -8,12 +8,6 @@ template(name="studentList")
       .col-lg-12
         .panel.panel-default
           .panel-body
-            if errorStudentAddMessage
-              .alert.alert-danger
-                | #{errorStudentAddMessage}
-            if updateStudentAddSuccessMessage
-              .alert.alert-success
-                | #{updateStudentAddSuccessMessage}
             
             h4 Search For Student
             h5 Total No. of Students: {{getStudentCount}}
@@ -33,6 +27,13 @@ template(name="studentList")
       .col-lg-12
         .panel.panel-default
           .panel-body
+            if errorStudentAddMessage
+              .alert.alert-danger
+                | #{errorStudentAddMessage}
+            if updateStudentAddSuccessMessage
+              .alert.alert-success
+                | #{updateStudentAddSuccessMessage}
+                
             h4 
               Student List Management
               button.btn.btn.btn-sm(data-toggle="modal", data-target="#addstudAcct" style="background: #333; color:#fff; float:right; margin-bottom:1%;")

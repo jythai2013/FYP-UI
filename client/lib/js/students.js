@@ -124,8 +124,8 @@ Template.addStudentAcctForm.events({
 		obj.dateOfBirth = 					document.getElementById("dob").value;
 		obj.mobileNo = 			document.getElementById("mobileNo").value;
 		obj.email = 				document.getElementById("email").value;
-		obj.userIdType = 	document.getElementById("studidType").value;
-		obj.userId = 	document.getElementById("studidNo").value;
+		obj.userIDType = 	document.getElementById("studidType").value;
+		obj.userID = 	document.getElementById("studidNo").value;
 		obj.nationality = 	document.getElementById("snationality").value;
 		obj.highestQualification = document.getElementById("squalification").value;
 		obj.nokName = 			document.getElementById("snokName").value;		

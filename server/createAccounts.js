@@ -3,8 +3,8 @@
 	 	user.email = options.email;
 	 	user.password = options.password;
 
-	 	user.userID = options.userId;
-	 	user.userIDType = options.userIdType;
+	 	user.userID = options.userID;
+	 	user.userIDType = options.userIDType;
 
 	 	user.fullName = options.fullName;
 	 	user.gender = options.gender;
@@ -88,24 +88,27 @@
 			console.log("Sys: Participant Account Created.");
 			return user_id;
 		},
-		
-		'editLearnerAccount': function editLearnerAccount(sid, sRemark, sMobileNo, qualification, snokName, snokTel, snokReln, userIdName){
+
+		'editLearnerAccount': function editLearnerAccount(sid, email, sRemark, sMobileNo, qualification, nationality, snokName, snokTel, snokReln, userIdName, idNo){
 			console.log(">>> EditLearnerAccount (server, createAccounts.js)");
-			console.log("dataRem-"+ sRemark);
-			console.log("dataMoNo-"+ sMobileNo);
+			console.log("Remark: "+ sRemark);
+			console.log("Mobile No: "+ sMobileNo);
 			// console.log("datasProf-"+ sProficiency);
-			console.log("datasQuali-"+ qualification);
-			console.log("datasName-"+ snokName);
-			console.log("datasTel-"+ snokTel);
-			console.log("datasReln-"+ snokReln);
+			console.log("Qualification: "+ qualification);
+			console.log("NOK Name: "+ snokName);
+			console.log("NOK Tel: "+ snokTel);
+			console.log("NOK Relation: "+ snokReln);
 			Meteor.users.update(sid, { $set :{
+					'email': email,
 					'remarks': sRemark,
 					'mobileNo': sMobileNo,
+					'nationality': nationality,
 					'highestQualification': qualification,
 					'nokName': snokName,
 					'nokTel': snokTel,
 					'nokReln': snokReln,
-					'userIDType': userIdName
+					'userIDType': userIdName,
+					'userID': idNo
 				}	
 			});
 			console.log(">>> for " + sid);

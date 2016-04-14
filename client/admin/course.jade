@@ -467,8 +467,14 @@ template(name="editCourseForm")
                 tr
                   th Genre
                   td
-                    .form-group.input-group
-                      input.form-control(type="text", id="cCGenre", value="#{genre}")
+                    .form-group
+                      select.form-control(name="type", id="cCGenre", style="color: black")
+                        option(value="#{genre}") #{genre}
+                        option(disabled) ──────────
+                        option(value="Manufacturing") Manufacturing
+                        option(value="Construction") Construction
+                        option(value="Workplace Health & Safety") Workplace Health & Safety
+                        option(value="Others") Others
                 tr
                   th Type
                   td
