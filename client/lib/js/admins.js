@@ -1,12 +1,27 @@
 Template.registerHelper('userHasAccess', function (portalName) {
 	var a = Meteor.user();
     if (a !== undefined) {
-      console.log('Logged in as: ' + Meteor.user().emails[0].address);
-      console.log('isAdmin ' + Meteor.user().userType.admin);
-      console.log('isTrainer ' + Meteor.user().userType.trainer);
-      console.log('isLearner ' + Meteor.user().userType.learner);
-      console.log('isSuper ' + Meteor.user().userType.super);
-      console.log('portalName ' + portalName);
+      // console.log('Logged in as: ' + Meteor.user().emails[0].address);
+      // console.log('isAdmin ' + Meteor.user().userType.admin);
+      // console.log('isTrainer ' + Meteor.user().userType.trainer);
+      // console.log('isLearner ' + Meteor.user().userType.learner);
+      // console.log('isSuper ' + Meteor.user().userType.super);
+      // console.log('portalName ' + portalName);
+      // if(portalName === "admin"){
+      // 	console.log("Meteor.user().userType.admin === true");
+      // 	console.log(Meteor.user().userType.admin === true);
+      // 	if(Meteor.user().userType.admin === true){
+      // 		return true;
+      // 	}
+      // } else if (portalName === "trainer") {
+      // 	if(Meteor.user().userType.trainer === true){
+      // 		return true;
+      // 	}
+      // } else if (portalName === "student") {
+      // 	if(Meteor.user().userType.learner === true){
+      // 		return true;
+      // 	}
+      // }
       return true;
     } else{
       console.log('isLearner ' + Meteor.user().userType.learner);

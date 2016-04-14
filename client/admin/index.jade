@@ -1,8 +1,21 @@
 template(name="mainLayout")
   div.adminBody
     +topbar
-    #wrapper
-      +container
+    if userHasAccess admin
+      #wrapper
+        +container
+    else
+      .container.alignMiddle
+        h1
+          strong Sterling
+          Training Hub
+        h3 Administrator Portal
+        .alert.alert-danger
+          | You have no access to this page
+        h3 Links to Sterling Portals
+        button.btn.btn-save(onclick="window.location.href='/website'") Website
+        button.btn.btn-save(onclick="window.location.href='/trainer'") Trainer
+        button.btn.btn-save(onclick="window.location.href='/student'") Student
 
 template(name="topbar")
   +checkUserLogin
