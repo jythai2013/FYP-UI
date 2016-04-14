@@ -1,5 +1,5 @@
  function getTrainerOngoingCourse(e) {
-  console.log("trainerPortal.js - trainerOngoingCourses >>>");
+  // console.log("trainerPortal.js - trainerOngoingCourses >>>");
   var tId = Meteor.user()._id;
   var coursesTaught = Groups.find({courseTrainers: {$in : [tId]}}).fetch();
   return coursesTaught;

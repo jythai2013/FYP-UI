@@ -102,10 +102,17 @@ Template.trainerAnnouncment.events({
 		var createdBy1 = this.annouAuthor;
 		var createdOn1 = this.annouDate;
 
+		var obj = new Object();
+		obj.annouTitle = announTitle1;
+		obj.annouDetails = annouDetails1;
+		obj.annouDate = createdOn1;
+		obj.annouAuthor = createdBy1;
+
 		console.log("GROUP>>>");
-		console.log(Template.parentData(1));
-		// var groupId = Template.parentData(2);
-		// Meteor.call("editAnnouncement", groupId, array);
+		// console.log(obj);
+		var groupId = e.currentTarget.dataset.groupid;
+		// console.log(groupId);
+		Meteor.call("editAnnouncement", groupId, obj);
 	}
 });
 

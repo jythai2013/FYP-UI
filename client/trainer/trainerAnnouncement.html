@@ -42,11 +42,11 @@
               {{#each announcement}}
                 <tr>
                   <td>{{formatDateee annouDate}}</td>
-                  <td>{{annouTitle}} {{../_id}}</td>
+                  <td>{{annouTitle}}</td>
                   <td>{{annouDetails}}</td>
                   <td>
                     {{#if isAuthor}}
-                      <a id="deleteTAnnounButton" class="button btn admin-btn">Delete</a>
+                      <a id="deleteTAnnounButton" class="button btn admin-btn" data-groupid="{{../_id}}">Delete</a>
                     {{else}}
                       <span style="font-size:80%;">By {{authorName annouAuthor}}</span>
                     {{/if}}

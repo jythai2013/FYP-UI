@@ -1,18 +1,18 @@
 template(name="mainLayout")
   div.adminBody
-    +topbar
-    if userHasAccess admin
+    if userHasAccess "admin"
+      +topbar
       #wrapper
         +container
     else
       .container.alignMiddle
-        h1
+        h1(style="color:white;")
           strong Sterling
           Training Hub
-        h3 Administrator Portal
+        h3(style="color:white;") Administrator Portal
         .alert.alert-danger
           | You have no access to this page
-        h3 Links to Sterling Portals
+        h3(style="color:white;") Links to Sterling Portals
         button.btn.btn-save(onclick="window.location.href='/website'") Website
         button.btn.btn-save(onclick="window.location.href='/trainer'") Trainer
         button.btn.btn-save(onclick="window.location.href='/student'") Student

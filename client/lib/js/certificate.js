@@ -189,16 +189,26 @@ Template.certificateStudentList.helpers({
 		var studentName = Session.get("certSearchStudent");
 		var courseCode 	= Session.get("certSearchCourseCode");
 		var groupNum 		= Session.get("certSearchGroupNum");
-		
 		if(verbose){
 			console.log(studentName);
 			console.log(courseCode);
 			console.log(groupNum);
 		}
+		
 		if(courseCode == undefined) courseCode 	= getParameterByName("cCode");
 		if(groupNum 	== undefined) groupNum 		= getParameterByName("grpNum");
 		Session.set("certSearchCourseCode", courseCode);
 		Session.set("certSearchGroupNum", groupNum);
+		courseCode 	= Session.get("certSearchCourseCode");
+		groupNum 		= Session.get("certSearchGroupNum");
+		if(verbose){
+			console.log(studentName);
+			console.log(courseCode);
+			console.log(groupNum);
+		}
+		
+		var theGroup = Groups.findOne({courseCode:courseCode, grpNum:groupNum});
+		var groupId = theGroup._id;
 			
 		if(verbose){
 			console.log(studentName);
@@ -257,6 +267,18 @@ Template.certificateStudentList.helpers({
 			});
 		}
 		
+		if(studentName != null && studentName != undefined && studentName.length > 0){ 
+			students = students.filter(function(studentId){
+				var thisStudent = Meteor.users.findOne({_id:studentId}, {userType:{learner:true}});
+				if(verbose){
+					console.log(studentId);
+					console.log(thisStudent);
+					console.log(thisStudent.grades[groupId]);
+				}
+				return (thisStudent.grades[groupId]);
+			});
+		}
+		
 		if(verbose){
 			// console.log(Array.isArray(students));
 			// console.log(typeof students);
@@ -287,55 +309,46 @@ Template.certificateStudentList.helpers({
 
 Template.certificateStudentList.events({
 	"click #generateCerts":function(event, templateT){
-		// console.log(this);
+		console.log(this);
 		// console.log(event);
 		// console.log(templateT);
-		
-		var aData = {};
+		var myData = new Object();    
 		var courseCode  = Session.get("certSearchCourseCode");
 		var groupNum 	  = Session.get("certSearchGroupNum"); 
-		
+		// console.log(courseCode);
+		// console.log(groupNum);
 		var thisCourse  = Courses.findOne({courseCode:courseCode});
 		var thisGroup   = Groups.findOne({courseCode:courseCode, grpNum:groupNum});
-		aData.courseName = thisCourse.courseName;
-		aData.courseCode = thisCourse.courseCode;
-		aData.courseStart = thisGroup.startDate;
-		aData.courseEnd   = thisGroup.endDate  ;
-		var students = Session.get("certificateStudentListStudents");
-		console.log(students);
-		students.forEach(function(student){
-			console.log(this);
-			var myData={};
-			// try{
-			var groupId = thisGroup._id;
-			var theStudent = Meteor.users.findOne({_id:this._id.toString()});
-			var passStatus = theStudent.grades[groupId].passStatus
-			if(passStatus != true) {
-				//TODO: error message. not yet pass
-				return false;
+		console.log(thisCourse);
+		console.log(thisGroup);
+		// console.log(this.toString());
+		// console.log(Meteor.users.findOne({_id:this.toString()}));
+		// try{
+		var groupId = thisGroup._id;
+		thisGroup.classlist.forEach(function(a,b,c){
+			console.log(a);
+			var theStudent = Meteor.users.findOne({_id:a});
+			var doPassStatus = !true;
+			if(doPassStatus){
+				var passStatus = theStudent.grades[groupId].passStatus
+				if(passStatus != true) {
+					//TODO: error message for those who not yet pass
+						return false;
+				}
 			}
 			myData.fullName = theStudent.fullName;
 			myData.userID = theStudent.userID;
+			myData.userIDType = theStudent.userIDType;
 			myData.courseName = thisCourse.courseName;
 			myData.courseCode = thisCourse.courseCode;
 			myData.courseStart = thisGroup.startDate;
 			myData.courseEnd   = thisGroup.endDate  ;
+			myData.courseStart = moment(thisGroup.startDate).format("DD-MMM-YYYY");
+			myData.courseEnd   = moment(thisGroup.endDate).format("DD-MMM-YYYY");
+			var sid = theStudent._id
+			myData.serialNumber = groupId + "" + sid;
 			genP(myData);
-			// }catch(err){
-				// alert(err);
-				// console.error(err);
-			// }
-			// Blaze.saveAsPDF(Template.certificateTemplate, {
-				// filename: "report.pdf", // optional, default is "document.pdf"
-				// data: myData, // optional, render the template with this data context
-				// // x: 0, // optional, left starting position on resulting PDF, default is 4 units
-				// // y: 0, // optional, top starting position on resulting PDF, default is 4 units
-				// orientation: "portrait", // optional, "landscape" or "portrait" (default)
-				// unit: "mm", // optional, unit for coordinates, one of "pt", "mm" (default), "cm", or "in"
-				// format: "a4" // optional, see Page Formats, default is "a4"
-			// });
 		});
-		console.log("End");
 	},
 	
 	"click #generateCert":function(event, templateT){
