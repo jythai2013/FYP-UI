@@ -1,5 +1,10 @@
 {
   "public": {
 
+  },
+  "private": {
+  "AWSAccessKeyId" : "AKIAJ6V7AFIYHRAG7PVA",
+  "AWSSecretAccessKey" : "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",
+  "AWSBucket" : "sterling-training-storage"
   }
 }

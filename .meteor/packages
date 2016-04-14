@@ -43,3 +43,4 @@ npm-container
 ongoworks:pdf
 insecure
 ecmascript
+cfs:s3

@@ -1,3 +1,11 @@
+var s3Store = new FS.Store.S3("files", {
+});
+
+Files = new FS.Collection("files", {
+  stores: [s3Store]
+});
+
+
 // counter starts at 0
 Session.setDefault("counter", 0);
 
@@ -5,7 +13,7 @@ Template.course.helpers({
   counter: function () {
     return Session.get("counter");
   },
- uploads:function(){
+  upload:function(){
     var a = Files.find({type: "course"});
     var fileList = Materials.find({course: this.courseCode});
     // var fileList2 = Materials.find({type: "course"});
@@ -39,9 +47,13 @@ Template.course.events({
     console.log(sessionId);
     var files = document.getElementById("myFileInput").files;
     
+    var user = Meteor.user();
+    var insertFile = new FS.File(files[0]);
+    insertFile.userType = sessionId;
+    insertFile.userId = user._id;
     
     console.log(Files);
-    var fileObjId = Files.insert(files[0], function (err, fileObj) {
+    var fileObjId = Files.insert(insertFile, function (err, fileObj) {
       if (err){
         // handle error
         console.log(err);
@@ -55,6 +67,22 @@ Template.course.events({
     
     fileObjIdI = fileObjId._id;
     Meteor.call("createMaterial",type, courseId, sessionId, fileObjIdI);
+  },
+  'click .myDeleteButton': function(e) {
+    e.preventDefault();
+
+    var sure = confirm('Are you sure you want to delete this file?');
+    if (sure === true) {
+      var idDelete = this._id;
+      Files.remove({ _id:idDelete }, function(error,result) {
+        if (error) {
+          console.log("Oops");
+        } else {
+          var materialRecord = Materials.findOne({fileName: idDelete});
+          Meteor.call("deleteMaterial", materialRecord._id);
+        }
+      })
+    }
   }
 });
 
@@ -81,7 +109,7 @@ Template.formRespo.helpers({
 Template.addLSPTemplateForm.events({
   'click .addFormButton':function(event, template){
     var typeI = "formLSP";
-    var courseId = "placeholder"
+    var courseId = "placeholder";
     console.log(courseId);
     var sessionId = document.getElementById("categoryName").value;
     console.log(sessionId);
@@ -90,12 +118,12 @@ Template.addLSPTemplateForm.events({
     // var fileObj = new FS.File(files[0]);
     // Files.insert(fileZero);
     
-
-    console.log(files);
+    var user = Meteor.user();
     var fileObjId = new FS.File(files[0]);
     fileObjId.category = sessionId;
+    fileObjId.userType = user.username;
+    fileObjId.userId = user._id;
     var fName = fileObjId.name();
-    console.log(fName);
     var a = Files.find({"original.name": fName}).fetch();
     if(a == null || a.length == 0)
     {
@@ -108,11 +136,8 @@ Template.addLSPTemplateForm.events({
 
     Files.insert(fileObjId, function (err, fileObj) {
       if (err){
-        toastr.error("Upload failed, please try again ...");
       } else {
-        toastr.success('Upload succeeded!');
         var userId = Meteor.userId();
-        fileObjId = fileObja._id;
 
       }
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
@@ -130,6 +155,7 @@ Template.studentUpload.events({
 
       event.preventDefault();
 
+
       //var e is the group unique ID string
       var sessionId = document.getElementById("courseCode").value;
       var groupList = Groups.find({_id: sessionId}).fetch();
@@ -138,10 +164,14 @@ Template.studentUpload.events({
       var courseId = groupList[0].courseCode;
       console.log(sessionId);
       var files = document.getElementById("attfileName").files;
-      
+      var user = Meteor.user();
       
       console.log(Files);
-      var fileObjId = Files.insert(files[0], function (err, fileObj) {
+      var fileObjId = new FS.File(files[0]);
+      fileObjId.category = sessionId;
+      fileObjId.userType = user.username;
+      fileObjId.userId = user._id; 
+      Files.insert(fileObjId, function (err, fileObj) {
         if (err){
           // handle error
           console.log(err);
@@ -199,11 +229,16 @@ Template.trainerUploads.events({
     
     
     console.log(Files);
-    var fileObjId = Files.insert(files[0], function (err, fileObj) {
+    var user = Meteor.user();
+    var fileObjId = new FS.File(files[0]);
+    fileObjId.category = sessionId;
+    fileObjId.userType = user.username;
+    fileObjId.userId = user._id; 
+    Files.insert(fileObjId, function (err, fileObj) {
       if (err){
-        toastr.error("Upload failed, please try again ...");
+
       } else {
-        toastr.success('Upload succeeded!');
+
       }
       // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
     });
@@ -250,8 +285,12 @@ Template.addNewLSPFormForm.events({
     var files = document.getElementById("myFileInput").files;
 
     console.log(files);
+    var user = Meteor.user();
     var fileObjId = new FS.File(files[0]);
     fileObjId.category = sessionId;
+    fileObjId.userType = user.username;
+    fileObjId.userId = user._id; 
+
     var fName = fileObjId.name();
     console.log(fName);
     var a = Files.find({"original.name": fName}).fetch();
@@ -266,11 +305,11 @@ Template.addNewLSPFormForm.events({
 
     Files.insert(fileObjId, function (err, fileObj) {
       if (err){
-        toastr.error("Upload failed, please try again ...");
+
       } else {
-        toastr.success('Upload succeeded!');
-        var userId = Meteor.userId();
-        fileObjId = fileObja._id;
+
+        // var userId = Meteor.userId();
+        // fileObjId = fileObja._id;
         // console.log(fileObj);
         // console.log(Files);
         // console.log(fileObjId = fileObj._id);

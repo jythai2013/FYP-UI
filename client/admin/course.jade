@@ -89,22 +89,26 @@ template(name="course")
               table#dataTables-example.table.table-bordered.table-hover
                 thead
                   tr
-                    th(colspan="2") Course Materials
+                    th Course Materials
+                    th Remarks
+                    th Upload At
                     th Download File
                     th Delete
                 tbody
-                  each uploads                   
+                  each upload             
                     tr 
-                      td(colspan="2") #{name}
+                      td #{name}
+                      td #{userType}
+                      td {{formatDate uploadAt}}
                       td
                         a(href="{{url download = true}}", class="button btn admin-btn") Download
                       td
-                        a(href="{{url download = true}}", class="button btn admin-btn") Delete 
+                        button.myDeleteButton.btn.admin-btn(type="button") Delete
                 tfoot        
                     tr
-                      td(colspan="4")
+                      td(colspan="5")
                         button.btn.btn-warning.btn-block(data-toggle="modal", data-target="#myModal2")
-                          | Upload Course Material(s)
+                          | Upload Course Material
             // /.table-responsive
             // Button trigger modal
             // Modal
@@ -116,8 +120,14 @@ template(name="course")
                     h4#myModalLabel.modal-title Upload Files
                   .modal-body
                     input(type ="hidden", value = "#{courseCode}", id ="cUploadCourseCode")    
-                    input(type ="hidden", value = "#{courseCode}", id ="cUploadSession")   
-                    input#myFileInput(type="file", name="courseMaterials")
+                    tr
+                      td Remarks
+                      td 
+                        input.form-control(type ="text", id ="cUploadSession", style ="color: black;")   
+                    tr
+                      td File
+                      td
+                        input#myFileInput(type="file", name="courseMaterials")
                   .modal-footer
                     button.myFileInputButton.btn.admin-btn(type="button", data-dismiss="modal") Upload
             p.breakH4
