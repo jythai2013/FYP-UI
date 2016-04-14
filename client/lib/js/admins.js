@@ -5,6 +5,7 @@ Template.registerHelper('userHasAccess', function () {
       console.log('isAdmin ' + Meteor.user().userType.admin);
       console.log('isTrainer ' + Meteor.user().userType.trainer);
       console.log('isLearner ' + Meteor.user().userType.learner);
+      console.log('isSuper ' + Meteor.user().userType.super);
       return true;
     } else{
       console.log('isLearner ' + Meteor.user().userType.learner);
@@ -143,22 +144,128 @@ Template.registerForCourse.helpers({
 // ADMIN ///////////////////////////////////////////////////////////////////////
 Template.topbar.helpers({
 	'displayUserName': function retrieveAdminName(e) {
-		return Meteor.user().fullName;
+		try {
+			return Meteor.user().fullName;
+		} catch (e){
+			// do nothing
+		}
+	}
+});
+
+Template.addSuperAdmin.helpers({
+	'notSuperUsers': function retrieveNotSuperUsers(e) {
+		console.log(">>> notSuperUsers");
+		try {
+			return Meteor.users.find({"userType.admin": true, "userType.super": {$ne: true}});
+		} catch (e){
+			// do nothing
+		}
+	}
+});
+
+Template.addSuperAdmin.events({
+	"click #addSuperAdminButton" : function addSuperEventHandler(e) {
+		var adminId = document.getElementById("addSuperToID").value;
+		console.log("addSuperAdminButton >>> " + adminId);
+		Meteor.call("addSuperAccess", adminId, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>update access creation SUCCESS MSG");
+				Session.set('updateAdminDeleteSuccessMessage', 'Successfully added super access')
+		        Meteor.setTimeout(function(){Session.set('updateAdminDeleteSuccessMessage', false);}, 3000);
+			} else {
+				console.log(">>>update access creation FAILURE MSG");
+			    Session.set('errorAdminDeleteMessage', 'Creation Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('errorAdminDeleteMessage', false);}, 3000);
+			}
+		});
+	}
+});
+Template.superAdminSetting.helpers({
+	'countSuper': function retrieveSuperCount(e) {
+		try {
+			var a = Meteor.users.find({"userType.super":true}).count();
+			return (a < 3);
+		} catch (e){
+			return false;
+		}
+	},
+
+	'isSuperUser': function checkIsSuperUser(e) {
+		try {
+			var a = Meteor.user().userType.super;
+			if(a !== undefined){
+				return true;
+			} else {
+				return false;
+			}
+		} catch (e){
+			// do nothing
+		}
+	},
+
+	'superUsers': function retrieveSuperUsers(e) {
+		try {
+			return Meteor.users.find({"userType.super":true});
+		} catch (e){
+			// do nothing
+		}
+	}
+});
+
+Template.superAdminSetting.events({
+	"click #deleteSuperButton" : function deleteSuperEventHandler(e) {
+		console.log("deleteSuperAccess >>> " + this._id);
+		Meteor.call("deleteSuperAccess", this._id, function (err, result) {
+      		if (!err) {
+				// If run is okay
+				console.log(">>>delete super access SUCCESS MSG");
+				Session.set('updateAdminDeleteSuccessMessage', 'Super Access Successfully Removed')
+		        Meteor.setTimeout(function(){Session.set('updateAdminDeleteSuccessMessage', false);}, 3000);
+			} else {
+				console.log(">>>elete super access FAILURE MSG");
+			    Session.set('errorAdminDeleteMessage', 'Delete Super Access Failed: ' + err.reason);
+			    Meteor.setTimeout(function(){Session.set('errorAdminDeleteMessage', false);}, 3000);
+			}
+		});
 	}
 });
 
 Template.administratorList.helpers({
 	"administrators" : function adminList(e) {
 		return Meteor.users.find({"userType.admin": true});
+	},
+
+
+	'isSuperUser': function checkIsSuperUser2(e) {
+		try {
+			var a = Meteor.user().userType.super;
+			if(a !== undefined){
+				return true;
+			} else {
+				return false;
+			}
+		} catch (e){
+			// do nothing
+		}
+	},
+
+	'countSuper': function retrieveSuperCount2(e) {
+		try {
+			var a = Meteor.users.find({"userType.super":true}).count();
+			return (a < 3);
+		} catch (e){
+			return false;
+		}
 	}
 });
 
 Template.administratorList.helpers({
 	"checkIsTrainer1" : function adminList1(userType) {
 		var isTrainer = this.userType.trainer;
-		console.log("Check1 : " + this.fullName + ", " + isTrainer);
-		console.log(isTrainer !== undefined);
-		if (isTrainer !== undefined){
+		// console.log("Check1 : " + this.fullName + ", " + isTrainer);
+		// console.log(isTrainer !== undefined);
+		if (isTrainer !== undefined && isTrainer === true){
 			return "Yes";
 		} else {
 			return "No";
@@ -169,24 +276,28 @@ Template.administratorList.helpers({
 Template.viewAdminParticulars.helpers({
 	"checkIsTrainer2" : function adminList2(e) {
 		var isTrainer = this.userType.trainer;
-		console.log("Check2 : " + this.fullName + ", " + isTrainer);
-		console.log(this.userType.trainer !== undefined);
-		if (this.userType.trainer !== undefined){
-			return true;
-		} else {
+		// console.log("Check2 : " + this.fullName + ", " + isTrainer);
+		// console.log(this.userType.trainer !== undefined);
+		if (this.userType.trainer === undefined || this.userType.trainer === false){
 			return false;
+		} else {
+			return true;
 		}
 	}
 });
 
 Template.sidebar.helpers({
 	"checkIfIsTrainer" : function adminSidebar(e) {
-		var isTrainer = Meteor.user().userType.trainer;
-		console.log("Display trainer portal button? " + isTrainer !== undefined);
-		if (isTrainer !== undefined){
-			return true;
-		} else {
-			return false;
+		try {
+			var isTrainer = Meteor.user().userType.trainer;
+			// console.log("Display trainer portal button? " + isTrainer !== undefined);
+			if (isTrainer === undefined || isTrainer === false){
+				return false;
+			} else {
+				return true;
+			}
+		} catch (e){
+			// do nothing
 		}
 	}
 });
@@ -204,7 +315,7 @@ Template.profilePage.events({
 		// console.log("Check : " + this.fullName + ", " + this.userType.trainer);
 		console.log(this.userType.trainer !== undefined);
 		var isTrainer = true;
-		if (this.userType.trainer === undefined){
+		if (this.userType.trainer === undefined || this.userType.trainer === false){
 			isTrainer = false;
 		}
 		
@@ -213,11 +324,11 @@ Template.profilePage.events({
 				// If run is okay
 				console.log(">>>update profile SUCCESS MSG");
 				Session.set('updateProfileSuccessMessage', 'Your profile has been updated')
-		        Meteor.setTimeout(function(){Session.set('updateProfileSuccessMessage', false);}, 2000);
+		        Meteor.setTimeout(function(){Session.set('updateProfileSuccessMessage', false);}, 3000);
 			} else {
 				console.log(">>>update profile FAILURE MSG");
 			    Session.set('errorUpdateProfileMessage', 'Update Failed: ' + err.reason);
-			    Meteor.setTimeout(function(){Session.set('errorUpdateProfileMessage', false);}, 2000);
+			    Meteor.setTimeout(function(){Session.set('errorUpdateProfileMessage', false);}, 3000);
 			}
 		});
 	}
@@ -234,11 +345,11 @@ Template.viewAdminParticulars.events({
 				// If run is okay
 				console.log(">>>update admin Particulars SUCCESS MSG");
 				Session.set('updateAdminParticularsSuccessMessage', 'Successfully updated')
-		        Meteor.setTimeout(function(){Session.set('updateAdminParticularsSuccessMessage', false);}, 2000);
+		        Meteor.setTimeout(function(){Session.set('updateAdminParticularsSuccessMessage', false);}, 3000);
 			} else {
 				console.log(">>>update admin Particulars FAILURE MSG");
 			    Session.set('errorAdminParticularsMessage', 'Update Failed: ' + err.reason);
-			    Meteor.setTimeout(function(){Session.set('errorAdminParticularsMessage', false);}, 2000);
+			    Meteor.setTimeout(function(){Session.set('errorAdminParticularsMessage', false);}, 3000);
 			}
 		});
 	}
@@ -275,11 +386,11 @@ Template.addAdminAcctForm.events({
 				// If run is okay
 				console.log(">>>update admin creation SUCCESS MSG");
 				Session.set('updateAdminAddSuccessMessage', 'Successfully added')
-		        Meteor.setTimeout(function(){Session.set('updateAdminAddSuccessMessage', false);}, 2000);
+		        Meteor.setTimeout(function(){Session.set('updateAdminAddSuccessMessage', false);}, 3000);
 			} else {
       			console.log(">>>update admin creation FAILURE MSG");
 			    Session.set('errorAdminAddMessage', 'Account Creation Failed: ' + err.reason);
-			    Meteor.setTimeout(function(){Session.set('errorAdminAddMessage', false);}, 2000);
+			    Meteor.setTimeout(function(){Session.set('errorAdminAddMessage', false);}, 3000);
 			}
 		});
 	}
@@ -293,11 +404,11 @@ Template.deleteAdminForm.events({
 				// If run is okay
 				console.log(">>>update admin delete SUCCESS MSG");
 				Session.set('updateAdminDeleteSuccessMessage', 'Successfully deleted')
-		        Meteor.setTimeout(function(){Session.set('updateAdminDeleteSuccessMessage', false);}, 2000);
+		        Meteor.setTimeout(function(){Session.set('updateAdminDeleteSuccessMessage', false);}, 3000);
 			} else {
 				console.log(">>>update admin delete FAILURE MSG");
 			    Session.set('errorAdminDeleteMessage', 'Delete Failed: ' + err.reason);
-			    Meteor.setTimeout(function(){Session.set('errorAdminDeleteMessage', false);}, 2000);
+			    Meteor.setTimeout(function(){Session.set('errorAdminDeleteMessage', false);}, 3000);
 			}
 		});
 	}

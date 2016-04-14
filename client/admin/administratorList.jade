@@ -27,11 +27,15 @@ template(name="administratorList")
             if updateAdminAddSuccessMessage
               .alert.alert-success
                 | #{updateAdminAddSuccessMessage}
+            
+            +superAdminSetting
 
             h4 Administrator List Management
-              button.btn.btn.btn-sm(data-toggle="modal", data-target="#addAdminAcct" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
-                i.fa.fa-plus
-                | Administrator
+              if isSuperUser
+                button.btn.btn.btn-sm(data-toggle="modal", data-target="#addAdminAcct" style="position: absolute; right: 6%; background: #333; color:#fff")
+                  i.fa.fa-plus
+                  | Administrator
+            i(style="margin-top:0px;") Only super administrator can add/delete administrators
             +addAdminAcctForm
 
             .table-responsive
@@ -52,7 +56,8 @@ template(name="administratorList")
                       td 
                         | {{checkIsTrainer1}}
                       td
-                        a.btn.admin-btn.bt-sn(data-target="#goDeleteAdmin#{_id}", data-toggle="modal", data-id="#{_id}") Delete
+                        if isSuperUser
+                          a.btn.admin-btn.bt-sn(data-target="#goDeleteAdmin#{_id}", data-toggle="modal", data-id="#{_id}") Delete
                         +deleteAdminForm 
 
 template(name="addAdminAcctForm")
@@ -161,22 +166,34 @@ template(name="deleteAdminForm")
 
 template(name="superAdminSetting")
   h4 Super Administrator Management
-    button.btn.btn.btn-sm(data-toggle="modal", data-target="#addSuperAdminForm" style="position: absolute; margin-top: -1%; right: 6%; background: #333; color:#fff")
-      i.fa.fa-plus
-      | SuperAdmin
+    if isSuperUser
+      button.btn.btn-sm(data-toggle="modal", data-target="#addSuperAdminForm", style="position: absolute; right: 6%; background: #333; color:#fff")
+        i.fa.fa-plus
+        | Super Admin
+  i(style="margin-top:0px;") Only super administrator can edit super access
   +addSuperAdmin
+
   form(name="", role="form", action="#", method="post")
   .table-responsive
     table#dataTables-example.table.table-striped.table-bordered
       thead
         tr
           th Name
-          th Drop Super Admin Rights?
-      tbody  
-        tr 
-          td Name
-          td Drop Super Admin Rights?
-
+          th Email
+          th Action
+      tbody
+        each superUsers
+          tr 
+            td #{fullName}
+            td #{email}
+            if isSuperUser
+              td
+                a#deleteSuperButton.btn.admin-btn.bt-sn(type="button") Remove Super Access
+            else
+              td
+        else
+          tr
+            td(colspan="3") Please contact IT to assign SUPER Access Type 
 
 template(name="addSuperAdmin")
   div.modal(id="addSuperAdminForm" tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true").adminFormDark
@@ -191,18 +208,16 @@ template(name="addSuperAdmin")
             table.table(style="background:#333")
               tbody
                 tr
-                  th Enter Full Name
-                  td(colspan="3")
-                    .form-group
-                      input.form-control(type="text", id="addName")
+                  th Select Admin You Wish To Assign As 
                 tr
-                  td Email
-                  td
-                    input.form-control(type='text', id='addEmail')
+                  td(colspan="3")
+                    select.form-control(id="addSuperToID", style="color:black")
+                      each notSuperUsers
+                        option(value="#{_id}") #{fullName} (#{email})
 
             // /.table-responsive
         .modal-footer
-          button#addAdminAcctButton.btn.btn-save(type="button", data-dismiss="modal") Add Super Admin
+          button#addSuperAdminButton.btn.btn-save(type="button", data-dismiss="modal") Add Super Admin
       // /.modal-content
     // /.modal-dialog
   // /.modal      

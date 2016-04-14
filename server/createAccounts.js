@@ -126,7 +126,7 @@
 				Meteor.users.update(_id, {
 					$set:{
 						"mobileNo": sMobileNo,
-						"userType": {admin: true, trainer: true}
+						"userType.trainer": true
 					}
 				});
 				console.log("here trainer is true >>> END");
@@ -134,12 +134,32 @@
 				Meteor.users.update(_id, {
 					$set:{
 						"mobileNo": sMobileNo,
-						"userType": {admin: true}
+						"userType.trainer": false
 					}
 				});
 				console.log("here trainer is false >>> END");
 			}
 			
+		},
+
+		'addSuperAccess': function addSuperAccess(_id){
+			console.log("create: addSuperAccess >> " + _id);
+			Meteor.users.update(_id, {
+				$set:{
+					"userType.super": true
+				}
+			});
+			console.log("reated super access >>> END");
+		},
+
+		'deleteSuperAccess': function deleteSuperAccess(_id){
+			console.log("Update: deleteSuperAccess >> " + _id);
+			Meteor.users.update(_id, {
+				$set:{
+					"userType.super": false
+				}
+			});
+			console.log("here del super access >>> END");
 		}
 
 
