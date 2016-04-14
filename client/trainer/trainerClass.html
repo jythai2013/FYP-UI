@@ -191,31 +191,31 @@
 </template>
 
 <template name="tcAttendence">
-  {{studentAttendenceDetails}}
   <div class="table-responsive">
     <table id="dataTables-example" class="table table-bordered table-hover">
+    {{#each studentAttendenceDetails}}
       <thead>
         <tr>
-          <th>Class Date</th>
-          <th>Number of Turnup</th>
-          <th>Absentees</th>
+          <th colspan="2">Session Date: {{name}}</th>
         </tr>
       </thead>
       <tbody>
-        {{#each studentAttendenceDetails}}
-          <tr> 
-            <td>Date</td>
-            <td>Number</td>
-            <td>
-              Names here
-            </td>
-          </tr> 
-        {{else}}
-          <tr>
-            <td colspan="3"> No Attendence Found</td>
-          </tr>
-        {{/each}}
+      {{#each value}}
+        <tr>
+          <td>{{getStudentName studentId}} ({{studentId}})</td>
+          {{#if equals value true}}
+            <td><i class="fa fa-user" aria-hidden="true" style="color: #1abc9c"></i></td>
+          {{else}}
+            <td><i class="fa fa-user" aria-hidden="true"></i></td>
+          {{/if}}
+        </tr>
+      {{/each}}
       </tbody>
+    {{else}}
+      <tr>
+        <td> No Attendence Found</td>
+      </tr>
+    {{/each}}
     </table>
   </div>
 </template>

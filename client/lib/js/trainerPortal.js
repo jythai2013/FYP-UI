@@ -13,6 +13,8 @@ Template.trainerSidebar.helpers({
     var isActive = url.endsWith(headerName);
     if (isActive){
       return "active";
+    } else if(url.endsWith("classlist") && headerName === "trainer"){
+      return "active";
     } else {
       return "";
     }
@@ -248,6 +250,10 @@ Template.tcViewStudentGrade.helpers({
 });
 
 Template.tcAttendence.helpers({
+  "getStudentName" : function sAttendenceStudentDetails(id) {
+    var a = Meteor.users.findOne({"userID": id});
+    return a.fullName;
+  },
   "studentAttendenceDetails" : function sAttendenceStudentDetails(cList) {
     var studId = this._id;
     var url =  Router.current().url;
@@ -261,25 +267,20 @@ Template.tcAttendence.helpers({
     var grpNumStr=url.substr(positionOfAND+1);
     var positionSecondEqual = grpNumStr.indexOf('=');
     var currentGrpNum=grpNumStr.substr(positionSecondEqual+1);
-    var obj = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum,});
+    var obj = Groups.findOne({courseCode:currentCourse,grpNum:currentGrpNum});
     result = [];
     if(obj !== undefined){
       var grpAttendenceObj = obj.attendance;
-      console.log("grpAttendenceObj >>> " + grpAttendenceObj);
-      for (i= 0; i < grpAttendenceObj.length; i++){
-        console.log("b>>>");
-        console.log(grpAttendenceObj[i]);
-        for(x= 0; x < grpAttendenceObj[i].length; x++){
-          console.log("a>>>");
-          console.log(grpAttendenceObj[i][x]);
+      // var absentee = 0;
+      // var absenteeList = [];
+      for (var key in grpAttendenceObj){
+        var result2 = [];
+        var value1 = grpAttendenceObj[key];
+        for (var key2 in value1){
+          result2.push({studentId:key2,value:value1[key2]});
         }
+        result.push({name:moment(key).format("Do MMM YYYY"),value:result2});
       }
-
-      // for (var key in grpAttendenceObj){
-      //   // result.push({name:key,value:grpAttendenceObj[key]});
-      //   console.log("c>>>");
-      //   console.log({name:key,value:grpAttendenceObj[key]});
-      // }
     }
     return result;
   }
