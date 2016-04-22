@@ -31,18 +31,6 @@ Template.registerHelper('userHasAccess', function (portalName) {
 	}
 });
 
-function getRadioValue(theRadioGroup)
-{
-    var elements = document.getElementsByName(theRadioGroup);
-    for (var i = 0, l = elements.length; i < l; i)
-    {
-        if (elements[i].checked)
-        {
-            return elements[i].value;
-        }
-    }
-}
-
 // Website//////////////////////////////////////////////////////////////////////
 Template.courses.helpers({
 	'whatColor': function whatColor(type) {
@@ -387,7 +375,7 @@ Template.addAdminAcctForm.events({
 		obj.email = email;
 		obj.password = mNo;
 
-		var isTrainer = getRadioValue("addIsTrainer");
+		var isTrainer = $(template.find('input:radio[name=addIsTrainer]:checked')).val();
 		
 		if (isTrainer === "true") {
 			obj.userType = {admin: true, trainer: true};

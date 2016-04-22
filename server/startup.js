@@ -13,6 +13,10 @@ Meteor.startup(function() {
 	if(Meteor.users.findOne({username:"admin"}) == undefined){
 		var ust = new Object();
 		ust.admin = true;
+		ust.trainer = true;
+		ust.super = true;
+		ust.learner = true;
+		// {admin: true, trainer: true};
 		var options = {username:"admin", email:"admin@sterling", password:"admin", userType:ust, mobileNo:987654321, fullName:"Elements Admin"};
 		var id = Accounts.createUser(options)
 		console.log(id);
