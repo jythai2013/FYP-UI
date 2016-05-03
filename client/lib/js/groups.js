@@ -792,6 +792,10 @@ Template.group.events({
 		obj.paid=true;
 
 		Meteor.call("studentPaid", groupID, this._id, obj);
+	},
+	"click #viewResultsButton" : function deleteCourseEventHandler(e) {
+		console.log(this);
+		Session.set("displayFeedbackfbidAns",this._id);
 	}
 });
 

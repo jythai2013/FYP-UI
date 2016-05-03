@@ -30,10 +30,10 @@ function feedbackData(question){
 // CASS's
 Template.displayFeedbackResults.onRendered(function drawingChart() { //create one template for each graph
 
-		var url =  window.location.href;
-		var positionFirstEqual = url.indexOf('=');
-		var fbidAns=url.substr(positionFirstEqual+1);
-		Session.set("displayFeedbackfbidAns", fbidAns);
+		// var url =  window.location.href;
+		// var positionFirstEqual = url.indexOf('=');
+		// var fbidAns=url.substr(positionFirstEqual+1);
+		// Session.set("displayFeedbackfbidAns", fbidAns);
 
 
     //clear the contents of the div, in the event this function is called more than once.
@@ -43,12 +43,13 @@ Template.displayFeedbackResults.onRendered(function drawingChart() { //create on
     children.empty();
     
 		console.log(this.qnID);
-		var url =  window.location.href;
+		// var url =  window.location.href;
 				
-		var positionFirstEqual = url.indexOf('=');
-		var fbidAns=url.substr(positionFirstEqual+1);    
-		//console.log(fbidAns);
-		Session.set("displayFeedback", fbidAns);
+		// var positionFirstEqual = url.indexOf('=');
+		// var fbidAns=url.substr(positionFirstEqual+1);    
+        var fbidAns = Session.get("displayFeedbackfbidAns");
+		console.log(fbidAns);
+		
 
 		var numQns = FeedbackAnswers.findOne({_id:fbidAns}).options;
 		//console.log(numQns.length);
@@ -73,7 +74,7 @@ Template.displayFeedbackResults.onRendered(function drawingChart() { //create on
 			//example of how to load data from a collection that already contains data in the appropriate format
 			//var data = MyCollection.find({}, {fields: { year: 1, value: 1}, {sort: year: 1}}).fetch();
 
-			if (data && Session.get("documentIsReady") || document.readyState == "complete") {
+			//if (data && Session.get("documentIsReady") || document.readyState == "complete") {
 				console.log(data && Session.get("documentIsReady") || document.readyState == "complete");
 				console.log(data );
 				console.log(Session.get("documentIsReady"));
@@ -94,7 +95,7 @@ Template.displayFeedbackResults.onRendered(function drawingChart() { //create on
 						labels:  ['Value'],
 						resize:  true
 				});
-			}
+			//}
 		}
 });
 
